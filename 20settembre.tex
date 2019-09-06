@@ -1,0 +1,160 @@
+%chktex-file 36
+%chktex-file 23
+%chktex-file 10
+%chktex-file 17
+%chktex-file 9
+\documentclass[computationalMathematics.tex]{subfiles}
+
+\begin{document}
+
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+\section{20th of September 2018 --- F. Poloni}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+
+\subsection{A warm up}
+
+\recap{
+  Let $x, y \in \R^n$. The product between those two vectors is computed as follows $\tr{x} y = \sum\limits_{i=1}^n x_i y_i$ and $\tr{x}y \in \R$.
+
+  Let $x \in \R^n$ and $\lambda \in \R$ we call \textbf{multiple} of vector $x$ the following: $\lambda x = x \lambda = \begin{pmatrix}\lambda x_1\\
+    \vdots\\
+    \lambda x_n\\
+  \end{pmatrix}$.
+
+  Given a matrix $A \in M(n, m, \R)$ and a vector $b \in \R^m$ the \textbf{matrix-vector product} $A b = v \in \R^n$ is computed as follows:
+\[
+  v = Ab = \begin{pmatrix}
+  A_1 b\\
+  A_2 b\\
+  \vdots\\
+  A_m b\\
+  \end{pmatrix}
+  =
+  \sum\limits_{j=1}^m A^j b_j
+\]
+The computational complexity of this operation is $O(n^2)$.
+
+We call \textbf{image} of a matrix $A$ ($\text{Im}(A)$) the set of vectors that can be obtained multiplying $A$ by any vector in the domain of $A$.
+
+On the other hand, we call \textbf{kernel} of a matrix $A$ ($\ker(A)$) the set of vectors $w$ in its domain such that $Aw=0$.
+
+Given two matrices $A \in M(n, m, \R)$ and $B \in M(m, k, \R)$ we call \textbf{matrix-matrix product} the following:
+$C=AB$ such that $C_{ij} = A_i B^j$, where $\tr{A_i} \in \R^m$ is the $i$-th row of $A$, $B^i$ is the $i$-th column of $B$ ($B^i \in \R^m$) and $C \in M(n, k, \R)$. The computational complexity of this operation is $O(n^3)$. Notice that this product is \textbf{not commutative}.
+
+The matrix-matrix product also works on ``matrices'' made of one column only (vector of $\R^n$), but in this case a row of the right-side matrix is made by only one scalar\ldots
+
+Given a matrix $A \in M(n, \R)$ we call \textbf{inverse} of $A$ the matrix $\inv{A}$ such that $\inv{A} A = A \inv{A} = I_{n}$.
+
+The \textbf{transpose} of a matrix $A \in M(n, m, \R)$ is $\tr{A}$ such that $\tr{A}_{ij} = A_{ji}$
+
+The \textbf{inverse of a product} (shoe-sock identity) is $\inv{(A B)} = \inv{B} \inv{A}$.
+Notice that this identity holds only for square matrices.
+
+The \textbf{transpose of a product} (shoe-sock identity) is $\tr{(A B)} = \tr{B} \tr{A}$.
+}
+
+The objective of this course, for the part concerning numerical methods, is solving linear systems efficiently.
+
+\begin{definition}[Linear system]
+  Let $A \in M(n, m, \R)$, $b \in \R^n$ and $x \in \R^m$. We term \textbf{linear system} the following:
+
+  \[
+Ax = b
+  \]
+\end{definition}
+
+Our goal is to approximate such vector $x$, hence resulting in solving a minimum problem:
+
+\[
+  \min\limits \norm{Ax - b}
+\]
+
+\syntax{Notice that the machine precision is $10^{-16}$, so we should pay attention when making computations, since we may incurr in some error (proportional to the size of the operands).
+
+In Matlab a matrix is written as \texttt{A=[1, 2, 3; 4, 5, 6];}, where \texttt{[1, 2, 3]} is the first row of the matrix A.
+
+The transpose of a matrix or a vector is denoted by \texttt{A'}.
+
+If we are interested in only a part of our matrix \texttt{A} we may write \texttt{A[1:2, 1:3]} and obtain only the rows of \texttt{A} that go from $1$ to $2$ and those columns from $1$ to $3$.
+}
+
+\begin{proposition}
+  Let $A \in GL(n, \R)$ (aka $A$ is a real square matrix of size $n$ and invertible), $B, C \in M(n, m, \R)$.
+
+  If $AB = AC$ then $B=C$.
+\end{proposition}
+
+\begin{definition}[Block multiplications]
+  Let $A \in M(n,m, \R)$ and let $B \in M(m, k, \R)$. We can compute the result of a block of the matrix $AB$ as the product of the two blocks in $A$ and $B$ in the corresponding position.
+  \todo{manca figura dei blocchi in latex}
+\end{definition}
+
+\begin{proposition}[Block triangular matrices]
+  Let $M \in M(n, m, \R)$ and $N \in M(m, k, \R)$ such that they are \textbf{block triangular}.
+  Their product is a block triangular matrix as well.
+
+  $M B 
+  = \begin{pmatrix}
+    A & B\\
+    0 & D
+  \end{pmatrix}
+  \begin{pmatrix}
+    E & F\\
+    0 & G
+  \end{pmatrix}
+  = 
+  \begin{pmatrix}
+    AE & BF\\
+    0 & DG
+  \end{pmatrix}$
+\end{proposition}
+
+\begin{proposition}[Properties of triangular matrices]~\\
+    \begin{enumerate}
+      \item A block triangular matrix is invertible iff its blocks are invertible;
+      \item The eigenvalues of a block triangular matrix are the union of the eigenvalues of each block;
+      \item Let $M \in GL(n, m, \R)$ such that $M= 
+        \begin{pmatrix}
+          A & B\\
+          0&D\\
+        \end{pmatrix}$ 
+       the inverse of $M$ is 
+        
+        $\inv{M} = 
+        \begin{pmatrix}
+          \inv{A} & -\inv{A}B\inv{D}\\
+          0 & \inv{B}
+        \end{pmatrix}$.
+    \end{enumerate}
+  \end{proposition}
+
+Why are we interested in block triangular matrices? They depict a situation as shown in \Cref{fig:20sett1}.
+
+\addpic{0.3}{pics/20sett/1.png}{The adjacency matrix of a biparted graph has $0$s in its bottom left part (Matlab syntax \texttt{A[p+1:n; 1:p]=0}).}{fig:20sett1}
+
+\subsection{Orthogonality}
+
+\begin{definition}[Norms]\label{def:20sett_norm}
+  Let $x \in \R^n$. We ``measure'' their magnitude using so-called ``norms''.
+  \begin{description}
+    \item[{\sc Euclidean:}] $\norm{x}_2 = \tr{x} x = \sqrt{\sum\limits_{i=1}^n {x_i}^2}$;
+    \item[{\sc Norm 1:}] $\norm{x}_1= \sum\limits_{i=1}^n \abs{x_i}$;
+    \item[{\sc $p$-Norm:}] $\abs{x}_p = {\bigg(\sum\limits_{i=1}^n \abs{x_i}^p\bigg)}^{1/p}$;
+    \item[{\sc $0$-Norm:}] $\norm{x}_0 = \abs{\{i~:~\abs{x_i} > 0\}}$;
+    \item[{\sc $\infty$-Norm:}]$\norm{x}_\infty = \max\limits_{i=1, \ldots, n} \abs{x_i}$.
+  \end{description}
+\end{definition}
+
+From now on in this part of th course we will refer to norm-2 only.
+
+\begin{definition}[Orthogonal matrix]
+  Let $A \in M(n, m, \R)$. We call $A$ \textbf{orthogonal} if $\forall x \in \R^n \norm{Ax} = \norm{x}$.
+\end{definition}
+
+\begin{proposition}[Equivalent definition of orthogonal matrix]
+  Let $A \in M(n, \R)$. $A$ is orthogonal iff $\tr{A} A = A \tr{A} = I_{n}$, where $I_n$ is the identity matrix of size $n$ ($1$ on the diagonal, $0$ elsewhere).
+\end{proposition}
+
+\end{document}
+
+

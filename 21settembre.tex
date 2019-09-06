@@ -1,0 +1,228 @@
+%chktex-file 36
+%chktex-file 23
+%chktex-file 10
+%chktex-file 17
+%chktex-file 9
+\documentclass[computationalMathematics.tex]{subfiles}
+
+\begin{document}
+
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+\section{21st of September 2018 --- A. Frangioni}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+
+\subsection{Mathematical background for optimization problems}
+
+\begin{definition}[Minimum problem]\label{def:min_prob}
+  Let $X$ be a set, called \textbf{feasible region} and let $f : X \to \R$ be \emph{any} function, called \textbf{objective function} we call \textbf{problem} the following
+\[
+  (P) \qquad f_* = \min \{f(x)~:x \in X\}
+\]
+\end{definition}
+
+
+\begin{definition}[Feasible solution]
+  Let $x \in F$ be a solution of the minumim problem in which the domain is a superset of $X \subset F$. 
+  We say that $x$ is a \textbf{feasible solution} if $x \in X$.
+  On the other hand, $x$ is \textbf{unfeasible} if $x \in F~\setminus~X$.
+\end{definition}
+
+\begin{definition}[Optimal solution]
+  Under the same hypothesis of the above definition, we define $x_*$ such that $f(x_*) = f_*$ an \textbf{optimal solution}, where $f_* \leq f(x) \, \forall x \in X$, $\forall v > f_* \, \exists \, x \in X$ s.t.~$f(x) < v$.
+\end{definition}
+
+It is possible to find problems where there is no optimal solution at all.
+
+\begin{example}
+  There are two cases in which it is not possible to find an optimal solution:
+  \begin{enumerate}
+    \item The domain is empty, which may be not trivial to prove, since it is an NP-hard problem sometimes;
+    \item We want to find the minimum of the objective function but it is unbounded below ($\forall M \, \exists x_M \in X$
+      s.t.~$f(x_M) \leq M$).
+      On the other hand, we need to maximize the function, but it is unbounded above.
+  \end{enumerate}
+\end{example}
+
+We can now rewrite the problem of solving an optimization problem as:
+\begin{enumerate}
+  \item Finding $x_*$ and proving it is optimal
+  \item Or proving $X = \emptyset$
+  \item Or constructively prove $\forall M \, \exists x_M \in X$ s.t.~$f(x_M) \leq M$.
+\end{enumerate}
+
+Most of the times we consider optimal a solution which is close to the true optimal value, modulo some error.
+
+\begin{definition}[Absolute error]
+  We call \textbf{absolute error} the gap between the real value and the one we obtained. Formally,
+\[
+  f(\bar{x}) - f_* \leq \varepsilon
+\]
+\end{definition}
+
+\begin{definition}[Relative error]
+  We define as \textbf{relative error} the absolute error, normalized by the true value of the function
+\[
+  ( \, f(\bar{x}) - f_* \, ) / | \, f_* \, | \leq \varepsilon
+\]
+\end{definition}
+
+Let us consider an iterative algorithm that moves towards the optimum.
+It may happen that the function decreases and decreases along a certain direction but its non-continuity leads to the impossibility of reaching the optimum.
+As an example, let us take the following
+
+\[
+  f(x) =\left\{\begin{array}{ll} x & \mbox{ if } x > 0 \\
+        1 & \mbox{ if } x = 0
+        \end{array}\right.
+\]
+
+\begin{definition}[Totally ordered set]
+  We say that  set $X$ is \textbf{totally ordered} if $\forall \, x, y \in X$, either $f(x) \leq f(y)$ or $f(y) \leq f(x)$.
+\end{definition}
+
+\begin{definition}[Infima and suprema]
+  Given a totally ordered set $R$ and one of its subsets (say $S \subseteq R$)
+\[
+  s\text{ is the {\bf infimum} of } S \Leftrightarrow \underline{s} = \inf S
+  \quad\Leftrightarrow\quad
+  \underline{s} \leq s \;\; \forall s \in S
+  \;\;\wedge\;\;
+  \forall t > \underline{s} \; \exists \, s \in S \mbox{ s.t. } s \leq t
+\]
+\[
+  s \text{ is the {\bf supremum} of } S \Leftrightarrow \bar{s} = \sup S
+  \quad\Leftrightarrow\quad
+  \bar{s} \geq s \;\; \forall s \in S
+  \;\;\wedge\;\;
+  \forall t < \bar{s} \; \exists \, s \in S \mbox{ s.t. } s \geq t
+\]
+
+\end{definition}
+
+
+What happens if we have more than one objective function? We are provided with two tools in order to reduce them into one:
+
+\begin{description}
+  \item[{\sc Scalarization:}] using a linear combination of the two functions: $f(x) = \alpha f_1(x) + \beta f_2(x)$;
+  \item[{\sc Budgeting:}] $f(x) = f_1(x)$, $X := X \cup \{ \, f_2(x) \leq b \, \}$, which intuitively corresponds to taking into account only one objective function, provided that the values of the othr functions are not too high.
+\end{description}
+
+\begin{definition}[Extended real]
+  In the case of unbounded functions the value of infima or suprema are $\infty$, and we call \textbf{extended reals} $\overline{\R} = {-\infty} \cup \R \cup {+\infty}$.
+\end{definition}
+
+We are interested in studying sequences, because iterative methods start from a certain point and move towards the optimal, hopefully.
+
+\begin{definition}[Limit]
+  Given a sequence $\{ x_i \}$ the \textbf{limit} for $i \to \infty$ is defined as
+\[
+  \lim_{i \to \infty} v_i = v ~ \iff ~ \forall \varepsilon > 0 ~ \exists ~ h \text{ s.t. } \abs{v_i - v} \leq \varepsilon ~ \forall i \geq h
+\]
+\end{definition}
+
+It may happen that a sequence has or does not have a limit. For example $\{ \frac{1}{n}\}$ has limit $0$ for $n \to +\infty$, while $\{ {(-1)}^n \}$ does not.
+
+\begin{proposition}
+  Let us be given a monotone sequence, then the sequence \textbf{does} have a limit.
+\end{proposition}
+
+Notice that given a sequence either it is monotone or it can be ``split'' into two monotone sequences (for example $\{ {(-1)}^n\}$ can be transformed into $\{ {(-1)}^{2n}\}$ and $\{ {(-1)}^{2n+1}\}$ and these two sequences are both monotone).
+
+\begin{definition}[Euclidean vector space]
+We call \textbf{Euclidean space}
+\[
+  \R^n := \{ \, \begin{pmatrix}x_1\\ x_2\\ \vdots\\ x_n\end{pmatrix}~:~x_i \in \R,~i = 1, \ldots, n\}
+\]
+Equivalently, we can characterize the Euclinean space as Cartesian product of $\R$ $n$ times: $\R^n = \R \times \R \times \ldots \R$.
+\end{definition}
+
+The main operations on elements of the Euclidean space (vectors) are:
+
+\begin{description}
+  \item[{\sc Sum:}] $x + y := \begin{pmatrix}x_1 + y_1\\
+      x_2 + y_2\\
+      \vdots\\
+      x_n + y_n\\
+  \end{pmatrix}$
+\item[{\sc Scalar multiplication:}] $\alpha x = \begin{pmatrix}\alpha x_1\\
+    \alpha x_2\\
+    \vdots\\
+    \alpha x_n\\
+  \end{pmatrix}$
+\end{description}
+
+In order to be able to compute limits in a vector space we need to use norms (see \Cref{def:20sett_norm}).
+
+\begin{proposition}
+The norms on a vector space have the following properties:
+\begin{enumerate}
+  \item $\norm{x} \ge 0$ and $\forall x \in \R^n$, $\norm{x}=0~\iff~x=0$;
+  \item $\norm{\alpha x} = \abs{\alpha} \norm{x},~\forall x \in \R^n,~\alpha \in \R$;
+  \item $\norm{x+y} \le \norm{x} + \norm{y},~\forall x,y \in \R^n$ (triangle inequality).
+\end{enumerate}
+\end{proposition}
+
+\begin{definition}[Ball]
+We term \textbf{ball} centered in $\bar{x}$ and having $\varepsilon$ as radius as the set of points that are close enough to $x \in \R^n$: $B(\bar{x}, \varepsilon) = \{x \in \R^n~:~ \norm{x - \bar{x}} \le \varepsilon\}$.
+\end{definition}
+
+In \Cref{fig:21sett1} we may observe the different shapes of the same ball varying the value of $p$ in the $p$-norm.
+
+\addpic{0.4}{pics/21sett/pnorms.pdf}{The shapes of balls centered in the origin of radius $1$ varying the value of $p$.}{fig:21sett1}
+
+\begin{definition}[Scalar product]
+  Let $x, y \in \R^n$ we define the \textbf{scalar product} between these two vectors 
+  \[
+\ps{x}{y} := y^T x = \sum_{i=1}^n x_i y_i = x_1 y_1 + \cdots + x_n y_n
+  \]
+\end{definition}
+
+\begin{proposition}
+A scalar product has the following properties:
+\begin{enumerate}
+  \item $\ps{x}{y} = \ps{y}{x} \quad \forall x, y \in \R^n$ (symmetry)
+  \item $\ps{x}{x} \ge 0,~\forall x \in \R^n$, $\ps{x}{x}=0~\iff~x=0$;
+  \item $\ps{\alpha x}{y} = \alpha \ps{x}{y},~\forall x\in\R^n, \alpha \in \R$;
+  \item $\ps{x + y}{z} = \ps{x}{z} + \ps{y}{z},~\forall x,y, z \in \R^n$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Cauchy-Schwartz inequality]
+  Let $x, y \in \R^n$. The following holds:
+  \[
+    \ps{x}{y}^2 \leq \ps{x}{x}\ps{y}{y}\equiv \abs{\ps{x}{y}} \leq \norm{x} \norm{y},~\forall x,y \in \R^n
+  \]
+\end{proposition}
+
+An important characterization of the scalar product is the one that uses angles:
+
+$\ps{x}{y} = \norm{x} \norm{y} \cos \theta$: $x \perp y \iff \ps{x}{y} = 0$ and  $\ps{x}{y} > 0 \iff$ ``$x$ and $y$ point in the same direction''
+
+We have now all the tools to define the notion of limit of a sequence in $\R^n$.
+
+\begin{definition}[Limit of a sequence in the Euclidean space]
+  Let $\{ x_i \} \subset \R^n$ be a sequence in $\R^n$. The \textbf{limit} of $\{x_i\}$ for $i \to +\infty$ is the following:
+  \[
+    \lim_{i \to \infty} x_i = x \equiv \{ x_i \} \to x
+  \]
+  \[
+    \Updownarrow
+  \]
+  \[
+    \forall \varepsilon > 0~\exists h~\text{s.t.}~d(x_i , x) \leq \varepsilon~\forall i \geq h
+  \]
+  \[
+    \Updownarrow
+  \]
+  \[
+    \forall \varepsilon > 0~\exists h~\text{s.t.}~x_i \in \mathcal{B}( x , \varepsilon ) \; \forall i \geq h
+  \]
+  \[
+    \Updownarrow
+  \]
+  \[
+    \lim_{i \to \infty} d( x_i , x ) = 0
+  \]
+\end{definition}
+
+\end{document}

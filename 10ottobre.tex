@@ -1,0 +1,67 @@
+%chktex-file 36
+%chktex-file 23
+%chktex-file 10
+%chktex-file 17
+%chktex-file 9
+\documentclass[computationalMathematics.tex]{subfiles}
+
+\begin{document}
+
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+\section{10th of October 2018 --- F. Poloni}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+
+This lecture has the goal of introducing the concept of linear combinations.
+
+\begin{definition}[Linear combination]
+  In a very unformal way, we can define the goal of linear combination as the pursuit of obtaining a certain target vector $b \in \R^n$ using $m$ (in principle $m \neq n$) vectors $a_1, a_2, \ldots, a_m$ such that
+  \[
+a_1 x_1 + a_2 x_2 + \cdots + a_m x_m = b
+  \]
+  where $x_i$ are properly chosen.
+\end{definition}
+
+The task of finding such vectors is called \textbf{solving a linear system} and it is formally written as $Ax=b$.
+
+\begin{theorem}
+  Let $A \in M(n, m)$ and let $b \in \R^n$. It holds that any linear system $Ax=b$ is solvable iff $A$ is invertible.
+\end{theorem}
+
+We are interested in finding approximate solutions of such systems, where the proximity to the target is expressed in terms as $\norm{Ax - b}$ that should be close to zero. A geometric inutition is displayed in \Cref{fig:10tt_1}.
+
+\addpic{0.5}{pics/10ott/1.png}{In this case the image of the matrix $A$ (in red) does not contain $b$ and the best one can do is to obtain a projection of $b$ in the plane $Im(A)$ (drawn in blue).}{fig:10ott_1}
+
+\syntax{Matlab provides syntactic sugar to solve linear systems.
+
+Before introducing such syntax let we just notice the following \texttt{5\textbackslash~2} $(=2/5) \neq$ \texttt{5/2}.
+
+The syntax to solve $Ax=b$ is \texttt{A\textbackslash~b}, where the algorithm used in Matlab is not inverting the matrix $A$ and then performing the multiplication, but it is a more sophisticated and efficient one.
+}
+
+\begin{definition}[Linearly square problem]
+  Let $A \in M(n, m, \R)$ and let $b \in \R^n$, we term \textbf{linearly square problem} the task of computing $\min\limits_{x \in \R^m} \norm{Ax - b}_2$.
+\end{definition}
+
+\syntax{In Matlab the syntax \texttt{.func} means that function func should be performed entry by entry of the non-scalar variable.}
+
+
+An example of a practical least square problem may be predicting the salary of NBA players, assuming that the income is obtained as a linear combination of some features.
+
+\begin{definition}[Full rank matrix]
+  Let $A \in M(n, m, \R)$ we say that $A$ has \textbf{full column rank} if $\ker{A} = \{0\}$.
+
+  Equivalently, $rk(A) = n$ or alternatively $\nexists z \in \R^n \setminus \{0\}$ such that $Az = 0$.
+\end{definition}
+
+\begin{proposition}
+  Let $A \in M(n, m, \R)$, the least square problem $\norm{Ax - b = 0}$ has a unique solution iff $A$ has full column rank.
+\end{proposition}
+
+\begin{theorem}
+  Let $A \in M(n, m, \R)$. $A$ has full column rank iff $\tr{A}A$ is positive definite.
+\end{theorem}
+
+\begin{proof}
+  $A$ has full column rank $\iff \norm{Az} \neq 0, \forall z \in \R^m \setminus \{0\}\iff \norm{Az}^2 \neq 0, \forall z \in \R^m \setminus \{0\}\iff 0=\tr{(Az)} Az = \tr{z}\tr{A}Az$  
+\end{proof}
+\end{document}

@@ -1,0 +1,292 @@
+% chktex-file 44
+% chktex-file 17
+% chktex-file 36
+% chktex-file 13
+% chktex-file 15
+% chktex-file 29
+% chktex-file 40
+% chktex-file 1
+% chktex-file 8
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mymacros}[28/09/2018 v1.0 My own macros]
+                           %~~~~~Packages~~~~~%
+\RequirePackage{tabularx}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\RequirePackage{pgfplotstable}
+\RequirePackage{fontawesome}
+\RequirePackage{caption}
+\RequirePackage{siunitx}
+%\RequirePackage{hyperref}
+\RequirePackage{amsthm}
+\RequirePackage{amsmath}
+\RequirePackage{mathtools}
+%\RequirePackage{mdframed, xcolor}
+\RequirePackage{minted}
+%\RequirePackage[svgnames, table]{xcolor}
+
+                           %~~~~~Pgfplots~~~~~%
+\pgfplotsset{compat=newest}
+\pgfplotsset{
+  every axis/.append style={legend pos=south east,ymin=0,grid=major,
+        major grid style={line width=.2pt,draw=gray,dotted}, axis x line=bottom,
+        no marks,log basis x=2,axis line style=-,
+        cycle list={
+          {draw=line1, thick},
+          {draw=line2, thick},
+          {draw=line3, thick},
+          {draw=line4, thick}
+        }}}
+\sisetup{                           % setup siunitx ...
+        round-mode      = places,   % rounds numbers
+        round-precision = 2,        % to 3 places
+        per-mode        = symbol,   % kg/dm^3 instead kgm^{-3}
+      group-four-digits = true,     %   for 1 234,567       
+        }
+                           %~~~~~Colours~~~~~%
+\definecolor{line1}{HTML}{FF0000}
+\definecolor{line2}{HTML}{0000FF}
+\definecolor{line3}{HTML}{009900}
+\definecolor{line4}{HTML}{B2ABD2}
+
+                          %~~~~~~MdDefs~~~~~~%
+%\global\mdfdefinestyle{exampledefault}{%
+%linecolor=lightgray,linewidth=1pt,%
+%leftmargin=1cm,rightmargin=1cm,
+%}
+
+
+                           %~~~~~New commands~~~~~%
+\newcommand{\ps}[2]{<#1, #2>}
+\newcommand{\R}{\mathds{R}}
+\newcommand{\C}[1]{{\mathcal{C}}^{#1}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand\y{\cellcolor{green!10}}
+\newcommand\stareq{\stackrel{\mathclap{\normalfont\mbox{*}}}{=}}
+\newcommand\numeq[1]{\stackrel{\mathclap{\normalfont\mbox{\textbf{\tiny #1}}}}{=}}
+\newcommand\numineq[2]{\stackrel{\mathclap{\normalfont\mbox{\textbf{\tiny #1}}}}{#2}}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+   \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand\questeq{\stackrel{\mathclap{\normalfont\mbox{?}}}{=}}
+\newcommand\barr[1]{\stackrel{\mathclap{\normalfont\mbox{\_}}}{#1}}
+\numberwithin{equation}{section} %To reset equation numbering when starting a new section.
+\makeatletter
+\newcommand{\oset}[3][0ex]{%
+  \mathrel{\mathop{#3}\limits^{
+    \vbox~to#1{\kern-2\ex@%
+    \hbox{$\scriptstyle#2$}\vss}}}}
+\makeatother
+\newcommand{\overtildesym}{\sim}
+%\makeatletter
+\newcommand{\overtildex}[2]{
+  \ifx\displaystyle#1\oset[-0.95ex]{\overtildesym}{#2\vphantom{i}}\fi
+  \ifx\textstyle#1\oset[-.7ex]{\overtildesym}{#2\vphantom{i}}\fi
+  \ifx\scriptstyle#1\oset[-.6ex]{\overtildesym}{#2\vphantom{i}}\fi
+  \ifx\scriptscriptstyle#1\oset[-.3ex]{\overtildesym}{#2\vphantom{i}}\fi
+}
+%\makeatother
+
+
+\newcommand\finline[3][]{\begin{myfont}[#1]{#2}#3\end{myfont}}%
+\addto\captionsitalian{\renewcommand{\appendixname}{Allegato}}
+\newcommand{\tr}[1]{{#1}^{T}}
+\newcommand{\inv}[1]{{#1}^{-1}}
+\newcommand{\sqrnorm}[1]{{\left\lVert#1\right\rVert}^2}
+\newcommand{\Cr}[1]{{\color{red} #1}}
+\newcommand{\Cb}[1]{{\color{blue} #1}}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\makeatletter%
+\let\oldabs\abs%
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+\makeatother
+
+\newcommand\addfourpics[7]{
+%1)width of first
+%2)path of first
+%3)width of second
+%4)path of second
+%5)width of third
+%6)path of third
+%7)width of fourth
+%8)path of fourth
+%9)caption
+%10)label
+	\begin{figure}[!htb]
+ 		\centering
+ 		\includegraphics[width=#1\textwidth]{#2} \hspace{0.1cm}
+ 		\includegraphics[width=#1\textwidth]{#3} \hspace{0.1cm}
+    \includegraphics[width=#1\textwidth]{#4} \hspace{0.1cm}
+    \includegraphics[width=#1\textwidth]{#5}
+ 		\caption{#6}\label{#7}
+	\end{figure}
+}
+
+\newcommand\addtwopics[6]{
+%1)width of first
+%2)path of first
+%3)width of second
+%4)path of second
+%5)caption
+%6)label
+	\begin{figure}[!htb]
+ 		\centering
+ 		\includegraphics[width=#1\textwidth]{#2} \hspace{0.1cm}
+ 		\includegraphics[width=#3\textwidth]{#4}
+ 		\caption{#5}\label{#6}
+	\end{figure}
+}
+
+\newcommand\addpic[4]{
+%1)width
+%2)path
+%3)caption
+%4)label
+\begin{figure}[!htb]
+    \begin{center}
+    \includegraphics[width=#1\textwidth]{#2}
+  	\caption{#3}\label{#4}
+  	\end{center}
+\end{figure}
+}
+
+\newcommand{\algo}[3]{ 
+%1)label
+%2)caption
+%3)pseudocode
+\begin{center}
+\begin{minipage}{.8\linewidth}
+  \begin{algorithm}[H]
+    \begin{algorithmic}[1]
+      {#3}
+    \end{algorithmic}
+  	\caption{#2}\label{#1}%
+  \end{algorithm}
+\end{minipage}
+\end{center}
+}
+
+\newcommand{\recap}[1]{  
+  \begin{myrecap}{{\Large \faLightbulbO} \,  Do you recall?\\}
+    #1
+  \end{myrecap}
+}
+
+\newcommand{\syntax}[1]{  
+  \begin{mysyntax}{{\Large \faCogs} \, Something on Matlab \ldots\\}
+    #1
+  \end{mysyntax}
+}
+
+\newcommand{\blockmatrix}[3]{%These end of the line comments are neccessary
+  \begin{minipage}[t][#2][c]{#1}%
+    \center%
+    #3%
+  \end{minipage}%
+  }%
+
+\newcommand{\fblockmatrix}[3]{%
+  \fbox{%
+  \begin{minipage}[t][#2][c]{#1}%
+    \center%
+    #3%
+  \end{minipage}%
+  }%
+}
+
+\newcommand{\tallthin}[1]{%
+  \raisebox{0.7cm}{
+    \fblockmatrix{0.2in}{0.5in}{#1}
+  }
+}
+
+\newcommand{\shortlarge}[1]{%
+  \raisebox{0.3cm}{
+    \fblockmatrix{0.5in}{0.2in}{#1}
+  }
+}
+
+\newcommand{\real}[1]{%
+  \raisebox{0.3cm}{
+    \fblockmatrix{0.2in}{0.2in}{#1}
+  }
+}
+\newcommand{\Highlight}[1][submatrix]{%
+    \tikz[overlay,remember picture]{
+    \node[highlight,fit=(left.north west) (right.south east)] (#1) {};}
+}
+\newcommand{\tikzmark}[2]{\tikz[overlay,remember picture,
+  baseline=(#1.base)] \node (#1) {#2};}
+\renewcommand{\setminus}{\hbox{\tikz{~\draw[line width=0.6pt,line cap=round] (3pt,0) -- (0,6pt);~}}}
+                           %~~~~~New environments~~~~~%
+\newtheoremstyle{thm}% name of the style to be used
+  {3pt}% measure of space to leave above the theorem. E.g.: 3pt
+  {3pt}% measure of space to leave below the theorem. E.g.: 3pt
+  {\itshape}% name of font to use in the body of the theorem
+  {0pt}% measure of space to indent
+  {\bfseries}% name of head font
+  {}% punctuation between head and body
+  { }% space after theorem head; " " = normal interword space
+  {\thmname{#1}\thmnumber{ #2} \thmnote{\bf (#3)}\\}% Manually specify head
+  
+\newtheoremstyle{def}% name of the style to be used
+  {3pt}% measure of space to leave above the theorem. E.g.: 3pt
+  {3pt}% measure of space to leave below the theorem. E.g.: 3pt
+  {\normalfont}% name of font to use in the body of the theorem
+  {0pt}% measure of space to indent
+  {\bfseries}% name of head font
+  {}% punctuation between head and body
+  { }% space after theorem head; " " = normal interword space
+  {\thmname{#1}\thmnumber{ #2} \thmnote{\bf (#3)}\\}% Manually specify head
+
+%\theoremstyle{thm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Fact}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{property}[theorem]{Property}
+%\theoremstyle{def}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{exe}{Exercise}[section]
+\newtheorem{obs}{Observation}[section]
+
+                           %~~~~~Tikz~~~~~%
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{fit}
+\tikzset{%
+  highlight/.style={rectangle,rounded corners,
+    fill opacity=0.5,thick,inner sep=0pt}
+}
+
+\tikzstyle{block} = [draw, fill=black!20, rectangle, 
+    minimum height=3em, minimum width=6em, align=center]
+\tikzstyle{dblock} = [block,double,double distance = 0.1em]
+\tikzstyle{sblock} = [block,dashed]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+\tikzstyle{nlabel} = [above,pos=0.5,anchor=center,align=center]
+\tikzstyle{nslabel} = [nlabel,sloped]
+\tikzstyle{label} = [nlabel,fill=white,inner sep=1pt]
+\tikzstyle{slabel} = [label,sloped]
+\tikzstyle{arr} = [->, rounded corners]
+
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+
+
+
+

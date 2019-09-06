@@ -1,0 +1,368 @@
+%chktex-file 36
+%chktex-file 8
+%chktex-file 24
+%chktex-file 35
+%chktex-file 44
+%chktex-file 1
+\documentclass[computationalMathematics.tex]{subfiles}
+
+\begin{document}
+
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+\section{12th of December 2018 --- A. Frangioni}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+
+\subsection{Quadratic problem with linear equality constraints}\label{sec:12dic_lec}
+
+Let $A$ be a matrix in $M(m, n, \R)$, where $m < n$ (otherwise the system is either fully determined or impossible) and $rk(A) = m$.
+The constrained quadratic problem may be written as
+
+\[
+  \min \bigg \{\frac{1}{2}\tr{x} Q x + q x~:~Ax = b\}
+\]
+
+where $Q \succeq 0$.
+
+A way to solve this problem is through Karusch Kuhn Tucker system:
+
+\begin{equation}
+\begin{array}{c} \mbox{(a)} \\ \mbox{(b)} \end{array}
+\left[\begin{array}{rc} Q & A^T \\ A & 0 \end{array}\right]
+\left[\begin{array}{r} x \\ \mu \end{array}\right] =
+\left[\begin{array}{r} -q \\ b \end{array}\right]
+\end{equation}
+
+where the first row (a) says that the gradient is a linear combination of the normals of the gradient of the constraints and the second one is just feasibility.
+
+Everything is linear here. This system is symmetric, although indefinite, because it contains many $0$s.
+
+We are left with solving the KKT system:
+
+\begin{description}
+  \item[{\sc Reduced KKT:}] in this method we first add the hypothesis of non-singularity to the matrix $Q$ so we get the following
+    \[
+      \begin{cases}
+        Qx + \tr{A} \mu = -q \text{~~~~(a)}\\
+        Ax = b \text{~~~~~~~~~~~~~~~~(b)}
+      \end{cases}
+    \]
+    Multiply (a) by $A\inv{Q}$
+    \[
+      \begin{cases}
+        A \cancel{\inv{Q}}\cancel{Q}x + A \inv{Q} \tr{A} \mu = -A \inv{Q} q \text{~~~~(a)}\\
+        Ax = b \text{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(b)}
+      \end{cases}
+    \]
+    Multiply (b) by $-1$ and add to it (a)
+
+    \[
+      \begin{cases}
+        Ax + A\inv{Q}\tr{A} \mu = -A\inv{Q}q \text{~~~~~~~~~~~~~~~~~~~~(a)}\\
+        \cancel{Ax} + A\inv{Q}\tr{A}\mu - \cancel{Ax} = -A\inv{Q}q -b \text{~~~~~~~(b)}
+      \end{cases}
+    \]
+
+    Multiply (a) by $\inv{A}$
+    \[
+      \begin{cases}
+        x + \inv{Q}\tr{A} \mu = -\inv{Q}q \text{~~~~~~~~~~~(a)}\\
+        A\inv{Q}\tr{A}\mu = -A\inv{Q}q -b \text{~~~~~~~(b)}
+      \end{cases}
+    \]
+    Isolate $x$
+
+    \[
+      \begin{cases}
+        x = -\inv{Q}(\tr{A} \mu + q) \text{~~~~~~~~~~~~~~(a)}\\
+        A\inv{Q}\tr{A}\mu = -A\inv{Q}q -b \text{~~~~~~~(b)}
+      \end{cases}
+    \]
+
+    Notice that $0 \preceq A\inv{Q}\tr{A} = M \in M(m,\R)$ and may be much smaller than the original one, since its size depends on the number of constraints. The issue here is that the matrix $M$ is less sparse than both $A$ and $Q$.
+
+  \item[{\sc Null space method:}] In this method we need no assumption on $Q$.
+
+    First of all we rearrange the matrix $A$ in order to have a small square matrix $A_B$ and then the rest  of the columns ($A_N$): $A = [A_B,~A_N]$, $x = [x_B, x_N]$, $det(A_B) \neq 0$.
+    
+    Replacing $A$ in (b) we get $A_B x_B + A_N x_N = b \iff x_B = \inv{A_B} \cdot (b - A_N x_N)$, hence resulting in $x = D x_N + d$, where
+    \[
+    d = \left[\begin{array}{c} b \\ 0 \end{array}\right],~D = \left[\begin{array}{c} - A_B^{-1} A_N \\ I \end{array}\right]
+      \in M(m, n-m)
+    \]
+
+    Notice that $D$ is a basis of the \textbf{null space} (or kernel) of $A$ and it is not mandatory to build it like we did above, it is only important to obtain a basis of the kernel.
+
+    Let us multiply (a) by $\tr{D}$ and obtain
+
+    \begin{equation}
+    \begin{split}
+      \tr{D}(Qx + \tr{A}\mu) &= - \tr{D} q\\
+      \tr{D}Qx + \tr{D}\tr{A}\mu &= - \tr{D} q\\
+      \tr{D}Qx + \tr{(\cancel{AD})}\mu &= - \tr{D} q\\
+      \tr{D}Q (D x_N + d) &= -\tr{D} q
+    \end{split}
+    \end{equation}
+
+    Where in the last step we applied the definition $x = Dx_N + d$ and hence, $(D^T Q D) x_N = - \tr{D} (Q d + q)$.
+
+    We term $H=\tr{D}QD \in M(n-m, \R)$ the reduced Hessian of the problem and notice that whenever the number of constraints is close to the number of variables this matrix is very small.
+\end{description}
+
+It is important to note that in order to solve an equality contrained problem we can choose either the reduced KKT method or the null space method, depending on the structure of our problem.
+
+\subsection{Inequality constrained problems}
+
+The problem, in this case, is written as follows
+
+\[
+(P) \min \{f(x)~:~Ax \leq b\}
+\]
+
+\subsubsection{Projected gradient method}
+The intuition behind this kind of algorithm is that we are interested in finding as direction for the line search not the opposite of the gradient (because then the step size should be put to $0$ if we lie on the boundaries, see \Cref{fig:12dic1}), but it is enough to pick a direction which has a negative scalar product with the gradient.
+
+The rationale is to pick the direction that minimizes the norm of the difference with the gradient. Formally
+
+\addpic{0.6}{pics/12dic/1.png}{Geometric idea of how to choose the direction in case of lying on the boundary.}{fig:12dic1}
+
+\[
+  d = argmin \{ \sqrnorm{\nabla f(x) - d}: d \in \mathcal{D}_X(x)\}
+\]
+where $\mathcal{D}_X(x)$ is the feasible cone. Notice that if the difference between the gradient and the direction is $0$ it means that we can stop, since the descent direction would bring us outside the feasible set.
+
+A more formal definition of the feasible cone $\mathcal{D}_X(x) = \{ d \in \R^n~:~A_{\mathcal{A}(x)}d \leq 0\}$, where $\mathcal{A}(x)$ is the set of all the active constraints.
+
+For sake of clarity we denote $\bar{A} = A_{\mathcal{A}(x)}$.
+
+At this point we are ready to project the problem in such a way that inequality contraints become equality constraints:
+
+\[
+  \min \bigg\{ \frac{1}{2} \sqrnorm{\nabla f(x) + d} = \frac{1}{2} \tr{d} I d + \nabla f(x) d~:~\bar{A}d = 0\bigg\}
+\]
+
+Note that in this case the Hessian is the identity matrix $I \succ 0$
+, hence the KKT conditions become simpler:
+
+\[
+  \begin{cases}
+  Qx + \tr{A} \mu = - q \iff d + A^T \mu = - \nabla f(x)\\
+  A d = 0
+  \end{cases}
+\]
+since $x=d, A=I, b= \nabla f(x) d$, so we get
+
+\begin{equation}
+  \begin{split}
+    d = - \nabla f(x) - A^T \mu\\
+    \cancel{Ad} = - A \nabla f(x) - A A^T \mu\\
+    A A^T \mu = - A \nabla f(x)
+  \end{split}
+\end{equation}
+
+resulting in
+\[
+  \begin{cases}
+  Qx + \tr{A} \mu = - q \iff d + A^T \mu = - \nabla f(x)\\
+  A d = 0
+  \end{cases}
+\]
+
+
+Therefore, we need to solve a system in $\mu$ and then we have the direction.
+If the number of active contraints is small, solving the system is very fast.
+
+\begin{proposition}
+We can restrict to solve
+  \[
+  \begin{cases}
+    \mu = - {(\bar{A}\tr{\bar{A}})}^{-1}\bar{A}\nabla f(x)\\
+    d = (I - \tr{\bar{A}} {(\bar{A}\tr{\bar{A}})}^{-1}\bar{A}) (- \nabla f(x))
+  \end{cases}
+  \]
+\end{proposition}
+
+\begin{proof}
+$\bar{A}$ has full row rank, then is non singular and may be inverted.
+  \[
+  \begin{cases}
+  \mu = - {(\bar{A} \bar{A}^T)}^{-1} \bar{A} \nabla f(x)\\
+  d = - \nabla f(x) + \bar{A}^T {(\bar{A} \bar{A}^T)}^{-1} \bar{A} \nabla f(x)\\
+  \end{cases}
+  \iff
+  \begin{cases}
+  \mu = - {(\bar{A} \bar{A}^T)}^{-1} \bar{A} \nabla f(x)\\
+  d = ( I - \bar{A}^T {(\bar{A} \bar{A}^T)}^{-1} \bar{A} ) (- \nabla f(x))
+  \end{cases}
+\]
+\end{proof}
+
+If the set of active contraints contains some linear dependent ones, we take the maximal subset of our constraints such that the matrix $\bar{A}$ has full rank.
+
+This procedure is formalized in \Cref{alg:PGM}, where at each stage we remove one of the contraints that lead to a negative $\mu$, keeping a set of linearly independent constraints.
+
+In the $14$-th line of the algorithm we find that our step size is takes as the minimum step size among the ones that satisfy some subsets of the constraints.
+
+\algo{alg:PGM}{Pseudocode for projected gradient method for quadratic functions.}{
+    \Procedure{\bf PGM}{$f, A, b, x, \varepsilon$}
+      \For{(;~;)}
+      \State~$B \gets$ maximal $\subseteq \mathcal{A}(x)$ s.t.~$rank(A_B) = \abs{B}$;
+      \For{(;~;)}
+        \State~$d \gets (I - {A_B}^T {(A_B A_B^T)}^{-1} A_B)(- \nabla f(x))$;
+        \If{$\ps{\nabla f(x)}{d} \leq \varepsilon$}
+          \State{$\mu_B \gets - {(A_B A_B^T)}^{-1} A_B \nabla f(x)$;}
+          \State{$\mu_i \gets 0 \; \forall \, i \notin B$;}
+          \If{ $\mu_B \geq 0$}
+            \Return
+          \EndIf%
+          \State{$h \gets \min \{i \in B~:~\mu_i < 0\}$;}
+        \EndIf%
+        \State~{$\bar{\alpha} \gets
+       \min \{\alpha_i = (b_i - A_i x) / A_i d~:~A_i d > 0,~i \notin B\}$;}
+        \State~$x \gets x + \alpha d$;
+        \If{$\bar{\alpha} > 0$}
+          \State{break};
+        \EndIf%
+        \State{$k \gets \min \{ \, i \notin B \,:\, A_i d > 0 \,:\,
+                           \alpha_i = 0 \, \}$;}
+        \State{$B \gets B \cup \{ \, k \, \}$;}
+      \EndFor%
+        \State{$\alpha \gets \text{Line\_Search}(f, x, d, \bar{\alpha})$;}
+        \State{$x \gets x + \alpha d$;}
+        \EndFor%
+    \EndProcedure%
+}
+
+\begin{proposition}
+The following holds:
+\begin{enumerate}
+  \item $d = 0 \wedge \mu \geq 0 \Longrightarrow x$ optimal (from KKT);
+  \item $d = 0 \wedge \exists \, h \in B$ s.t.~$\mu_h < 0 \Longrightarrow~\exists \, x' \in \{ \, x \in \R^n \,:\, A_{B \setminus \{ h \}}x = b_{B \setminus \{ h \}} \;,\; A_h x \leq b_h \, \}~s.t.~f(x') < f(x)$;
+  \item $d \neq 0$ descent direction:  $H = I - \tr{A_B} {[A_B \tr{A_B}]}^{-1} A_B$ symmetric and idempotent $H H = H^T H = H$ $\Longrightarrow$ $\ps{d}{\nabla f(x)}< 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  \begin{itemize}~\\
+    \item trivial;
+    \item The intuition is that if we remove $h$ from $B$ next time we will have a descent direction.
+      
+      $\exists \, d$ s.t.~$A_{B \setminus \{ h \}}d = 0 \wedge
+       A_h d < 0~\Longrightarrow~\ps{\nabla f(x)}{d} = \ps{- \mu A_B}{d} = - \mu_h A_h d < 0$;
+     \item $\ps{d}{\nabla f(x)} = \ps{- H \nabla f(x)}{\nabla f(x)} = - \nabla \tr{f(x)} H \nabla f(x) = - \tr{(H \nabla f(x))} H \nabla f(x)$.
+  \end{itemize}
+\end{proof}
+
+Once we found the optimal face we move inside that face and we are dealing with a steepest descent, which is slow.
+
+At a certain point of the execution the set $B$ of the active contstraints will stabilize and become the one of the optimal solution.
+
+At this point the smart thing to do is to use the KKT conditions, since we know the set of active constraints. This idea is pursued in \Cref{sec:12dic_active}.
+
+\subsubsection{Projected gradient method with box constraints}
+Given the non linear minimum problem of the following shape
+
+\[
+  \text{(P) } \min \bigg \{f(x)~:~l \leq x \leq u \bigg \}
+\]
+
+a slightly different version of the projected gradient method forces the algorithm to put to $0$ the component of the direction which would bring us to go outside the feasible region. This intuition is formalized in \Cref{alg:PGMBC}.
+
+\algo{alg:PGMBC}{Pseudocode for projected gradient method for quadratic functions in the case of box constraints.}{
+  \Procedure{\bf PGMBC}{$f, l, u, x, \varepsilon$}
+      \State{$d = -\nabla f(x)$;}
+      \State{$\bar{\alpha} = \infty$;}
+      \For{($i = 1 \ldots n$ s.t. $d_i \neq 0$)}
+        \If{$(d_i <0)$}
+          \If{$(x_i = l_i)$}
+            \State{$d_i = 0$;}
+          \Else%
+            \State{$\bar{\alpha} \gets \min \{\bar{\alpha} (x_i - l_i) / d_i\}$;}
+          \EndIf%
+        \Else%
+          \If{($x_i = u_i$)}
+            \State{$d_i = 0$;}
+          \Else
+            \State{$\bar{\alpha} \gets \min \{\bar{\alpha} (u_i - x_i) / d_i\}$;}
+          \EndIf%
+        \EndIf%
+        \If{($\ps{\nabla f(x)}{d} \leq \varepsilon$)}
+          \Return%
+        \EndIf%
+        \State{$\alpha \gets \text{Line\_Search}(f,~x,~d,~\bar{\alpha})$;}
+        \State{$x \gets x + \alpha d$;}
+      \EndFor%
+  \EndProcedure%
+}
+
+Notice that we can assume that $l_i < u_i ~ \forall i$, because otherwise that component would be fixed.
+
+\subsubsection{Active-set method for quadratic programs}\label{sec:12dic_active}
+
+Let us be given the following minimum problem
+
+\[
+  \min \bigg \{\frac{1}{2} \tr{x} Q x + q x~:~Ax \leq b \bigg \}
+\]
+ where an important hypothesis is that the problem is quadratic, once we know $\mathcal{A}(x_*)$.
+
+ We start from a certain point, such that the constraints are satisfied as equalties.
+ According to KKT conditions, a solution $\bar{x}$ is optimal if $\bar{x}$ is feasible and $\mu \ge 0$.
+ Otherwise, if $\mu$ is not positive we eliminate something from the active set and start again.
+ In the case of $x$ unfeasible, we know the descent direction, we only need to revise the step size.
+
+ All this machinery is formalized in \Cref{alg:ASMQP}.
+
+\algo{alg:ASMQP}{Pseudocode for active set method for quadratic functions.}{
+  \Procedure{\bf ASMQP}{$Q, q, A, b, x, \varepsilon$}
+    \For{($B \gets \mathcal{A}(x)$;~;)}
+      \State{solve ($P_B$) $\min \{\frac{1}{2} \tr{x}Qx + q x~:~{A}_{B}x = b_B\}$ for $(\bar{x},~{\bar{\mu}}_B)$;}
+        \If{($A_i \bar{x} \leq b_i~\forall \, i \notin B$)}
+          \If{($\mu_B \geq 0$)}
+            \Return%
+          \EndIf%
+          \State{$h \gets \min \{i \in B~:~\mu_i < 0\}$;}
+          \State{$B \gets B \setminus \{h\}$;}
+          \State{\textbf{continue};}
+        \EndIf%
+        \State{$d \gets \bar{x} - x$;}
+        \State{$\bar{\alpha} \gets \min \{\alpha_i = (b_i - A_i x) / A_i d~:~A_i d > 0,~i \notin B\}$;}
+        \State{$x \gets x + \bar{\alpha} d$;}
+        \State{$B \gets \mathcal{A}(x)$;}
+      \EndFor%
+  \EndProcedure%
+}
+
+Notice that this algorithm allows easy solving of the same problem, under box constraints, because we end up having two sets: $L$, indexes of variables fixed to the lower bound, and $U$, indexes of variables fixed to the upper bound.
+
+$\{1, \ldots, n\} \setminus (L \cup U)$ is the set of the indexes of the free variables.
+
+Thanks to this consideration the problem to solve becomes
+
+\[
+  \min \bigg \{\frac{1}{2} \tr{x_F} Q_{FF} x_F + (q_F + \tr{u_U} Q_{UF}) x_F \bigg \}~[+ \frac{1}{2} \tr{x_U} Q_{UU} x_U + q_U u_U]
+\]
+
+\subsubsection{Frank-Wolfe method}
+Let us take a non-linear function and the following problem
+
+
+Supposing $f$ is convex we can make a first order model and minimize it over our constraints.
+
+In this case we use the right constraints and an approximation of the function.
+
+\algo{alg:FWM}{Pseudocode for Frank-Wolf method for non linear functions.}{
+  \Procedure{\bf FWM}{$f, A, b, x, \varepsilon$}
+    \While{($\norm{\nabla f(x)} > \varepsilon$)}
+      \State{$\bar{x} \gets$ argmin $\{\ps{\nabla f(x)}{y}~:~Ay \leq b\}$;}
+      \State{$d \gets \bar{x} - x$;}
+      \State{$\alpha \gets$ Line\_Search($f,~x,~d,~1$);}
+      \State{$x \gets x + \alpha d$;}
+      \EndWhile%
+  \EndProcedure%
+}
+
+Provided that the computation at line $3$ of \Cref{alg:FWM} is performed efficiently, then either $d=0$ and we are in the optimum or $d>0$ and we are moving toward the optimum.
+
+The linear model is below the function in the quadratic case, hence we get a lower bound.
+
+\end{document}
