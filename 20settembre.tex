@@ -114,10 +114,9 @@ Before starting here is a small recap
                 & & & \ddots\\
                 & & & & 1
          \end{pmatrix}$$
-         The \textbf{inverse of a product} (shoe-sock identity) is $\inv{(A B)} = \inv{B} \inv{A}$.
-Notice that this identity holds only for square matrices.
+         The \textbf{inverse of a product} (shoe-sock identity) is $\inv{(A B)} = \inv{B} \inv{A}$. Notice that this identity holds only for square matrices.
 
-     \item The \textbf{transpose} of a matrix $A \in M(n, m, \R)$ is $\tr{A}$ such that $\tr{A}_{ij} = A_{ji}$. The \textbf{transpose of a product} (shoe-sock identity) is $\tr{(A B)} = \tr{B} \tr{A}$.
+     \item The \textbf{transpose} of a matrix $A \in M(n, m, \R)$ is $\tr{A}$ such that $\tr{A}_{ij} = A_{ji}$. The \textbf{transpose of a product} (shoe-sock identity) is $\tr{(A B)} = \tr{B} \tr{A}$. ( This identity holds for square and rectangular matrices)
 
 \end{itemize} 
 
@@ -323,13 +322,18 @@ Informal idea: we can start solving from the variables in C.
 
 From now on in this part of th course we will refer to norm-2 only.
 
+
+
 \begin{definition}[Orthogonal matrix]
-  Let $A \in M(n, m, \R)$. We call $A$ \textbf{orthogonal} if $\forall x \in \R^n \norm{Ax} = \norm{x}$.
+    Let $A \in M(n, \R)$ a square matrix. $A$ is orthogonal iff:
+    \begin{itemize}
+        \item $\tr{A} A  = I_{n}$
+        \item $A \tr{A} = I_{n}$
+        \item $A^{-1} = U^T$
+    \end{itemize}
+  where $I_n$ is the identity matrix of size $n$ ($1$ on the diagonal, $0$ elsewhere).
 \end{definition}
 
-\begin{proposition}[Equivalent definition of orthogonal matrix]
-  Let $A \in M(n, \R)$. $A$ is orthogonal iff $\tr{A} A = A \tr{A} = I_{n}$, where $I_n$ is the identity matrix of size $n$ ($1$ on the diagonal, $0$ elsewhere).
-\end{proposition}
 
 \end{document}
 

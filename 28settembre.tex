@@ -12,19 +12,26 @@
 \section{28th of September 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-We are left with the task of reaching a (sort of) ``eigenvalue decomposition'' when the target matix is not symmetric.
+\subsection{Singular value decomposition (SVD)}
+We are left with the task of reaching a (sort of) ``eigenvalue decomposition'' when the target matix is not symmetric.\\
+There are two way to generalize the eigenvalue decomposition to a
+nonsymmetric matrix A (with something that always exists):
 
 \begin{definition}[Schur decomposition]
   Let $A \in M(n, \R)$, $\exists~U \in M(n, \R)$ orthogonal matrix and $T \in M(n, \R)$ triangular matrix such that $A = UT\tr{U}$ and this is called \textbf{Schur decomposition}.
 \end{definition}
 
+What is really important for us is the \textbf{Singular value decomposition}, every square matrix $A$ can be written with \textbf{SVD} form.\\
+
+\noindent Every square matrix A can be written as SVD.
+
 \begin{definition}[Singular value decomposition]
-  Let $A \in M(n, \R)$, $\exists~U, V \in M(n, \R)$ orthogonal matrices and $\Sigma \in \text{Diag}(n, \R)$ such that $A = U\Sigma\tr{V}$ and this is called \textbf{Singular Value Decomposition}.
+  Let $A \in M(n, \R)$, $\exists~U, V \in M(n, \R)$ orthogonal matrices ($V$ not necessary equal to $U$) and $\Sigma \in \text{Diag}(n, \R)$ such that $A = U\Sigma\tr{V}$ and this is called \textbf{Singular Value Decomposition}.
 
 \[
   A = 
   \begin{pmatrix}
-    U^1 & U^2 & \cdots & U^n\\
+    u_1 & u_2 & \cdots & u_n\\
   \end{pmatrix}
   \cdot
   \begin{pmatrix}
@@ -35,39 +42,80 @@ We are left with the task of reaching a (sort of) ``eigenvalue decomposition'' w
   \end{pmatrix}
   \cdot
   \begin{pmatrix}
-    \tr{V^1}\\
-    \tr{V^2}\\
+    \tr{v_1}\\
+    \tr{v_2}\\
   \vdots\\
-    \tr{V^n}
+    \tr{v_n}
   \end{pmatrix}
-  = \sum\limits_{i=1}^{n} U^i \sigma_i \tr{V^i}
+  = \sum\limits_{i=1}^{n} u_i \sigma_i \tr{v_i} =
 \]
-  Where $\sigma_i$ are called \textbf{singular values} and they are sorted such that $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_m \ge 0$.
+
+$$
+= u_1 \sigma_1 v_1^T + u_2 \sigma_2 v_2^T + \dots + u_n \sigma_n v_n^T
+$$
+
+  Where $\sigma_i$ are called \textbf{singular values} and they are sorted such that:
+  $$\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_n \ge 0$$
+\indent  General fact on singular values:
+  \begin{itemize}
+      \item Singular values $\neq$ eigenvalues
+      \item They are always positive and usually more ‘spread apart’ than the eigenvalues.
+      $$ \sigma_1 \geq \abs{\lambda_1} \;\; \text{and} \;\; \abs{\lambda_m} \geq \sigma_m$$
+      $\lambda_i$ is larger than the largest eigenvalue of a matrix $A$ and $\lambda_m$ is smaller than the smallest eigenvalue of a matrix $A$.
+  \end{itemize}
+\end{definition}
+
+\noindent The SVD can be defined also for a rectangular matrix A:
+
+\begin{definition}[Rectangular matrices and SVD]
+  Let $A \in M(m, n, \R)$, there exist $U \in M(m, \R)$ orthogonal, $V \in M(n, \R)$ orthogonal and $\Sigma(m, n, \R)$ diagonal in the sense that $\sum_{ij} = 0$ with $i \neq j$ (padded with zeros). Matrix $A$  has a \textbf{SVD factorization}, where $\Sigma$ has the following shape:
+  \begin{itemize}
+      \item case m < n  (e.g $m=3, n=5$)
+        \[
+          \begin{pmatrix}
+            \sigma_1&0&0&0&0\\
+            0& \sigma_2&0&0&0\\
+            0&0&\sigma_3&0&0
+          \end{pmatrix}
+        \]
+        
+        \item  case m > n ( e.g $m=5, n=3$)
+        \[
+          \begin{pmatrix}
+            \sigma_1&0&0&\\
+            0& \sigma_2&0&\\
+            0&0&\sigma_3&\\
+            0&0&0\\
+            0&0&0
+          \end{pmatrix}
+        \]
+  \end{itemize}
+
+\end{definition}
+
+\begin{definition}[Thin SVD]
+  Let $A \in M(m, n, \R)$,   has a \textbf{thin} \textbf{SVD factorization}:  we may restrict to compute only the first min(m, n)
+vectors that appear in this sum: thin SVD.
+$$A = \sum\limits_{i=1}^{\min(m, n)} u_i \sigma_i \tr{v_i} = u_1 \sigma_1 v_1^T + u_2 \sigma_2 v_2^T + \dots + u_{min(m,n)} \sigma_{min(m,n)} v_{min(m,n)}^T $$
 \end{definition}
 
 \syntax{In Matlab the SVD decomposition is obtained through the command \texttt{svd(A)}, which return value is made of the three matrices $U, \Sigma, V$.
 
 As an example, \texttt{[U, S, V] = svd(A)}.
 Notice that, if \texttt{svd(A)} is assigned to one variable, then such variable is an array of singular values.
-}
 
+The thin SVD can be compute with:\texttt{[U, S, V] = svd(A, 0)}
+} 
 
-\begin{definition}[Thin (fat) SVD]
-  Let $A \in M(m, n, \R)$, there exist $U \in M(m, n, \R)$, $V \in M(n, \R)$ and $\Sigma(m, n, \R)$ such that $A = \sum\limits_{i=1}^{\min(m, n)} U^i \sigma_i \tr{V^i}$ has a \textbf{thin} (or fat) \textbf{SVD factorization}, where $\Sigma$ has the following shape (case $m=3, n=5$)
-
-\[
-  \begin{pmatrix}
-    \sigma_1&0&0&0&0\\
-    0& \sigma_2&0&0&0\\
-    0&0&\sigma_3&0&0
-  \end{pmatrix}
-\]
-\end{definition}
-
-
+\noindent \textbf{Computational costs}\\
 We are not going into details of algorithms for computing SVD, but we would like to add a consideration about the computational complexity of such an algorithm.
-For thin SVD, it is $O(m \cdot n^2)$.
+\begin{itemize}
+    \item \texttt{[U, S, V] = svd(A, 0)} (thin) costs $O(mn^2)$ ops for $A \in \mathbb{R}^{m \times n}$ or $A \in \mathbb{R}^{n \times m}$ with $m \geq n$
+    \item \texttt{[U, S, V] = svd(A)} (non-thin) more expensive, because it has to store the ‘large’ $m \times m$ factor. (But there are some tricks to store orthogonal matrices compactly, more about it later).
+\end{itemize}
 
+\subsubsection{Properties of SVD}
+The SVD reveals rank, image, and kernel of a matrix.
 \begin{definition}[Rank]
   Let $A \in M(n, \R)$ we call the \textbf{rank} of $A$ the number of non-zero singular values.
   
@@ -76,7 +124,7 @@ For thin SVD, it is $O(m \cdot n^2)$.
 
 
 \begin{property}\label{prop:28sett_rank}
-  A matrix $A \in M(n, \R)$ has rank $r$ iff all its eigenvalues starting from the $r+1$-th are $0$, formally iff $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_k > \sigma_{k+1} = \cdots = \sigma_n = 0$. 
+  A matrix $A \in M(n, \R)$ has rank $r$ iff all its eigenvalues starting from the $r+1$-th are $0$, formally iff $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r > \sigma_{r+1} = \cdots = \sigma_n = 0$. 
 \end{property}
 
 Thanks to \Cref{prop:28sett_rank}, we can somehow talk about an ``even thinner'' SVD, where all the $0$s in the bottom right part of the matrix $\Sigma$, cancel out the latter columns of $U$ and the latter rows of $V$ (aka columns of $\tr{V}$).

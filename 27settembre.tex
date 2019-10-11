@@ -13,7 +13,7 @@
 
 
 \begin{definition}[Minimizing sequence]
-Le us consider the \textbf{minimum problem} defined in \Cref{def:min_prob}:
+Let us consider the \textbf{minimum problem} defined in \Cref{def:min_prob}:
 
 \[
   (P) \qquad f_* = \min \{f(x)~:x \in X\}
@@ -28,7 +28,9 @@ As an example, consider
 
   $\min \{x~:~x \in \R \wedge x > 0\} ~ \{x_i = 1/i\}$, where $\{f(x_i)\} \to 0$, but it is not an optimum or 
 
-  $\min \{1/x~:~x \in \R \wedge x > 0\} ~ \{x_i = i\}$, where $\{f(x_i)\} \to 0$, but it is not an optimum.
+  $\min \{1/x~:~x \in \R \wedge x > 0\} ~ \{x_i = i\}$, where $\{f(x_i)\} \to 0$, but it is not an optimum.\\
+  
+We want \emph{conditions} that ensure $\{f(x_i)\} \to f_* \Rightarrow \{x_i\}\to x_* \in X \quad optimal \, solution$.
 
 \begin{definition}[Interior and border of a set]
   Given $S \subseteq \R^n$, we say that $x \in int(S)$ ($x$ is an \textbf{interior point}) if $\exists r > 0$ s.t. $\mathcal{B}(x,~r) \subseteq S$.
@@ -71,9 +73,9 @@ Notice that there are sets that are both open and closed, for example $R^n$.
   Let $S$ be a compact set and let $\{x_i\} \subseteq S$ minimizing sequence. (Bolzano-Weierstrass) $\{x_i\}$ has an \textbf{accumulation point} $x \in S$, thus the limit of the sequence has to be a feasible solution.
 \end{proposition}
 
-Why did we say \emph{feasible} but not \emph{optimal}? If the function is not continuous (cfr. \Cref{fig:27set1}) it may happen that the sequence is minimizing, but the limit is not the optimum.
+Why did we say \emph{feasible} but not \emph{optimal}? If the function is not continuous (cfr. \Cref{fig:27set0}) it may happen that the sequence is minimizing, but the limit is not the optimum.
 
-\addpic{0.5}{pics/27set/1.png}{Case of non-continuity of the objective function in the border point $(0, 0)$.}{fig:27set.png}
+\addpic{0.5}{pics/27set/1.png}{Case of non-continuity of the objective function in the border point $(0, 0)$.}{fig:27set0}
 
 \begin{definition}[Domain]
 Let $f : D \to \R$. We term $D$ \textbf{domain}: $D = \text{dom}(f)$.
@@ -88,8 +90,9 @@ $f : \R^n \to \bar{\R}$, where $f(x) = \infty$ for $x \notin D$.
 
   On the other hand, we term \textbf{epigraph} $\text{epi}(f) = \{(v,~x)~:~x \in \text{dom}(f)~\wedge~v \geq f(x)\}$.
 \end{definition}
+  A graphic example of epigraph is displayed in \Cref{fig:27set1}.
 
-\addtwopics{0.43}{pics/27set/f2.pdf}{0.43}{pics/27set/f3.pdf}{On the left-hand side the graph of the function $f(x)$, while on the right-handed side the epigraph of such function.}{fig:27set2}
+\addtwopics{0.43}{pics/27set/f2.pdf}{0.43}{pics/27set/f3.pdf}{On the left-hand side the graph of the function $f(x)$, while on the right-handed side the epigraph of such function.}{fig:27set1}
 
 \begin{definition}[Level and sublevel set]
   Let $f: \R^n \to \R$. We term \textbf{level set} $L(f,v) = \{x \in \text{dom}(f)~:~f(x) = v\}$.
@@ -99,9 +102,9 @@ $f : \R^n \to \bar{\R}$, where $f(x) = \infty$ for $x \notin D$.
   
   Intuitively, the level sets are projections of the points of the domain and they are used in order to ``look'' at the function even if we are working in $\R^n$.
 
-  A graphic example of level set is displayed in \Cref{fig:27set3}.
+  A graphic example of level set is displayed in \Cref{fig:27set2}.
 
-  \addtwopics{0.43}{pics/27set/f4.pdf}{0.43}{pics/27set/f5.pdf}{On the left-handed side of the figure, the level set of the function $f$, while on the right-hand side the sublevel set of such function.}{fig:27set3}
+  \addtwopics{0.43}{pics/27set/f4.pdf}{0.43}{pics/27set/f5.pdf}{On the left-handed side of the figure, the level set of the function $f$, while on the right-hand side the sublevel set of such function.}{fig:27set2}
 
 \subsection{Continuity}
 
@@ -133,7 +136,7 @@ Let $f: \R^n \to \R$. We term $f$ \textbf{Lipschitz continuous} (L.c.) on $S \in
        \[
          \abs{f(x) - f(y)} \leq L \norm{x - y}~ \forall x, y \in S
        \]
-More generally, $f$ is \textbf{globally Lipshitz continuous} if $S = \R^n$ and it is \textbf{locally Lipshitz continuous} if at $x$ $\exists~\varepsilon > 0 ~S = \mathcal{B}(x,~\varepsilon)$.
+More generally, $f$ is \textbf{globally Lipshitz continuous} if $S = \R^n$ and it is \textbf{locally Lipshitz continuous} if at $x$ $\exists~\varepsilon > 0 ~S = \mathcal{B}(x,~\varepsilon)$. It's a stronger form of continuity.
 \end{definition}
 
 Notice that the $L$ constant value depends on $S$. The wider the set the smaller $L$.
@@ -151,7 +154,7 @@ Let $f: \R^n \to \R$ $f$ is \textbf{lower}[upper] \textbf{semi-continuous} (l.[u
     \;\; [ \, f(x) \geq \lim \sup \ldots \, ]
   \]
 
-  Equivalently, $\lim \inf_{y \to x} f(y) \geq f(x)$, $\lim \sup_{y \to x} f(y) \leq f(x)$.
+  Equivalently, $\lim \inf_{y \to x} f(y) \geq f(x)$, $\lim \sup_{y \to x} f(y) \leq f(x)$.\\
 \end{definition}
 
 \subsection{Derivatives}
@@ -246,13 +249,13 @@ We are now ready to introduce a class of functions that allows good results for 
 
 Let $f \in \C{1}$, then $f$ is differentiable everywhere and also continuous everywhere.
 
-\Cref{fig:27set1}, \Cref{fig:27set2} and \Cref{fig:27set3} picture some functions which are not differentiable in the minimum.
+\Cref{fig:27set3}, \Cref{fig:27set4} and \Cref{fig:27set5} picture some functions which are not differentiable in the minimum.
 
-\addpic{0.35}{pics/27set/nondiff1.png}{The function $f(x_1,x_2) = \norm{[x_1,x_2]} = |x_1| + |x_2|$ has some kinks.}{fig:27set1}
+\addpic{0.35}{pics/27set/nondiff1.png}{The function $f(x_1,x_2) = \norm{[x_1,x_2]} = |x_1| + |x_2|$ has some kinks.}{fig:27set3}
 
-\addpic{0.35}{pics/27set/nondiff2.png}{The function $f(x_1,x_2) = \frac{{x_1}^2 x_2}{{x_1}^2 + {x_2}^2}$ may be put to $0$ in $(0, 0)$ for continuity, but it is still not differentiable in $(0, 0)$ although the function admits directional derivatives in $(0, 0)$.}{fig:27set2}
+\addpic{0.35}{pics/27set/nondiff2.png}{The function $f(x_1,x_2) = \frac{{x_1}^2 x_2}{{x_1}^2 + {x_2}^2}$ may be put to $0$ in $(0, 0)$ for continuity, but it is still not differentiable in $(0, 0)$ although the function admits directional derivatives in $(0, 0)$.}{fig:27set4}
 
-\addpic{0.35}{pics/27set/nondiff4.png}{The function $f(x_1,x_2) = {\left( \frac{{x_1}^2 x_2}{{x_1}^4 + {x_2}^2} \right)}^2$ is not continuous in $0$. There are some directions that lead to the limit $0$, while there are some other directions (the parabolas above) that do not lead to value $0$.}{fig:27set3}
+\addpic{0.35}{pics/27set/nondiff4.png}{The function $f(x_1,x_2) = {\left( \frac{{x_1}^2 x_2}{{x_1}^4 + {x_2}^2} \right)}^2$ is not continuous in $0$. There are some directions that lead to the limit $0$, while there are some other directions (the parabolas above) that do not lead to value $0$.}{fig:27set5}
 
 \begin{definition}[First order model]
   Let $f: \R^n \to \R$ and let $x \in dom(f)$. We term \textbf{first order model} of $f$ at point $x$ 

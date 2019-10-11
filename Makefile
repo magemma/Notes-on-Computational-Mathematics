@@ -1,15 +1,39 @@
-all: computationalMathematics.pdf
+#all: computationalMathematics.pdf
+all: numerical_methods optimization
+numerical_methods: numerical_methods.pdf
+optimization: optimization.pdf
+
 all_single: 19settembre.pdf 20settembre.pdf 21settembre.pdf 26settembre.pdf 27settembre.pdf 28settembre.pdf 3ottobre.pdf 4ottobre.pdf 5ottobre.pdf 10ottobre.pdf 11ottobre.pdf 17ottobre.pdf 18ottobre.pdf 19ottobre.pdf 24ottobre.pdf 25ottobre.pdf 26ottobre.pdf 7novembre.pdf 8novembre.pdf 9novembre.pdf 14novembre.pdf 15novembre.pdf 16novembre.pdf 21novembre.pdf 22novembre.pdf 23novembre.pdf 28novembre.pdf 29novembre.pdf 30novembre.pdf 5dicembre.pdf 6dicembre.pdf 7dicembre.pdf 12dicembre.pdf 13dicembre.pdf 14dicembre.pdf computationalMathematics.pdf 
 
 
-computationalMathematics.pdf: computationalMathematics.tex pics/Cherubino.jpg 19settembre.tex 20settembre.tex 21settembre.tex 26settembre.tex 27settembre.tex 28settembre.tex 3ottobre.tex 4ottobre.tex 5ottobre.tex 10ottobre.tex 11ottobre.tex 17ottobre.tex 18ottobre.tex 19ottobre.tex 24ottobre.tex 25ottobre.tex 26ottobre.tex 7novembre.tex 8novembre.tex 9novembre.tex 14novembre.tex 15novembre.tex 16novembre.tex 21novembre.tex 22novembre.tex 23novembre.tex 28novembre.tex 29novembre.tex 30novembre.tex 5dicembre.tex 6dicembre.tex 7dicembre.tex 12dicembre.tex 13dicembre.tex 14dicembre.tex
-	lualatex -shell-escape -pdf computationalMathematics.tex
-	lualatex -shell-escape -pdf computationalMathematics.tex
-	rm computationalMathematics.toc
-	rm -rf _minted-computationalMathematics
-	rm computationalMathematics.aux
-	rm computationalMathematics.out
-	rm computationalMathematics.log
+#computationalMathematics.pdf: computationalMathematics.tex  pics/Cherubino.jpg optimization.tex numerical_methods.tex
+#	lualatex -shell-escape -pdf computationalMathematics.tex
+#	lualatex -shell-escape -pdf computationalMathematics.tex
+#	rm computationalMathematics.toc
+#	rm -rf _minted-computationalMathematics
+#	rm computationalMathematics.aux
+#	rm computationalMathematics.out
+#	rm computationalMathematics.log
+
+optimization.pdf: optimization.tex 19settembre.tex  21settembre.tex 27settembre.tex 3ottobre.tex  5ottobre.tex 11ottobre.tex 17ottobre.tex 19ottobre.tex 24ottobre.tex 25ottobre.tex 8novembre.tex 14novembre.tex 16novembre.tex 22novembre.tex 28novembre.tex 30novembre.tex 6dicembre.tex 12dicembre.tex 14dicembre.tex
+	lualatex -shell-escape -pdf optimization.tex
+	lualatex -shell-escape -pdf optimization.tex
+	rm optimization.toc
+	rm -rf _minted-optimization
+	rm optimization.aux
+	rm optimization.out
+	rm optimization.log
+
+
+numerical_methods.pdf: numerical_methods.tex pics/Cherubino.jpg  20settembre.tex 26settembre.tex 28settembre.tex 4ottobre.tex 10ottobre.tex 18ottobre.tex 26ottobre.tex 7novembre.tex 9novembre.tex 15novembre.tex 21novembre.tex 23novembre.tex 29novembre.tex 5dicembre.tex 7dicembre.tex 13dicembre.tex
+	lualatex -shell-escape -pdf numerical_methods.tex
+	lualatex -shell-escape -pdf numerical_methods.tex
+	rm numerical_methods.toc
+	rm -rf _minted-numerical_methods
+	rm numerical_methods.aux
+	rm numerical_methods.out
+	rm numerical_methods.log
+
 	
 19settembre.pdf: 19settembre.tex
 	lualatex -shell-escape -pdf 19settembre.tex
