@@ -19,7 +19,7 @@ Finding such a region is a NP-hard problem, if we don't restrict to a ball.
 
   \begin{description}
     \item[{\sc Karush:}]$[H^i +\lambda I ] x^{i+1} = - \nabla f(x^i)$ [linear];
-    \item[{\sc Khun:}] $H^i + \lambda I~\succeq~ 0$ [semidefinite];
+    \item[{\sc Kuhn:}] $H^i + \lambda I~\succeq~ 0$ [semidefinite];
     \item[{\sc Tucker:}] $\lambda (r - \norm{x^{i+1}}) = 0$ [nonlinear].
   \end{description}
 Where the last condition means that $\lambda$ has to be $0$, unless the solution we get is exaclty on the border of the ball.
@@ -81,7 +81,7 @@ In order to have a matrix $H^i$ that satifies the first two condition we could c
   We may observe that this theorem implies that if we perform Armijo Wolf exact line search condition (C) can always be satisfied.
 \end{obs}
 
-\subsubsection{Davidon-Fletcher-Powell}
+\subsubsection{Davidson-Fletcher-Powell}
 How can we choose a $H^i$ that satisfies the three conditions enumerated above? Taking $H^{i+1} =argmin \{\norm{H - H^i}~:~H \in$(S) and $ ~ H \succeq 0\}$ is a good idea and for this minimum problem holds the following:
 
 \begin{theorem}[Davidson-Feltcher-Powell]
@@ -107,7 +107,7 @@ We can do better, in terms of computational complexity.
 \subsubsection{Broyden-Fletcher-Goldfarb-Shanno}
 
 We can use directly $B^i$, the inverse of $H^i$.
-Write (S) for $B^{i+1}$: $\Cb{s^i = B^{i+1} y^i} \Longrightarrow B^{i+1} =$ argmin $\{\norm{B - B^i}~:~\ldots~ \}$.
+Write (S) for $B^{i+1}$: $s^i = B^{i+1} y^i \Longrightarrow B^{i+1} =$ argmin $\{\norm{B - B^i}~:~\ldots~ \}$.
 
 $B^{i+1} = B^i + \rho^i [(1 + \rho^i \tr{(y^i)} B^i y^i) s^i \tr{(s^i)} - (B^i y^i \tr{(s^i)} + s^i \tr{(y^i)} B^i)]$
 
