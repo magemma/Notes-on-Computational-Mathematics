@@ -20,8 +20,9 @@ optimization: optimization.tex pics/Cherubino.jpg 19settembre.tex 21settembre.te
 
 
 clean:
-	rm -R _minted*
-	rm *.aux
-	rm *.log
-	rm *.out
-	rm *.toc
+	rm -f *.synctex.gz
+	rm -f -R _minted*
+	rm -f *.aux
+	rm -f *.log
+	rm -f *.out
+	rm -f *.toc
