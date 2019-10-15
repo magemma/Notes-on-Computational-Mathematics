@@ -1,0 +1,164 @@
+\documentclass[preview,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[section]{algorithm}
+\usepackage{mdframed,xcolor}
+
+\usepackage{algpseudocode}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{attachfile}
+
+\usepackage{bbding}
+\usepackage{booktabs}
+\usepackage{breqn}
+
+\usepackage{cancel}
+\usepackage[font=small, labelfont=sc]{caption}
+\usepackage{chngcntr}
+\usepackage{cleveref}
+\usepackage{color,listings}
+
+\usepackage{dsfont}
+
+\usepackage{eurosym}
+
+\counterwithin{figure}{section}
+\usepackage{fixltx2e}
+\usepackage{float}
+\usepackage{fontawesome}
+
+\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+
+\usepackage{frcursive}
+\usepackage{fullpage}
+
+\usepackage{graphicx}
+
+%\usepackage[hidelinks]{hyperref}
+
+\usepackage{lmodern}
+
+\usepackage{makeidx}
+\usepackage{mathrsfs}
+%\usepackage{mathpazo}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{minted}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{mymacros}
+
+%\usepackage{nccmath}
+
+\usepackage{pifont}
+
+\usepackage{relsize}
+
+\usepackage{subfiles}
+\usepackage{subfig}
+
+\usepackage{tableof}
+\usepackage{tabto}
+\usepackage{tabularx}
+\usepackage[many]{tcolorbox}
+\usepackage{tikz}
+\setlength{\marginparwidth}{2cm}
+\usepackage{todonotes}
+
+\usepackage{verbatim}
+\usepackage{vwcol}  
+
+\usepackage{xparse} % Add support for \NewDocumentEnvironment
+%\usepackage[framemethod=tikz]{mdframed,xcolor}
+
+%%%%%%%MUST STAY HERE%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtcolorbox{myframe}[2][]{
+  width=\linewidth-1pt,
+  boxrule=0.3pt,
+  fonttitle=\bfseries,
+  colback=black!5!white,
+  colframe=gray,
+  title={#2},
+  #1
+}%
+
+\newtcolorbox{myrecap}[2][]{
+  width=\linewidth-1pt,
+  boxrule=0.3pt,
+  fonttitle=\bfseries,
+  colback=blue!5!white,
+  colframe=blue,
+  title={#2},
+  #1
+}%
+
+\newtcolorbox{mysyntax}[2][]{
+  width=\linewidth-1pt,
+  boxrule=0.3pt,
+  fonttitle=\bfseries,
+  colback=red!5!white,
+  colframe=red,
+  title={#2},
+  #1
+}%
+
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+
+\addto\captionsitalian{\renewcommand{\appendixname}{Allegato}}
+
+\hypersetup{
+  pdfborder = {0 0 0}
+}
+\captionsetup[algorithm]{font=small, labelfont=sc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+\vspace{3cm}
+
+\Large
+
+\vspace{2cm}
+
+\includegraphics[scale=0.3]{pics/Cherubino.jpg}
+
+\vspace{2.5cm}
+
+{\Huge \sc Computational Mathematics}
+
+\vspace{2cm}
+Based on prof. Antonio Frangioni's and\\
+  prof. Federico Poloni's lectures
+
+\vspace{2cm}
+Gemma Martini\\ Alessandro Cudazzo\\ Giulia Volpi
+\vfill
+
+\today
+
+\end{center}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%
+\shipout\null
+\newpage
+
+
+\newpage
+\subfile{numerical_methods}
+\newpage
+\subfile{optimization}
+\end{document}
+
+
