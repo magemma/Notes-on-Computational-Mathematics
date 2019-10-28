@@ -33,7 +33,7 @@ Some of these combinations of bits are reserved for special numbers, e.g. \textt
 
 This system is subject to approximation errors, exactly like the ``usual'' decimal arithmetic: for example, if we do $\frac{1}{3} = 0.33333 \ldots$ and if we do $\frac{1}{3} + \frac{1}{3} + \frac{1}{3} = 0.99999 \ldots \neq 1$. 
 
-Whenever we store a number on a computer we need to approximate it, using the ``representable numbers, as shown in \Cref{fig:15nov1}.
+Whenever we store a number on a computer we need to approximate it, using the representable numbers, as shown in \Cref{fig:15nov1}.
 
 \addpic{0.5}{pics/15nov/1.png}{We have $2^{52}$ equispaced numbers between $\frac{1}{2}$ and $1$ and between $1$ and $2$, and also $2^{52}$ between $2$ and $4$ and so on and so forth, so we have the same number of integers, although the space is enlarging.}{fig:15nov1}
 
@@ -50,12 +50,12 @@ Let us assume that we have the best possible algorithm that returns $\tilde{y} =
 	&\leq \kappa_{rel}(f,x) \mathsf{u} + o(\mathsf{u}).
 \end{align*}
 
-In practice we may ignore $o(u)$, since it's small o of $2^{-16}$.
+In practice we may ignore $o(u)$, since it's small of $2^{-16}$.
 
 When we are approximating a result, we are approximating it up to a relative error of order of magnitude $10^{-16}$.
 
 \[
-a \oplus b = (a+b)(1+\delta), \quad \abs{\delta} \leq \mathsf{u}.
+a \oplus b = (a+b)(1+\delta), \quad \abs{\delta} \leq \mathsf{u}
 \]
 
 \[
@@ -74,7 +74,7 @@ We would like to compute the error on the function $f(a, b) = \tr{a} b$.
   \end{pmatrix},
   b =\begin{pmatrix}
     b_1\\b_2\\b_3\\
-  \end{pmatrix} \text{, so} f(a, b) = a_1 \cdot b_1 + a_2 \cdot b_2 + a_3 \cdot b_3
+  \end{pmatrix} ~ so ~ f(a, b) = a_1 b_1 + a_2 b_2 + a_3 b_3
 \]
 
 Denoting $\odot$ the approximated product and $\oplus$ the approximated sum on a computer, we can write the following:
@@ -82,25 +82,25 @@ Denoting $\odot$ the approximated product and $\oplus$ the approximated sum on a
 \begin{equation}
   \begin{aligned}
     \text{computer result} &= a_1 \odot b_1 \oplus a_2 \odot b_2 \oplus a_3 \odot b_3\\
-    &= \Biggl [ \Bigl [ a_1 b_1 \cdot (1+\delta) + a_2 b_2 \cdot (1+\delta_2) \Bigr ] \cdot (1+\delta_3) + a_3 b_3 \cdot (1+\delta_4) \Biggr] \cdot (1+\delta_5)\\
-    &= a_1 b_1 \cdot (1+\delta_1) \cdot (1+ \delta_3) \cdot (1+\delta_5) + a_2 b_2 \cdot (1+\delta_2) \cdot (1+\delta_3) \cdot (1+\delta_5)\\
-    &+ a_3 b_3 \cdot (1+\delta_4) \cdot (1+\delta_5)\\
+    &= \Biggl [ \Bigl [ a_1 b_1 (1+\delta) + a_2 b_2 (1+\delta_2) \Bigr ] (1+\delta_3) + a_3 b_3 (1+\delta_4) \Biggr] (1+\delta_5)\\
+    &= a_1 b_1 (1+\delta_1) (1+ \delta_3) (1+\delta_5) + a_2 b_2 (1+\delta_2) (1+\delta_3) (1+\delta_5)\\
+    &+ a_3 b_3 (1+\delta_4) (1+\delta_5)\\
     &= a_1 b_1 (1 + \delta_1 + \delta_3 + \delta_5 + O(u^2))\\
-    &+ a_2 b_2 \cdot (1+ \delta_1 + \delta_3 + \delta_5 + O(u^2))\\
-    &+ a_3 b_3 \cdot (1 + \delta_4 + \delta_5 + O(u^2))\\
-    &\approx a_1 b_1 (1 + \delta_1 + \delta_3 + \delta_5) + a_2 b_2 \cdot (1+ \delta_1 + \delta_3 + \delta_5) + a_3 b_3 \cdot (1 + \delta_4 + \delta_5)
+    &+ a_2 b_2 (1+ \delta_1 + \delta_3 + \delta_5 + O(u^2))\\
+    &+ a_3 b_3 (1 + \delta_4 + \delta_5 + O(u^2))\\
+    &\approx a_1 b_1 (1 + \delta_1 + \delta_3 + \delta_5) + a_2 b_2 (1+ \delta_1 + \delta_3 + \delta_5) + a_3 b_3 (1 + \delta_4 + \delta_5)
   \end{aligned}
 \end{equation}
 
 Where $O(u^2)$ comes from the summation of $\delta_i \delta_j$, for some $i$, $j$ and allows us to do an approximation up to second order terms of precision.
 
-The absolute error then is 
+The absolute error then is:
 
 \begin{equation}
   \begin{aligned}
-    \text{Err}_a &= \abs{a_1 b_1 (\cancel{1} + \delta_1 + \delta_3 + \delta_5) + a_2 b_2 \cdot (\cancel{1} + \delta_1 + \delta_3 + \delta_5) + a_3 b_3 \cdot (\cancel{1} + \delta_4 + \delta_5) + \cancel{a_1 b_1} + \cancel{a_2 b_2} + \cancel{a_3 b_3}}\\
-    &\numineq{(1)}{\le} \abs{a_1b_1} \cdot 3u + \abs{a_2 b_2} \cdot 3u + \abs{a_3 b_3} \cdot 2u\\
-    &\le (\abs{a_1 b_1} + \abs{a_2 b_2} + \abs{a_3 b_3}) \cdot 3u
+    \text{Err}_a &= \abs{a_1 b_1 (\cancel{1} + \delta_1 + \delta_3 + \delta_5) + a_2 b_2 (\cancel{1} + \delta_1 + \delta_3 + \delta_5) + a_3 b_3 (\cancel{1} + \delta_4 + \delta_5) + \cancel{a_1 b_1} + \cancel{a_2 b_2} + \cancel{a_3 b_3}}\\
+    &\numineq{(1)}{\le} \abs{a_1b_1} 3u + \abs{a_2 b_2} 3u + \abs{a_3 b_3} 2u\\
+    &\le (\abs{a_1 b_1} + \abs{a_2 b_2} + \abs{a_3 b_3}) 3u
   \end{aligned}
 \end{equation}
 
@@ -108,18 +108,18 @@ Where $\numineq{(1)}{\le}$ follows from the observation that $\abs{\delta_i} \le
 
 The result that we can obtain is weaker than we would have expected: \emph{if $a_i b_i \ge 0, \forall i=1,2,3$}, then 
 \[
-  \frac{\abs{\text{computer result} - (a_1 b_1 + a_2 b_2 + a_3 b_3)}}{a_1b_1 + a_2 b_2 + a_3 b_3} \le 3u,
+  \frac{\abs{\text{computer result} - (a_1 b_1 + a_2 b_2 + a_3 b_3)}}{a_1b_1 + a_2 b_2 + a_3 b_3} \le 3u
 \]
 which means that the algorithm is stable.
 
 However, if $a_1b_1$, $a_2b_2$ and $a_3 b_3$ have different signs, then we can bound the error not with $a_1 b_1 + a_2 b_2 + a_3 b_3$, but only with $\abs{a_1 b_1} + \abs{a_2 b_2} + \abs{a_3 b_3}$. This might be a lot larger than what we want to compute.
 
 \begin{example}
-  Take $\varepsilon = 10^{-16}$. Compute $\begin{pmatrix} 1 & -1 & 0\end{pmatrix} \cdot \begin{pmatrix} 1+ \varepsilon\\ 1\\1 \end{pmatrix} = (1+ \varepsilon) -1 + 0 = \varepsilon$.
+  Take $\varepsilon = 10^{-16}$. Compute $\begin{pmatrix} 1 & -1 & 0\end{pmatrix} \begin{pmatrix} 1+ \varepsilon\\ 1\\1 \end{pmatrix} = (1+ \varepsilon) -1 + 0 = \varepsilon$.
     
     In this case we have a subtraction between two very close numbers.
 
-    $    \abs{computer~result} \le u \cdot ( i + \abs{1 \cdot (1 + \varepsilon)} + \abs{-1 \cdot 1} + \abs{0 \cdot 1}) = (2 + \varepsilon) \cdot u$, which means that we have $10$ correct digits.
+    $    \abs{computer~result} \le u ( i + \abs{1 (1 + \varepsilon)} + \abs{-1 \cdot 1} + \abs{0 \cdot 1}) = (2 + \varepsilon) u$, which means that we have $10$ correct digits.
 
     The problem is in the fact that we have a very small result ($\varepsilon = O(10^{-6})$) and a very small error (of the same order of the result), which implies a large relative error.
 \end{example}
@@ -144,7 +144,7 @@ where
 \begin{aligned}
 \widetilde{b_1} &= b_1(1+\delta_1)(1+\delta_4)(1+\delta_5) = b_1 + 3ub_1 + o(u),\\
 \widetilde{b_2} &= b_2(1+\delta_2)(1+\delta_4)(1+\delta_5) = b_2 + 3ub_2 + o(u),\\
-\widetilde{b_3} &= b_3(1+\delta_2)(1+\delta_5) = b_3 + 2u b_3 + o(u),\\
+\widetilde{b_3} &= b_3(1+\delta_3)(1+\delta_5) = b_3 + 2u b_3 + o(u),\\
   \widetilde{a_i} = a_i \quad i=1,2,3.
 \end{aligned}
 \end{equation}
@@ -153,7 +153,7 @@ And the relative error is $\frac{\norm{\widetilde{b}-b}}{\norm{b}} \leq 3u + o(u
 
 Hence,
 \[
-  \frac{\norm{\tilde{y}-y}}{\norm{y}} \leq \kappa_{rel, b} \frac{\norm{\widetilde{b}-b}}{\norm{b}} \le k_{rel, b} \cdot 3u
+  \frac{\norm{\tilde{y}-y}}{\norm{y}} \leq \kappa_{rel, b} \frac{\norm{\widetilde{b}-b}}{\norm{b}} \le k_{rel, b} 3u
 \]
 
 This isn't bad, because it's within a factor $3$ of the optimal error for a perfect algorithm.
@@ -174,7 +174,7 @@ Backward stable algorithms are as accurate as theoretically possible (given the 
 
 \begin{proof}
 \[
-\frac{\norm{\tilde{\mathbf{y}} - \mathbf{y}}}{\norm{\mathbf{y}}} \leq \kappa_{rel}(f,\x)\frac{\norm{\tilde{\x}-\x}}{\norm{\x}} = \kappa_{rel}(f,\x) O(\mathsf{u}),
+\frac{\norm{\tilde{\mathbf{y}} - \mathbf{y}}}{\norm{\mathbf{y}}} \leq \kappa_{rel}(f,\x)\frac{\norm{\tilde{\x}-\x}}{\norm{\x}} = \kappa_{rel}(f,\x) O(\mathsf{u})
 \]
 while the best attainable accuracy is $\kappa_{rel}(f,\x)\mathsf{u}$.
 \end{proof}
@@ -187,7 +187,7 @@ We observe that in general it's not true that the computed approximation of $f(a
 \[
 \begin{bmatrix}
     x_1\\ x_2\\ x_3
-\end{bmatrix} \cdot
+\end{bmatrix}
 \begin{bmatrix}
     y_1 & y_2 & y_3
 \end{bmatrix}
@@ -219,14 +219,14 @@ While
 \widetilde{M}
 \]
 
-And we are looking for $\widetilde{x}$ and $\widetilde{y}$ such that $\widetilde{M} = \tr{\widetilde{x}} \cdot \widetilde{y}$
+And we are looking for $\widetilde{x}$ and $\widetilde{y}$ such that $\widetilde{M} = \tr{\widetilde{x}} \widetilde{y}$
 \begin{example}
 Example (with exaggerated errors):
 
 \[
 \begin{bmatrix}
     1\\2\\3
-\end{bmatrix} \cdot
+\end{bmatrix}
 \begin{bmatrix}
     4&5&6
 \end{bmatrix}
@@ -293,10 +293,10 @@ With some tedious computations like the ones above, one can show that \emph{one}
   \frac{\norm{{\widetilde{R}}_{k-1} - R_{k-1}}}{\norm{R_{k-1}}} \le O(u)
 \]
 
-At a generic step $k$ we have that
+At a generic step $k$ we have that:
 
 \[
-  R_k = Q_k \cdot R_{k-1}
+  R_k = Q_k R_{k-1}
 \]
 
 \[
@@ -310,7 +310,7 @@ At a generic step $k$ we have that
 The idea is doing this procedure one step after the other, starting from step $1$, where $R_0 = A$.
 
 \[
-  \widetilde{R_1} = Q_1 \widetilde{R_0} = Q_1 \cdot (R_0 + \Delta_{R_0}) = Q_1 \cdot (A + \Delta_{R_0})
+  \widetilde{R_1} = Q_1 \widetilde{R_0} = Q_1 (R_0 + \Delta_{R_0}) = Q_1 (A + \Delta_{R_0})
 \]
 
 \[
@@ -324,7 +324,7 @@ In the end we may observe that the final computed $R_n$ is the exact result obta
 \begin{obs}
   We should notice that the norm of each perturbation is small with respect to the norm of $A$.
   
-  In formal terms, $\norm{\Delta_{R_0}} \le u \cdot \norm{R_0} = u \cdot \norm{A}$ and $\norm{\tr{Q_1} \Delta R_1} \numeq{(1)} \norm{\Delta R_1} \le u \cdot \norm{R_1} \numeq{(2)} u \cdot \norm{A}$.
+  Formally, $\norm{\Delta_{R_0}} \le u \norm{R_0} = u \norm{A}$ and $\norm{\tr{Q_1} \Delta R_1} \numeq{(1)} \norm{\Delta R_1} \le u \norm{R_1} \numeq{(2)} u \norm{A}$.
 
   Where $\numeq{(1)}$ and $\numeq{(2)}$ hold because $Q_i$ are orthogonal. 
 \end{obs}
@@ -339,7 +339,7 @@ Let us see how various algorithms to solve LS problems (implemented in Matlab) b
 \textbf{Least squares problem via QR}
 \begin{description}
   \item[{\sc Step 1:}] Computing a thin QR (\texttt{qr(A, 0);}) $\rightarrow$ backward stable;
-  \item[{\sc Step 2:}] (\texttt{Q1'*b;})$\rightarrow$ backward stable;
+  \item[{\sc Step 2:}] (\texttt{Q1' * b;})$\rightarrow$ backward stable;
   \item[{\sc Step 3:}] (\texttt{R1 \ c;})$\rightarrow$ backward stable;
 \end{description}
 
@@ -348,9 +348,9 @@ Let us see how various algorithms to solve LS problems (implemented in Matlab) b
 \textbf{Least squares problem via SVD}
 \begin{description}
   \item[{\sc Step 1:}] Computing a SVD (\texttt{svd(A, 0);}) $\rightarrow$ backward stable;
-  \item[{\sc Step 2:}] (\texttt{U'*b;})$\rightarrow$ backward stable;
+  \item[{\sc Step 2:}] (\texttt{U' * b;})$\rightarrow$ backward stable;
   \item[{\sc Step 3:}] (\texttt{c ./ diag(S);})$\rightarrow$ backward stable;
-  \item[{\sc Step 4:}] (\texttt{V*d;})$\rightarrow$ backward stable; 
+  \item[{\sc Step 4:}] (\texttt{V * d;})$\rightarrow$ backward stable; 
 \end{description}
 
 \textbf{Least squares problem via Normal Equations}
@@ -362,7 +362,7 @@ Let us see how various algorithms to solve LS problems (implemented in Matlab) b
 
 We can also prove that some algorithms aren't backward stable, like normal equations. The issue here is that the same input is needed in more than one operation, so it should satisfy more than one equation and this may lead to a solution set which is empty. Also, in the last equation we solve a linear system with matrix $C$, and this gives an error of the order of ${\kappa(A)}^2$, never of $\kappa(A)$: $\kappa(C) = \kappa(\tr{A} A) = {\kappa(A)}^2$.
 
-Let us take the example of two lectures ago: \Cref{ex:1}.
+Let us take the example of two lectures ago.
 
 \begin{example}
    Let $A \in \mathcal{M}(4, 3, \R)$ s.t.
@@ -378,7 +378,7 @@ Let us take the example of two lectures ago: \Cref{ex:1}.
     We may observe that $A$ is at distance $10^{-8}$ from a matrix without full column rank, hence $\kappa \approx 10^8$.  
 
   What is the condition number of solving this least squares problem?
-  It's about $10^8$, since in that problem we generated $b= A \cdot \begin{pmatrix} 3 & 4 & 5 \end{pmatrix}$, so $b$ lies in the image of $A$ ($Im(A)$). The geometric idea in \Cref{fig:15nov2}.
+  It's about $10^8$, since in that problem we generated $b= A \begin{pmatrix} 3 & 4 & 5 \end{pmatrix}$, so $b$ lies in the image of $A$ ($Im(A)$). The geometric idea in \Cref{fig:15nov2}.
 
     \addpic{0.7}{pics/15nov/2.png}{$b$ lies (at least almost, because of numerical error) on the plane of $Im(A)$. In this case $\kappa_{rel}(\text{solving LS}) \approx \kappa(A)$.}{fig:15nov2}
 \end{example}
@@ -411,7 +411,7 @@ Suppose we have solved a linear system\dots
   \begin{minted}{matlab}
 >> A = randn(4, 4); b = randn(4, 1);
 >> x = A \ b;
->> A*x - b
+>> A * x - b
 ans =
             0
   -1.3878e-17
@@ -424,7 +424,7 @@ ans =
   Let $A\in \mathcal{M}(m, {\R})$ and $\b\in\mathbb{R}^m$, and $x$ be the solution of $Ax=b$. For a given $\widetilde{x}$ we define \textbf{residual} the following $\mathbf{r}=A\widetilde{x}-b$. 
 \end{definition}
 
-assume that $\norm{r}$ is small; does this mean that $\widetilde{x}$ is close to the exact solution $x$?
+Assume that $\norm{r}$ is small; does this mean that $\widetilde{x}$ is close to the exact solution $x$?
 
 \begin{theorem}
 Let $A\in\mathbb{R}^{m\times m}, \b\in\mathbb{R}^m$, and $x$ be the solution of $Ax=b$.
@@ -460,7 +460,7 @@ Can we make an analogous check for the Least Squares Problem?
 \addpic{0.5}{pics/15nov/3.png}{$A$ can be as large as $b$ if $b$ is perfectly orthogonal.}{fig:15nov3}
 
   \begin{obs}
-    If you solve LSP via QR $\norm{Ax - b} = \norm{\begin{pmatrix} 
+    If you solve LSP via QR, $\norm{Ax - b} = \norm{\begin{pmatrix} 
     R_1 x - \tr{Q_1}b\\ -\tr{Q_2} b \end{pmatrix}}$. We said that the entries in the second block are fixed irrespective of $x$, but we could make the entries in the first block zero, by choosing $x=R_1^{-1}\tr{Q}b$. This information let us infer something about the values of the vectors in \Cref{fig:15nov3}, in particular the minimum of the value that we can get is $\norm{\tr{Q_2} b} = \norm{Ax - b}$.
 
     With some algebra we may also check that $\norm{\tr{Q_1} b} = \norm{Ax}$.
@@ -471,7 +471,7 @@ Can we make an analogous check for the Least Squares Problem?
   $\nabla_{\widetilde{x}} f = 2 (\tr{A} A x - \tr{A} b) \to 0$
 
   \begin{theorem}
-    $\frac{\norm{\widetilde{x} - x}}{x} \le {(\kappa(A))}^2 \cdot \frac{\norm{\tr{A} A x - \tr{A} b}}{\norm{\tr{A} b}}$. Although we might have wanted to have the condition number of the problem, instead of the condition number of $A$ and this could lead to underestimating the error.
+    $\frac{\norm{\widetilde{x} - x}}{x} \le {\kappa(A)}^2 \frac{\norm{\tr{A} A x - \tr{A} b}}{\norm{\tr{A} b}}$. Although we might have wanted to have the condition number of the problem, instead of the condition number of $A$ and this could lead to underestimating the error.
   \end{theorem}
 
 Another idea could be using as error the first entry of the vector obtained via QR (namely $\tr{R_1} x - \tr{Q_1} b$), by imposing $R_1 x = \tr{Q_1} b$
@@ -483,14 +483,14 @@ given $r = \norm{\tr{R_1} \widetilde{x} - \tr{Q_1} b}$, there exists $\widetilde
 We have proved the following
 
 \begin{proposition}
-  $\frac{\norm{\widetilde{x} - x}}{\norm{x}} \le \kappa_{rel, LS} \cdot \frac{\norm{\widetilde{b} - b}}{\norm{b}} = \kappa_{rel, LS} \cdot \frac{\norm{r}}{\norm{b}}$.
+  $\frac{\norm{\widetilde{x} - x}}{\norm{x}} \le \kappa_{rel, LS} \frac{\norm{\widetilde{b} - b}}{\norm{b}} = \kappa_{rel, LS} \frac{\norm{r}}{\norm{b}}$.
 \end{proposition}
 
 
 \begin{theorem}
-  Let $A=Q_1R_1$ be a thin QR factorization. Let $\mathbf{r}_1 = Q_1^T(A\widetilde{\x}-\mathbf{b})$. Then, $\widetilde{\x}$ is the exact solution of the LS problem
+  Let $A=Q_1R_1$ be a thin QR factorization. Let $\mathbf{r}_1 = Q_1^T(A\widetilde{\x}-\mathbf{b})$. Then, $\widetilde{\x}$ is the exact solution of the LS problem:
 \[
-\min \norm{A\x - (\mathbf{b}+Q_1\mathbf{r}_1)},
+\min \norm{A\x - (\mathbf{b}+Q_1\mathbf{r}_1)}
 \]
 so the backward error of $\widetilde{\x}$ is $\norm{Q_1\mathbf{r}_1} = \norm{\mathbf{r}_1}$.
 \end{theorem}

@@ -36,7 +36,7 @@ Why did we introduce the QR factorization to solve the least squares problem, th
   As an example, let $f(x, y) = x + 2y$. If we perturb the second parameter of $f$ as follows $\widetilde{y} = y + \delta$, we can compute the variation in the output value of the function \textbf{v} as
   
   \[
-    \mathbf{v} = f(x, \widetilde{y}) - f(x, y) =  x + 2(y + \delta) - (x + 2y) = 2\delta.
+    \mathbf{v} = f(x, \widetilde{y}) - f(x, y) =  x + 2(y + \delta) - (x + 2y) = 2\delta
   \]
 
 \end{definition}
@@ -47,7 +47,7 @@ A good example of this behaviour is the temperature of water coming from the sho
 \begin{definition}[Absolute condition measure]
   The \textbf{absolute condition number} of a function $f$ is the \textbf{maximum} possible output change / input change ratio in the limit for a \textbf{small} change of the input.
 \[
-\kappa_{abs}(f,x) = \lim_{\varepsilon\to 0} \sup_{\abs{\tilde{x}-x} \leq \varepsilon} \frac{\abs{f(\tilde{x})-f(x)}}{\abs{\tilde{x}-x}}.
+\kappa_{abs}(f,x) = \lim_{\varepsilon\to 0} \sup_{\abs{\tilde{x}-x} \leq \varepsilon} \frac{\abs{f(\tilde{x})-f(x)}}{\abs{\tilde{x}-x}}
 \]
 \end{definition}
 
@@ -133,33 +133,33 @@ At this point we would like to compute the condition number of solving a linear 
           \begin{aligned}
             \norm{\widetilde{x} - x} &= \norm{\inv{A} \widetilde{b} - \inv{A} b}\\
             &= \norm{\inv{A} (\widetilde{b} - b)}\\
-            &\le \norm{\inv{A}} \cdot \norm{\widetilde{b} - b}\\
+            &\le \norm{\inv{A}} \norm{\widetilde{b} - b}\\
           \end{aligned}
           \end{equation}
-        \item Since $\norm{b} = \norm{Ax} \le \norm{A} \cdot \norm{x}$ we have
-          $\frac{\norm{\widetilde{x} - x}}{\norm{x}} \le \norm{\inv{A}} \cdot \norm{A} \cdot \frac{\norm{\widetilde{b} - b}}{\norm{b}}$
+        \item Since $\norm{b} = \norm{Ax} \le \norm{A} \norm{x}$ we have
+          $\frac{\norm{\widetilde{x} - x}}{\norm{x}} \le \norm{\inv{A}} \norm{A} \frac{\norm{\widetilde{b} - b}}{\norm{b}}$
     \end{enumerate}
     In the end, since $input ~ error = \frac{\norm{\widetilde{b} - b}}{\norm{b}}$ we obtain 
     \[
-      \kappa_{rel} (f, x) = \lim\limits_{\varepsilon \rightarrow 0} \frac{output ~ error}{input ~ error} \le \lim\limits_{\varepsilon \rightarrow 0} \norm{\inv{A}} \cdot \norm{A} = \norm{\inv{A}} \cdot \norm{A}
+      \kappa_{rel} (f, x) = \lim\limits_{\varepsilon \rightarrow 0} \frac{output ~ error}{input ~ error} \le \lim\limits_{\varepsilon \rightarrow 0} \norm{\inv{A}} \norm{A} = \norm{\inv{A}} \norm{A}
     \]
     
-    We denote $\kappa(A) = \norm{\inv{A}} \cdot \norm{A}$ the \textbf{condition number of $A$};
+    We denote $\kappa(A) = \norm{\inv{A}} \norm{A}$ the \textbf{condition number of $A$};
 
   \item[{\sc Perturbing} $A$]~%
-    Given $Ax=b$ we obtain $(A+\Delta_A) \cdot (x + \Delta_x)= b$, where $\widetilde{A} = A + \Delta_A$ and $\widetilde{x} = x + \Delta_x$. Then we can expand as follows
+    Given $Ax=b$ we obtain $(A+\Delta_A) (x + \Delta_x)= b$, where $\widetilde{A} = A + \Delta_A$ and $\widetilde{x} = x + \Delta_x$. Then we can expand as follows
 
-    $\cancel{Ax} + \Delta_A \cdot x + A \cdot \Delta_x + \Delta_A \cdot \Delta_x = \cancel{b}$
+    $\cancel{Ax} + \Delta_A x + A \Delta_x + \Delta_A \Delta_x = \cancel{b}$
 
-We can stop taking into account $\Delta_A \cdot \Delta_x$, since it's a sort of second order term ($ \Delta_A \cdot \Delta_x = o (\norm{\Delta_A} \cdot \norm{\Delta_x})$), so we get the following
+We can stop taking into account $\Delta_A \Delta_x$, since it's a sort of second order term ($ \Delta_A \Delta_x = o (\norm{\Delta_A} \norm{\Delta_x})$), so we get the following
   \[
-      \Delta_A \cdot x + A \cdot \Delta_x = 0
+      \Delta_A x + A \Delta_x = 0
   \]
   \[
-      \Delta_x = -\inv{A} \cdot \Delta_A \cdot x
+      \Delta_x = -\inv{A} \Delta_A x
     \]
 
-then $\norm{\Delta_x} \le \norm{\inv{A}} \cdot \norm{\Delta_A} \cdot \norm{x}$, which implies $\frac{\norm{\Delta_x}}{\norm{x}} \le \norm{\inv{A}} \cdot \frac{\norm{\Delta_A}}{\norm{A}}$.
+then $\norm{\Delta_x} \le \norm{\inv{A}} \norm{\Delta_A} \norm{x}$, which implies $\frac{\norm{\Delta_x}}{\norm{x}} \le \norm{\inv{A}} \frac{\norm{\Delta_A}}{\norm{A}}$.
 
 We obtain that $relative ~ output ~ error \le \kappa(A) \cdot relative ~ input ~ error$.
 \end{description}
@@ -176,7 +176,7 @@ $\kappa(A) = \frac{\sigma_1}{\sigma_n}$, i.e., $\kappa(A)$ is the ratio between 
 So we can say that if a matrix is close to a singular matrix, then its condition number is going to be large.
 
 \begin{proof}
-Let $A = US\tr{V}$, then $\norm{A} = \norm{U \cdot S \cdot \tr{V}} = \norm{S} = \sigma_1$, since 
+Let $A = US\tr{V}$, then $\norm{A} = \norm{U S \tr{V}} = \norm{S} = \sigma_1$, since 
 
 $S =  \begin{pmatrix}
     \sigma_1 &&&&&\\
@@ -185,7 +185,7 @@ $S =  \begin{pmatrix}
     &&& \cdot&&\\
     &&&& \cdot&\\
     &&&&& \sigma_n\\
-  \end{pmatrix}$ and $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_n$. 
+  \end{pmatrix}$ and $\sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_n$. 
 
   It's also true that $\norm{\inv{A}} = \norm{\inv{(USV)}} = \norm{V\inv{S} \tr{U}} = \norm{\inv{S}} = \sigma_n$, since 
 
@@ -196,7 +196,7 @@ $S =  \begin{pmatrix}
     &&& \cdot&&\\
     &&&& \cdot&\\
     &&&&& \frac{1}{\sigma_n}\\
-  \end{pmatrix}$ and $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_n$. 
+  \end{pmatrix}$ and $\sigma_1 \ge \sigma_2 \ge \ldots \ge \sigma_n$. 
 
 In the end $\kappa(A) = \frac{\norm{A}}{\norm{\inv{A}}} = \frac{\sigma_1}{\sigma_n}$
 \end{proof}
@@ -217,7 +217,7 @@ The relative distance between $A$ and the closest singular matrix is $\frac{1}{\
     &&&& \cdot&\\
     &&&&& \sigma_n\\
     &&&&&& 0\\
-  \end{pmatrix} \cdot \tr{V}
+  \end{pmatrix} \tr{V}
 \]}
 
 \begin{equation}
@@ -228,8 +228,8 @@ bau
 
 \begin{equation}
   \begin{aligned}
-    \norm{A - \hat{A}} &= \norm{U \cdot 
-    \Bigl(
+    \norm{A - \hat{A}} &= \norm{U 
+    \Bigg(
     \begin{pmatrix}
       \sigma_1 &&&&&\\
       & \sigma_2&&&&\\
@@ -246,8 +246,8 @@ bau
       &&&& \cdot&\\
       &&&&& \sigma_{n-1}\\
       &&&&&& 0\\
-    \end{pmatrix} \Bigr) \cdot \tr{V}}\\
-    &= \norm{U \cdot 
+    \end{pmatrix} \Bigg) \tr{V}}\\
+    &= \norm{U 
     \begin{pmatrix}
       0 &&&&&\\
       & \cdot &&&&\\
@@ -255,7 +255,7 @@ bau
       &&& \cdot&&\\
       &&&& 0&\\
       &&&&& \sigma_n\\
-    \end{pmatrix} \cdot \tr{V}}\\
+    \end{pmatrix} \tr{V}}\\
     &= \sigma_n\\
   \end{aligned}
 \end{equation}
@@ -272,7 +272,7 @@ We need two quantities to be able to measure the conditioning of least squares p
 
 \begin{description}
   \item[\ding{78} $\kappa(A)$]
-Let $A \in \mathcal{M}(m, n, \R)$, with $m > n$ (tall, thin $A$). We \emph{define} $\kappa(A) = \frac{\sigma_1}{\sigma_n}$. We take this as a definition of $\kappa(A)$. Note that we cannot use the other definition $\kappa(A)=\norm{A}\norm{\inv{A}}$, since $\inv{A}$ does not exist for a non-square $A$. However, one can verify that $\norm{A} \cdot \norm{A^{+}} = \frac{\sigma_1}{\sigma_n}=\kappa(A)$, where $A^+$ is the pseudoinverse.
+Let $A \in \mathcal{M}(m, n, \R)$, with $m > n$ (tall, thin $A$). We \emph{define} $\kappa(A) = \frac{\sigma_1}{\sigma_n}$. Note that we cannot use the other definition $\kappa(A)=\norm{A}\norm{\inv{A}}$, since $\inv{A}$ does not exist for a non-square $A$. However, one can verify that $\norm{A} \norm{A^{+}} = \frac{\sigma_1}{\sigma_n}=\kappa(A)$, where $A^+$ is the pseudoinverse.
 
 \begin{obs}
   Note that $\frac{1}{\kappa(A)}$ is the relative distance to the closest $\hat{A}$ without full column rank.
@@ -286,14 +286,14 @@ $\theta = \arccos \frac{\norm{Ax}}{\norm{b}}$
 
 Now we can express the theorem:
 
-\begin{theorem}[Trefethen, Bau, Theorem 18.1]
+\begin{theorem}[Trefethen, Bau]
 Consider the linear least squares problem $\min \norm{Ax-b}$, with $A\in\mathbb{R}^{m\times n}$ with full column rank. Its relative condition number with respect to the input $b$ is
 \[
-\kappa_{rel, b \to x} \leq \frac{\kappa(A)}{\cos\theta},
+\kappa_{rel, b \to x} \leq \frac{\kappa(A)}{\cos\theta}
 \]
 and with respect to $A$ it is
 \[
-  \kappa_{rel, A \to x} \leq \kappa(A) + {\kappa(A)}^2 \tan \theta,
+  \kappa_{rel, A \to x} \leq \kappa(A) + {\kappa(A)}^2 \tan \theta
 \]
 where $\theta$ is the angle such that $\cos \theta = \frac{\norm{Ax}}{\norm{b}}$.
 \end{theorem}

@@ -82,7 +82,7 @@ In order to have a matrix $H^i$ that satifies the first two condition we could c
 \end{obs}
 
 \subsubsection{Davidson-Fletcher-Powell}
-How can we choose a $H^i$ that satisfies the three conditions enumerated above? Taking $H^{i+1} =argmin \{\norm{H - H^i}~:~H \in$(S) and $ ~ H \succeq 0\}$ is a good idea and for this minimum problem holds the following:
+How can we choose a $H^i$ that satisfies the three conditions enumerated above? Taking $H^{i+1} =argmin \{\norm{H - H^i}~:~H \in$(S), $ ~ H \succeq 0\}$ is a good idea and for this minimum problem holds the following:
 
 \begin{theorem}[Davidson-Feltcher-Powell]
   The new matrix is obtained at each step constructing a rank two matrix, obtained from $H^i$ as a rank to correction, as follows:
@@ -94,7 +94,7 @@ At any step we need to compute $B^{i+1} = \inv{(H^{i+1})}$, because we need to s
 
 \begin{theorem}[Sherman-Morrison-Woodbury]\label{theo:16novsmw}
   The inverse of a matrix of the form $A + a \tr{b}$ has the following shape:
-  $\inv{[A + a \tr{b}]} = \frac{\inv{A} - \inv{A} a \tr{b} \inv{A}}{1 - \tr{b} \inv{A} a}$.
+  $\inv{(A + a \tr{b})} = \frac{\inv{A} - \inv{A} a \tr{b} \inv{A}}{1 - \tr{b} \inv{A} a}$.
 \end{theorem}
 
 \begin{obs}
@@ -177,7 +177,7 @@ The number of iterations needed to converge is proportional to the clusterizatio
 
 The algorithm that was presented is for quadratic functions, but the same algorithm works for non quadratic function as well, as long as we change the fomula for $\beta$.
 
-The pseudocode of \Cref{alg:16novCGA} is referred to Fletcher-Reeves definition of $\beta^i$ $\beta^i = \norm{\nabla f(x^i)} / \sqrnorm{\nabla f(x^{i-1})}$.
+The pseudocode of \Cref{alg:16novCGA} is referred to Fletcher-Reeves definition of $\beta^i = \norm{\nabla f(x^i)} / \sqrnorm{\nabla f(x^{i-1})}$.
 
 This algorithm converges in at most $n$ iterations.
 
@@ -199,10 +199,10 @@ This algorithm converges in at most $n$ iterations.
     \EndProcedure%
 }
 
-We have three different formulas for $\beta_i$, which coincide in the quadratic case.
+We have three different formulas for $\beta^i$, which coincide in the quadratic case.
 
 \begin{enumerate}
-  \item Polak-Ribi\`ere: $\beta^i = \frac{[\nabla \tr{f(x^i)} (\nabla f(x^i) - \nabla f(x^{i-1}))]}{\sqrnorm{\nabla f(x^{i-1})}}$  
+  \item Polak-Ribi\`ere: $\beta^i = \frac{\nabla \tr{f(x^i)} (\nabla f(x^i) - \nabla f(x^{i-1}))}{\sqrnorm{\nabla f(x^{i-1})}}$  
   \item Hestenes-Stiefel: $\beta^i = \frac{\tr{\nabla f(x^i)}(\nabla f(x^i) - \nabla f(x^{i-1}))}{\tr{(\nabla f(x^i) - \nabla f(x^{i-1}))}d^{i-1}}$
     
   \item Dai-Yuan: $\beta^i = \frac{\sqrnorm{\nabla f(x^i)}}{\tr{(\nabla f(x^i) - \nabla f(x^{i-1}))} d^{i-1}}$

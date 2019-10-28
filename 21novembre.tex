@@ -21,8 +21,8 @@ Let us see some real life examples, where the matrices are large and sparse.
     This kind of functions lead to a sparse adjacency matrix $A$, as can be observed in \Cref{fig:21nov1};
 
     \addpic{0.5}{pics/21nov/1}{A local function on graph.}{fig:21nov1}
-  \item[{\sc Images:}] Take an $m \times m$ image and blur it (each pixel is obtained as the average of its neighbours). $T: \mathcal{M}(m, \R) \to \mathcal{M}(m, \R)$ such that ${T(A)}_{ij} = \frac{1}{9} \cdot (A_{i-1 j} + A_{i-1 j-1} + A_{i-1 j+1} + A_{i j} + A_{i j-1} + A_{i j+1} + A_{i+1 j} + A_{i+1 j-1} + A_{i+1 j+1})$. $T$ may be written as a matrix that maps all the $m$ images to a set of $m$ blurred images and has the following shape $T \in \mathcal{M}(m^2, \R)$ such that the $(i, j)$-th row of $T$ has exactly $9$ entries with value $\frac{1}{9}$ and all the others are $0$. The non zero entries correspond to $A_{i-1 j}$, \ldots, $A_{i+1 j+1}$;
-  \item[{\sc KKT systems}] constrained optimization;
+  \item[{\sc Images:}] Take an $m \times m$ image and blur it (each pixel is obtained as the average of its neighbours). $T: \mathcal{M}(m, \R) \to \mathcal{M}(m, \R)$ such that ${T(A)}_{ij} = \frac{1}{9} (A_{i-1 j} + A_{i-1 j-1} + A_{i-1 j+1} + A_{i j} + A_{i j-1} + A_{i j+1} + A_{i+1 j} + A_{i+1 j-1} + A_{i+1 j+1})$. $T$ may be written as a matrix that maps all the $m$ images to a set of $m$ blurred images and has the following shape $T \in \mathcal{M}(m^2, \R)$ such that the $(i, j)$-th row of $T$ has exactly $9$ entries with value $\frac{1}{9}$ and all the others are $0$. The non zero entries correspond to $A_{i-1 j}$, \ldots, $A_{i+1 j+1}$;
+  \item[{\sc KKT systems:}] constrained optimization;
   \item[{\sc Engineering problem:}] To check stability of a bridge, it gets split into small cells. It can be proven that the stress on each of these cells corresponds to the force applied by the neighbours. In the end, this local phenomenon may be represented by a sparse matrix.
     \addpic{0.5}{pics/21nov/2.png}{Graphic idea of a bridge partitioned into small blocks}{fig:21nov2}
 \end{description}
@@ -64,10 +64,10 @@ Since the idea of Gauss elimination is to add multiples of row $1$ to all the ro
     Where the $\circled{\ast}$ is called \textbf{pivot}.
 
 \[
-L_1 A = A_1.
+L_1 A = A_1
 \]
 \[
-  {(L_1)}_{k1} = -\frac{A_{k1}}{A_{11}}, \quad k = 2,3,\dots,m.
+  {(L_1)}_{k1} = -\frac{A_{k1}}{A_{11}}, \quad k = 2,3,\dots,m
 \]
 
 \item[{\sc Step 2:}] we multiply for a matrix that has an ``identity frame'' and inside does the same $L_1$ was doing before.
@@ -96,10 +96,10 @@ L_1 A = A_1.
 \end{pmatrix}
 \]
 \[
-L_2 A_1 = A_2,
+L_2 A_1 = A_2
 \]
 \[
-  {(L_2)}_{k2} = \frac{{(A_1)}_{k2}}{{(A_1)}_{22}}, \quad k = 3,\dots,m.
+  {(L_2)}_{k2} = \frac{{(A_1)}_{k2}}{{(A_1)}_{22}}, \quad k = 3,\dots,m
 \]
 \item[{\sc Step 3:}] we go on and
 \[
@@ -127,10 +127,10 @@ L_2 A_1 = A_2,
     \end{pmatrix}
 \]
 \[
-L_3 A_2 = A_3,
+L_3 A_2 = A_3
 \]
 \[
-  {(L_3)}_{k3} = \frac{{(A_2)}_{k3}}{{(A_2)}_{33}}, \quad k = 4,\dots,m.
+  {(L_3)}_{k3} = \frac{{(A_2)}_{k3}}{{(A_2)}_{33}}, \quad k = 4,\dots,m
 \]
 
 \item[{\sc Step 4:}] one more operation
@@ -159,10 +159,10 @@ L_3 A_2 = A_3,
     \end{pmatrix}
 \]
 \[
-L_4 A_3 = A_4,
+L_4 A_3 = A_4
 \]
 \[
-  {(L_4)}_{k4} = \frac{{(A_3)}_{k4}}{{(A_3)}_{44}}, \quad k = 5,\dots,m.
+  {(L_4)}_{k4} = \frac{{(A_3)}_{k4}}{{(A_3)}_{44}}, \quad k = 5,\dots,m
 \]
 \end{description}
 
@@ -182,21 +182,21 @@ In the generic case we have $L_{m-1}L_{m-2}\dots L_1 A = U$, where $U$ is upper 
     -a_3 &  & 1  \\
     -a_4 &  & & 1  \\
     -a_5 &  &  & & 1 
-\end{bsmallmatrix}^{-1} \cdot
+\end{bsmallmatrix}^{-1}
 \begin{bsmallmatrix}
     1 & \\
      & 1 & \\
      & -b_3 & 1  \\
      & -b_4 & & 1  \\
      & -b_5 &  & & 1 
-\end{bsmallmatrix}^{-1} \cdot
+\end{bsmallmatrix}^{-1}
 \begin{bsmallmatrix}
     1 & \\
      & 1 & \\
      &  & 1  \\
      &  & -c_4& 1  \\
      &  & -c_5 & & 1 
-\end{bsmallmatrix}^{-1} \cdot 
+\end{bsmallmatrix}^{-1} 
 \begin{bsmallmatrix}
     1 & \\
      & 1 & \\
@@ -278,7 +278,7 @@ A = \begin{bmatrix}
 \begin{bmatrix}
     10^{-30} & 1\\
     0 & 1-10^{30}
-\end{bmatrix}.
+\end{bmatrix}
 \]
 
 In this case the LU factorization produces $L,U$ with norm much larger than $\norm{A}$.
@@ -287,7 +287,7 @@ In this case the LU factorization produces $L,U$ with norm much larger than $\no
 Luckily, it's easy to circumvent this issue multiplying $L_i$s by some permutation matrices (which swap rows in order to keep ``large'' pivots), as follows
 
 \[
-L_{m-1}P_{m-1}\dots L_2P_2L_1P_1A = U.
+L_{m-1}P_{m-1}\dots L_2P_2L_1P_1A = U
 \]
 
 \begin{obs}
@@ -366,7 +366,7 @@ A = \begin{pmatrix}
   \ast & \ast & \ast & 0 & 0 & 0  &\cdots & 0\\
   \ast & \ast & \ast & \ast & 0 & 0 & \cdots & 0\\
   \ast & \ast & \ast & \ast & \ast & 0 & \cdots & 0\\
-  0 & \ast & \ast & \ast & \ast & \ast & & \vdots\\
+  0 & \ast & \ast & \ast & \ast & \ast & \ddots & \vdots\\
   \vdots & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & 0\\
   0 & 0 & 0 & \cdots & \ast & \ast & \ast & \ast\\
   0 & 0 & 0 & \cdots & \ast & \ast & \ast & \ast\\
@@ -377,22 +377,22 @@ A = \begin{pmatrix}
 
 \[
 L = \begin{pmatrix}
-  \ast & & & & & & & \\
-  \ast & \ast & & & & & \\
-  \ast & \ast & \ast & & & & & \\
-  & \ddots & \ddots & \ddots & & & \\
-  & & \ast & \ast & \ast & & \\
-  & & & \ast & \ast & \ast & \\
+  \ast & 0 & 0 & 0 & 0 & \cdots & 0\\
+  \ast & \ast & 0 & 0 & 0 & \cdots & 0\\
+  \ast & \ast & \ast & 0 & 0 & \cdots & 0\\
+  & \ddots & \ddots & \ddots & \ddots & \vdots & \vdots\\
+  & & \ast & \ast & \ast & 0 & 0\\
+  & & & \ast & \ast & \ast & 0\\
   & & & & \ast & \ast & \ast\\
 \end{pmatrix}
 U = \begin{pmatrix}
   \ast & \ast & \ast & & & & & \\
-  & \ast & \ast & \ast & & & \\
-  & & \ast & \ast & \ast & & & \\
-  & & & \ddots & \ddots & \ddots & \\
-  & & & & \ast & \ast & \ast & \\
-  & & & & & \ast & \ast & \ast\\
-  & & & & & & \ast & \ast\\
+  0 & \ast & \ast & \ast & & & \\
+  0 & 0 & \ast & \ast & \ast & & & \\
+  \vdots & \vdots & \ddots & \ddots & \ddots & \ddots & \\
+  0 & \cdots & 0 & 0 & \ast & \ast & \ast & \\
+  0 & \cdots & 0 & 0 & 0 & \ast & \ast & \ast\\
+  0 & \cdots & 0 & 0 & 0 & 0 & \ast & \ast\\
 \end{pmatrix}
 \]
 

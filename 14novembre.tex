@@ -172,18 +172,18 @@ How to compute $\varepsilon$ numerically? How much larger should $\varepsilon$ b
 
  The reasons behind the choice of $\delta$ (not too small) are bothnumerical (any double $\leq$ {\tt 1e-16} ``is $0$'') and algorithmical (if $\lambda^n(\nabla^2 f(x^i) + \varepsilon I)$ ``very small'' then the axes of $S(Q_{x^i}, \cdot)$ are ``very elongated'').
 
- It can be proved that the $\varepsilon$ we chose is the solution to an optimization problem: $\min \{\norm{H - \nabla^2 f(x^i)} ~ H \succeq \delta I\}$. The choice for $\delta$ in the MatLab code is $10^{-6}$.
+ It can be proved that the $\varepsilon$ we chose is the solution to an optimization problem: $\min \{\norm{H - \nabla^2 f(x^i)} ~ H \succeq \delta I\}$. The choice for $\delta$ in the code is $10^{-6}$.
 
 \begin{obs}
    Note that these contraints are important and we will get back to them later on in the course.
 \end{obs}
  
-Could we use a different norm instead of the $2$-norm? Yes, for example we can use Frobenius norm, changing a bit the algorithm, but we still get convergence. We would need to solve $\min \{{\norm{H - \nabla^2 f(x^i)}}_{\Cr{F}} ~ H \succeq \delta I\}$, which is performed in two steps:
+Could we use a different norm instead of the $2$-norm? Yes, for example we can use Frobenius norm, changing a bit the algorithm, but we still get convergence. We would need to solve $\min \{{\norm{H - \nabla^2 f(x^i)}}_{F} ~ H \succeq \delta I\}$, which is performed in two steps:
 \begin{enumerate}
   \item compute spectral decomposition $\nabla^2 f(x^i) = H \Lambda H^T$
   \item $H^i = H \bar{\Lambda} H^T$ with $\bar{\gamma}^i = \max \{\lambda^i, \delta\}$
 \end{enumerate}
-In both cases, $\{x^i\} \to x_*$ with $\nabla^2 f(x_*) \succeq \delta I$, which implies $varepsilon^i = 0$ and $H^i = \nabla^2 f(x^i)$ eventually. It holds also that we have superlinear convergence if ``$H^i$ looks like $\nabla^2 f(x^i)$ along $d^i$'', formally $\lim_{i \to \infty} \norm{(H^i - \nabla^2 f(x^i)) d^i} \norm{d^i} = 0$.
+In both cases, $\{x^i\} \to x_*$ with $\nabla^2 f(x_*) \succeq \delta I$, which implies $\varepsilon^i = 0$ and $H^i = \nabla^2 f(x^i)$ eventually. It holds also that we have superlinear convergence if ``$H^i$ looks like $\nabla^2 f(x^i)$ along $d^i$'', formally $\lim_{i \to \infty} \norm{(H^i - \nabla^2 f(x^i)) d^i} \norm{d^i} = 0$.
 
 \begin{myframe}{\bf Computational complexity}
 We still need to compute eigenvalues, which takes $O(n^3)$, which is too much if we are in multidimensional spaces.
