@@ -23,7 +23,7 @@ In the previous lecture we introduced some sufficent conditions for matrix ortho
 \begin{proof}
   Instead of proving that $\norm{Ux} = \norm{x}$ we will prove $\norm{Ux}^2 = \norm{x}^2$:\\
   
-  $$\norm{Ux}^2 = \tr{(Ux)} \cdot (Ux) \numeq{(1)} \tr{x} \tr{U} U x = \tr{x} I_n x = \tr{x} x = \norm{x}$$
+  $$\norm{Ux}^2 = \tr{(Ux)} (Ux) \numeq{(1)} \tr{x} \tr{U} U x = \tr{x} I_n x = \tr{x} x = \norm{x}$$
 
   where $\numeq{(1)}$ follows from the definition of transpose of a product.
 \end{proof}
@@ -61,10 +61,10 @@ In the previous lecture we introduced some sufficent conditions for matrix ortho
 \end{proposition}
 
 \begin{proposition}
-  Let $U, V \in M(n, \R)$, such that $U$ and $V$ are orthogonal, then $U \cdot V$ is orthogonal. Orthogonal are closed under the product.
+  Let $U, V \in M(n, \R)$, such that $U$ and $V$ are orthogonal, then $U V$ is orthogonal. Orthogonal are closed under the product.
 \end{proposition}
 \begin{proof}
-  $\tr{(UV)} \cdot (UV) = \tr{V} \tr{U} U V = \tr{V} I_n V = \tr{V} V = I_n$
+  $\tr{(UV)} (UV) = \tr{V} \tr{U} U V = \tr{V} I_n V = \tr{V} V = I_n$
 \end{proof}
 
 
@@ -101,15 +101,13 @@ For almost almost all matrices $A \in \R^{n \times n}$ under some conditions we 
     \\
     v_1 & v_2 & \cdots & v_n\\
     \\
-  \end{pmatrix}
-  \cdot 
+  \end{pmatrix} 
   \begin{pmatrix}
     \lambda_1\\
     &\lambda_2\\
     && \ddots\\
     &&&&&\lambda_n\\
-  \end{pmatrix}
-  \cdot 
+  \end{pmatrix} 
   \begin{pmatrix}
     w_1\\
     w_2\\
@@ -134,30 +132,30 @@ This is due to the fact that $\forall B \in R^n$ s.t. $Vx=b$, $x = \begin{pmatri
 \end{comment}
 Another way to see the diagonalized form of $A$ is the following:
 $$ A = V \Lambda \inv{V} = \sum\limits_{i=1}^{n} v_i\lambda_i w_i^T = $$
-$$    \tallthin{$v_1$} \cdot \real{$\lambda_1$} \cdot \shortlarge{$w_1^T$} + \tallthin{$v_2$} \cdot \real{$\lambda_2$} \cdot \shortlarge{$w_2^T$} + \cdots + \tallthin{$v_n$} \cdot \real{$\lambda_n$} \cdot \shortlarge{$w_n^T$}
+$$    \tallthin{$v_1$} \real{$\lambda_1$} \shortlarge{$w_1^T$} + \tallthin{$v_2$} \real{$\lambda_2$} \shortlarge{$w_2^T$} + \cdots + \tallthin{$v_n$} \real{$\lambda_n$} \shortlarge{$w_n^T$}
 $$
 
-\syntax{Notice that in Matlab the eigenvalues and eigenvectors of a matrix are computed using the command \texttt{[V, Lambda] = eig(U)} and this operation has a computational complexity of $O(n^3)$.\\ we can check that the matrix \texttt{A} is equal to the decomposition in this way:\\ \texttt{A - V*Lambda*inv(V)} or \texttt{norm(A - V*Lambda*inv(V))} (both should be near to zero) }
+\syntax{Notice that in Matlab the eigenvalues and eigenvectors of a matrix are computed using the command \texttt{[V, Lambda] = eig(U)} and this operation has a computational complexity of $O(n^3)$.\\ We can check that the matrix \texttt{A} is equal to the decomposition in this way:\\ \texttt{A - V * Lambda * inv(V)} or \texttt{norm(A - V * Lambda * inv(V))} (both should be near to zero).}
 
 Notice that not all matrices $A \in M(n, \R)$ allow a diagonal decomposition.
 It may happen that such a matrix is diagonalizable in $\mathds{C}$ and its eigenvalues are complex.
 
 \begin{proposition} If this factorization with eigenvalues and eigenvectors holds, then:
-  $$ A = V \Lambda \inv{V} \Longrightarrow Av_i = v_i\lambda \; , \; \forall i = 1, \; \dots \; n $$
+  $$ A = V \Lambda \inv{V} \Longrightarrow Av_i = v_i\lambda \; , \; \forall i = 1, \dots, n $$
 \end{proposition}
 
 \noindent This decomposition tell us the behavior under repeated application of a matrix $A$ to a vector $x$. This process allow to scale a general vector $x$.\\
 
 \syntax{
-e.g \texttt{A = [1 1; 1 1]} and \texttt{x = [ 1 1 ]}\\
-then \texttt{A*x} is equal to \texttt{[2 2]'} and \texttt{A*A*x} is equal to \texttt{[4 4]'}
+e.g. \texttt{A = [1 1; 1 1]} and \texttt{x = [1 1]}\\
+then \texttt{A * x} is equal to \texttt{[2 2]'} and \texttt{A * A * x} is equal to \texttt{[4 4]'}
 }
 
 \begin{comment}
 
 
 \begin{proposition}
-  If $A \in M(n, \R)$ is diagonalizable (aka may be written as $A = V \Lambda \inv{V}$) then $A^k x = \sum\limits_{i=1}^{n} \lambda_i^k \alpha_i V^i$, for some $\alpha_i \in \R$.
+  If $A \in M(n, \R)$ is diagonalizable (aka may be written as $A = V \Lambda \inv{V}$) then $A^k x = \sum\limits_{i=1}^{n} \lambda_i^k \alpha_i V^i$, for some $\alpha_i \in \R$
 \end{proposition}
 
 \begin{proof}
@@ -173,7 +171,7 @@ x = V^1 \alpha_1 + V^2 \alpha_2 + \cdots + V^n \alpha_n
 
   \begin{equation}
     \begin{split}
-      Ax &= A \cdot ( V^1 \alpha_1 + V^2 \alpha_2 + \cdots + V^n \alpha_n)\\
+      Ax &= A ( V^1 \alpha_1 + V^2 \alpha_2 + \cdots + V^n \alpha_n)\\
       &= A V^1 \alpha_1 + A V^2 \alpha_2 + \cdots + A V^n \alpha_n\\
       & = \lambda_1 V^1 \alpha_1 + \lambda_2 V^2 \alpha_2 + \cdots + \lambda_n V^n \alpha_n\\
       &= V^1 (\lambda_1 \alpha_1) + V^2 (\lambda_2 \alpha_2) + \cdots + V^n (\lambda_n \alpha_n)\\
@@ -183,7 +181,7 @@ x = V^1 \alpha_1 + V^2 \alpha_2 + \cdots + V^n \alpha_n
   Then
  \begin{equation}
     \begin{split}
-      A^2 x &= A \cdot \Big (V^1 (\lambda_1 \alpha_1) + V^2 (\lambda_2 \alpha_2) + \cdots + V^n (\lambda_n \alpha_n) \Big )\\
+      A^2 x &= A \Big (V^1 (\lambda_1 \alpha_1) + V^2 (\lambda_2 \alpha_2) + \cdots + V^n (\lambda_n \alpha_n) \Big )\\
       &= A V^1 \lambda_1 \alpha_1 + A V^2 \lambda_2 \alpha_2 + \cdots + A V^n \lambda_n \alpha_n\\
       &= {\lambda_1}^2 V^1 \alpha_1 + {\lambda_2}^2 V^2 \alpha_2 + \cdots + A {\lambda_n}^2 V^n \alpha_n\\
     \end{split}
@@ -193,7 +191,7 @@ Inductively, we have proved the theorem.
   \item[{\sc Linear algebra view point:}]
     \begin{equation}
       \begin{split}
-        A^k x &= A \cdot A \cdot \ldots \cdot A \cdot x\\
+        A^k x &= A A \ldots A x\\
         &=V \Lambda \cancel{\inv{V}} \cancel{V} \Lambda \cancel{\inv{V}} \ldots \cancel{V} \Lambda \inv{V} x\\
         &= V \Lambda^k \inv{V} x\\
         &=V \begin{pmatrix}
@@ -209,7 +207,7 @@ Inductively, we have proved the theorem.
           && \ddots\\
           &&&& {\lambda_n}^k\\
         \end{pmatrix}
-        \cdot \begin{pmatrix}
+        \begin{pmatrix}
           {\alpha_1}\\
           {\alpha_2}\\
           \ddots\\
@@ -225,15 +223,15 @@ Inductively, we have proved the theorem.
 \begin{proposition}
   If $A \in M(n, \R)$ is diagonalizable (aka may be written as $A = V \Lambda \inv{V}$) 
   then:
-  $$A^k x = \sum\limits_{i=1}^{n} v_i\lambda^k_i w_i^T$$. 
+  $$A^k x = \sum\limits_{i=1}^{n} v_i\lambda^k_i w_i^T$$
 \end{proposition}
 
-\begin{proof}
+\begin{proof}~\\
   \begin{description}
   \item[{\sc Linear algebra view point:}]
     \begin{equation}
       \begin{split}
-        A^k x &= A \cdot A \cdot \ldots \cdot A \cdot x\\
+        A^k x &= A A \ldots A x\\
         &=V \Lambda \cancel{\inv{V}} \cancel{V} \Lambda \cancel{\inv{V}} \ldots \cancel{V} \Lambda \inv{V} x\\
         &= V \Lambda^k \inv{V} x\\
         &=V \begin{pmatrix}
@@ -258,7 +256,7 @@ Inductively, we have proved the theorem.
         \item Reorder eigenvalues/vectors
         \item Replace an eigenvector $v_i$ with $2v_i \;,\; −3.5v_i\; \dots$
         \item For matrices with repeated eigenvalues, even more possibilities:\\
-        e.g $I = VIV^-1$ for every invertible $V$
+        e.g. $I = VIV^-1$ for every invertible $V$
     \end{itemize}
     
     \item  some matrices have only complex eigenvalues: e.g. $\begin{pmatrix} 2 & 4\\ -3 & 3\end{pmatrix}$
@@ -284,15 +282,13 @@ Inductively, we have proved the theorem.
     \\
     V^1 & V^2 & \cdots & V^n\\
     \\
-  \end{pmatrix}
-  \cdot 
+  \end{pmatrix} 
   \begin{pmatrix}
     \lambda_1\\
     &\lambda_2\\
     && \ddots\\
     &&&&&\lambda_n\\
   \end{pmatrix}
-  \cdot 
   \begin{pmatrix}
     w_1\\
     w_2\\
@@ -301,7 +297,7 @@ Inductively, we have proved the theorem.
   \end{pmatrix}
 \]
 
-  Let us now consider a reordering of $V$'s columns and apply the same permutations to the ``diagonal vector'' of $\Lambda$ such that
+  Let us now consider a reordering of $V$'s columns and apply the same permutations to the ``diagonal vector'' of $\Lambda$ such that:
   
 \[
     \hat{V} = \begin{pmatrix}
@@ -342,7 +338,7 @@ Moreover, in the case of repeated eigenvalues
 \noindent For symmetric matrices, nothing goes wrong: eigenvalues decomposition always exists (Spectral theorem). The matrix will not have complex eigenvalues and not fewer eigenvectors. We can choose an $U$ orthogonal because we said it was possible to reorder eigenvalues/vectors and replace eigenvector $v_i$. \\
 
 \syntax{
-If we have an symmetric matrix \texttt{B} and we compute \texttt{[V, D] = eig(B)}, matlab will always return an orthogonal matrix $V$.
+If we have an symmetric matrix \texttt{B} and we compute \texttt{[V, D] = eig(B)}, Matlab will always return an orthogonal matrix $V$.
 }
 
 \noindent \textbf{Quadratic forms}: for a fixed symmetric matrix $Q = Q^T$, consider $x \in \R^{n}$ and $Q \in \R^{n \times n}$ $f(x) = x^T Qx$ (Geometric idea: paraboloids):\\
@@ -371,24 +367,24 @@ $$\text{with a matrix } Q = \begin{pmatrix} 3 & 2 \\ 2 & -4 \end{pmatrix}$$
   where $\lambda_{\text{max}}$ and $\lambda_{\text{min}}$ are respectively the eigenvalue of maximum value and the eigenvalue of minimum value.
 \end{proposition}
 
-\begin{proof}
+\begin{proof}~\\
   \begin{description}
     \item[{\sc Easy case with $Q = \Lambda$ diagonal:}]
     
-      $$\tr{x}Qx = \tr{x} \cdot \begin{pmatrix}
+      $$\tr{x}Qx = \tr{x} \begin{pmatrix}
     \lambda_2\\
     &\lambda_1\\
     &&\lambda_3\\
     &&& \ddots\\
     &&&&&&\lambda_n\\
     \end{pmatrix}
-      \cdot x = \lambda_1 {x_1}^2 + \lambda_2 {x_2}^2 + \cdots + \lambda_n {x_n}^2$$
+    x = \lambda_1 {x_1}^2 + \lambda_2 {x_2}^2 + \cdots + \lambda_n {x_n}^2$$
   It is obvious that this sum is bounded by:
   \[
-    \lambda_{\text{min}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) \le  \lambda_1 {x_1}^2 + \lambda_2 {x_2}^2 + \cdots + \lambda_n {x_n}^2 \le \lambda_{\text{max}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2)
+    \lambda_{\text{min}} ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) \le  \lambda_1 {x_1}^2 + \lambda_2 {x_2}^2 + \cdots + \lambda_n {x_n}^2 \le \lambda_{\text{max}} ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2)
   \]
 
-      The following holds: $ \lambda_{\text{min}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) =  \lambda_{\text{min}} \cdot \tr{x} x =  \lambda_{\text{min}} \cdot \sqrnorm{x}$ and, on the other hand, $ \lambda_{\text{max}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) =  \lambda_{\text{max}} \cdot \tr{x} x =  \lambda_{\text{max}} \cdot \sqrnorm{x}$ and this proves the fact in the special case of diagonal matrix $Q$.
+      The following holds: $ \lambda_{\text{min}} ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) =  \lambda_{\text{min}} \tr{x} x =  \lambda_{\text{min}} \sqrnorm{x}$ and, on the other hand, $ \lambda_{\text{max}} ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) =  \lambda_{\text{max}} \tr{x} x =  \lambda_{\text{max}} \sqrnorm{x}$ and this proves the fact in the special case of diagonal matrix $Q$.
     \item[{\sc General case:}]
       Let us represent $Q$ through its eigendecomposition: $A = U \Lambda \inv{U} = U \Lambda \tr{U}$, where $U$ is an orthogonal matrix.
       $$\tr{x}Qx = \tr{x} U \Lambda \tr{U} x \numeq{(1)} \tr{y} \Lambda y$$
@@ -396,7 +392,7 @@ $$\text{with a matrix } Q = \begin{pmatrix} 3 & 2 \\ 2 & -4 \end{pmatrix}$$
       where $\numeq{(1)}$ is due to the change of variable $y = \tr{U} x$ (that implies $\tr{y} = \tr{x} U$).
 
       By the same argument used in the diagonal case,
-      $$\lambda_{\text{min}} \cdot \sqrnorm{y} \le \tr{y} \Lambda y \le \lambda_{\text{max}} \cdot \sqrnorm{y}$$
+      $$\lambda_{\text{min}} \sqrnorm{y} \le \tr{y} \Lambda y \le \lambda_{\text{max}} \sqrnorm{y}$$
       Now the point is that if we can replace $\sqrnorm{y}$ with $\sqrnorm{x}$ we have proved the theorem.
       In fact this is true, due to the orthogonality of matrix $U$ ( $UU^T = U^TU = I$.
   \end{description}
@@ -425,9 +421,9 @@ $$\text{with a matrix } Q = \begin{pmatrix} 3 & 2 \\ 2 & -4 \end{pmatrix}$$
 
 \begin{proof}~\\
 Let's prove that Iff $Q$ is \textbf{positive semidefinite} then $\lambda \ge 0 \; \forall \lambda$ by contradiction:\\
-if $Q$ has a eigenvalue $\lambda_i < 0$ then 
+if $Q$ has a eigenvalue $\lambda_i < 0$ then:
 $$ v_i^TQv_i = v_i^T \lambda v_i = \lambda_i\norm{v_i}^2 < 0$$
-for the eigenvector $v_i$ associated to $\lambda_i$
+for the eigenvector $v_i$ associated to $\lambda_i$.
   
 \begin{comment}
   %not 2019
@@ -435,7 +431,7 @@ for the eigenvector $v_i$ associated to $\lambda_i$
 
   ($\Leftarrow$)Let $v_i$ be an eigenvector of $A$.
 
-  \indent $0 \le \tr{v_i} A v_i = \tr{v_i} \cdot ( \lambda_i v_i) = \lambda_i  \tr{v_i} v_i = \lambda_i \sqrnorm{v_i} \Rightarrow \lambda_i \ge 0$.
+  \indent $0 \le \tr{v_i} A v_i = \tr{v_i} ( \lambda_i v_i) = \lambda_i  \tr{v_i} v_i = \lambda_i \sqrnorm{v_i} \Rightarrow \lambda_i \ge 0$.
 \end{comment}  
 \end{proof}
 
@@ -444,9 +440,9 @@ for the eigenvector $v_i$ associated to $\lambda_i$
 and gives a square, symmetric matrix and is positive semidefinite.
 \end{proposition}
 
-\begin{proof}
+\begin{proof}~\\
 \begin{description}
-  \item[{\sc Symmetry:}] $\tr{(\tr{B}B)} = \tr{B} \cdot \tr{(\tr{B})} = \tr{B} B$.
+  \item[{\sc Symmetry:}] $\tr{(\tr{B}B)} = \tr{B} \tr{(\tr{B})} = \tr{B} B$
   \item[{\sc Positive definite:}] $\tr{x} \tr{B} B x = \tr{(B x)} (Bx) = \sqrnorm{Bx} \ge 0$
 \end{description}
 \end{proof}
@@ -460,7 +456,7 @@ The same holds for $B\tr{B}$, since we can define $C = \tr{B}$.
 \end{proposition}
 
 \syntax{
-  In ordert to check if a matrix $A$ is positive definite in Matlab we can look at its eigenvalues (cfr. \texttt{eig(A)}).
+  In order to check if a matrix $A$ is positive definite in Matlab we can look at its eigenvalues (cfr. \texttt{eig(A)}).
 }
 
 \noindent \textbf{NOTE for complex matrices}:\\

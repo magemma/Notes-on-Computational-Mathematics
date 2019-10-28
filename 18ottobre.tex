@@ -28,6 +28,7 @@ We find the minimum by solving $\nabla f(x) = 0$,
 where $f(x) = {x}^{T}{A}^{T}Ax - 2{b}^{T}Ax + {b}^{T}b$
 
 $\nabla  f(x) = 2 {A}^{T}Ax - 2{A}^{T}b$
+
 How should we compute this gradient? 
 
 We know that $f(x+h) = f(x) + {(\nabla f(x))}^{T} \dot h  + o(\|h\|)$
@@ -134,7 +135,7 @@ Let's analyze the case in which $A$ is a vector. Given $x \in \mathds{R}^m$, we 
   We denote $e_{i}$ the i-th column of the identity matrix.
 
 \begin{definition}[Housholder reflector]
-  Let $U$ be a vector in $\mathds{R}^m$. An \textbf{Householder reflector} is a matrix $H$ such that $H = I - \frac{2}{\tr{U}U} \cdot U \tr{U}$.
+  Let $U$ be a vector in $\mathds{R}^m$. An \textbf{Householder reflector} is a matrix $H$ such that $H = I - \frac{2}{\tr{U}U} U \tr{U}$.
   
   We can observe that $\tr{U}U$ is a scalar.
 
@@ -149,9 +150,9 @@ Let's analyze the case in which $A$ is a vector. Given $x \in \mathds{R}^m$, we 
 \begin{proof}
   \begin{equation}
     \begin{split}
-      H\tr{H} & = (I-\frac{2}{{\|U\|}^{2}} \cdot U \tr{U}) \cdot (I-\frac{2}{{\|U\|}^{2}} \cdot U \tr{U})\\
-      & = I\cdot I - \frac{2}{\sqrnorm{U}} \cdot U \tr{U} I-I \cdot \frac{2}{\sqrnorm{U}} \cdot U \tr{U} + \frac{2}{\sqrnorm{U}} \cdot U \tr{U} \cdot \frac{2}{\sqrnorm{U}} \cdot U \tr{U}\\
-      & = I - \frac{2}{\sqrnorm{U}} \cdot U \tr{U} - \frac{2}{\sqrnorm{U}} \cdot U \tr{U} + \frac{4}{{\|U\|}^{4}} \cdot U\tr{U} U \tr{U}\\
+      H\tr{H} & = (I-\frac{2}{{\|U\|}^{2}} U \tr{U}) (I-\frac{2}{{\|U\|}^{2}} U \tr{U})\\
+      & = I I - \frac{2}{\sqrnorm{U}} U \tr{U} I-I \frac{2}{\sqrnorm{U}} U \tr{U} + \frac{2}{\sqrnorm{U}} U \tr{U} \frac{2}{\sqrnorm{U}} U \tr{U}\\
+      & = I - \frac{2}{\sqrnorm{U}} U \tr{U} - \frac{2}{\sqrnorm{U}} U \tr{U} + \frac{4}{{\|U\|}^{4}} U\tr{U} U \tr{U}\\
       & = I - \frac{4}{\sqrnorm{U}} U \tr{U} + \frac{4}{{\|U\|}^{4}} U {\|U\|}^{2} \tr{U}\\
       & = I
     \end{split}
@@ -165,9 +166,9 @@ $y = compute\_product(U,x)$
 
 $a = U' * x$
 
-$b=U' * U$
+$b= U' * U$
 
-$y = x \frac{2*a}{b} \cdot U$
+$y = x \frac{2*a}{b} U$
 
 All these operations are linear operations, so the complexity is $O(m)$, cheaper than generic matrix-vector product ($O(m^2)$).
 \end{example}
@@ -178,7 +179,7 @@ Can we find a matrix $H$ in this family that maps $x$ to $y$ (equivalently $Hx =
  $\forall x, y ~ s.t ~ \|x\| = \|y\| \exists H ~ s.t. ~ Hx = y$, choosing $u = x - y$.
 \end{lemma}
 
-A geometric idea is given by the following
+A geometric idea is given by the following:
 
 \addtwopics{0.5}{pics/18ott/2.png}{0.46}{pics/18ott/3.png}{On the left in $\mathds{R}^{2}$, on the right in $\mathds{R}^{3}$.}{fig:18ott2}
 
@@ -193,7 +194,7 @@ What happens if $y = \begin{pmatrix} \|x\|\\ 0\\ \cdot\\ \cdot\\ \cdot\\ 0\end{p
     \begin{pmatrix} {x}_{1}-s\\ {x}_{2}\\ \cdot\\ \cdot\\ \cdot\\ {x}_{n} \end{pmatrix}
   \]
       
-      where $s = \|x\|$
+      where $s = \|x\|$.
 
 \syntax{
 {\tt function[v,s] = householder\_vector(x)}, where v and s are the returned values and x is the argument.
