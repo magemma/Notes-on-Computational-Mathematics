@@ -26,8 +26,7 @@
     &&&\\
     &&&\\
     \end{pmatrix}
-    \cdot
-    \Sigma \cdot 
+    \Sigma 
     \tr{\begin{pmatrix}
     \\
     V^1 ~ V^2 ~ \cdots ~ V^n\\
@@ -46,7 +45,7 @@ where
     \end{pmatrix}
 \]
 
-  And if we denote $U_1$ the matrix obtained as the first $n$ columns of $U$ we have the tall, thin SVD:~$ A = U_1 \cdot \Sigma \cdot \tr{V}$}.
+  And if we denote $U_1$ the matrix obtained as the first $n$ columns of $U$ we have the tall, thin SVD:~$ A = U_1 \Sigma \tr{V}$}
 
 We would like to see how we can solve a least squares problem through $SVD$:
 
@@ -105,22 +104,22 @@ Where the first $n$ rows may be assigned to $0$ iff $y_{i} = -\frac{\tr{U^{i}} b
     x &= Vy ~~~~~~~~~~~~~~~~ \leftarrow \text{Orthogonality of} ~V\\
     &= V^1 y_1 + V^2 y_2+ \cdots + V^n y_n\\
     &= V^1 \frac{1}{\sigma_1} \tr{U^1} b + V^2 \frac{1}{\sigma_2} \tr{U^2} b + \cdots + V^n \frac{1}{\sigma_n} \tr{U^n} b\\ 
-    &= {V \cdot \begin{pmatrix}
+    &= {V \begin{pmatrix}
       \frac{1}{\sigma_{1}} & & & & &&&&\\
         & \frac{1}{\sigma_{2}} & & & &&&&\\
         & & \cdot & & & &&&\text{\Huge 0}\\
         & & & \cdot & &&&&\\
         & & & & \cdot &&&&&\\
         & & & & & & \frac{1}{\sigma_{n}}&&&\\
-    \end{pmatrix} \cdot \tr{U} \cdot b}\\
-    &= {V \cdot \begin{pmatrix}
+    \end{pmatrix} \tr{U} b}\\
+    &= {V \begin{pmatrix}
       \frac{1}{\sigma_{1}} & & & &\\
         & \frac{1}{\sigma_{2}} & & &\\
         & & \cdot & & &\\
         & & & \cdot & &\\
         & & & & \cdot &\\
         & & & & & & \frac{1}{\sigma_{n}}\\
-    \end{pmatrix} \cdot \tr{U_1} \cdot b}\\
+    \end{pmatrix} \tr{U_1} b}\\
   \end{aligned}
 \end{equation}
 
@@ -140,14 +139,14 @@ Which depends only on the tall, thin~SVD.%
 $\Updownarrow$
   
   $\tr{(US\tr{V})} (US\tr{V}) = V\tr{S}\tr{U}US\tr{V}
-    = V \cdot  \begin{pmatrix}
+    = V \begin{pmatrix}
     \sigma_{1}^2 & & & & &\\
     & \sigma_{2}^2 & & & &\\
     & & \cdot & & &\\
     & & & \cdot & &\\
     & & & & \cdot &\\
     & & & & & & \sigma_{n}^2\\ 
-  \end{pmatrix} \cdot \tr{V}$
+  \end{pmatrix} \tr{V}$
   is invertible 
   
 $\Updownarrow$
@@ -162,7 +161,7 @@ This lemma also proves that the factorization is also a $QR$ factorization.
 \begin{myframe}{\bf Note on Matlab syntax}
   \texttt{svd(A, 0)} and \texttt{qr(A, 0)} express that we are only interested in the parts of the factorization without zeros, in case of a tall, thin matrix $A$.
 \end{myframe}
- We may observe that the computational complexity is $O(15 \cdot n^3)$ for square matrices, while it's $O(m \cdot n^2)$ in the tall, thin case.
+ We may observe that the computational complexity is $O(15n^3)$ for square matrices, while it's $O(mn^2)$ in the tall, thin case.
 
  \subsubsection{Behaviour in case of zeros as singular values}
  What happens when there are some zeros as singular values? 
@@ -210,7 +209,7 @@ Note that $\norm{x} = \norm{y}$, because $x = Vy$. It follows from the expressio
 
   The solution of $P2$ is given by
   \[
-    Vy = \begin{pmatrix} V^1 & V^2 & \cdots & V^{n} \end{pmatrix} \cdot \begin{pmatrix}
+    Vy = \begin{pmatrix} V^1 & V^2 & \cdots & V^{n} \end{pmatrix} \begin{pmatrix}
    -\frac{\tr{U^1} b}{\sigma_1}\\
     -\frac{\tr{U^2} b}{\sigma_2}\\
     \vdots\\
@@ -277,7 +276,7 @@ We show that the two objective functions coincide.
         \alpha x
       \end{pmatrix}}\\
       &= \sqrnorm{Ax-b} + \sqrnorm{\alpha x}\\
-      &= \sqrnorm{Ax-b} + \alpha \cdot \sqrnorm{x}\\
+      &= \sqrnorm{Ax-b} + \alpha^2 \sqrnorm{x}\\
     \end{aligned}
   \end{equation}
 \end{proof}
@@ -340,7 +339,7 @@ We can observe that $(\tr{A}A + \alpha^2 I)$ is positive definite.
 \end{proposition}
 
 \begin{proof}
-  $\tr{z} \cdot (\tr{A}A + \alpha^2 I) \cdot z = \tr{z}\tr{A}Az + \alpha^2 \tr{z} z  \numeq{(1)} \alpha^2 \tr{z} z = \alpha^2 \sqrnorm{x} > 0$. The equality $(1)$ is obtained because $\tr{z}\tr{A}A \ge 0$, since $\tr{A}A$ is positive semidefinite. 
+  $\tr{z} \cdot (\tr{A}A + \alpha^2 I) \cdot z = \tr{z}\tr{A}Az + \alpha^2 \tr{z} z  \numeq{(1)} \alpha^2 \tr{z} z = \alpha^2 \sqrnorm{x} > 0$. The equality $(1)$ is obtained because $\tr{z}\tr{A}Az \ge 0$, since $\tr{A}A$ is positive semidefinite. 
 \end{proof}
 
 \begin{exe}
@@ -353,8 +352,8 @@ When $\sigma_i \gg \alpha$, $\frac{\sigma_i}{\sigma_i^2+\alpha^2} \approx \frac{
 
 When $\sigma_i \ll \alpha$, $\frac{\sigma_i}{\sigma_i^2+\alpha^2} \approx \frac{\sigma_i}{\alpha^2} \approx 0$: approximately ignoring small singular values.
 \end{exe}
-\textbf{Per casa:} fare esercizio.
+How can we choose $k$?
 
 \addpic{0.5}{pics/7nov/1.png}{Here is the shape of the formula for the singular values.}{fig:7nov1}
-How can we choose $k$? We don't know.
+
 \end{document}

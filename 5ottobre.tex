@@ -135,7 +135,7 @@ Since the Hessian is strictly positive definite $\lambda_{\text{min}} > 0$ minim
 
 In the remaining part of this lecture we will look for conditions that ensure that one a local minimum is found, it is also a global minimum.
 
-Until now, we said that the local minima are those points where the fradient is $0$ and the Hessian is positive semidefinite.
+Until now, we said that the local minima are those points where the gradient is $0$ and the Hessian is positive semidefinite.
 An easy way to ensure that the Hessian is positive semidefinite in a ball around $x$ is to have that the Hessian is positive semidefinite everywhere ($\forall x \in \R^n$) aka $f$ is a convex function.
 
 \subsection{Convexity}
@@ -232,7 +232,7 @@ The following operations preserve convexity.
   \item Let $C_1$ and $C_2$ convex and let $\alpha_1, \alpha_2 \in \R$. Then $\alpha_1 C_1 + \alpha_2 C_2 := \{ x = \alpha_1 x_1 + \alpha_2 x_2 \,:\, x_1 \in C_1, x_2 \in C_2\}$ convex;
   \item $C \subseteq \R^n = \R^{n_1} \times \R^{n_2}$ convex $\Longrightarrow$
   \begin{description}
-    \item[{\small \sc Slice:}] $C(y) := \{x \in \R^{n_1}~:~(x, y) \in C\}$ conve;
+    \item[{\small \sc Slice:}] $C(y) := \{x \in \R^{n_1}~:~(x, y) \in C\}$ convex;
     \item[{\small \sc Projection:}] $C^1 := \{x \in \R^{n_1}~:~\exists y$ s.t. $(x, y) \in C\}$ convex
   \end{description}
     A pictorial example in \Cref{fig:5ott_3};

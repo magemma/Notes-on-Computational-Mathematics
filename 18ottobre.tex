@@ -86,14 +86,14 @@ $v^T({A}^{T}Ax - {A}^{T}b) = 0$, see \Cref{fig:18ott1}.
 It's possible to find a close formula for solving this problem: $\min\|Ax-b\|$ is given by $x={({A}^{T}A)}^{-1}{A}^{T}b$.
 
 \begin{definition}[Moore-Penrose pseudoinverse]
-  Let $A$ be a matrix in $\mathcal{M}(n, m, \mathds{R})$, the \textbf{Moore-Penrose pseudoinverse} of $A$ with full column rank is ${\bf {A}^{\dag}} := {({A}^{T}A)}^{-1}{A}^{T}$
+  Let $A$ be a matrix in $\mathcal{M}(n, m, \mathds{R})$, the \textbf{Moore-Penrose pseudoinverse} of $A$ with full column rank is ${\bf {A}^{+}} := {({A}^{T}A)}^{-1}{A}^{T}$
 \end{definition}
 
-So we can write $x={A}^{\dag}b$ for the solution of a LS problem.
+So we can write $x={A}^{+}b$ for the solution of a LS problem.
 
 In particular, the solution of $\|\min Ax - ({b}_{1} + {b}_{2})\|$ is the sum of two solutions of $\min \| A{x}_{1} -b_{1} \|$ and  $\min \| A{x}_{2} -b_{2} \|$.
 
-\textbf{Obs:} $A{A}^{\dag} = A {(\tr{A}A)}^{-1} \tr{A} = A \inv{A} \inv{\tr{A}} \tr{A} = I_{n \times m}$, but this doesn't hold for ${A}^{\dag}A = {({A}^{T}A)}^{-1}({A}^{T}A)$, which is not the identity matrix.
+\textbf{Obs:} $A{A}^{+} = A {(\tr{A}A)}^{-1} \tr{A} = A \inv{A} \inv{\tr{A}} \tr{A} = I_{n \times m}$, but this doesn't hold for ${A}^{+}A = {({A}^{T}A)}^{-1}({A}^{T}A)$, which is not the identity matrix.
 
 \subsection{QR factorization}
 
@@ -185,6 +185,7 @@ A geometric idea is given by the following
 What happens if $y = \begin{pmatrix} \|x\|\\ 0\\ \cdot\\ \cdot\\ \cdot\\ 0\end{pmatrix}$?
   
   $y = \tr{H}x$, actually $\tr{H} = \inv{H} = H$
+  
   Let's map $x$ to $y$: 
   \[
     U = x - y =
@@ -194,10 +195,8 @@ What happens if $y = \begin{pmatrix} \|x\|\\ 0\\ \cdot\\ \cdot\\ \cdot\\ 0\end{p
       
       where $s = \|x\|$
 
-\textbf{Matlab syntax for functions}
-
+\syntax{
 {\tt function[v,s] = householder\_vector(x)}, where v and s are the returned values and x is the argument.
+}
 
 \end{document}
-
-

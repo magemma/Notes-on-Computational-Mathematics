@@ -11,7 +11,7 @@
 \section{25th of October 2018 --- A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-We need to choose a descending direction, we have more choices than the opposite of the gradient.
+In order to choose a descending direction, we have more choices than the opposite of the gradient.
 
 We want the derivative to be almost zero, given a tolerance value. 
 
@@ -59,9 +59,9 @@ We want to compute how much the error is, if compared to the error at the previo
     \item Since $\alpha^{k+1} \numeq{(1)} \alpha^k - \frac{\varphi'({\alpha}_*)}{\varphi''(a^k)}$ and $\varphi'(\alpha_*) \numeq{(2)} 0$, we obtain:
   \begin{equation}
     \begin{split}
-      \alpha^{k+1} - \alpha_* & \numeq{(1)} \alpha^k - \alpha_* - \frac{(\varphi'(\alpha^k))}{\varphi''(\alpha^k)}\\
-      & \numeq{(2)} \alpha^k - \alpha_* - \frac{(\varphi'(\alpha^k) - \varphi'(\alpha_*))}{\varphi''(\alpha^k)}\\
-      & = \frac{[\varphi'(\alpha^k) -\varphi'(\alpha_*) + \varphi''(\alpha^k) \cdot (\alpha^k - \alpha_*)]}{\varphi''(\alpha^k)} 
+      \alpha^{k+1} - \alpha_* & \numeq{(1)} \alpha^k - \alpha_* - \frac{\varphi'(\alpha^k)}{\varphi''(\alpha^k)}\\
+      & \numeq{(2)} \alpha^k - \alpha_* - \frac{\varphi'(\alpha^k) - \varphi'(\alpha_*)}{\varphi''(\alpha^k)}\\
+      & = \frac{[\varphi'(\alpha^k) -\varphi'(\alpha_*) + \varphi''(\alpha^k) (\alpha^k - \alpha_*)]}{\varphi''(\alpha^k)} 
     \end{split}
   \end{equation}
  Where the term inside the square parenthesis  is the first order model, centered in $\alpha_*$ computed in $\alpha^k$.
@@ -69,15 +69,15 @@ We want to compute how much the error is, if compared to the error at the previo
     Let's see what happens to $\alpha^{k+1} - \alpha_*$:
   \begin{equation}
     \begin{split}
-      \alpha^{k+1} - \alpha_* & \numeq{(5)} \frac{[\varphi'(\alpha^k) -\varphi'(\alpha_*) + \varphi''(\alpha^k) \cdot (\alpha^k - \alpha_*)]}{\varphi''(\alpha^k)}\\
-      & \numeq{(3)} \frac{-\varphi'''(\beta)}{2 \varphi''(\alpha^k)} \cdot {(\alpha^k - \alpha_*)}^2
+      \alpha^{k+1} - \alpha_* & \numeq{(5)} \frac{[\varphi'(\alpha^k) -\varphi'(\alpha_*) + \varphi''(\alpha^k) (\alpha^k - \alpha_*)]}{\varphi''(\alpha^k)}\\
+      & \numeq{(3)} \frac{-\varphi'''(\beta)}{2 \varphi''(\alpha^k)} {(\alpha^k - \alpha_*)}^2
     \end{split}
   \end{equation}
 \item We can say that the quantity $2\varphi''(\alpha^{k})$ doesn't become too small and that the numerator $\varphi'''(\beta)$ doesn't become too big. This is proved since $\exists \delta > 0$ s.t.~$\varphi''(\alpha) \geq k_2 > 0$ and also  $| \varphi'''(\beta) | \leq k_1 < \infty$. We can go on bounding the difference between $\alpha^{k+1}$ and $\alpha_*$ as follows: for $\alpha$, $\beta \in [ \, \alpha_* - \delta \,,\, \alpha_* + \delta$
        
   \begin{equation}
     \begin{split}
-      |\alpha^{k+1} - \alpha_*| & \numeq{(6)} \frac{-\varphi'''(\beta)}{2 \varphi''(\alpha^k)} \cdot {(\alpha^k - \alpha_*)}^2\\
+      |\alpha^{k+1} - \alpha_*| & \numeq{(6)} \frac{-\varphi'''(\beta)}{2 \varphi''(\alpha^k)} {(\alpha^k - \alpha_*)}^2\\
       & = |\alpha^{k+1} - \alpha_{*}| \leq [\frac{k_1}{2 k_{2}}] {(\alpha^{k} - \alpha_{*})}^{2}
     \end{split}
   \end{equation}
@@ -85,7 +85,7 @@ We want to compute how much the error is, if compared to the error at the previo
   \begin{equation}
     \begin{split}
       |\alpha^{k+1} - \alpha_*| & = |\alpha^{k+1} - \alpha_{*}| \leq [\frac{k_1}{2 k_{2}}] {(\alpha^{k} - \alpha_{*})}^{2}\\
-      &= |\alpha^{k+1} - \alpha_{*}| \leq [\frac{k_1}{2 k_{2}}] {(\alpha^{k} - \alpha_{*})} \cdot {(\alpha^{k} - \alpha_{*})}
+      &= |\alpha^{k+1} - \alpha_{*}| \leq [\frac{k_1}{2 k_{2}}] {(\alpha^{k} - \alpha_{*})} {(\alpha^{k} - \alpha_{*})}
     \end{split}
   \end{equation}
       Where $[\frac{k_1}{2 k_2}] {(\alpha^k - \alpha_*)} < 1$, so $\frac{k_1 (\alpha^k - \alpha_*)}{2 k_2} \leq 1 \Longrightarrow
