@@ -20,10 +20,10 @@ This methods use the information about the prevous iterations without exploiting
 \subsubsection{Heavy ball gradient method}
 The intuition behind this algorithm may be expressed through the following metaphore: an object is moving in the space and it's subject to a force. We can observe that the heavier the object, the stronger should be the force imposed in order to make it describe a certain trajectory.
 
-In this interpretation, we may define the $(i+1)$-th iteration as 
+In this interpretation, we may define the $(i+1)$-th iteration as:
 
 \[
-  x^{i+1} \gets x^i - \alpha^i \nabla f(x^i) + \beta^i (x^i - x^{i-1}),
+  x^{i+1} \gets x^i - \alpha^i \nabla f(x^i) + \beta^i (x^i - x^{i-1})
 \]
  where {\boldmath${\beta^i}$} is called \textbf{momentum}, $\mathbf{x^i}$ \textbf{heavy} and $\mathbf{\nabla f(x^i)}$ \textbf{force}.
 
@@ -42,14 +42,14 @@ Notice that if the smaller eigenvalue isn't zero (i.e.~quadratic case) we have a
 
 
 We may observe that the step we take is something that goes like $\frac{1}{L}$, where $L$ is the Lipshitz constant, since $\lambda_n$ is very small.
-With these choices the rate is the following. We observe that in the gradient the rate is the same, although there aren't the square roots
+With these choices the rate is the following. We observe that in the gradient the rate is the same, although there aren't the square roots:
 
 \[
-  \norm{x^{i+1} - x_* \} \leq \left(\frac{\sqrt{\lambda^1} - \sqrt{\lambda^n}}{\sqrt{\lambda^1} + \sqrt{\lambda^n}}\right)} \cdot \norm{x^i - x_*}
+  \norm{\{x^{i+1} - x_* \} \leq \left(\frac{\sqrt{\lambda^1} - \sqrt{\lambda^n}}{\sqrt{\lambda^1} + \sqrt{\lambda^n}}\right)} \norm{x^i - x_*}
 \]
 
 An alternative idea could be choosing $\beta^i$ and finding $\alpha^i$ using line search.
-A possible issue is that we don not know if we are moving along a descending direction, but in this method it is perfectly acceptable not to make any movement at a single step (notice that in gradient method if one step has size $0$ then we will not move anymore).
+A possible issue is that we don't know if we are moving along a descending direction, but in this method it is perfectly acceptable not to make any movement at a single step (notice that in gradient method if one step has size $0$ then we will not move anymore).
 
 $\beta^i$ is seen as an hyperparameter, hence its value is tuned rerunning the alogirthm several times.
 
@@ -78,7 +78,7 @@ This method works only on convex functions, it has some similarities with heavy 
   \EndProcedure%
 }
 
-The rational behind this algorithm is the following: When we are in a certain point at a certain iteration, we go on a little bit $\beta^i$ and we end up in a point $y$. The gradient is computed in that point and used to choose the next point.
+The rational behind this algorithm is the following: when we are in a certain point at a certain iteration, we go on a little bit $\beta^i$ and we end up in a point $y$. The gradient is computed in that point and used to choose the next point.
 
 \addpic{0.7}{pics/22nov/3.png}{We build a linear model, which is a lowerbound for the function, then we build a quadratic model, which is above our function.}{fig:22nov3}
 
@@ -125,7 +125,7 @@ An online aplication may be a sensor that produces hundreds of outputs per secon
 
 We study the converge of this kind of algorithms from a stochastic point of view.
 
-In machine learning we always need some regularization, because the tuning of hyperparameters clearly takes into account only the error in the samples that have been seen. Let us regularize the model as follows
+In machine learning we always need some regularization, because the tuning of hyperparameters clearly takes into account only the error in the samples that have been seen. Let us regularize the model as follows:
 \[
   \min \big\{ \, \sum\limits_{i \in I} l(y^i, \ps{\Phi(X^i)}{w}) + \mu \Omega(w) : w \in \R^n \big\}
 \]
@@ -149,7 +149,7 @@ $\Omega$ function is not differentiable, so the function gets non differentiable
 These methods are thought for convex functions that are not differentiable.
 
 Let us consider a kinky point: how can we choose between all the subgradients of that point?
-We assume to be able to compute some subgradients; since the function is convex we may recall
+We assume to be able to compute some subgradients; since the function is convex we may recall:
 
 \begin{property}\label{prop:22nov1}
   Let $f$ be a convex function, $\forall g \in \partial f(x), \forall~y \in \R^n g(y) \equiv f(y) \geq f(x) + g(y - x)$.

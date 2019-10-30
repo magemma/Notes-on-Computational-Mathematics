@@ -38,7 +38,7 @@ In Gaussian elimination we had $A$ and we multiplied it by $L_1$ in order to get
     0 & \ast & \ast & \ast & \ast\\
     0 & \ast & \ast & \ast & \ast\\
     0 & \ast & \ast & \ast & \ast\\
-\end{pmatrix},
+\end{pmatrix}
 \]}
 
 Let us consider an upgrade of Gaussian elimination in the case of $A \in S(m, \R)$.
@@ -113,11 +113,11 @@ Let us see what happens if we multiply $L_1A$ on the right by the transpose of $
 
 \item[{\sc Step $m$:}] 
   \[
-L_{m-1}L_{m-2}\dots L_1 A L1^T \dots L_{m-2}^T L_{m-1}^T = D,
+L_{m-1}L_{m-2}\dots L_1 A L1^T \dots L_{m-2}^T L_{m-1}^T = D
 \]
-where $D$ is diagonal, or
+where $D$ is diagonal, or:
 \[
-A = L_1 L_2 \dots L_{m-1} D L_{m-1}^T \dots L_2^T L_1^T = LDL^T.
+A = L_1 L_2 \dots L_{m-1} D L_{m-1}^T \dots L_2^T L_1^T = LDL^T
 \]
 \end{description}
 
@@ -132,21 +132,21 @@ A = L_1 L_2 \dots L_{m-1} D L_{m-1}^T \dots L_2^T L_1^T = LDL^T.
     -a_3 &  & 1  \\
     -a_4 &  & & 1  \\
     -a_5 &  &  & & 1 
-\end{bsmallmatrix}^{-1} \cdot
+\end{bsmallmatrix}^{-1}
 \begin{bsmallmatrix}
     1 & \\
      & 1 & \\
      & -b_3 & 1  \\
      & -b_4 & & 1  \\
      & -b_5 &  & & 1 
-\end{bsmallmatrix}^{-1} \cdot
+\end{bsmallmatrix}^{-1}
 \begin{bsmallmatrix}
     1 & \\
      & 1 & \\
      &  & 1  \\
      &  & -c_4& 1  \\
      &  & -c_5 & & 1 
-\end{bsmallmatrix}^{-1} \cdot 
+\end{bsmallmatrix}^{-1} 
 \begin{bsmallmatrix}
     1 & \\
      & 1 & \\
@@ -220,7 +220,7 @@ Of course there are some matrices (like the ones with all $0$s on the diagonal) 
 
 \begin{proof}~\\
    \begin{enumerate}
-    \item~\\
+    \item
       \begin{description}
         \item[$\Rightarrow)$]
           $A \in S(m, \R)$ and $A {\succ} 0  \Longrightarrow MA\tr{M} \in S(m, \R)$ and $MA\tr{M} {\succ} 0$.
@@ -242,17 +242,15 @@ Of course there are some matrices (like the ones with all $0$s on the diagonal) 
       Let us take $\mathbf{z}=
         \begin{bsmallmatrix}
           \mathbf{z}_1\\0
-        \end{bsmallmatrix}$.
+        \end{bsmallmatrix}$
 
         $\begin{bsmallmatrix}
           \tr{\mathbf{z}_1} &0\\
-        \end{bsmallmatrix} 
-        \cdot 
+        \end{bsmallmatrix}  
         \begin{bsmallmatrix}
 	        A_{11} & A_{12}\\
 	        A_{21} & A_{22}
-        \end{bsmallmatrix}
-        \cdot 
+        \end{bsmallmatrix} 
         \begin{bsmallmatrix}
           \mathbf{z}_1\\0
         \end{bsmallmatrix}
@@ -261,17 +259,15 @@ Of course there are some matrices (like the ones with all $0$s on the diagonal) 
       Let us take $\mathbf{z}=
       \begin{bsmallmatrix}
         0\\\mathbf{z}_2
-      \end{bsmallmatrix}$.
+      \end{bsmallmatrix}$
 
       $\begin{bsmallmatrix}
         0& \tr{\mathbf{z}_2}\\
-      \end{bsmallmatrix} 
-      \cdot 
+      \end{bsmallmatrix}  
       \begin{bsmallmatrix}
 	      A_{11} & A_{12}\\
 	      A_{21} & A_{22}
-      \end{bsmallmatrix}
-      \cdot 
+      \end{bsmallmatrix} 
       \begin{bsmallmatrix}
         0\\\mathbf{z}_2
       \end{bsmallmatrix}
@@ -293,7 +289,7 @@ Of course there are some matrices (like the ones with all $0$s on the diagonal) 
     0 & \ast & \ast & \ast & \ast\\
     0 & \ast & \ast & \ast & \ast\\
     0 & \ast & \ast & \ast & \ast\\
-\end{pmatrix}$ and so the first and the second diagonal blocks are positive definite ($D_{11} > 0$ and $D_{22} {\succ} 0$).
+\end{pmatrix}$ and so the first and the second diagonal blocks are positive definite ($D_{11} {\succ} 0$ and $D_{22} {\succ} 0$).
 
   Notice that, since $A$ is positive definite $A_{11} {\succ} 0$, but it's a scalar, hence $A_{11} > 0$ and this implies no breakdown case.
 \end{proof}
@@ -313,7 +309,7 @@ $D = \begin{pmatrix}
   &\sqrt{d_{22}} &\\
   && \ddots\\
   &&& \sqrt{d_{mm}}\\
-\end{pmatrix} \cdot
+\end{pmatrix}
 \begin{pmatrix}
   \sqrt{d_{11}}&&\\
   &\sqrt{d_{22}} &\\
@@ -322,10 +318,10 @@ $D = \begin{pmatrix}
 \end{pmatrix}
 $
 
-The LDL factorization may be rewritten as follows
+The LDL factorization may be rewritten as follows:
 
 \[
-A = LDL^T = LD^{1/2} ({D^{1/2}}^T L^T) = C C^T,
+A = LDL^T = LD^{1/2} ({D^{1/2}}^T L^T) = C C^T
 \]
 where $D^{1/2} = \operatorname{diag}(D_{11}^{1/2}, D_{22}^{1/2},\dots,D_{mm}^{1/2})$, and $C$ is lower triangular (but not anymore with ones on the diagonal).
 
@@ -348,15 +344,15 @@ In this part we will discuss some different techniques to solved linear systems,
   Let us consider the optimization problem $\min \frac{1}{2}x^T A x + b^T x $, where $A \succ 0$. We know that the solution to this problem is $x=A^{-1}b$. Assume we solve this problem via a gradient descent-type method, starting from $x_0=0$.
   \begin{description}
     \item[{\sc Step 1:}] $x_0 = 0$, $\nabla f(x_0) = -b$;
-    \item[{\sc Step 2:}] $x_1 = $some multiple of $b$ $\in Span(b)$
+    \item[{\sc Step 2:}] $x_1 = $ some multiple of $b$ $\in Span(b)$
       
       $f(x_1) = Ax_1 - b$
 
       $\nabla f(x_1) = $ some multpiple of $Ab$ + some multiple of $b$ $\in span(b)$;
     \item[{\sc Step 3:}] $x_2 = $ mult.~of $x_1$ + mul.~of $\nabla f(x_1)$ + mult.~of $x_0 + \cdots $ $\in span(Ab_1, b)$;
-    \item[{\sc Step 4:}] $x_3 = mult. of x_2 + \cdots \nabla f(x_2) + $ previous iterates $\cdots$
+    \item[{\sc Step 4:}] $x_3 = $ mult.~of $x_2 + \cdots \nabla f(x_2) + $ previous iterates $\cdots$
 
-      $Ax_2 - b = A \cdot (sAb + tb) - b= s A^2 b + tAb -b \in span(b, Ab, A^2b)$, where $s$ and $t$ are scalars;
+      $Ax_2 - b = A (sAb + tb) - b= s A^2 b + tAb -b \in span(b, Ab, A^2b)$, where $s$ and $t$ are scalars;
     \item[{\sc Step 5:}] $x_4 \in span(b, Ab, A^2b, A^3b)$.
   \end{description}
   Notice that we can make some linear combinations of the vectors we have available and $A(A(sb + tAb) +uAb + vb) + e(sb + tAb) + fAb+gb \in span(b, Ab, A^2b, A^3b)$.
@@ -375,16 +371,15 @@ The following family of algorithms ``uses'' the matrix $A$ only by computing mat
 
   The matrix-vector product would then be
   \begin{enumerate}
-    \item \texttt{x=zeros}
-    \item \texttt{for (i, j, }$A_{ij}$ \texttt{) such that} $A_{ij} \neq 0$
+    \item \texttt{x = zeros}
+    \item \texttt{for (i, j, }$A_{ij}$\texttt{) such that} $A_{ij} \neq 0$
     \item $x_i = x_i + A_{ij} * z_j$
-    \item \texttt{end}
   \end{enumerate}
 \end{proof}
 
   From now on we will consider to have a function \texttt{compute\_product\_with\_A} that we use to compute matrix-vector products with $A$. In particular, $x=$\texttt{compute\_product\_with\_A(z)} computes $x =Az$, given $z$. This function will be the only way in which the matrix $A$ appears in our algorithm. If $A$ is sparse, hence, these algorithms become particularly fast. Moreover, if we somehow have matrices that are not really sparse, but for which there exists a clever implementation of the matrix-vector product, this class of algorithms will give good results.
 
-\begin{definition}[Krylof subspace]
+\begin{definition}[Krylov subspace]
   Let $A \in M(m, \R)$ and let $b \in \R^m$. The \textbf{Krilov subspace} of index $n$ is $\mathbf{K_n(A, b)} = span(b, Ab, A^2b, \ldots, A^{n-1}b)$.
   
   Equivalently, $k \in K_n(A, b) \iff ~ \exists \alpha_1, \ldots, \alpha_{n-1} \in \R^m$ s.t. $v= \alpha_0 b + \alpha_1 Ab + \alpha_2 A^2b + \cdots + \alpha_{n-1} A^{n-1}b$.
@@ -395,10 +390,13 @@ The following family of algorithms ``uses'' the matrix $A$ only by computing mat
 \begin{obs}[Properties]~\\
   \begin{enumerate}
     \item $v, w \in K_n(A, b) \Rightarrow \alpha + \beta W \in K_n(A, b)$;
-    \item $v \in {K}_{n}(A, b) \Rightarrow Av \in {K}_{n}(A, b)$. Proof. Let us take $v = {\alpha}_{0} b + \cdots + {\alpha}_{n-1} b$, then $Av = A({\alpha}_{0} b + \cdots + {\alpha}_{n-1}b) = {\alpha}_0 Ab + \cdots + {\alpha}_{n-1} {A}^{n}b$;
-    \item $\dim(K_n(A, b)) \le n$. It is exactly $n$ if $b, Ab, A^2 b, \ldots, A^{n-1} b$ are linearly independent.
-    \item Let us assume $dim(K_n(A, b)) \le n$. In the second point, if $A^{n-1}$ was really necessary ${\alpha}_{n-1} \neq 0$ or $v \in {K}_{n}(A, b)$, $v \notin {K}_{n-1}(A, b)$, equivalently then ${A}^{n}b$ is really necessary to write $Av$, i.e. $Av \in {K}_{n+1}(A, b)$ but $Av not \in {K}_{n}(A, b)$.
-    \item We may observe that $\dim({K}_{1} (A, b)) < \dim({K}_{2}(A, b)) < \cdots < \dim({K}_{n_{max}}(A, b)) = \dim({K}_{n_{max} + 1}(A, b)) = \cdots$.
+    \item $v \in {K}_{n}(A, b) \Rightarrow Av \in {K}_{n}(A, b)$;
+    \begin{proof}~\\ 
+    Let us take $v = {\alpha}_{0} b + \cdots + {\alpha}_{n-1} b$, then $Av = A({\alpha}_{0} b + \cdots + {\alpha}_{n-1}b) = {\alpha}_0 Ab + \cdots + {\alpha}_{n-1} {A}^{n}b$.
+    \end{proof}
+    \item $\dim(K_n(A, b)) \le n$. It is exactly $n$ if $b, Ab, A^2 b, \ldots, A^{n-1} b$ are linearly independent;
+    \item let us assume $dim(K_n(A, b)) \le n$. In the second point, if $A^{n-1}$ was really necessary ${\alpha}_{n-1} \neq 0$ or $v \in {K}_{n}(A, b)$, $v \notin {K}_{n-1}(A, b)$, equivalently then ${A}^{n}b$ is really necessary to write $Av$, i.e. $Av \in {K}_{n+1}(A, b)$ but $Av \notin {K}_{n}(A, b)$;
+    \item we may observe that $\dim({K}_{1} (A, b)) < \dim({K}_{2}(A, b)) < \cdots < \dim({K}_{n_{max}}(A, b)) = \dim({K}_{n_{max} + 1}(A, b)) = \cdots$.
   \end{enumerate}
   \end{obs}
 \end{document}
