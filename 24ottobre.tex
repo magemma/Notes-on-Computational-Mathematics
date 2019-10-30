@@ -7,14 +7,14 @@
 \section{24th of October 2018 --- A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Gradient method for non quadratic functions}
+\subsection{Gradient method for non-quadratic functions}
 We want to move from quadratic functions to wider families of functions.
 
-\recap{The step size $\alpha$ in the quadratic case is defined as follows: $\alpha = \frac{\sqrnorm{d}}{\tr{d}Qd}$}
+\recap{The step size $\alpha$ in the quadratic case is defined as follows: $\alpha = \frac{\sqrnorm{d}}{\tr{d}Qd}$.}
 
 We would like to find a more general form for the step size, which doesn't depend on the fact that the function is quadratic.
 
-The algorithm for finding local minima of non quadratic functions has the same structure of the one used for quadratic ones, i.e.~first compute the direction of the step and then compute its size.
+The algorithm for finding local minima of non-quadratic functions has the same structure of the one used for quadratic ones, i.e.~first compute the direction of the step and then compute its size.
 
 We will see that, differently from the quadratic case (where the gradient was $\nabla f(x) = Qx + q$) computing the gradient in this more general case isn't easy at all.
 
@@ -23,11 +23,11 @@ We may recall from last lecture that the proof of the orthogonality of the gradi
 \subsubsection{How fast does it converge?}
 Given \Cref{alg:24ottnonQuad} for finding minima of quadratic functions (that differs from the one provided for quadratic ones for the step size) we would like to understand how fast the convergence is.
 
-\algo{alg:24ottnonQuad}{Pseudocode for non quadratic functions local minimum detection.}{
+\algo{alg:24ottnonQuad}{Pseudocode for non-quadratic functions local minimum detection.}{
     \Procedure{\bf SDQ}{$f, x, \varepsilon$}
       \While{($\norm{\nabla f(x)} > \varepsilon$)}
         \State~$d \gets - \nabla f(x)$;
-        \State~$\alpha \gets \frac{\sqrnorm{d}}{(\tr{d} Q d)}$;
+        \State~$\alpha \gets$ argmin$\{ f(x+\alpha d) \}$;
         \State~$x \gets x + \alpha d$;
       \EndWhile%
     \EndProcedure%
@@ -40,23 +40,23 @@ Given \Cref{alg:24ottnonQuad} for finding minima of quadratic functions (that di
         \Longrightarrow \{ \, f(x^i) \, \} \to f(x_*)
       \]
         linearly, with same $R$ as the quadratic case, depending on
-       $\lambda_1$ and $\lambda_n$ of $\nabla^2 f(x_*)$
+       $\lambda_1$ and $\lambda_n$ of $\nabla^2 f(x_*)$.
 \end{theorem}
 
 This theorem means that if the function is differentiable and the Hessian is strictly positive definite then when getting closer and closer to the minimum, the function is more and more similar to a quadratic function.
 
 This similarity is a good new, since we can use the same methods of the quadratic case, but, as we recall from the previous lecture, we must pay attention to \textbf{conditioning}.
 
-At this point we need to work on finding the local minimum of the one dimensional function $\varphi^{i}$, s.t.
+At this point we need to work on finding the local minimum of the one dimensional function $\varphi^{i}$, s.t.:
 \[
-  \varphi^{i}(\alpha) = f(x^{i} + \alpha d^{i}),
+  \varphi^{i}(\alpha) = f(x^{i} + \alpha d^{i})
 \]
 
 where $d^{i} = - \nabla f(x^{i})$.
 
 Let's omit the $i$, since we are concentrating on a single iteration.
 
-We are interested in finding a $\alpha^{*}$ such that $ \varphi'(\alpha^{*}) = 0$
+We are interested in finding a $\alpha^{*}$ such that $ \varphi'(\alpha^{*}) = 0$.
 
 \begin{example}
   Let's suppose we are in $\R^{2}$ and $f(x, y) = x^{2} e^{y}$. We can differentiate $F$ and $\nabla f(x, y) = (2x e^{y}, x^{2} e^{y})$.
@@ -74,7 +74,7 @@ It's hard to find the roots of this function. The points we can find are not $\v
 \begin{proposition}\label{24ottps}
   Let $\varphi: \R \to \R$, such that $\varphi(\alpha) = f(x^{i} + \alpha d^{i})$, $\varphi'(\alpha) =\ps{\nabla f(x^i + \alpha d^i)}{d}$.
 \end{proposition}
-\begin{proof}
+\begin{proof}~\\
   TODO:~using the \textbf{chain rule}: $f : \R^m \to \R^k$, $g : \R^n \to \R^m$, $h : \R^n \to \R^k$ such that $h(x) = f(g(x)) \Rightarrow~\mathbf{J h(x) = J f(g(x)) \cdot J g(x)}$
 
   Obs: $J f \in \R^{ k \times m }$, $J g \in \R^{ m \times n }$ and $J h \in \R^{ k \times m } \cdot \R^{ m \times n }  = \R^{ k \times n }$.
@@ -84,7 +84,7 @@ It's hard to find the roots of this function. The points we can find are not $\v
 \begin{proposition}
 We claim that $\varepsilon' = \varepsilon$. 
 \end{proposition}
-\begin{proof}
+\begin{proof}~\\
 We want to find the relationship between the two parameters $\varepsilon$ and $\varepsilon '$. Assuming that we've got a black box that finds $\alpha$, given $\varepsilon '$, we are interested in computing $\varepsilon '$.
 
   \textbf{Key idea:} Normalization of the direction.
@@ -140,7 +140,7 @@ Actually, we only need to find where the derivative is positive, because the $0$
 The algorithm is the following:
 
 \algo{alg:24ottELS1}{First algorithm for exact line search}{
-  \State~$\bar{\alpha} \gets x_{1}$; \#or whatever value $>0$
+  \State~$\bar{\alpha} \gets x_{1}$; \# or whatever value $>0$
     \While{($\varphi'(\bar{\alpha}) < 0$)}
       \State~$\bar{\alpha} \gets 2 \bar{\alpha}$; \#or whatever factor $>1$
     \EndWhile%
@@ -150,7 +150,7 @@ We'll stop when $\alpha < -{10}^{308}$, which is the smallest value for a double
 
 Works if $\varphi$ \textbf{coercive}:
        $\lim_{\alpha \to \infty} \varphi( \, \alpha \, ) = \infty$
-       (ex.~$f$ strongly convex)
+       (e.g.~$f$ strongly convex).
 
 \begin{exe}
 Build an example where $\bar{\alpha}$ exists but it is not found by this algorithm.
@@ -198,7 +198,7 @@ Then we look for the stationary point of this function and that's the ball where
 We can say something more, since the following fact holds:
 
 \begin{proposition}\label{fact:24ott3}
-Let $\varphi \in C^{{3}}$, then quadratic interpolation has convergence of order $1 < p < 2$ (superlinear)
+Let $\varphi \in C^{{3}}$, then quadratic interpolation has convergence of order $1 < p < 2$ (superlinear).
 \end{proposition}
 
 In \Cref{fig:24ott4} we can observe a situation in which the hypothesis of \Cref{fact:24ott3} aren't satisfied.

@@ -238,13 +238,13 @@ On the other hand for $\mu=0$ we have the problem which is not differentiable on
 
 At this point we are in the situation of $f_{\mu}(x) \leq f(x) \leq f_{\mu}(x) + \mu R$, such that as $\mu \searrow 0$, ``argmin $\{ \, f_{\mu}(x) \, \} \to x_*$''.
 
-The new function is not only convex, but it is also Lipschitz continuous: $\nabla f_{\mu}$ Lipschitz with $L = \sqrnorm{A} / \mu$, but it is ``less and less Lipschitz'' as $\mu \searrow 0$.
+The new function is not only convex, but it is also Lipschitz continuous: $\nabla f_{\mu}$ Lipschitz with $L = \frac{\sqrnorm{A}}{\mu}$, but it is ``less and less Lipschitz'' as $\mu \searrow 0$.
 
 \begin{proposition}
-  If $f_* > -\infty$ and picking a very special value of $\mu$ ($\mu = \varepsilon / (2R)$), then an appropriate ACCG obtains $f(x^i) - f_* \leq \varepsilon$ for $i \geq 4 \norm{A} \norm{x_*} \sqrt{R} / \eps$.
+  If $f_* > -\infty$ and picking a very special value of $\mu$ ($\mu = \varepsilon / (2R)$), then an appropriate ACCG obtains $f(x^i) - f_* \leq \varepsilon$ for $i \geq 4 \norm{A} \norm{x_*} \frac{\sqrt{R}}{\eps}$.
 \end{proposition}
 
-We observe that the convergence is much better, because it depends on $O(1 / \eps)$ instead of $O(1/\varepsilon^2)$.
+We observe that the convergence is much better, because it depends on $O(\frac{1}{\eps})$ instead of $O(\frac{1}{\varepsilon^2})$.
 
 \addtwopics{0.48}{pics/28nov/kgh4_1_i.pdf}{0.48}{pics/28nov/kgh6_1_i.pdf}{At the beginning we will make a lot of bad steps (the upper gray line). We can improve (pick the black line) changing the $\eps$ value and we obtain something that looks more stable. The more precision we want, the smaller the step we make. At the ending it pays, but at the beginning it is not so.}{fig:28nov4}
 
