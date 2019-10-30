@@ -116,10 +116,10 @@ Summing for $i=1, \ldots, k$ we obtain a telescopic series:
   \norm{x^1 - x_*} - \norm{\cancel{x^2} - x_*} + \norm{\cancel{x^2} - x_*} - \norm{\cancel{x^3} - x_*} + \cdots + \norm{\cancel{x^k} - x_*} - \norm{x^{k+1} - x_*}
 \]
 
-Hence resulting in
+Hence resulting in:
 
 \[
-  k \cdot \frac{{(\underline{f}^k - f(x_*))}^2}{L^2} \le \sqrnorm{x^1 - x_*} - \sqrnorm{x^{k+1} - x_*} \le \sqrnorm{x^1 - x_*} = R
+  k \frac{{(\underline{f}^k - f(x_*))}^2}{L^2} \le \sqrnorm{x^1 - x_*} - \sqrnorm{x^{k+1} - x_*} \le \sqrnorm{x^1 - x_*} = R
 \]
 
 which is equivalent to ${(\underline{f}^k - f(x^*))}^2 \le \frac{R^2L^2}{k}$, which is again equivalent to $\underline{f}^k - f(x^*) \le \sqrt{\frac{RL}{k}}$, where $L$ is the Lipschitz constant.
@@ -246,14 +246,14 @@ The new function is not only convex, but it is also Lipschitz continuous: $\nabl
 
 We observe that the convergence is much better, because it depends on $O(1 / \eps)$ instead of $O(1/\varepsilon^2)$.
 
-\addtwopics{0.48}{pics/28nov/kgh4_1_i.pdf}{0.48}{pics/28nov/kgh6_1_i.pdf}{At the beginning we eill make a lot of bad steps (the upper gray line). We can improve (pick the black line) changing the $\eps$ value and we obtain something that looks more stable. The more precision we want, the smaller the step we make. At the ending it pays, but at the beginning it is not so.}{fig:28nov4}
+\addtwopics{0.48}{pics/28nov/kgh4_1_i.pdf}{0.48}{pics/28nov/kgh6_1_i.pdf}{At the beginning we will make a lot of bad steps (the upper gray line). We can improve (pick the black line) changing the $\eps$ value and we obtain something that looks more stable. The more precision we want, the smaller the step we make. At the ending it pays, but at the beginning it is not so.}{fig:28nov4}
 
 \subsection{Cutting-plane algorithm}
 We cheated to get first order information, we want to do more. We want to cheat and have also the second order information.
 
 We want to use the same idea of limited memory quasi Newton methods. Using some limited memory of the Hessian, in order to understand th curvature.
 
-The point is that the directional derivatives are defined and (if computed massively) give me a hint of the curvature of the function (cfr. \Cref{fig:28nov5}).
+The point is that the directional derivatives are defined and (if computed massively) give a hint of the curvature of the function (cfr. \Cref{fig:28nov5}).
 Notice that it is not possible to build a matrix, because it is not defined.
 
 \addpic{0.7}{pics/28nov/4.png}{The idea is that we do not compute a subgradient and discard it. We store it, thus resulting in a model}{fig:28nov5}
@@ -265,14 +265,14 @@ We can now define a piece wise linear function defined as the maximum of the fir
   f_{\mathscr{B}}(x) = \max \{f^i + g^i (x - x^i)~:~(x^i, f^i, g^i) \in \mathscr{B}\}
 \]
 
-At this point we can apply Newton method: first we minimize the model and the use the minimum as next point. We collect information in that specific point and then we repeat.
+At this point we can apply Newton method: first we minimize the model and then use the minimum as next point. We collect information in that specific point and then we repeat.
 
  Notice that the model is always below the objective function ($f_{\mathscr{B}}(x) \leq f(x) \; \forall x$), hence $\min \{f_{\mathscr{B}}(x)\} \leq f_*$, so $x^*_{\mathscr{B}} \in \mbox{argmin} \{f_{\mathscr{B}}(x) \} \approx~x_*$.
 
  This function has many kinky points, so how to minimize it?
 Dirty trick from Ricerca Operativa: 
 \[
-  \min \{ \, f_{\mathscr{B}}(x) \, \} = \min \{ \, v \,:\, v \geq f^i + g^i (x - x^i),\text{ where } (x^i,f^i,g^i) \in \mathscr{B}\}
+  \min \{ \, f_{\mathscr{B}}(x) \, \} = \min \{ \, v \,:\, v \geq f^i + g^i (x - x^i), (x^i,f^i,g^i) \in \mathscr{B}\}
 \]
 
 And on this problem, we can use the simplex method.
@@ -297,9 +297,9 @@ A way to express this is to add a quadratic quantity to the function
 that grows when we move outside the current point.
 
 \begin{definition}[Stabilized master problem]
-  We term \textbf{stabilized master problem} the following
+  We term \textbf{stabilized master problem} the following:
   \[
-    \min \{f_{\mathscr{B}}(x) + \mu \sqrnorm{x - \bar{x}} / 2\}
+    \min \{f_{\mathscr{B}}(x) + \frac{\mu \sqrnorm{x - \bar{x}}}{2} \}
   \]
 \end{definition}
 
