@@ -26,8 +26,8 @@ We want to bound the distance between the point at the ``next step'' and the opt
 \begin{equation}
   \begin{aligned}
     \sqrnorm{x^{i+1} - x_*} &\numeq{(1)} \sqrnorm{x^i - \alpha^i d^i - x_*}\\
-    &= \sqrnorm{x^i  - x_*} + 2\alpha^i g^i \frac{(x_* - x^i)}{\norm{g^i}} + {(\alpha^i)}^2\\
-    &\numineq{(2)}{\le} \sqrnorm{x^i  - x_*} - 2 \alpha^i \frac{(f(x^i) - f(x_*))}{\norm{g^i}} + {(\alpha^i)}^2
+    &= \sqrnorm{x^i  - x_*} + 2\alpha^i g^i \frac{x_* - x^i}{\norm{g^i}} + {(\alpha^i)}^2\\
+    &\numineq{(2)}{\le} \sqrnorm{x^i  - x_*} - 2 \alpha^i \frac{f(x^i) - f(x_*)}{\norm{g^i}} + {(\alpha^i)}^2
   \end{aligned}\label{eq:28nov1}
 \end{equation}
 
@@ -38,7 +38,7 @@ Where $\numeq{(1)}$ follows from the definition of a normalized step: $x^{i+1} =
   
   Hence, if the steps are short enough we get close to the optimum fast enough, because the linear part dominates the quadratic one.
   
-  Formally, $- 2 \frac{(f(x^i) - f(x_*))}{\norm{g^i}} < 0 + \alpha ^i \searrow$, hence ${(\alpha^i)}^2 \searrow 0_+$.
+  Formally, $- 2 \frac{f(x^i) - f(x_*)}{\norm{g^i}} < 0 + \alpha ^i \searrow$, hence ${(\alpha^i)}^2 \searrow 0_+$.
 
   An attentive reader may notice that from \Cref{eq:28nov1} follows $\sqrnorm{x^{i+1}  - x_*} < \sqrnorm{x^i  - x_*} + {(\alpha_i)}^2$ and $\sqrnorm{x^{i+1} - x_*} \leq \sqrnorm{x^1  - x_*} + \sum_{k = 1}^i {(\alpha^k)}^2$.
 \end{obs}
@@ -53,8 +53,11 @@ The convergence of the series of the squares may be obtained using the following
   We term a series that diverges, while the series of the squares of the terms diverges, as \textbf{diminisching-square summable}.
   
   Formally,
-  
-  (DSS) $\sum\limits_{i=1}^\infty \alpha^i = \infty~\wedge~\sum\limits_{i=1}^\infty {(\alpha^i)}^2 < \infty$.
+
+	\[
+    \sum\limits_{i=1}^\infty \alpha^i = \infty~\wedge~\sum\limits_{i=1}^\infty {(\alpha^i)}^2 < \infty~\text{(DSS)}
+  	\]  
+ 
 \end{definition}
 
 Assumptions: function convex, definite in all its domain, hence the norm of the gradient will never become very large.
@@ -67,7 +70,7 @@ We claim that the sequence of the stepsizes is a diminishing-square sequence.
 Let us assume $f(x^i) - f_* \ge \eps > 0,~\forall i$. Then,
 
   \[
-    \sqrnorm{x^{i+1} - x_*} \le \sqrnorm{x^1 -x_*} - \delta \cdot \sum\limits_{k=1}^{i} \alpha^k + \sum\limits_{k=1}^{i} {(\alpha^k)}^2
+    \sqrnorm{x^{i+1} - x_*} \le \sqrnorm{x^1 -x_*} - \delta \sum\limits_{k=1}^{i} \alpha^k + \sum\limits_{k=1}^{i} {(\alpha^k)}^2
   \]
 
 The contraddiction is due to the fact that as $i \to \infty$ the right-hand side goes to $- \infty$.
@@ -77,11 +80,11 @@ This family of algorithms is clearly incredibly robust in theory, but in practic
 
 Let us make an experiment: let us suppose we know the minimum of the function $f$. 
 
-\begin{definition}[Plyak stepsize]
+\begin{definition}[Polyak stepsize]
 Let $f$ be our convex objective function and let $x_*$ be the optimum for $f$.
   We term \textbf{Polyak stepsize}:
   \[
-    \text{(PSS)}~\alpha^i = \beta^i \frac{(f(x^i) - f(x_*))}{\norm{g^i}}
+   \alpha^i = \beta^i \frac{(f(x^i) - f(x_*))}{\norm{g^i}}~ \text{(PSS)}
   \]
   where $\beta \in (0, 2)$.
 
@@ -99,7 +102,7 @@ The problem is that we don't know the optimum.
 
 Let us assume that we know it and compute the efficiency:
 
-Since we know that the sequence is bounded, we know that the objective function is globally Lipshitz (the norm of the gradient is bounded above).
+Since we know that the sequence is bounded, we know that the objective function is globally Lipschitz (the norm of the gradient is bounded above).
 
 The point is that the sequence $\{ x_1 \}$ is not necessarily monotone, so we pick the so-called record value of best vaue ($\underline{f}^i = \min \{ f(x^h)~:~h=1, \ldots, i\}$)
 
@@ -119,7 +122,7 @@ Hence resulting in
   k \cdot \frac{{(\underline{f}^k - f(x_*))}^2}{L^2} \le \sqrnorm{x^1 - x_*} - \sqrnorm{x^{k+1} - x_*} \le \sqrnorm{x^1 - x_*} = R
 \]
 
-which is equivalent to ${(\underline{f}^k - f(x^*))}^2 \le \frac{R^2L^2}{k}$, which is again equivalent to $\underline{f}^k - f(x^*) \le \sqrt{\frac{RL}{k}}$, where $L$ is the Lipshitz constant.
+which is equivalent to ${(\underline{f}^k - f(x^*))}^2 \le \frac{R^2L^2}{k}$, which is again equivalent to $\underline{f}^k - f(x^*) \le \sqrt{\frac{RL}{k}}$, where $L$ is the Lipschitz constant.
 
 The issue here is that the convergence is sublinear: $k \ge \frac{1}{{\eps}^2}$.
 
@@ -221,13 +224,13 @@ A graphical example in the case of $f(x) = \abs{x} = \max \{x, -x\} = \max \{zx 
 
  In the case of the absolute value, the nasty trick is ``to make it have only one optimal solution'' in the point $0$.
  
- This result is obtained adding a small quadratic term: $f(x) = max \{ \tr{x}Az - \mu \sqrnorm{z}~:~ z\ in G\}$ that is shown in \Cref{fig:28nov3}.
+ This result is obtained adding a small quadratic term: $f(x) = max \{ \tr{x}Az - \mu \sqrnorm{z}~:~ z \in G\}$ that is shown in \Cref{fig:28nov3}.
  At this point the new function $f_{\mu}$ is not the original function anymore, but it is very close to it whenever the $\mu$ is small.
  
  Notice that this new function is smooth (differentiable).
 
 \addpic{0.5}{pics/28nov/3.png}{Geometric intuition of the usage of variable $\mu$.}{fig:28nov3}
-It might be not ery easy to compute once chosen the value for $\mu$.
+It might be not very easy to compute once chosen the value for $\mu$.
 
 We are solving a problem which is different from the original one and would be exactly the same if $\mu$ where $0$.
 
@@ -235,10 +238,10 @@ On the other hand for $\mu=0$ we have the problem which is not differentiable on
 
 At this point we are in the situation of $f_{\mu}(x) \leq f(x) \leq f_{\mu}(x) + \mu R$, such that as $\mu \searrow 0$, ``argmin $\{ \, f_{\mu}(x) \, \} \to x_*$''.
 
-The new function is not only convex, but it is also Lipshitz continuous: $\nabla f_{\mu}$ Lipschitz with $L = \sqrnorm{A} / \mu$, but it is ``less and less Lipschitz'' as $\mu \searrow 0$.
+The new function is not only convex, but it is also Lipschitz continuous: $\nabla f_{\mu}$ Lipschitz with $L = \sqrnorm{A} / \mu$, but it is ``less and less Lipschitz'' as $\mu \searrow 0$.
 
 \begin{proposition}
-  If $f_* > -\infty$ and picking a very special value of $\mu$ ($\mu = \varepsilon / (2R)$), then an appropriate ACCG obtains $f(x^i) - f_* \leq \varepsilon$ for $i \geq 4 \cdot \norm{A} \cdot \norm{x_*} \cdot \sqrt{R} / \eps$.
+  If $f_* > -\infty$ and picking a very special value of $\mu$ ($\mu = \varepsilon / (2R)$), then an appropriate ACCG obtains $f(x^i) - f_* \leq \varepsilon$ for $i \geq 4 \norm{A} \norm{x_*} \sqrt{R} / \eps$.
 \end{proposition}
 
 We observe that the convergence is much better, because it depends on $O(1 / \eps)$ instead of $O(1/\varepsilon^2)$.
