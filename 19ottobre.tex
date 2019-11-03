@@ -19,7 +19,7 @@ We are interested in finding local minima of the function $f$.
   A quadratic function $f: {\R}^n \rightarrow {\R}^n$, s.t. $f(x) = \frac{1}{2} \tr{x} Q x + qx$ admits a minimum iff $Q \succeq 0$ ($Q$ is positive semidefinite).
 \end{proposition}
 
-The gradient method generates points that move along orthognal directions. More formally, $x^{i+1} = x^{i} + \alpha^{i}d^{i}$, where $d^{i} = -\nabla f(x^{i}) = -Qx^{i} -q$
+The gradient method generates points that move along orthognal directions. More formally, $x^{i+1} = x^{i} + \alpha^{i}d^{i}$, where $d^{i} = -\nabla f(x^{i}) = -Qx^{i} -q$.
 
 
 \addpic{0.5}{pics/19ott/1.png}{Some iterations of the gradient method}{fig:19ottorto}
@@ -42,16 +42,16 @@ What  can we say about $f(x^{i+1}) - f_{*} = \frac{1}{2} \tr{(x^{i+1} - x_{*})} 
 I want it in terms of $x^{i+1} = x^{i} - \frac{{\|Qx^{i} - q\|}^{2}}{\tr{(Q{x}^{i} - q)}Q(Qx^{i}-q)}$
 
 From this fomula we can say that the error at the current step ($i+1$) is equal to the error of the step before ($i$) divided by something. 
-More precisely, $f_*(x) = \frac{1}{2} \tr{(x-x_*)} Q (x-x_*) = f(x) + \frac{1}{2}\tr{x_*}Qx_* = f(x) - f_*$
+More precisely, $f_*(x) = \frac{1}{2} \tr{(x-x_*)} Q (x-x_*) = f(x) + \frac{1}{2}\tr{x_*}Qx_* = f(x) - f_*$.
 
 If the quantity after the minus is positive but less than 1 the error at the next step will be less than the error at the previous step. This means not only \textbf{linear convergence}, but a bit more, because linear convergence only takes into consideration steps in proximity to the limit, while this formula holds also at the beginning.
 
 \begin{proposition}
-  If $Q$ is positive semidefinite $\tr{d}Qd = {\|d\|}_{Q}^{2}$
+  If $Q$ is positive semidefinite $\tr{d}Qd = {\|d\|}_{Q}^{2}$.
 \end{proposition}
 
 \begin{proposition}
-  If $Q$ is positive definite we can say that the error goes like $1 - \left( \frac{{\|d_i\|}^{2}}{(\tr{d^{i}} Q d^{i}) (\tr{d^{i}} \inv{Q} d^{i})} \right)$ or, equivalently, $1 - \frac{{{\norm{d_i}}_I}^2}{{{\norm{d_i}}_Q}^2} \cdot \frac{{{\norm{d_i}}_I}^2}{{{\norm{d_i}}_{\inv{Q}}}^2}$.
+  If $Q$ is positive definite we can say that the error goes like $1 - \left( \frac{{\|d_i\|}^{2}}{(\tr{d^{i}} Q d^{i}) (\tr{d^{i}} \inv{Q} d^{i})} \right)$ or, equivalently, $1 - \frac{{{\norm{d_i}}_I}^2}{{{\norm{d_i}}_Q}^2} \frac{{{\norm{d_i}}_I}^2}{{{\norm{d_i}}_{\inv{Q}}}^2}$.
 \end{proposition}
   
 We are measuring a vector with three different norms.

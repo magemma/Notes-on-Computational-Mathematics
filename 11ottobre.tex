@@ -104,7 +104,7 @@ Let $f \in C^1$. It is convex on $C$ convex iff
 In other words, given a point $x$, we compute the derivative and the value fo the function is above the derivative in that point.
 \end{theorem}
 
-\begin{proof}
+\begin{proof}~\\
   \begin{description}
     \item[$\Rightarrow)$]
       $\alpha (f(y) - f(x)) \geq f( \alpha (y - x) + x) - f(x)$, send $\alpha \to 0$
@@ -141,7 +141,7 @@ $x_*$ optimal for $(P)$ $\iff$ $x_*$ local minimum of $f_X$.
 \subsubsection{Subgradients and subdifferentials}
 
 \begin{definition}[Subgradient]
-  For each $s \in \R$ we term \textbf{s-subgradient} of $f$ at $x$ as
+  For each $s \in \R$ we term \textbf{s-subgradient} of $f$ at $x$ as:
   
 \[
   f(y) \geq f(x) + s (y - x) \qquad \forall \, y \in \R^n
@@ -155,9 +155,8 @@ Let us assume that the minimum of the non differentiable function resides in one
 The issue here is that it is unfeasible to check if the subgradient with $s=0$ is a subgradient for $f$.
 
 \begin{definition}[Subdifferential]
-  We term \textbf{subdifferential} the set of all possible subgradients.
-
-  Formally,
+  We term \textbf{subdifferential} the set of all possible subgradients. Formally:
+  
   \[
     \partial f(x) := \{s \in \R^n~:~s \text{ is a subgradient at } x\} 
   \]
@@ -209,11 +208,11 @@ Let $f,g: \R^n \to \R$ and take $\alpha, \beta \in \R_+$, then $\partial [\alpha
 \end{proposition}
 
 \begin{definition}[$\eps$-subgradient]
-  Let $f: \R^n \to \R$. $s$ is $\varepsilon$\textbf{-subgradient} at $x$ if 
+  Let $f: \R^n \to \R$. $s$ is $\varepsilon$\textbf{-subgradient} at $x$ if:
 \[
   f(y) \geq f(x) + s (y - x) - \varepsilon~ \forall y \in \R^n
 \]
-support hyperplane passing $\varepsilon$ below $epi(f)$
+support hyperplane passing $\varepsilon$ below $epi(f)$.
 \end{definition}
 
 \begin{proposition}

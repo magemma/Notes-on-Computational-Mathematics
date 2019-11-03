@@ -39,21 +39,21 @@ Everything is linear here. This system is symmetric, although indefinite, becaus
 We are left with solving the KKT system:
 
 \begin{description}
-  \item[{\sc Reduced KKT:}] in this method we first add the hypothesis of non-singularity to the matrix $Q$ so we get the following
+  \item[{\sc Reduced KKT:}] in this method we first add the hypothesis of non-singularity to the matrix $Q$ so we get the following:
     \[
       \begin{cases}
         Qx + \tr{A} \mu = -q \text{~~~~(a)}\\
         Ax = b \text{~~~~~~~~~~~~~~~~(b)}
       \end{cases}
     \]
-    Multiply (a) by $A\inv{Q}$
+    multiply (a) by $A\inv{Q}$:
     \[
       \begin{cases}
         A \cancel{\inv{Q}}\cancel{Q}x + A \inv{Q} \tr{A} \mu = -A \inv{Q} q \text{~~~~(a)}\\
         Ax = b \text{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(b)}
       \end{cases}
     \]
-    Multiply (b) by $-1$ and add to it (a)
+    multiply (b) by $-1$ and add to it (a):
 
     \[
       \begin{cases}
@@ -62,14 +62,14 @@ We are left with solving the KKT system:
       \end{cases}
     \]
 
-    Multiply (a) by $\inv{A}$
+    multiply (a) by $\inv{A}$:
     \[
       \begin{cases}
         x + \inv{Q}\tr{A} \mu = -\inv{Q}q \text{~~~~~~~~~~~(a)}\\
         A\inv{Q}\tr{A}\mu = -A\inv{Q}q -b \text{~~~~~~~(b)}
       \end{cases}
     \]
-    Isolate $x$
+    isolate $x$:
 
     \[
       \begin{cases}
@@ -112,16 +112,16 @@ It is important to note that in order to solve an equality contrained problem we
 
 \subsection{Inequality constrained problems}
 
-The problem, in this case, is written as follows
+The problem, in this case, is written as follows:
 
 \[
-(P) \min \{f(x)~:~Ax \leq b\}
+\min \{f(x)~:~Ax \leq b\}~(P)
 \]
 
 \subsubsection{Projected gradient method}
 The intuition behind this kind of algorithm is that we are interested in finding as direction for the line search not the opposite of the gradient (because then the step size should be put to $0$ if we lie on the boundaries, see \Cref{fig:12dic1}), but it is enough to pick a direction which has a negative scalar product with the gradient.
 
-The rationale is to pick the direction that minimizes the norm of the difference with the gradient. Formally
+The rationale is to pick the direction that minimizes the norm of the difference with the gradient. Formally:
 
 \addpic{0.6}{pics/12dic/1.png}{Geometric idea of how to choose the direction in case of lying on the boundary.}{fig:12dic1}
 
@@ -149,7 +149,7 @@ Note that in this case the Hessian is the identity matrix $I \succ 0$
   A d = 0
   \end{cases}
 \]
-since $x=d, A=I, b= \nabla f(x) d$, so we get
+since $x=d, A=I, b= \nabla f(x) d$, so we get:
 
 \begin{equation}
   \begin{split}
@@ -159,7 +159,7 @@ since $x=d, A=I, b= \nabla f(x) d$, so we get
   \end{split}
 \end{equation}
 
-resulting in
+resulting in:
 \[
   \begin{cases}
   Qx + \tr{A} \mu = - q \iff d + A^T \mu = - \nabla f(x)\\
@@ -172,7 +172,7 @@ Therefore, we need to solve a system in $\mu$ and then we have the direction.
 If the number of active contraints is small, solving the system is very fast.
 
 \begin{proposition}
-We can restrict to solve
+We can restrict to solve:
   \[
   \begin{cases}
     \mu = - {(\bar{A}\tr{\bar{A}})}^{-1}\bar{A}\nabla f(x)\\
@@ -241,9 +241,8 @@ The following holds:
 \end{enumerate}
 \end{proposition}
 
-\begin{proof}
-  \begin{itemize}~\\
-    \item trivial;
+\begin{proof}~\\
+  \begin{itemize}
     \item The intuition is that if we remove $h$ from $B$ next time we will have a descent direction.
       
       $\exists \, d$ s.t.~$A_{B \setminus \{ h \}}d = 0 \wedge
@@ -259,7 +258,7 @@ At a certain point of the execution the set $B$ of the active contstraints will 
 At this point the smart thing to do is to use the KKT conditions, since we know the set of active constraints. This idea is pursued in \Cref{sec:12dic_active}.
 
 \subsubsection{Projected gradient method with box constraints}
-Given the non linear minimum problem of the following shape
+Given the non linear minimum problem of the following shape:
 
 \[
   \text{(P) } \min \bigg \{f(x)~:~l \leq x \leq u \bigg \}
@@ -298,7 +297,7 @@ Notice that we can assume that $l_i < u_i ~ \forall i$, because otherwise that c
 
 \subsubsection{Active-set method for quadratic programs}\label{sec:12dic_active}
 
-Let us be given the following minimum problem
+Let us be given the following minimum problem:
 
 \[
   \min \bigg \{\frac{1}{2} \tr{x} Q x + q x~:~Ax \leq b \bigg \}
@@ -336,14 +335,14 @@ Notice that this algorithm allows easy solving of the same problem, under box co
 
 $\{1, \ldots, n\} \setminus (L \cup U)$ is the set of the indexes of the free variables.
 
-Thanks to this consideration the problem to solve becomes
+Thanks to this consideration the problem to solve becomes:
 
 \[
   \min \bigg \{\frac{1}{2} \tr{x_F} Q_{FF} x_F + (q_F + \tr{u_U} Q_{UF}) x_F \bigg \}~[+ \frac{1}{2} \tr{x_U} Q_{UU} x_U + q_U u_U]
 \]
 
 \subsubsection{Frank-Wolfe method}
-Let us take a non-linear function and the following problem
+Let us take a non-linear function and the following problem.
 
 
 Supposing $f$ is convex we can make a first order model and minimize it over our constraints.

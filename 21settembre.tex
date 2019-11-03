@@ -14,9 +14,9 @@
 \subsection{Mathematical background for optimization problems}
 
 \begin{definition}[Minimum problem]\label{def:min_prob}
-  Let $X$ be a set, called \textbf{feasible region} and let $f : X \to \R$ be \emph{any} function, called \textbf{objective function} we call \textbf{problem} the following
+  Let $X$ be a set, called \textbf{feasible region} and let $f : X \to \R$ be \emph{any} function, called \textbf{objective function} we call \textbf{problem} the following:
 \[
-  (P) \qquad f_* = \min \{f(x)~:x \in X\}
+  \qquad f_* = \min \{f(x)~:x \in X\}~(P)
 \]
 \end{definition}
 
@@ -36,8 +36,8 @@ It is possible to find problems where there is no optimal solution at all.
 \begin{example}
   There are two cases in which it is not possible to find an optimal solution:
   \begin{enumerate}
-    \item The domain is empty, which may be not trivial to prove, since it is an NP-hard problem sometimes;
-    \item We want to find the minimum of the objective function but it is unbounded below (\,$\forall M \, \exists x_M \in X$
+    \item the domain is empty, which may be not trivial to prove, since it is an NP-hard problem sometimes;
+    \item we want to find the minimum of the objective function but it is unbounded below (\,$\forall M \, \exists x_M \in X$
       s.t.~$f(x_M) \leq M$\,).
       On the other hand, we need to maximize the function, but it is unbounded above.
   \end{enumerate}
@@ -45,22 +45,22 @@ It is possible to find problems where there is no optimal solution at all.
 
 \noindent We can now rewrite the problem of solving an optimization problem as:
 \begin{enumerate}
-  \item Finding $x_*$ and proving it is optimal
-  \item Or proving $X = \emptyset$
-  \item Or constructively prove $\forall M \, \exists x_M \in X$ s.t.~$f(x_M) \leq M$.
+  \item finding $x_*$ and proving it is optimal;
+  \item or proving $X = \emptyset$;
+  \item or constructively prove $\forall M \, \exists x_M \in X$ s.t.~$f(x_M) \leq M$.
 \end{enumerate}
 
 Typically “$x \in \R$” actually mean “$x \in \mathbb{Q}$” with up to k digits precision and most of the times we consider optimal a solution which is close to the true optimal value, modulo some error ($\bar{x}$, the approximately optimal).
 
 \begin{definition}[Absolute error]
-  We call \textbf{absolute error} the gap between the real value and the one we obtained. Formally,
+  We call \textbf{absolute error} the gap between the real value and the one we obtained. Formally:
 \[
   f(\bar{x}) - f_* \leq \varepsilon
 \]
 \end{definition}
 
 \begin{definition}[Relative error]
-  We define as \textbf{relative error} the absolute error, normalized by the true value of the function
+  We define as \textbf{relative error} the absolute error, normalized by the true value of the function:
 \[
   ( \, f(\bar{x}) - f_* \, ) / | \, f_* \, | \leq \varepsilon
 \]
@@ -70,15 +70,15 @@ Typically “$x \in \R$” actually mean “$x \in \mathbb{Q}$” with up to k d
 What happens if we have more than one objective function?\newline
 Often you need more than one, say:
 \[
-  (P) \qquad \min \{[f_1(x),f_2(x)]~:x \in X\}
+  \qquad \min \{[f_1(x),f_2(x)]~:x \in X\}~(P)
 \]
 with $f_1$, $f_2$ contrasting and/or with incomparable units (apples vs. oranges)
 
 In multi-objective optimization, there does not typically exist a feasible solution that minimizes all objective functions simultaneously. Therefore, attention is paid to \emph{Pareto optimal solutions}; that is, solutions that cannot be improved in any of the objectives without degrading at least one of the other objectives.
 \begin{definition}[Pareto frontier]
-   A feasible solution $x^{1} \in X$is said to (Pareto) dominate another solution $x^{2} \in X$, if
+   A feasible solution $x^{1} \in X$is said to (Pareto) dominate another solution $x^{2} \in X$, if:
   \[
-  f_{i}(x^{1})\leq f_{i}(x^{2})\quad for\quad all\quad indices\quad i \in \{ 1,2,\dots ,k\}\quad and
+  f_{i}(x^{1})\leq f_{i}(x^{2})\quad for\quad all\quad indices\quad i \in \{ 1,2,\dots ,k\}
 \]
 \[
   f_{j}(x^{1})\leq f_{j}(x^{2})\quad for\quad all\quad indices\quad j \in \{ 1,2,\dots ,k\}
@@ -102,12 +102,12 @@ We are provided with two practical solutions:
 Here some problems that has no optimal solution:
 \begin{itemize}
     \item empty case ($X = \emptyset$): $\min\{ x \; : \; x \in \R \land x \leq -1 \land x \geq 1\}$
-    \item unbounded [below]:  $\min\{ x \; : \; x \in \R \land x \leq 0\}$
-    \item bad $X$:  $\min\{ x \; : \; x \in \R \land x > 0\}$
-    \item bad $f$ and  $X$:  $\min\{ x \; : \; x \in \R \land x > 0\}$
+    \item unbounded [below]:  $\min\{ x \; : \; x \in \R \land x \leq 0\}$;
+    \item bad $X$:  $\min\{ x \; : \; x \in \R \land x > 0\}$;
+    \item bad $f$ and  $X$:  $\min\{ x \; : \; x \in \R \land x > 0\}$;
     \item bad $f$: let us consider an iterative algorithm that moves towards the optimum.
 It may happen that the function decreases and increases along a certain direction but its non-continuity leads to the impossibility of reaching the optimum.
-As an example, let us take the following
+As an example, let us take the following:
 
 \[
   \min \left\{f(x) =\bigg\{\begin{array}{ll} x & \mbox{ if } x > 0 \\
@@ -123,7 +123,7 @@ As an example, let us take the following
 \end{definition}
 
 \begin{definition}[Infima and suprema]
-  Given a totally ordered set $R$ and one of its subsets (say $S \subseteq R$)
+  Given a totally ordered set $R$ and one of its subsets (say $S \subseteq R$):
 \[
   s\text{ is the {\bf infimum} of } S \Leftrightarrow \underline{s} = \inf S
   \quad\Leftrightarrow\quad
@@ -147,9 +147,9 @@ As an example, let us take the following
 \end{definition}
 
 \begin{itemize}
-    \item For all $S \subseteq \R, \sup / \inf S \in \overline{\R}$
-    \item $\inf S = -\infty $ just a convenient notation for “there is no (finite) inf”
-    \item $\inf \emptyset = \infty$, $\sup \emptyset = -\infty$
+    \item for all $S \subseteq \R, \sup / \inf S \in \overline{\R}$;
+    \item $\inf S = -\infty $ just a convenient notation for `there is no (finite) inf';
+    \item $\inf \emptyset = \infty$, $\sup \emptyset = -\infty$.
 \end{itemize}
 
 \subsection{(Monotone) Sequences in $\R$ and optimization}
@@ -180,14 +180,14 @@ The obvious way to make $\{ vi \}$ monotone: keep aside the best
 \]
 
 \begin{itemize}
-    \item  $v_1^* \geq v_2^* \geq v_3^* \geq \, \dots \, \Rightarrow v_\infty^* = \lim_{i \to \infty} v_i^* \geq f_*$ ∗ (asymptotic estimate)
-    \item $\lim_{i \to \infty} v_i^* = v_\infty^* = f_* \Rightarrow \{v_i\}$ minimizing sequence (of values)
+    \item  $v_1^* \geq v_2^* \geq v_3^* \geq \, \dots \, \Rightarrow v_\infty^* = \lim_{i \to \infty} v_i^* \geq f_*$ ∗ (asymptotic estimate);
+    \item $\lim_{i \to \infty} v_i^* = v_\infty^* = f_* \Rightarrow \{v_i\}$ minimizing sequence (of values).
 \end{itemize}
 
 \begin{figure}
     \centering
     \includegraphics[scale = 0.6]{pics/21sett/forcing_monotonicity.png}
-    \caption{Forcing monotonicity on sequences in $\R$: the hard way}
+    \caption{Forcing monotonicity on sequences in $\R$: the hard way.}
 \end{figure}
 
 
@@ -195,11 +195,11 @@ The obvious way to make $\{ vi \}$ monotone: keep aside the best
 \subsubsection{Euclidean space $\R^n$}
 Single numbers are not enough, except for objective function values.
 \begin{definition}[Euclidean vector space]
-We call \textbf{Euclidean space}
+We call \textbf{Euclidean space}:
 \[
   \R^n := \{ \, \begin{pmatrix}x_1\\ x_2\\ \vdots\\ x_n\end{pmatrix}~:~x_i \in \R,~i = 1, \ldots, n\}
 \]
-Equivalently, we can characterize the Euclidean space as Cartesian product of $\R$ $n$ times: $\R^n = \R \times \R \times \ldots \R$. Closed under sum and scalar multiplication
+Equivalently, we can characterize the Euclidean space as Cartesian product of $\R$ $n$ times: $\R^n = \R \times \R \times \ldots \R$. Closed under sum and scalar multiplication.
 \end{definition}
 
 The main operations on elements of the Euclidean space (vectors) are:
@@ -219,12 +219,12 @@ The main operations on elements of the Euclidean space (vectors) are:
 
 Usually $x \in \R^n$ usually considered “column vector” $\in \R^{n \times 1}$, otherwise a row vector is  $x^T$.
 
-\begin{definition}[Finite vector space] each $x \in \R^n$ can be obtained from a finite basis. (canonical base is $u_i$ having 1 in position $i$ and 0 elsewhere)
+\begin{definition}[Finite vector space] each $x \in \R^n$ can be obtained from a finite basis (canonical base is $u_i$ having 1 in position $i$ and 0 elsewhere).
 \end{definition}
 Notes for vector space:
 \begin{itemize}
-    \item Not all vector spaces are finite
-    \item Not a totally ordered set
+    \item not all vector spaces are finite;
+    \item not a totally ordered set.
 \end{itemize}
 
 \noindent Concept of “limit” requires topology. So, in order to be able to compute limits in a vector space we need some topology definitions: norm, scalar product,  distance.\\
@@ -266,22 +266,22 @@ Many (but not all) derive from p-norm:
 \begin{definition}[p-norm] Let $p \geq 1$ be a real number, the p-norm of a vector $x = ( x_1, \dots , x_n )$ is defined as follow:
 $$ \norm{x}_p := \left( \sum_{i = 1}^n \abs{x_i}^p\right)^{1/p} $$
 We require $p \geq 1$ for the general definition of the p-norm because the
-triangle inequality fails to hold if $p < 1$.  The p-norm is convex for $p \geq 1$, nonconvex for $p < 1$
+triangle inequality fails to hold if $p < 1$.  The p-norm is convex for $p \geq 1$, nonconvex for $p < 1$.
 \end{definition}
 Here some norm derived from p-norm:
 \begin{itemize}
     \item $\norm{x}_1 := \sum_{i = 1}^n \abs{x_i}$
     \item $\norm{x}_\infty := \max\{ \abs{x_i}\; :\; i = 1, \dots, n \}$
     \item $\norm{x}_i := \abs{\{ i \; : \; \abs{x_i} > 0\}}$
-    \item Other ones (e.g. for matrices . . . )
+    \item Other ones (e.g. for matrices, etc.)
 \end{itemize}
 \begin{proposition}
 For any given finite-dimensional vector space $V$ (e.g. $\R^n$ is a finite vector space), all norms on $V$ are equivalent in the sense that given two norms $\norm{\cdot}_A\, ,\,\norm{\cdot}_B$:
 $$ \exists \; 0 < \alpha < \beta \;\; s.t\;\; \alpha\norm{x}_A \leq \norm{x}_B \leq \beta\norm{x}_A \qquad \forall x \in V$$
 Therefore convergence in one norm implies convergence in any other norm. This rule
-may not apply in infinite-dimensional vector spaces such as function spaces, though
+may not apply in infinite-dimensional vector spaces such as function spaces, though:
 \end{proposition}
-\begin{proposition}[(Holder’s inequality]
+\begin{proposition}[Holder’s inequality]
 $$ \ps{x}{y}^2 \leq \norm{x}_p\norm{y}_q \; \; 1/p + 1/q = 1$$
 
 \end{proposition}
@@ -299,7 +299,7 @@ In \Cref{fig:21sett1} we may observe the different shapes of the same ball varyi
 \subsubsection{(Euclidean) Scalar Product}
 
 \begin{definition}[Scalar product]
-  Let $x, y \in \R^n$ we define the \textbf{scalar product} between these two vectors 
+  Let $x, y \in \R^n$ we define the \textbf{scalar product} between these two vectors:
   \[
 \ps{x}{y} \; := \; y^T x = \sum_{i=1}^n x_i y_i = x_1 y_1 + \cdots + x_n y_n
   \]
@@ -326,7 +326,7 @@ $$\ps{x}{y} = \norm{x} \norm{y} \cos \theta$$
 
 \subsubsection{(Euclidean) Distance}
 \begin{definition}[(Euclidean) distance]
-The \textbf{Euclidean distance} between points $x$ and $y$ is the length of the line segment connecting them. In Cartesian coordinates, if $x = (x_{1}, x_{2},..., x_{n})$ and $y = (y_{1}, y_{2},..., y_{n})$ are two points in Euclidean n-space, then the distance ($d$) from $x$ to $y$, or from $y$ to $x$ is given by
+The \textbf{Euclidean distance} between points $x$ and $y$ is the length of the line segment connecting them. In Cartesian coordinates, if $x = (x_{1}, x_{2},..., x_{n})$ and $y = (y_{1}, y_{2},..., y_{n})$ are two points in Euclidean n-space, then the distance ($d$) from $x$ to $y$, or from $y$ to $x$ is given by:
   \[
     d(x,y) := \lVert x - y \rVert = \sqrt{(x_{1} - y_{1})^{2} + ... + (x_{n} - y_{n})^{2}} 
   \]
@@ -346,7 +346,7 @@ The distance has the following properties:
 
 \subsection{Limit of a sequence in $\R^n$}
 We have now all the tools to define the notion of limit of a sequence in $\R^n$.
-\noindent\textbf{Limit of a sequence in $R^n$}
+\noindent\textbf{Limit of a sequence in $R^n$}.
 
 \begin{definition}[Limit of a sequence in the Euclidean space]
   Let $\{ x_i \} \subset \R^n$ be a sequence in $\R^n$. The \textbf{limit} of $\{x_i\}$ for $i \to +\infty$ is the following:
@@ -374,7 +374,7 @@ We have now all the tools to define the notion of limit of a sequence in $\R^n$.
 \end{definition}
 \noindent \textbf{Note}: 
 \begin{itemize}
-    \item Points of ${x_i}$ eventually all come arbitrarily close to $x$
-    \item No obvious lim inf / lim sup ($\R^n$ is not totally ordered)
+    \item points of ${x_i}$ eventually all come arbitrarily close to $x$;
+    \item no obvious lim inf / lim sup ($\R^n$ is not totally ordered).
 \end{itemize}
 \end{document}

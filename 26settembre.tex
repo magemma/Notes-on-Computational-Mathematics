@@ -148,7 +148,7 @@ It may happen that such a matrix is diagonalizable in $\mathds{C}$ and its eigen
 
 \syntax{
 e.g. \texttt{A = [1 1; 1 1]} and \texttt{x = [1 1]}\\
-then \texttt{A * x} is equal to \texttt{[2 2]'} and \texttt{A * A * x} is equal to \texttt{[4 4]'}
+then \texttt{A * x} is equal to \texttt{[2 2]'} and \texttt{A * A * x} is equal to \texttt{[4 4]'}.
 }
 
 \begin{comment}
@@ -251,17 +251,17 @@ Inductively, we have proved the theorem.
 
 \noindent \textbf{What can go wrong with eigenvalue decomposition}
 \begin{enumerate}
-    \item  The eigenvalue decomposition is highly non-unique, we can:
+    \item  the eigenvalue decomposition is highly non-unique, we can:
     \begin{itemize}
-        \item Reorder eigenvalues/vectors
-        \item Replace an eigenvector $v_i$ with $2v_i \;,\; −3.5v_i\; \dots$
-        \item For matrices with repeated eigenvalues, even more possibilities:\\
-        e.g. $I = VIV^-1$ for every invertible $V$
+        \item reorder eigenvalues/vectors;
+        \item replace an eigenvector $v_i$ with $2v_i \;,\; −3.5v_i \;,\; \dots$;
+        \item for matrices with repeated eigenvalues, even more possibilities:\\
+        e.g. $I = VIV^-1$ for every invertible $V$.
     \end{itemize}
     
-    \item  some matrices have only complex eigenvalues: e.g. $\begin{pmatrix} 2 & 4\\ -3 & 3\end{pmatrix}$
+    \item  some matrices have only complex eigenvalues: e.g. $\begin{pmatrix} 2 & 4\\ -3 & 3\end{pmatrix}$;
     
-    \item some matrices have fewer eigenvectors than we want and we can't use eigenvalue decomposition: e.g. $\begin{pmatrix} 1 & 1\\ 0 & 1\end{pmatrix}$
+    \item some matrices have fewer eigenvectors than we want and we can't use eigenvalue decomposition: e.g. $\begin{pmatrix} 1 & 1\\ 0 & 1\end{pmatrix}$.
     
 \end{enumerate}
 
@@ -276,7 +276,7 @@ Inductively, we have proved the theorem.
 \end{theorem}
 
 \begin{proposition}
-  Let $A \in M(n, \R)$ be a diagonalizable matrix and let 
+  Let $A \in M(n, \R)$ be a diagonalizable matrix and let:
   \[
     A=V\Lambda \inv{V} = \begin{pmatrix}
     \\
@@ -305,7 +305,6 @@ Inductively, we have proved the theorem.
     V^2 & V^1 & V^3 \cdots & V^n\\
     \\
   \end{pmatrix}
-  \text{ and }
   \hat{\Lambda}= \begin{pmatrix}
     \lambda_2\\
     &\lambda_1\\
@@ -318,7 +317,7 @@ Inductively, we have proved the theorem.
   A can be diagonalized through such $\hat{V}$ and $\hat{\Lambda}$: $A = V \Lambda \inv{V} = \hat{V} \hat{\Lambda} \inv{\hat{V}}$.
 \end{proposition}
 
-Moreover, in the case of repeated eigenvalues
+Moreover, in the case of repeated eigenvalues.
 
 \begin{proposition}
   Let $A \in M(n, \R)$ a diagonalizable matrix such that $A = V \Lambda \inv{V}$, where $\lambda_1 = \lambda_2$ (without loss of generality). Then $V$ can be replaced by $\widetilde{V} = \begin{pmatrix}
@@ -362,7 +361,7 @@ $$\text{with a matrix } Q = \begin{pmatrix} 3 & 2 \\ 2 & -4 \end{pmatrix}$$
 
 \newpage
 \begin{proposition}
-  Let $Q \in S(n, \R)$ (For a fixed symmetric matrix) and let $x \in \R^n$. Then 
+  Let $Q \in S(n, \R)$ (For a fixed symmetric matrix) and let $x \in \R^n$. Then:
   $$\lambda_{\text{min}} \sqrnorm{x} \le \tr{x}Qx \le \lambda_{\text{max}} \sqrnorm{x}$$
   where $\lambda_{\text{max}}$ and $\lambda_{\text{min}}$ are respectively the eigenvalue of maximum value and the eigenvalue of minimum value.
 \end{proposition}
@@ -391,7 +390,7 @@ $$\text{with a matrix } Q = \begin{pmatrix} 3 & 2 \\ 2 & -4 \end{pmatrix}$$
 
       where $\numeq{(1)}$ is due to the change of variable $y = \tr{U} x$ (that implies $\tr{y} = \tr{x} U$).
 
-      By the same argument used in the diagonal case,
+      By the same argument used in the diagonal case:
       $$\lambda_{\text{min}} \sqrnorm{y} \le \tr{y} \Lambda y \le \lambda_{\text{max}} \sqrnorm{y}$$
       Now the point is that if we can replace $\sqrnorm{y}$ with $\sqrnorm{x}$ we have proved the theorem.
       In fact this is true, due to the orthogonality of matrix $U$ ( $UU^T = U^TU = I$.
@@ -420,7 +419,7 @@ $$\text{with a matrix } Q = \begin{pmatrix} 3 & 2 \\ 2 & -4 \end{pmatrix}$$
 \end{proposition}
 
 \begin{proof}~\\
-Let's prove that Iff $Q$ is \textbf{positive semidefinite} then $\lambda \ge 0 \; \forall \lambda$ by contradiction:\\
+Let's prove that iff $Q$ is \textbf{positive semidefinite} then $\lambda \ge 0 \; \forall \lambda$ by contradiction:\\
 if $Q$ has a eigenvalue $\lambda_i < 0$ then:
 $$ v_i^TQv_i = v_i^T \lambda v_i = \lambda_i\norm{v_i}^2 < 0$$
 for the eigenvector $v_i$ associated to $\lambda_i$.

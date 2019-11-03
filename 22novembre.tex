@@ -157,7 +157,7 @@ We assume to be able to compute some subgradients; since the function is convex 
 
 Let $x^*$ be the optimum, $\ps{x^* - x^i}{g}$ is smaller than $0$.
 This means that the angle between $x$ and $x*$ is acute. If we knew the exact direction $x-x^*$ the line search would land on $x^*$.
-For a pictorial representation see \Cref{fig:22nov4}
+For a pictorial representation see \Cref{fig:22nov4}.
 
 \addpic{0.5}{pics/22nov/4.png}{Since we know that $<g, x^*>$ is negative we get that the angle between $g$ and $x^*$ is larger than $90^{\circ}$. Moreover, we know where the optimum is not (red region), hence we restrict to the green region. At this point we will perform a line search on $g$ direction. Since the function is not smooth, the line search may not succeed since the value of the function along the half line from $x$ in $g$ direction may remain the same, but there may be some points there that are closer to $x^*$.}{fig:22nov4}
 

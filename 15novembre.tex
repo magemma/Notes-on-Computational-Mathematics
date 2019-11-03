@@ -14,7 +14,7 @@
 
 In this lecture we will try to answer the questio: ``Is our algorithm (using floating point) going to compute a good approximation of the answer?''
 
-It is related to sensitivity / conditioning but different. Depends on how we perform the computation.
+It is related to sensitivity/conditioning but different. Depends on how we perform the computation.
 
 \recap{
 Computers work with IEEE arithmetic and the basic idea is the following.
@@ -437,8 +437,8 @@ Let $A\in\mathbb{R}^{m\times m}, \b\in\mathbb{R}^m$, and $x$ be the solution of 
 
 This theorem tells us that $\widetilde{x}$ is ``close to the solution'' apart from a factor which is the conditioning of matrix $A$.
 
-\begin{proof}
-Follows from the perturbation results for linear systems. The idea is that $\widetilde{x}$ is the exact solution of the perturbed system 
+\begin{proof}~\\
+Follows from the perturbation results for linear systems. The idea is that $\widetilde{x}$ is the exact solution of the perturbed system:
 \[
   A\widetilde{x} \stareq b + \mathbf{r} = \widetilde{b}
 \]
@@ -495,7 +495,7 @@ We have proved the following
 so the backward error of $\widetilde{\x}$ is $\norm{Q_1\mathbf{r}_1} = \norm{\mathbf{r}_1}$.
 \end{theorem}
 
-\begin{proof}
+\begin{proof}~\\
   Idea: replay the solution of a LS problem with QR factorization, and use $\tr{Q_1}TQ_1=I$. You will get in the first block $R_1 x = \tr{Q_1} b + \mathbf{r}_1$, i.e., $\tr{Q_1}(Ax-b)=\mathbf{r}_1$, which is verified by $\widetilde{x}$.
 \end{proof}
 \end{document}

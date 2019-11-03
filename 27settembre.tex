@@ -16,7 +16,7 @@
 Let us consider the \textbf{minimum problem} defined in \Cref{def:min_prob}:
 
 \[
-  (P) \qquad f_* = \min \{f(x)~:x \in X\}
+  \qquad f_* = \min \{f(x)~:x \in X\}~(P)
 \]
 
   we term \textbf{minimizing sequence} a sequence that gets closer to the optimal value: $\{x_i\}$ s.t.~$\{f(x_i)\} \to f_*$.
@@ -24,7 +24,7 @@ Let us consider the \textbf{minimum problem} defined in \Cref{def:min_prob}:
 
 It goes without saying that we would like to avoid minimizing sequences that do not lead to an optimum.
 
-As an example, consider
+As an example, consider:
 
   $\min \{x~:~x \in \R \wedge x > 0\} ~ \{x_i = 1/i\}$, where $\{f(x_i)\} \to 0$, but it is not an optimum or 
 
@@ -115,9 +115,9 @@ $f : \R^n \to \bar{\R}$, where $f(x) = \infty$ for $x \notin D$.
 Notice that if $f, g$ continuous at $x$ then:
 
 \begin{enumerate}
-  \item $f+g$, $f \cdot g$ continuous at $x$
-  \item $\max\{f,~g\}$ and $\min\{f,~g\}$ continuous at $x$
-  \item $f \circ g$ $\equiv$ $f(g(\cdot))$ continuous at $x$
+  \item $f+g$, $f \cdot g$ continuous at $x$;
+  \item $\max\{f,~g\}$ and $\min\{f,~g\}$ continuous at $x$;
+  \item $f \circ g$ $\equiv$ $f(g(\cdot))$ continuous at $x$.
 \end{enumerate}
 
 \begin{theorem}[Intermediate value]
@@ -132,7 +132,7 @@ Equivalently, let $X \subseteq \R^n$ compact and let $f$ continuous on $X$. Then
 \end{theorem}
 
 \begin{definition}[Lipschitz continuity]
-Let $f: \R^n \to \R$. We term $f$ \textbf{Lipschitz continuous} (L.c.) on $S \in \R^n$ if $\exists L > 0$ such that
+Let $f: \R^n \to \R$. We term $f$ \textbf{Lipschitz continuous} (L.c.) on $S \in \R^n$ if $\exists L > 0$ such that:
        \[
          \abs{f(x) - f(y)} \leq L \norm{x - y}~ \forall x, y \in S
        \]
@@ -146,7 +146,7 @@ Let $f: \R^n \to R$. On a compact set $S \in \R^n$ if $f$ is continuous then it 
 \end{proposition}
 
 \begin{definition}[Lower-upper semi-continuous]
-Let $f: \R^n \to \R$ $f$ is \textbf{lower}[upper] \textbf{semi-continuous} (l.[u.]s.c.) at $x$ if
+Let $f: \R^n \to \R$ $f$ is \textbf{lower}[upper] \textbf{semi-continuous} (l.[u.]s.c.) at $x$ if:
   \[
     \textstyle
     \{ \, x_i \, \} \to x \;\; \Longrightarrow \;\;
@@ -165,9 +165,9 @@ Those functions are called ``derivatives''.
 It goes without saying that it is not possible to compute such simple representation in any kind of point.
 
 \begin{definition}[Left and right derivative]
-  Let $f: \R \to \R$. We term \textbf{left derivative} $f'_{-}(x) = \lim_{t \to 0_{-}} [f(x + t) - f(x)] / t$.
+  Let $f: \R \to \R$. We term \textbf{left derivative} $f'_{-}(x) = \lim_{t \to 0_{-}} \frac{f(x + t) - f(x)}{t}$.
   
-  On the other hand, \textbf{right derivative} $f'_{+}(x) = \lim_{t \to 0_{+}} [f(x + t) - f(x)] / t$.
+  On the other hand, \textbf{right derivative} $f'_{+}(x) = \lim_{t \to 0_{+}} \frac{f(x + t) - f(x)}{t}$.
 \end{definition}
 
 \begin{definition}[Differentiable]
@@ -207,7 +207,7 @@ Given $f : \R^n \to \R$. We term \textbf{gradient} of $f$ the vector of all the 
 \end{definition}
 
 \begin{definition}[Directional derivative]
-  Let $f : \R^n \to \R$. We term \textbf{directional derivative} of $f$ in point $x \in dom(f)$ along direction $d \in \R^n$
+  Let $f : \R^n \to \R$. We term \textbf{directional derivative} of $f$ in point $x \in dom(f)$ along direction $d \in \R^n$:
   \[
     \frac{\partial f}{\partial d}(x) :=	\lim_{t \to 0} \frac{f(x + td ) - f(x)}{t}
   \]
@@ -218,7 +218,7 @@ In a multivariate space it is not possible to assure differentiability checking 
 We are now ready to introduce the notion of multivariate differentiability.
 
 \begin{definition}[Differentiable]
-Let $f: \R^n \to \R$. We say that $f$ is \textbf{differentiable} at $x$ if $\exists$ a linear function $\phi(h) = \ps{c}{h} + f(x)$ s.t.
+Let $f: \R^n \to \R$. We say that $f$ is \textbf{differentiable} at $x$ if $\exists$ a linear function $\phi(h) = \ps{c}{h} + f(x)$ s.t.:
   \[
     \lim_{\norm{h} \to 0} \frac{\norm{f(x + h) - \phi(h)}}{\norm{h}}= 0
   \]
@@ -258,7 +258,7 @@ Let $f \in \C{1}$, then $f$ is differentiable everywhere and also continuous eve
 \addpic{0.35}{pics/27set/nondiff4.png}{The function $f(x_1,x_2) = {\left( \frac{{x_1}^2 x_2}{{x_1}^4 + {x_2}^2} \right)}^2$ is not continuous in $0$. There are some directions that lead to the limit $0$, while there are some other directions (the parabolas above) that do not lead to value $0$.}{fig:27set5}
 
 \begin{definition}[First order model]
-  Let $f: \R^n \to \R$ and let $x \in dom(f)$. We term \textbf{first order model} of $f$ at point $x$ 
+  Let $f: \R^n \to \R$ and let $x \in dom(f)$. We term \textbf{first order model} of $f$ at point $x$:
   \[
     L_x(y) = \nabla f(x) (y - x) + f(x)
   \]

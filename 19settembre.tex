@@ -73,9 +73,9 @@ How can we evaluate the ``similarity'' between our model and the objective funct
 Under this assumption, the error function may be used to find the best parameters for our model, through a minimum problem:
 
 \begin{definition}[Least squares problem]
-  Let $f: \R^n \to \R^n$ be the objective function, such that $f(x) = y$ and let $Xw$ be our linear model. Then we can find the best values for vector $w \in \R^{n+1}$ by computing 
+  Let $f: \R^n \to \R^n$ be the objective function, such that $f(x) = y$ and let $Xw$ be our linear model. Then we can find the best values for vector $w \in \R^{n+1}$ by computing:
 \[
-  y = \begin{pmatrix} y^1\\ \vdots\\ y^m \end{pmatrix} \; , \; X = \begin{pmatrix} 1 & x^1\\ \vdots & \vdots\\ 1 & x^m \end{pmatrix}\; , \; \min_{w} \norm{y - X w}
+  y = \begin{pmatrix} y^1\\ \vdots\\ y^m \end{pmatrix} \; \; X = \begin{pmatrix} 1 & x^1\\ \vdots & \vdots\\ 1 & x^m \end{pmatrix}\; \; \min_{w} \norm{y - X w}
 \]
 \end{definition}
 
@@ -103,7 +103,7 @@ on pairs (e.g. objects chosen from customers) and we may want to approximate tha
   \end{tikzpicture}
 \]
 
-This problem can be translated into a numerical analysis problem of the following shape
+This problem can be translated into a numerical analysis problem of the following shape:
 \[
   \min_{A, B} \norm{M - AB}
 \]
@@ -138,7 +138,7 @@ The rationale here is to maximize the space between the line and the nearest poi
 
 \addtwopics{0.4}{pics/19sett/svm4.pdf}{0.4}{pics/19sett/svm5.pdf}{There are many possible boundaries that can be chosen as a model using many angular coefficients. Our best guess is the one that maximizes the distance between the line and the nearest points.}{fig:19sett2}
 
-\noindent So we have this optimization problem and the maximum-margin separating hyperplane (assuming any exists) is the solution of
+\noindent So we have this optimization problem and the maximum-margin separating hyperplane (assuming any exists) is the solution of:
 \[
   {\min\limits_w \big\{\sqrnorm{w_+}~:~y^i( w_+ x^i + w_0 ) \geq 1, ~ i = 1, \ldots, m \big\}}
 \]
@@ -179,9 +179,9 @@ Whenever we are able to solve the multi-objective optimization problem we are al
 
 a convex constrained quadratic program, but with “simple constraints”. The idea is solve one problem by solving an apparently different one:
 $$ \alpha^* \, \text{optimal for (SVM-D)} \Rightarrow w^*_+ = \sum_{i=1}^{m} \alpha_i^* y^i x^i \, \text{optimal for (SVM-P)} $$
-Dual formulation $\Rightarrow$ kernel trick: input space $\rightsquigarrow$ (larger) feature space where points are hopefully “more linearly separable”
+Dual formulation $\Rightarrow$ kernel trick: input space $\rightsquigarrow$ (larger) feature space where points are hopefully more linearly separable:
     $$ \ps{x^i}{x^j} \rightsquigarrow \ps{\phi(x^i)}{\phi(x^j)}$$
 
-Feature space can be infinite-dimensional, provided that scalar product can be (efficiently) computed
+Feature space can be infinite-dimensional, provided that scalar product can be (efficiently) computed.
 
 \end{document}

@@ -146,9 +146,9 @@ Before starting here is a small recap
   \textbf{Basis}: a set $B$ of elements (vectors) in a vector space $V$ is called a \textbf{basis}, if every element of $V$ may be written in a unique way as a (finite) linear combination of elements of $B$. The coefficients of this linear combination are referred to as components or coordinates on $B$ of the vector. The elements of a basis are called basis vectors.
 \end{definition}
 \noindent\textbf{Canonical basis}: $w = w_1e_1 + w_2e_2 + w_3e_3 + w_4e_4, \,$ e.g. for $m = 4$\\
-$$  e_1 = \begin{pmatrix} 1\\ 0\\ 0\\ 0 \end{pmatrix}\, , \,
-    e_2 = \begin{pmatrix} 0\\ 1\\ 0\\ 0 \end{pmatrix}\, , \,
-    e_3 = \begin{pmatrix} 0\\ 0\\ 1\\ 0 \end{pmatrix}\, , \,
+$$  e_1 = \begin{pmatrix} 1\\ 0\\ 0\\ 0 \end{pmatrix}\, \,
+    e_2 = \begin{pmatrix} 0\\ 1\\ 0\\ 0 \end{pmatrix}\, \,
+    e_3 = \begin{pmatrix} 0\\ 0\\ 1\\ 0 \end{pmatrix}\, \,
     e_4 = \begin{pmatrix} 0\\ 0\\ 0\\ 1 \end{pmatrix}$$
 The powerful idea behind linear algebra: many relations are true
 regardless of the basis we use. E.g. $w$, $v$ and $w + v$ in two different bases.
@@ -228,7 +228,7 @@ are closed under products:
 \end{proposition}
 
 \begin{proposition}[Properties of triangular matrices]~\\
-    Let M be a block triangular matrix, with all $A_{ii}$ square
+    Let M be a block triangular matrix, with all $A_{ii}$ square:
     $$M 
       = \begin{pmatrix}
         A_{11}  & A_{12} & ... & A_{1k}\\
@@ -237,9 +237,9 @@ are closed under products:
         0       & ... & 0 & A_{kk}
       \end{pmatrix}$$ 
     \begin{enumerate}
-      \item A block triangular matrix is invertible iff all diagonal blocks $A_{ii}$ are invertible;
-      \item The eigenvalues of a block triangular matrix are the union of the eigenvalues of each $A_{ii}$ block;
-      \item Let $M \in GL(n, m, \R)$ such that $M= 
+      \item a block triangular matrix is invertible iff all diagonal blocks $A_{ii}$ are invertible;
+      \item the eigenvalues of a block triangular matrix are the union of the eigenvalues of each $A_{ii}$ block;
+      \item let $M \in GL(n, m, \R)$ such that $M= 
         \begin{pmatrix}
           A & B\\
           0 & C\\
@@ -250,9 +250,9 @@ are closed under products:
         \begin{pmatrix}
           \inv{A} & -\inv{A}B\inv{C}\\
           0 & \inv{C}
-        \end{pmatrix}$.
-      \item The product of two block (upper/lower) triangular matrices
-(with compatible block sizes) is still block triangular
+        \end{pmatrix}$;
+      \item the product of two block (upper/lower) triangular matrices
+(with compatible block sizes) is still block triangular.
     \end{enumerate}
   \end{proposition}
 

@@ -139,7 +139,7 @@ We would like to understand how to compute some eigenvalues that are not the big
   \begin{enumerate}
     \item $(A + \alpha I)\mathbf{v} = A \mathbf{v} + \alpha \mathbf{v} = \lambda \mathbf{v} + \alpha \mathbf{v} = (\lambda + \alpha) \mathbf{v}$;
     \item $(\inv{\lambda} \mathbf{v})$ is an eigenpair of $\inv{A}$. We need to check that $\inv{A} \mathbf{v} = \inv{\lambda} \mathbf{v}$. If we multiply by $\lambda A$ both sides: $\lambda \cancel{A} \cancel{\inv{A}} \mathbf{v} = \lambda A \inv{\lambda} \mathbf{v} \Leftrightarrow \lambda \mathbf{v} = \cancel{\lambda} \cancel{\inv{\lambda}} A \mathbf{v}$, which is true by definition of eigenvalue/vector of $A$;
-    \item (by induction) $A^2 \mathbf{v} = A (A\mathbf{v}) = A \cdot \lambda \mathbf{v} = \lambda A v = \lambda \lambda v = {\lambda}^2 v $.
+    \item (by induction) $A^2 \mathbf{v} = A (A\mathbf{v}) = A \lambda \mathbf{v} = \lambda A v = \lambda \lambda v = {\lambda}^2 v $.
   \end{enumerate}
 \end{proof}
 
@@ -158,11 +158,11 @@ The idea is to use factorizations: $A - \mu I = LU$, then $Bz = \inv{U} (\inv{L}
 \begin{minted}{matlab}
 % computes 5 eigenvalues closest to mu=2
 >> fl = eigs(A, 5, mu);
->> fl = eigs(A, 5, 'SM'); %smallest magnitude
->> fl = eigs(A, 5, 'LM'); %largest magnitude
+>> fl = eigs(A, 5, 'SM'); % smallest magnitude
+>> fl = eigs(A, 5, 'LM'); % largest magnitude
 \end{minted}
 
-Notice that \texttt{eigs(A, 6, 1)} needs to factorize $A - 1 \cdot I = LU$, which might induce a lot of fill-in.
+Notice that \texttt{eigs(A, 6, 1)} needs to factorize $A - 1 I = LU$, which might induce a lot of fill-in.
 
 As final observation, the equivalents to Matlab's \texttt{eigs} function are \texttt{scipy.linalgs.eigs} for Python and \texttt{arpack} for C/C++ and Fortran.
 \end{document}

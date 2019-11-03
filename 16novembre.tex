@@ -15,7 +15,7 @@ In particular, we may decide to restrict to a part of the space where we can tru
 Finding such a region is a NP-hard problem, if we don't restrict to a ball.
 
 \begin{definition}[Karush-Khun-Tucker conditions]
-  Any optimal solution of the problem $x^{i+1}$ must satisfy that $\equiv$ $\exists \, \lambda \geq 0$ s.t.
+  Any optimal solution of the problem $x^{i+1}$ must satisfy that $\equiv$ $\exists \, \lambda \geq 0$ s.t.:
 
   \begin{description}
     \item[{\sc Karush:}]$[H^i +\lambda I ] x^{i+1} = - \nabla f(x^i)$ [linear];
@@ -40,10 +40,10 @@ We don't need to compute the Hessian, we can use the first order information to 
 
 \subsection{Quasi-newton methods}
 At a step we have:
-$m^i(x) = \nabla f(x^i) (x - x^i) + \frac{1}{2} \tr{(x - x^i)} H^i (x - x^i)$, $x^{i+1} = x^i + \alpha^i d^i$
+$m^i(x) = \nabla f(x^i) (x - x^i) + \frac{1}{2} \tr{(x - x^i)} H^i (x - x^i)$, $x^{i+1} = x^i + \alpha^i d^i$.
 
 At the next step we recompute the gradient in $x^{i+1}$ and the matrix $H^{i+1}$:
- $m^{i+1}(x) =\nabla f(x^{i+1}) (x - x^{i+1}) + \frac{1}{2} \tr{(x - x^{i+1})} H^{i+1} (x - x^{i+1})$
+ $m^{i+1}(x) =\nabla f(x^{i+1}) (x - x^{i+1}) + \frac{1}{2} \tr{(x - x^{i+1})} H^{i+1} (x - x^{i+1})$.
 
 How should $H^i$ be chosen? It should satisfy the following:
 \begin{enumerate}
@@ -124,8 +124,8 @@ The two $B^i$s, obtained from DFP and BFGS, are different although both sensible
 Let us see a couple of choices for $B^1$:
 
 \begin{itemize}
-  \item Scalar multiples of identity, but how to choose the scalar?
-  \item Compute the gradient in every direction and approximate $H$. This will cost $O(n^3)$, but it should be done only once.
+  \item scalar multiples of identity, but how to choose the scalar?
+  \item compute the gradient in every direction and approximate $H$. This will cost $O(n^3)$, but it should be done only once.
 \end{itemize}
 
 Let us compute the space needed to store the $B^i$s: order of $n^2$ is still a lot. What happens if we restrict to working with information of the last $k$ operations?

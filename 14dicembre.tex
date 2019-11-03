@@ -26,10 +26,10 @@ Let us be given the following optimization problem:
 
 We would like to work with dual feasibility.
 
-$\forall$ fixed $\lambda \geq 0$, this is the lagrangian problem $\psi(\lambda) = \min\limits_x \{\frac{1}{2} \tr{x} Q x + q x + \lambda (b - Ax)\} \leq v$ and the Lagrangian dual is the following
+$\forall$ fixed $\lambda \geq 0$, this is the lagrangian problem $\psi(\lambda) = \min\limits_x \{\frac{1}{2} \tr{x} Q x + q x + \lambda (b - Ax)\} \leq v$ and the Lagrangian dual is the following:
 
 \[
-  (D) ~ \max \{\psi(\lambda)~:~\lambda \geq 0\}
+  \max \{\psi(\lambda)~:~\lambda \geq 0\}~(D)
 \]
 
 which is equivalent to the primal problem.
@@ -79,20 +79,20 @@ At the same time this methods keep the unconstrained property of the Lagrangian 
 
 \subsubsection{Barrier function and central path}
 
-The rationale behind this algorithm is to minimize a function which penalizes the value of the original function when the solution is getting closer and closer to the boundaries of the feasible set.
+The rationale behind this algorithm is to minimize a function which penalizes the value of the original function when the solution is getting closer and closer to the boundaries of the feasible set:
 
 \[
-  (P_{\mu})~\min \{ f_{\mu}(x) = f(x) - \mu \sum\limits_{i=1}^m \log(b_i - A_i x)\}
+  \min \{ f_{\mu}(x) = f(x) - \mu \sum\limits_{i=1}^m \log(b_i - A_i x)\}~(P_{\mu})
 \]
  
 The parameter $\mu$ is there to weight the proximity to the boundary.
 
-\begin{property}
+\begin{property}~\\
   \begin{itemize}
-    \item If $f$ is convex, $f_\mu$ is strictly convex;
-    \item If $f \in \mathcal{C}^2$ then $f_{\mu} \in \mathcal{C}^2$, since $\log \in \mathcal{C}^{\infty}$;
+    \item if $f$ is convex, $f_\mu$ is strictly convex;
+    \item if $f \in \mathcal{C}^2$ then $f_{\mu} \in \mathcal{C}^2$, since $\log \in \mathcal{C}^{\infty}$;
     \item $\forall \mu~ \exists!~x_\mu$ optimal of (P$_{\mu}$), since $\mu \sum\limits_{i=1}^m \log(b_i - A_i x)$ is striclty convex;
-    \item As $\mu \to 0 ~ x_{\mu}$ converges to the analytic center of the optimal face. 
+    \item as $\mu \to 0 ~ x_{\mu}$ converges to the analytic center of the optimal face. 
       An example of this behaviour may be seen in \Cref{fig:14dic1}.
   \end{itemize}
 \end{property}
@@ -153,9 +153,9 @@ In this new system of coordinates the first two KKT remain linear, while the thi
   \left[\begin{array}{c}
     - ( Q x + q ) - \lambda A \\
     b - A x - s \\
-    \mu u - \Lambda S u - \Cr{\Delta \Lambda \Delta S u}
+    \mu u - \Lambda S u - \Delta \Lambda \Delta S u
   \end{array}\right]
-  \,\Cr{\approx}\,
+  \,\approx\,
   \left[\begin{array}{c}
     0 \\
     0 \\
@@ -199,14 +199,16 @@ Notice that $u=
   - {\Delta \lambda}_1 {\Delta s}_1\\
 \vdots\\
   - {\Delta \lambda}_m {\Delta s}_m \in \R^m\\
-\end{array}\right] \in \R^m;
+\end{array}\right] \in \R^m
 \]
+
 The Newton method can be applied if we discard the non-linear part (written in red), pretending it does not exist. Notice that vector $u$ is the vector of all $1$s.
 
 \subsection{Primal-dual interior point method}
-This method is based on the observation that we can solve the dual problem
+This method is based on the observation that we can solve the dual problem:
+
 \[
-(D)~~~ \max \{- \lambda b - \frac{1}{2} x^T Q x~:~Q x + \lambda A  = - q,~\lambda \geq 0\}
+ \max \{- \lambda b - \frac{1}{2} x^T Q x~:~Q x + \lambda A  = - q,~\lambda \geq 0\}~(D)
 \]
 
 thus obtaining both a lower and upper bound for the solution $x$.
@@ -224,8 +226,8 @@ For example, let us take the third line of \Cref{eq:14dic1}:
     \Lambda \Delta s &= \mu u -\Lambda S u - S \Delta \lambda\\
     \Delta s &= \inv{\Lambda}\mu u -\cancel{\inv{\Lambda}}\cancel{\Lambda} S u - \inv{\Lambda}S \Delta \lambda\\
     \Delta s &= \inv{\Lambda}\mu u -S u - \inv{\Lambda}S \Delta \lambda\\
-    \Delta s &= \inv{\Lambda} \cdot (\mu u - S \Delta \lambda) - Su\\
-    \Delta s &= \inv{\Lambda} \cdot (\mu u - S \Delta \lambda) - s\\
+    \Delta s &= \inv{\Lambda} (\mu u - S \Delta \lambda) - Su\\
+    \Delta s &= \inv{\Lambda} (\mu u - S \Delta \lambda) - s\\
   \end{split}
 \end{equation}
 
@@ -282,11 +284,11 @@ where the first set of equations follows from the expansion of the first row of 
   \end{split}
 \end{equation}
 
-Hence, 
+Hence:
 \begin{equation}
   \begin{split}
     Q \Delta x + \tr{A} \Delta \lambda &= 0\\
-    Q \Delta x + \tr{A} \cdot (\mu S^{-1} u + \Lambda S^{-1} A \Delta x - \lambda) &= 0\\
+    Q \Delta x + \tr{A} (\mu S^{-1} u + \Lambda S^{-1} A \Delta x - \lambda) &= 0\\
     Q \Delta x + \tr{A} \mu S^{-1} u + \tr{A} \Lambda S^{-1} A \Delta x - \tr{A} \lambda &= 0\\
     Q \Delta x + \tr{A} \Lambda S^{-1} A \Delta x &= - \tr{A} \mu S^{-1} u + \tr{A} \lambda\\
     (Q + \tr{A} \Lambda \inv{S} A) \Delta x &= \tr{A} (\lambda - \mu S^{-1} u)\\
@@ -315,10 +317,10 @@ When dealing with the step size we need to highlight the fact that $\lambda + \D
 
 In order to achieve this we find the maximum $\alpha$ that satisfies the equality and then multiply it by a constant $\bar{\alpha}=0.995$ (or $0.9995$), in order to get closer.
 
-Let us assume that we also have a bunch of box contraints, hence our problem becomes
+Let us assume that we also have a bunch of box contraints, hence our problem becomes:
 
 \[
-  (P)~~~~\min \bigg \{\frac{1}{2} x^T Q x + q x~:~Ax = b,~0 \leq x \leq u \bigg \}
+  \min \bigg \{\frac{1}{2} x^T Q x + q x~:~Ax = b,~0 \leq x \leq u \bigg \}~(P)
 \]
 
 In this special case, things simplify a lot.

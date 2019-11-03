@@ -32,7 +32,7 @@ We can perform some more reductions and:
       Q_{n+1} {\underline{H}}_n y - Q_{n+1} \norm{b} e_1}\\
     &=
     \norm{
-      Q_{n+1} \cdot ({\underline{H}}_n y - \norm{b} e_1)}\\
+      Q_{n+1} ({\underline{H}}_n y - \norm{b} e_1)}\\
     &\numeq{(3)}
     \norm{\underline{H}_n y - \norm{b}e_1}.
   \end{aligned}
@@ -68,19 +68,19 @@ This allows us to compute at each step a residual $\norm{Ax_n-b}$ that we can us
 
 To estimate the convergence of GMRES we can see $x$ as a plynomial ($x=p(A)b$, such that $p(t) = \alpha_0 + \alpha_1 t + \cdots + \alpha_{n-1} t^{n-1}$ is a polynomial of degree $n-1$).
 
-As far as the residual is concerned $Ax - b = A \cdot p(A) \cdot b -b = A \cdot (\alpha_0 I + \alpha_1 A + \cdots + \alpha_{n-1} A^{n-1}) \cdot b - b = q(A) \cdot b$, where $q(t) = t \cdot p(t) -1$.
-If $A=V\Lambda V^{-1}$ diagonalizable, then $A^k = V \cdot \begin{bmatrix}
+As far as the residual is concerned $Ax - b = A p(A) b -b = A (\alpha_0 I + \alpha_1 A + \cdots + \alpha_{n-1} A^{n-1}) b - b = q(A) b$, where $q(t) = t p(t) -1$.
+If $A=V\Lambda V^{-1}$ diagonalizable, then: 
+\[
+  A^k = V \begin{bmatrix}
   {\lambda_1}^k\\
     & \ddots \\
     & & {\lambda_m}^k
-\end{bmatrix}V^{-1}$
-and 
-\[
+\end{bmatrix}V^{-1}~and~
 q(A) = V\begin{bmatrix}
     q(\lambda_1)\\
     & \ddots \\
     & & q(\lambda_m)
-\end{bmatrix}V^{-1}.
+\end{bmatrix}V^{-1}
 \]
 
 All this computation was needed to write the residual GMRES in a clearer form:
@@ -90,19 +90,19 @@ All this computation was needed to write the residual GMRES in a clearer form:
     \min\limits_{x\in K_n(A,b)}\norm{Ax-b}
     &= \min_{\substack{q(x)=xp(x)-1\\\text{of degree $\leq n$}}}\norm{Ap(A)b-b}\\
     &= \min_{\substack{q(x)=xp(x)-1\\\text{of degree $\leq n$}}}\norm{q(A)b}\\
-    &\le (\min\limits_{\cdots}\norm{q(A)} )\cdot \norm{b}\\
+    &\le (\min\limits_{\cdots}\norm{q(A)}) \norm{b}\\
     &= \min\limits_{\cdots}\norm{V\begin{bmatrix}
     q(\lambda_1)\\
     & \ddots \\
     & & q(\lambda_m)
     \end{bmatrix}V^{-1}}\\
-    &\le \min\limits_{\cdots}\norm{V}\cdot \norm{\begin{bmatrix}
+    &\le \min\limits_{\cdots}\norm{V} \norm{\begin{bmatrix}
     q(\lambda_1)\\
     & \ddots \\
     & & q(\lambda_m)
-    \end{bmatrix}} \cdot \norm{\inv{V}}\\ 
+    \end{bmatrix}} \norm{\inv{V}}\\ 
     &\le
-    K(V) \cdot\norm{\min\limits_{\cdots} \begin{bmatrix}
+    K(V) \norm{\min\limits_{\cdots} \begin{bmatrix}
     q(\lambda_1)\\
     & \ddots \\
     & & q(\lambda_m)

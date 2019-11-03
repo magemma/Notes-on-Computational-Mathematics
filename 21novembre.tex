@@ -298,7 +298,7 @@ L_{m-1}P_{m-1}\dots L_2P_2L_1P_1 = \widehat{L}_{m-1}\widehat{L}_{m-2}\dots \wide
 where $\widehat{L}_i$ have the same structure as the $L_i$.
 \end{obs}
 
-We can now introduce the following
+We can now introduce the following:
 
 \begin{theorem}
   Let $A \in \mathcal{M}(m, \R)$. $A$ admits a factorization $A=PLU$, where $P$ is a permutation matrix, $L$ is lower triangular with ones on its diagonal, and $U$ is upper triangular.
@@ -306,11 +306,11 @@ We can now introduce the following
 
 What about the stability of this improvement to LU factorization, called \textbf{LU with partial pivoting}?
 
-It's not stable at all, in the worst case it may happen that $\norm{U} / \norm{A}$ may grow as $\approx 2^m$, although matrices for which this happens are very rare.
+It's not stable at all, in the worst case it may happen that $\frac{\norm{U}}{\norm{A}}$ may grow as $\approx 2^m$, although matrices for which this happens are very rare.
 
 \subsubsection{Gaussian elimination on sparse matrices}
 
-Given a sparse matrix 
+Given a sparse matrix :
 
 \[
 A = \begin{pmatrix}
@@ -359,7 +359,7 @@ How to circumvent this problem? At each step we may use as pivot row the most sp
 
 Because of this trade-off the choice is made in relation to the needs of the implementation. We won't study any algorithm that deals with sparse matrices, since they are very complicated and make use of heuristics.
 
-There are some lucky cases in which the fill-in is almost none, for example a matrix that only has 5 diagonals which entries are different from $0$ (called \textbf{tridiagonal}). In this particular case $L$ is tridiagonal and lower triangular and $U$ is tridiagonal and upper triangular, as shown below.
+There are some lucky cases in which the fill-in is almost none, for example a matrix that only has 5 diagonals which entries are different from $0$ (called \textbf{tridiagonal}). In this particular case $L$ is tridiagonal and lower triangular and $U$ is tridiagonal and upper triangular, as shown below:
 
 \[
 A = \begin{pmatrix}
@@ -368,9 +368,9 @@ A = \begin{pmatrix}
   \ast & \ast & \ast & \ast & \ast & 0 & \cdots & 0\\
   0 & \ast & \ast & \ast & \ast & \ast & \ddots & \vdots\\
   \vdots & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & 0\\
-  0 & 0 & 0 & \cdots & \ast & \ast & \ast & \ast\\
-  0 & 0 & 0 & \cdots & \ast & \ast & \ast & \ast\\
-  0 & 0 & 0 & \cdots & 0 & \ast & \ast & \ast\\
+  0 & \cdots & 0 & \ast & \ast & \ast & \ast & \ast\\
+  0 & \cdots & 0 & 0 & \ast & \ast & \ast & \ast\\
+  0 & \cdots & 0 & 0 & 0 & \ast & \ast & \ast\\
 
 \end{pmatrix}
 \]
@@ -380,7 +380,7 @@ L = \begin{pmatrix}
   \ast & 0 & 0 & 0 & 0 & \cdots & 0\\
   \ast & \ast & 0 & 0 & 0 & \cdots & 0\\
   \ast & \ast & \ast & 0 & 0 & \cdots & 0\\
-  & \ddots & \ddots & \ddots & \ddots & \vdots & \vdots\\
+  & \ddots & \ddots & \ddots & \ddots & \ddots & \vdots\\
   & & \ast & \ast & \ast & 0 & 0\\
   & & & \ast & \ast & \ast & 0\\
   & & & & \ast & \ast & \ast\\
@@ -389,7 +389,7 @@ U = \begin{pmatrix}
   \ast & \ast & \ast & & & & & \\
   0 & \ast & \ast & \ast & & & \\
   0 & 0 & \ast & \ast & \ast & & & \\
-  \vdots & \vdots & \ddots & \ddots & \ddots & \ddots & \\
+  \vdots & \ddots & \ddots & \ddots & \ddots & \ddots & \\
   0 & \cdots & 0 & 0 & \ast & \ast & \ast & \\
   0 & \cdots & 0 & 0 & 0 & \ast & \ast & \ast\\
   0 & \cdots & 0 & 0 & 0 & 0 & \ast & \ast\\

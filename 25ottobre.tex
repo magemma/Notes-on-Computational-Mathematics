@@ -29,13 +29,13 @@ Via chain rule.
 Since we are looking for a point where the derivative $\varphi'(\alpha) = 0$, we may use the second derivative to write a model and, assuming to trust the model, it can be studied.
 
 \begin{definition}[Model$-$Newton tangent method]
-Our model, in this case is
+Our model, in this case is:
   \[
     \varphi'(\alpha) \approx \varphi'(\alpha^k) + \varphi''(\alpha^k)(\alpha - \alpha^k)
   \]
 \end{definition}
 
-In this context, solving $\varphi'(\alpha) = 0$ implies finding those $\alpha$ such that $\alpha = \alpha^k - \varphi'(\alpha^k) \varphi''(\alpha^k)$ 
+In this context, solving $\varphi'(\alpha) = 0$ implies finding those $\alpha$ such that $\alpha = \alpha^k - \varphi'(\alpha^k) \varphi''(\alpha^k)$.
 
 \algo{alg:25ottNewton}{Pseudocode for Newton method.}{
   \Procedure{\bf LSNM}{$\varphi', \varphi'', \alpha, \varepsilon$}
@@ -73,7 +73,7 @@ We want to compute how much the error is, if compared to the error at the previo
       & \numeq{(3)} \frac{-\varphi'''(\beta)}{2 \varphi''(\alpha^k)} {(\alpha^k - \alpha_*)}^2
     \end{split}
   \end{equation}
-\item We can say that the quantity $2\varphi''(\alpha^{k})$ doesn't become too small and that the numerator $\varphi'''(\beta)$ doesn't become too big. This is proved since $\exists \delta > 0$ s.t.~$\varphi''(\alpha) \geq k_2 > 0$ and also  $| \varphi'''(\beta) | \leq k_1 < \infty$. We can go on bounding the difference between $\alpha^{k+1}$ and $\alpha_*$ as follows: for $\alpha$, $\beta \in [ \, \alpha_* - \delta \,,\, \alpha_* + \delta$
+\item We can say that the quantity $2\varphi''(\alpha^{k})$ doesn't become too small and that the numerator $\varphi'''(\beta)$ doesn't become too big. This is proved since $\exists \delta > 0$ s.t.~$\varphi''(\alpha) \geq k_2 > 0$ and also  $| \varphi'''(\beta) | \leq k_1 < \infty$. We can go on bounding the difference between $\alpha^{k+1}$ and $\alpha_*$ as follows: for $\alpha$, $\beta \in [ \, \alpha_* - \delta \,,\, \alpha_* + \delta ]\, $
        
   \begin{equation}
     \begin{split}
@@ -190,7 +190,7 @@ Another issue of this conditions is that the derivative in the interval is quite
 \addpic{0.5}{pics/25ott/armijo09.pdf}{Strong Wolfe condition.}{fig:25ott8}
 
 \begin{proposition}
-  If $\varphi'(\alpha) \not\gg 0$ and (A) $\cap$ (W) / (W') then all local minima (\& maxima) are captured unless $m_1$ too close to $1$ (that's why usually $m_1 \approx 0.0001$)
+  If $\varphi'(\alpha) \not\gg 0$ and (A) $\cap$ (W) / (W') then all local minima (and maxima) are captured unless $m_1$ too close to $1$ (that's why usually $m_1 \approx 0.0001$).
 \end{proposition}
 
 \addpic{0.5}{pics/25ott/armijo11.pdf}{If the line is too close to the original one only a few points will satisfy Armijo condition which means that the intersection between Armijo and Wolfe will almost be empty.}{fig:25ott9}
@@ -201,7 +201,7 @@ The $m_{i}$ are like the hyperparameters of machine learning. Less formally, if 
 Let $\varphi \in C^1$ and $\varphi(\alpha)$ bounded below for $\alpha \geq 0$ then $\exists ~ \alpha$ s.t.~(A) $\cap$ (W') holds.
 \end{theorem}
 
-\begin{proof}
+\begin{proof}~\\
 $l(\alpha) = \varphi(0) + m_1 \alpha \varphi'(0)$, $d(\alpha) = l(\alpha) - \varphi(\alpha) \Longrightarrow$
 
 $d(0) = 0$, $d'(0) = (m_1 - 1) \varphi'(0) > 0$ ($m_1 < 1$)
@@ -231,8 +231,8 @@ How can we find such a point?
 }
 
 \begin{itemize}
- \item Fundamental assumption: $\nabla f$ Lipschitz $\Longrightarrow ~ \varphi'$ Lipschitz and $L$ does not depend on $x^i$ ({\bf check})
- \item Recall: $\exists \bar{\alpha}$ s.t.~(A) holds $\forall \alpha \in ]0, \bar{\alpha}]$ and $\varphi'(\bar{\alpha}) > m_1 \varphi'(0) > \varphi'(0)$;
+ \item fundamental assumption: $\nabla f$ Lipschitz $\Longrightarrow ~ \varphi'$ Lipschitz and $L$ does not depend on $x^i$ ({\bf check})
+ \item recall: $\exists \bar{\alpha}$ s.t.~(A) holds $\forall \alpha \in ]0, \bar{\alpha}]$ and $\varphi'(\bar{\alpha}) > m_1 \varphi'(0) > \varphi'(0)$;
  \item $\varphi'$ Lipschitz $\Longrightarrow \bar{\alpha}$ is ``large'' if $\norm{\nabla f(x^i)}$ is: 
    \[
      L(\bar{\alpha} - 0) \geq \varphi'(\bar{\alpha}) - \varphi'(0)
@@ -240,8 +240,8 @@ How can we find such a point?
         \bar{\alpha} > (1 - m_1) \frac{\norm{\nabla f(x^i)}|}{L}
   \]
        (recall $- \varphi'(0) = \norm{\nabla f(x^i)}$);
- \item Fundamental trick: $\bar{\alpha}$ can $\searrow 0$, but only as fast as $\norm{\nabla f(x^i)}$ does;
- \item Enough to prove that $\alpha^i \geq \bar{\alpha}$, or ``not too smaller''.
+ \item fundamental trick: $\bar{\alpha}$ can $\searrow 0$, but only as fast as $\norm{\nabla f(x^i)}$ does;
+ \item enough to prove that $\alpha^i \geq \bar{\alpha}$, or ``not too smaller''.
 \end{itemize}
 
 Now we can prove the following
@@ -251,11 +251,11 @@ Now we can prove the following
 \end{theorem}
 
 \begin{proof}
-  \textbf{By contraddiction}, we assume $- \varphi'(0) = \norm{\nabla f(x^i)} \geq \varepsilon > 0 \forall i$. Then
+  \textbf{By contraddiction}, we assume $- \varphi'(0) = \norm{\nabla f(x^i)} \geq \varepsilon > 0 \forall i$. Then:
   \begin{enumerate}
     \item (W) $\Longrightarrow \alpha^i \geq \bar{\alpha} > (1 - m_1) \frac{\norm{\nabla f(x^i)}}{L} \Longrightarrow \alpha^i \geq \delta > 0$;
     \item (A) $\Longrightarrow f(x^{i+1}) \leq f(x^i) - m_1 \alpha^i \norm{\nabla f(x^i)} \leq f(x^i) - m_1 \delta \varepsilon$;
-    \item So $\{f(x^i)\} \to -\infty$ (or $ \{\norm{\nabla f(x^i)}\} \to 0$).
+    \item so $\{f(x^i)\} \to -\infty$ (or $ \{\norm{\nabla f(x^i)}\} \to 0$).
   \end{enumerate}
 \end{proof}
 

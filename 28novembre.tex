@@ -52,10 +52,10 @@ The convergence of the series of the squares may be obtained using the following
 \begin{definition}[Diminishing-Square Summable]
   We term a series that diverges, while the series of the squares of the terms diverges, as \textbf{diminisching-square summable}.
   
-  Formally,
+  Formally:
 
 	\[
-    \sum\limits_{i=1}^\infty \alpha^i = \infty~\wedge~\sum\limits_{i=1}^\infty {(\alpha^i)}^2 < \infty~\text{(DSS)}
+    \sum\limits_{i=1}^\infty \alpha^i = \infty~\wedge~\sum\limits_{i=1}^\infty {(\alpha^i)}^2 < \infty~(DSS)
   	\]  
  
 \end{definition}
@@ -67,7 +67,7 @@ We claim that the sequence of the stepsizes is a diminishing-square sequence.
 \end{proposition}
 
 \begin{proof}[Proof by contraddiction]
-Let us assume $f(x^i) - f_* \ge \eps > 0,~\forall i$. Then,
+Let us assume $f(x^i) - f_* \ge \eps > 0,~\forall i$. Then:
 
   \[
     \sqrnorm{x^{i+1} - x_*} \le \sqrnorm{x^1 -x_*} - \delta \sum\limits_{k=1}^{i} \alpha^k + \sum\limits_{k=1}^{i} {(\alpha^k)}^2
@@ -84,7 +84,7 @@ Let us make an experiment: let us suppose we know the minimum of the function $f
 Let $f$ be our convex objective function and let $x_*$ be the optimum for $f$.
   We term \textbf{Polyak stepsize}:
   \[
-   \alpha^i = \beta^i \frac{(f(x^i) - f(x_*))}{\norm{g^i}}~ \text{(PSS)}
+   \alpha^i = \beta^i \frac{f(x^i) - f(x_*)}{\norm{g^i}}~ \text{(PSS)}
   \]
   where $\beta \in (0, 2)$.
 
@@ -199,7 +199,7 @@ In order to choose them we have two different approaches:
   \[
     \text{(DSS)}~\wedge~ \frac{\alpha^{i-1} \norm{d^{i-1}}}{(f(x^i) - f_*) + \alpha^{i-1}}\norm{d^{i-1}} \leq \gamma^i
   \]
-  ``as $f(x^i) \to f_*$, deflection $\searrow$''
+  ``as $f(x^i) \to f_*$, deflection $\searrow$''.
 \end{description}
 
 This algorithm gets the optimal $O(1/\varepsilon^2)$ on average, sadly not worst case.

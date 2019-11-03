@@ -15,7 +15,7 @@ Two lectures ago we introduced the QR factorization to solve least squares probl
 Why did we introduce the QR factorization to solve the least squares problem, then? Altough it's more complex computationally speaking, it's much better than the normal equation for what concerns accuracy. Let's see why through an example:
 
  \begin{example}\label{ex:9nov1}
-   Let $A \in \mathcal{M}(4, 3, \R)$ s.t.
+   Let $A \in \mathcal{M}(4, 3, \R)$ s.t.:
    \[
   A = \begin{pmatrix}
     1&1&2\\
@@ -204,9 +204,8 @@ In the end $\kappa(A) = \frac{\norm{A}}{\norm{\inv{A}}} = \frac{\sigma_1}{\sigma
 \begin{proposition}
 The relative distance between $A$ and the closest singular matrix is $\frac{1}{\kappa(A)}$.
 \end{proposition}
-\begin{proof}
 
-\recap{\textbf{Eckart-Young theorem:} the closest matrix to $A$ that has rank $\le n-1$ is 
+\recap{\textbf{Eckart-Young theorem:} the closest matrix to $A$ that has rank $\le n-1$ is:
 
 \[
   \hat{A} = U \begin{pmatrix}
@@ -218,14 +217,10 @@ The relative distance between $A$ and the closest singular matrix is $\frac{1}{\
     &&&&& \sigma_n\\
     &&&&&& 0\\
   \end{pmatrix} \tr{V}
-\]}
+\]
+}
 
-\begin{equation}
-  \begin{aligned}
-bau
-  \end{aligned}
-\end{equation}
-
+\begin{proof}
 \begin{equation}
   \begin{aligned}
     \norm{A - \hat{A}} &= \norm{U 

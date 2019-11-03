@@ -14,13 +14,13 @@
 If you want better convergence, use a better model.
 \end{myframe}
 
-So far we chose the direction for the step as $d^i = - \nabla f(x^i) \cdot \norm{\nabla f(x^i)}$, in particular this is the direction where the decrease of the function is maximum.
+So far we chose the direction for the step as $d^i = - \nabla f(x^i) \norm{\nabla f(x^i)}$, in particular this is the direction where the decrease of the function is maximum.
 
 We introduced the \textbf{convergence argument} which says that in proximity of the stationary point of the linear model the norm of the gradient goes to $0$. Formally, $\varphi'(0) = \frac{\partial f}{\partial d^i}(x^i) = \ps{d^i}{\nabla f(x^i)} = - \ps{\nabla f(x^i)}{\nabla f(x^i)} = - \norm{\nabla f(x^i)}$, which implies that $\norm{\nabla f(x)} \to 0$ when $\varphi'(0) \to 0$.
 
 Can we take another direction which isn't the opposite of the gradient and have that the same argument holds? Yes, for example if we choose as direction a rotation of the opposite of the gradient, the value of $\varphi'$ is then the cosine of the angle of the rotation times the opposite of the norm fo the gradient. It's trivial to observe that there are infinite angles that could be chosen, so we have a lot of flexibility.
 
-Note that the angle between $d^i$ and the gradient shouldn't be too close to $90°$, otherwise the cosine would get approximately $0$..
+Note that the angle between $d^i$ and the gradient shouldn't be too close to $\ang{90}$, otherwise the cosine would get approximately $0$.
 
 \begin{theorem}[Zoutendijk]
   Let $f \in C^1$, $\nabla f$ Lipschitz and $f$ bounded below.
@@ -36,7 +36,7 @@ If we choose an angle which is bounded below then the norm of the gradient has t
   $\cos(\theta^i) \geq \varepsilon > 0 \Longrightarrow \norm{\nabla f(x^i)} \to 0$
 \end{proposition}
 \begin{proof}
-  From the observation above, we may recall that the $n$-th term of the Zoutendijk sum should be approximately $0$ $\forall n > \widetilde{n}$, which means that one between $\cos^(\theta^i)$ and $\sqrnorm{\nabla f(x^i)}$ should be zero.
+  From the observation above, we may recall that the $n$-th term of the Zoutendijk sum should be approximately $0$ $\forall n > \widetilde{n}$, which means that one between $\cos(\theta^i)$ and $\sqrnorm{\nabla f(x^i)}$ should be zero.
 
   The proof is obtained from the fact that it can't be the cosine, because it's bounded below.
 \end{proof}
@@ -48,7 +48,7 @@ At this point we assume that the function is perfectly convex (Hessian strictly 
 \begin{theorem}
 Let $f$ be a function such that $\nabla^2 f(x^i) {\succ} 0$. Then the second order model $Q_{x^i}(y)$ admits a minimum.
 \end{theorem}
-\begin{proof}
+\begin{proof}~\\
 For simplicity of notation let us forget about the index $^i$ of $x^i$. The Taylor expansion is the following:
   \begin{equation}
     \begin{aligned}
@@ -100,24 +100,24 @@ Let $f$ be a function that satisfies $u I \preceq \nabla^2 f \preceq L I$ and $\
 \begin{proof}~%
   \begin{description}
     \item[{\sc Step 1}]
-From the definition of $d^i$ we have that
+From the definition of $d^i$ we have that:
 \[
   d^i = - \inv{[\nabla^2 f(x^i)]} \nabla f(x^i)
 \]
-or, equivalently,
+or, equivalently:
 \[
   \nabla^2 f(x^i) d^i = - \nabla f(x^i)
 \]
-which implies
+which implies:
 \[
   d^i \nabla f(x^i) = - \tr{(d^i)} \nabla^2 f(x^i) d^i \leq - \lambda^n \sqrnorm{d^i}
 \]
   \item[{\sc Step 2}]
-    Since we have that $\cos(\theta^i) = d^i \nabla f(x^i) \cdot (\norm{x^i} \cdot \norm{\nabla f(x^i)}) \leq \delta < 0$, we want to bound the norm of the gradient:
+    Since we have that $\cos(\theta^i) = d^i \nabla f(x^i) (\norm{x^i} \norm{\nabla f(x^i)}) \leq \delta < 0$, we want to bound the norm of the gradient:
   \[
-    \norm{\nabla f(x^i)} = \norm{\nabla^2 f(x^i) d^i} \leq \norm{\nabla^2 f(x^i)} \cdot \norm{d^i} = \lambda^1 \norm{d^i}
+    \norm{\nabla f(x^i)} = \norm{\nabla^2 f(x^i) d^i} \leq \norm{\nabla^2 f(x^i)} \norm{d^i} = \lambda^1 \norm{d^i}
   \]
-      which implies
+      which implies:
   \[
       \cos(\theta^i) \leq - \lambda^n / \lambda^1 \leq - u / L
   \]
@@ -131,10 +131,10 @@ which implies
 \begin{proof}
   \begin{equation}
     \begin{aligned}
-      f(x^i + d^i) &= f(x^i) + d^i \nabla f(x^i) + \frac{1}{2} \cdot (d^i) [\nabla^2 f(x^i)] d^i +  R(\norm{d^i})\\
+      f(x^i + d^i) &= f(x^i) + d^i \nabla f(x^i) + \frac{1}{2} (d^i) [\nabla^2 f(x^i)] d^i +  R(\norm{d^i})\\
       &= f(x^i) - \tr{\nabla f(x^i)} \inv{[\nabla^2 f(x^i)]} \nabla f(x^i) + \\
       &+ \frac{1}{2} \tr{\nabla f(x^i)} \inv{[\nabla^2 f(x^i)]} \nabla f(x^i) + R(\norm{d^i})\\
-      &= f(x^i) - \frac{1}{2} \cdot  \tr{\nabla f(x^i)} \cdot \inv{[ \nabla^2 f(x^i)]} \nabla f(x^i) + R(\norm{d^i})\\
+      &= f(x^i) - \frac{1}{2} \tr{\nabla f(x^i)} \inv{[ \nabla^2 f(x^i)]} \nabla f(x^i) + R(\norm{d^i})\\
       &= f(x^i) + \frac{1}{2} \ps{\nabla f(x^i)}{d^i} + R(\norm{d^i})
     \end{aligned}
   \end{equation}

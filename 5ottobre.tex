@@ -17,12 +17,17 @@ Until now we stated that the best conditions are encountered when the domain is 
 Now we need to consider when we can stop our algorithm.
 
 \begin{definition}[Unconstrained optimization problem]
-We want to solve $(P)~f_* = \min \{f(x)~:~x \in X\}$, where $X = \R^n$.
+We want to solve:
+\[
+  f_* = \min \{f(x)~:~x \in X\}~(P)
+\]
+
+where $X = \R^n$.
 \end{definition}
 
 If $\R^n$ is not bounded, Weierstrass theorem does not apply, hence even if a (global) minimum $x_*$ exists, finding it is a NP problem.
 
-Let us use a weaker condition to ease things a little: $x_*$ is a \textbf{local minimum} if it solves
+Let us use a weaker condition to ease things a little: $x_*$ is a \textbf{local minimum} if it solves:
 \[
   \min \{f(x)~:~x \in \mathcal{B}(x_*, \eps) \}\mbox{for some } \eps > 0
 \]

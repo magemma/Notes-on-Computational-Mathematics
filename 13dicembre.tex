@@ -64,10 +64,10 @@ By induction:
   Let us assume we proved the thesis $\tr{r_j} r_k = 0$ for $k-1, k-2, \ldots, 0$.
   Since $x_k = x_{k-1} \alpha_{k} d_{k-1}$, the residual $r_k = b-Ax_k = b - A(x_{k-1} + \alpha_{k} d_{k-1}) = b - A x_{k-1} - \alpha_k A d_{k-1} = r_{k-1} - \alpha_k A d_{k-1}$.
 
-  Let us compute $\tr{r_j} r_k = \tr{r_j} \cdot (r_{k-1} - \alpha_k A d_{k-1})$.
+  Let us compute $\tr{r_j} r_k = \tr{r_j} (r_{k-1} - \alpha_k A d_{k-1})$.
   \begin{itemize}
     \item If $i < k-1$ then $\tr{r_j} r_{k-1} - \tr{r_j} \alpha_k A d_{k-1} = 0$, because the first term is $0$ from induction hypothesis and $\tr{r_j} \alpha_k A d_{k-1} = 0$, because $r_j \in K_{k-1}(A, b) = span(d_0, d_1, \ldots, d_{k-2})$.
-    \item If $i = k-1$, $0 = \tr{r_{k-1}} \cdot (r_{k-1} - \alpha_k A d_{k-1}) = \tr{r_{k-1}} r_{k-1} - \alpha_k \tr{r_{k-1}} A d_{k-1}$ holds if $\alpha_k=\frac{r_{k-1}^T r_{k-1}}{r_{k-1}^T A d_{k-1}}$. 
+    \item If $i = k-1$, $0 = \tr{r_{k-1}} (r_{k-1} - \alpha_k A d_{k-1}) = \tr{r_{k-1}} r_{k-1} - \alpha_k \tr{r_{k-1}} A d_{k-1}$ holds if $\alpha_k=\frac{r_{k-1}^T r_{k-1}}{r_{k-1}^T A d_{k-1}}$. 
       We are left with proving that $\alpha_k=\frac{r_{k-1}^T r_{k-1}}{r_{k-1}^T A d_{k-1}} = \alpha_k=\frac{r_{k-1}^T r_{k-1}}{d_{k-1}^T A d_{k-1}}$.
 
       This is true, since $d_{k-1} = r_{k-1} + \beta_{k-1} d_{k-2}$, so $\tr{d_{k-1}} A d_{k-1} = \tr{(r_{k-1} + \beta_{k-1} d_{k-2})} A d_{k-1} = \tr{r_{k-1}} A d_{k-1} + \beta_{k-1} \tr{d_{k-2}Ad_{k-1}}$ and the second part is equal to $0$ by induction. 
@@ -76,7 +76,7 @@ By induction:
 
 Notice that this base is not orthonormal, we need to rescale it to obtain an orthonormal one, moreover, $\frac{1}{\norm{r_i}}r_i$ coincides (up to a sign) with the $q_i$ obtained with Arnoldi.
 
-We are left with writing the equation we need to solve at each iteration, namely we need to ensure that $r_k = b - A x_k$ is orthogonal to all vectors of $K_k(A, b)$ which is equivalent to requiring $\tr{Q_k} \cdot (b - Ax_k) = 0$ or, equivalently, $\norm{b} \cdot e_1 = H_k y_k$.
+We are left with writing the equation we need to solve at each iteration, namely we need to ensure that $r_k = b - A x_k$ is orthogonal to all vectors of $K_k(A, b)$ which is equivalent to requiring $\tr{Q_k} (b - Ax_k) = 0$ or, equivalently, $\norm{b} e_1 = H_k y_k$.
 
 In figure \Cref{fig:13dic_parallel} we can see a comparison between Arnoldi algorithm and the conjugate gradient.
 
@@ -95,13 +95,13 @@ As far as convergence speed is concerned,
 \end{theorem}
 
 \begin{theorem}
-Let $\lambda_{\max}$, $\lambda_{\min}$ be the maximum/minimum eigenvalue of $A$; then, CG converges with rate
+Let $\lambda_{\max}$, $\lambda_{\min}$ be the maximum/minimum eigenvalue of $A$; then, CG converges with rate:
 \[
-  \norm{x-x_k} \leq {\left( \frac{\sqrt{\lambda_{\max}} - \sqrt{\lambda_{\min}}}{\sqrt{\lambda_{\max}} + \sqrt{\lambda_{\min}}}\right)}^k \norm{x-x_0}.
+  \norm{x-x_k} \leq {\left( \frac{\sqrt{\lambda_{\max}} - \sqrt{\lambda_{\min}}}{\sqrt{\lambda_{\max}} + \sqrt{\lambda_{\min}}}\right)}^k \norm{x-x_0}
 \]
 \end{theorem}
 
-We can rewrite it in terms of a more familiar quantity: for a positive definite matrix, eigenvalues and singular values coincide, hence
+We can rewrite it in terms of a more familiar quantity: for a positive definite matrix, eigenvalues and singular values coincide, hence:
 \[
 \frac{\sqrt{\lambda_{\max}} - \sqrt{\lambda_{\min}}}{\sqrt{\lambda_{\max}} + \sqrt{\lambda_{\min}}} = \frac{\sqrt{\sigma_1} - \sqrt{\sigma_m}}{\sqrt{\sigma_1} + \sqrt{\sigma_m}} = \frac{\sqrt{\frac{\sigma_1}{\sigma_m}}-1}{\sqrt{\frac{\sigma_1}{\sigma_m}}+1} = \frac{\sqrt{\kappa(A)}-1}{\sqrt{\kappa(A)}+1}.
 \]
