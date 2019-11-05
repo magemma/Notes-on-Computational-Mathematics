@@ -1,0 +1,333 @@
+%chktex-file 36
+%chktex-file 8
+%chktex-file 24
+%chktex-file 35
+%chktex-file 26
+%chktex-file 37
+\documentclass[computationalMathematics.tex]{subfiles}
+
+\begin{document}
+
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+\section{28th of November 2018 --- A. Frangioni}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+
+\subsection{Subgradient methods}
+We are still in the hypothesis of convex objective functions that are not differentiable in the whole domain.
+
+\recap{
+  \Cref{prop:22nov1} of last lecture: for $f$ convex function, $\forall g \in \partial f(x), \forall~y \in \R^n g(y) \equiv f(y) \geq f(x) + g(y - x)$. This is a characterization of the function with respect to the model.
+}
+
+Let us assume we know the minimum point $x_*$. We observe that the scalar product between the subgradient and the direction we should choose is negative.
+Formally, $f(x_*) \ge f(x) + \ps{g}{x_* - x}$, hence $\ps{g}{x_*-x} \le f(x_*) - f(x) \le 0$.
+
+We want to bound the distance between the point at the ``next step'' and the optimum:
+\begin{equation}
+  \begin{aligned}
+    \sqrnorm{x^{i+1} - x_*} &\numeq{(1)} \sqrnorm{x^i - \alpha^i d^i - x_*}\\
+    &= \sqrnorm{x^i  - x_*} + 2\alpha^i g^i \frac{(x_* - x^i)}{\norm{g^i}} + {(\alpha^i)}^2\\
+    &\numineq{(2)}{\le} \sqrnorm{x^i  - x_*} - 2 \alpha^i \frac{(f(x^i) - f(x_*))}{\norm{g^i}} + {(\alpha^i)}^2
+  \end{aligned}\label{eq:28nov1}
+\end{equation}
+
+Where $\numeq{(1)}$ follows from the definition of a normalized step: $x^{i+1} = \frac{x^i - \alpha^i g^i}{\norm{g^i}}$ and $\numineq{(2)}{\le}$ follows from the inequality we stated above.
+
+\begin{obs}
+  The distance from the optimum is bounded by a square function in $\alpha_i$ (the step size), where the linear part is negative and the quadratic part is positive.
+  
+  Hence, if the steps are short enough we get close to the optimum fast enough, because the linear part dominates the quadratic one.
+  
+  Formally, $- 2 \frac{(f(x^i) - f(x_*))}{\norm{g^i}} < 0 + \alpha ^i \searrow$, hence ${(\alpha^i)}^2 \searrow 0_+$.
+
+  An attentive reader may notice that from \Cref{eq:28nov1} follows $\sqrnorm{x^{i+1}  - x_*} < \sqrnorm{x^i  - x_*} + {(\alpha_i)}^2$ and $\sqrnorm{x^{i+1} - x_*} \leq \sqrnorm{x^1  - x_*} + \sum_{k = 1}^i {(\alpha^k)}^2$.
+\end{obs}
+
+The point here is that we cannot choose a too small $\alpha$, recall Armijo conditions.
+
+If the series of the squares of step sizes does not diverge, then the sequence does not diverge as well, hence it converges somewhere, say $\bar{x}$.
+
+The convergence of the series of the squares may be obtained using the following 
+
+\begin{definition}[Diminishing-Square Summable]
+  We term a series that diverges, while the series of the squares of the terms diverges, as \textbf{diminisching-square summable}.
+  
+  Formally,
+  
+  (DSS) $\sum\limits_{i=1}^\infty \alpha^i = \infty~\wedge~\sum\limits_{i=1}^\infty {(\alpha^i)}^2 < \infty$.
+\end{definition}
+
+Assumptions: function convex, definite in all its domain, hence the norm of the gradient will never become very large.
+
+\begin{proposition}
+We claim that the sequence of the stepsizes is a diminishing-square sequence.
+\end{proposition}
+
+\begin{proof}[Proof by contraddiction]
+Let us assume $f(x^i) - f_* \ge \eps > 0,~\forall i$. Then,
+
+  \[
+    \sqrnorm{x^{i+1} - x_*} \le \sqrnorm{x^1 -x_*} - \delta \cdot \sum\limits_{k=1}^{i} \alpha^k + \sum\limits_{k=1}^{i} {(\alpha^k)}^2
+  \]
+
+The contraddiction is due to the fact that as $i \to \infty$ the right-hand side goes to $- \infty$.
+\end{proof}
+
+This family of algorithms is clearly incredibly robust in theory, but in practice it does not work very well.
+
+Let us make an experiment: let us suppose we know the minimum of the function $f$. 
+
+\begin{definition}[Plyak stepsize]
+Let $f$ be our convex objective function and let $x_*$ be the optimum for $f$.
+  We term \textbf{Polyak stepsize}:
+  \[
+    \text{(PSS)}~\alpha^i = \beta^i \frac{(f(x^i) - f(x_*))}{\norm{g^i}}
+  \]
+  where $\beta \in (0, 2)$.
+
+ \end{definition}
+ 
+If we pick a Polyak stepsize, then $\sqrnorm{x^{i+1} - x_*} < \sqrnorm{x^i  - x_*}$, so $\{x^i \} \to x_*$.
+The best value for $\beta_i$ is $1$.
+In this case, we obtain what follows by sybstituting $\beta_i = 1$ in \Cref{eq:28nov1}
+
+\[
+  \frac{{(f(x^i) - f(x_*))}^2}{\sqrnorm{g^i}} \le \sqrnorm{x^i - x_*} - \sqrnorm{x^{i+1} - x_*}
+\]
+
+The problem is that we don't know the optimum.
+
+Let us assume that we know it and compute the efficiency:
+
+Since we know that the sequence is bounded, we know that the objective function is globally Lipshitz (the norm of the gradient is bounded above).
+
+The point is that the sequence $\{ x_1 \}$ is not necessarily monotone, so we pick the so-called record value of best vaue ($\underline{f}^i = \min \{ f(x^h)~:~h=1, \ldots, i\}$)
+
+\[
+  \frac{{(\underline{f}^i - f(x_*))}^2}{L^2} \le \frac{{({f}^i - f(x_*))}^2}{{\norm{g_i}}^2} \le \sqrnorm{x^i - x_*} - \sqrnorm{x^{i+1} - x_*}
+\]
+
+Summing for $i=1, \ldots, k$ we obtain a telescopic series:
+
+\[
+  \norm{x^1 - x_*} - \norm{\cancel{x^2} - x_*} + \norm{\cancel{x^2} - x_*} - \norm{\cancel{x^3} - x_*} + \cdots + \norm{\cancel{x^k} - x_*} - \norm{x^{k+1} - x_*}
+\]
+
+Hence resulting in
+
+\[
+  k \cdot \frac{{(\underline{f}^k - f(x_*))}^2}{L^2} \le \sqrnorm{x^1 - x_*} - \sqrnorm{x^{k+1} - x_*} \le \sqrnorm{x^1 - x_*} = R
+\]
+
+which is equivalent to ${(\underline{f}^k - f(x^*))}^2 \le \frac{R^2L^2}{k}$, which is again equivalent to $\underline{f}^k - f(x^*) \le \sqrt{\frac{RL}{k}}$, where $L$ is the Lipshitz constant.
+
+The issue here is that the convergence is sublinear: $k \ge \frac{1}{{\eps}^2}$.
+
+
+\begin{theorem}
+Take an algorithm that uses only the subgradient. It's possible to construct a function that makes the algorithm converge with sublinear speed.
+Hence, we cannot do better.
+\end{theorem}
+
+It comes without saying that although this algorithm is not very good it is the ``less bad'' it can be.
+
+There are some lucky cases in which we do know the optimal value, but this is not the case usually.
+
+\subsubsection{Target level stepsize}
+Let us assume $f(x_*)$ is unknown. The only information available is that this value is below any value in any iteration.
+
+The rationale behind this algorithm is to assume to know the optimal value and as soon as we realize it is not correct we change it.
+
+Let us first give an informal description of the algorithm:
+
+\begin{itemize}
+  \item $\delta$ is the displacement: how much below the function is with respect to the best value obtained so far;
+  \item reference value $f_{rec} = \underline{f}$. At the beginning is the value at the first iterate and then we define the target value as the difference between the reference value and some $\delta$ (at the beginning $\delta_0$).
+\end{itemize}
+
+\algo{alg28nov:nonSGPTL}{Pseudocode for target level stepsize.}{
+  \Procedure{\bf SGPTL}{$f, g, x, i_{max}, \beta, \delta_0, R, \rho$}
+      \State~$r \gets 0$;
+      \State~$\delta \gets \delta_0$;
+      \State~$f_{ref} \gets f_{rec} \gets f(x)$;
+      \State~$i \gets 1$;
+      \While{($i < i_{max}$)}
+        \State~$g = g(x)$;
+        \State~$\alpha = \beta (f(x) - (f_{ref} - \delta))/ \sqrnorm{g}$;
+        \State~$x \gets x - \alpha g$;
+        \If{($f(x) \leq f_{ref} - \delta/2$)}
+          \State~$f_{ref} \gets f_{rec}$;
+          \State~$r \gets 0$;
+        \Else%
+          \If{( $r > R$ )}
+            \State~$\delta \gets \delta \rho$;
+            \State~$r \gets 0$;
+          \Else%
+            \State~$r \gets r + \alpha \| \, g \, \|$;
+          \EndIf%
+        \EndIf%
+      \EndWhile%
+      \State~$f_{rec} \gets \min \{ \, f_{rec} \,,\, f(x) \, \}$;
+      \State~$i \gets i + 1$;
+    \EndProcedure%
+}
+
+\addpic{0.5}{pics/28nov/1.png}{There are two cases: either the function value is significanlty below the reference (for example $\frac{\delta}{2}$ below the reference) or it's not . If we are in the ``happy case'' (we just move the reference to the best value). For what conserns the ``unhappy case'', if we are unhapy for 1 iteration, no problem. Two iterations? no prolem. Many iterations? Problem: after some iterations in which we are not improving it means that we have to decreas the reference values. How? $r$ is updated at each bad step and reset when a good step occurs. When $r$ gets too large we decrease $\delta$ and reset everything.}{fig:28nov1}
+
+At this point we defined the algorithm and we are ready to implement it, except for the fact that we need to choose of a lot of parameters.
+A way to choose them is to use the ML approach: try many possible values.
+
+Two big issues of this algorithm are that it does not provide a good stopping criterion and it is very sensitive to many parameters.
+
+\subsection{Deflected subgradient}
+
+The idea is to use the same trick of ball-step (also called primal-dual).
+
+Let us assume that our function was differentiable. The subgradient method collapses to the gradient method and we know that the gradient method does not provide a good convergence.
+Yet, deflection is possible: $d^i = \gamma^i g^i  + ( \, 1 - \gamma^i \, ) d^{i-1},~x^{i+1} = x^i - \alpha^i d^i$.
+We can prove that $d^i$ approximates the subgradient.
+We can also prove that the algorithm converges in the end.
+The prameters of this algorithm are two: $\beta$ (stepsize) and $\gamma$ (deflection).
+In order to choose them we have two different approaches:
+\begin{description}
+  \item[{\sc Stepsize-rescricted}]$\equiv$ deflection-first. We first choose $\beta$ and when choosing $\alpha$ we need to take into account $\beta$:
+    $\alpha^i = \frac{\beta^i (f(x^i) - f_*)}{\norm{d^i}}~\wedge~\beta^i \leq \gamma^i$ ``as deflection $\nearrow$, stepsize has to $\searrow$'';
+  \item[{\sc Deflection-restricted}] $\equiv$ stepsize-first. We first choose $\gamma$, then we pick a step size that depends on $\gamma$: 
+  \[
+    \text{(DSS)}~\wedge~ \frac{\alpha^{i-1} \norm{d^{i-1}}}{(f(x^i) - f_*) + \alpha^{i-1}}\norm{d^{i-1}} \leq \gamma^i
+  \]
+  ``as $f(x^i) \to f_*$, deflection $\searrow$''
+\end{description}
+
+This algorithm gets the optimal $O(1/\varepsilon^2)$ on average, sadly not worst case.
+
+\subsection{Smoothed gradient methods}
+
+Let us assume that the target function is a \textbf{Lagrangian function}.
+
+\begin{definition}[Lagrangian function]
+  Let $f: \R^n \to \R$ be a function of the following shape:
+  \[
+    f(x) = \max \{x^T A z~:~z \in Z\}
+  \]
+  where $Z$ is convex and bounded.
+\end{definition}
+
+Let us assume that $Z$ is also compact.
+
+A graphical example in the case of $f(x) = \abs{x} = \max \{x, -x\} = \max \{zx : z \in [-1, 1]\}$ is shown in \Cref{fig:28nov2}.
+
+\addpic{0.5}{pics/28nov/2.png}{Let us take the absolute value function $f(x) = |x|$. This function would be differentiable, if it wasn't for some nasty points (in this case $0$, were the optimization problem has many optimal solutions). In $0$ there are many subgradients, so it has many optima.}{fig:28nov2}
+
+ In the case of the absolute value, the nasty trick is ``to make it have only one optimal solution'' in the point $0$.
+ 
+ This result is obtained adding a small quadratic term: $f(x) = max \{ \tr{x}Az - \mu \sqrnorm{z}~:~ z\ in G\}$ that is shown in \Cref{fig:28nov3}.
+ At this point the new function $f_{\mu}$ is not the original function anymore, but it is very close to it whenever the $\mu$ is small.
+ 
+ Notice that this new function is smooth (differentiable).
+
+\addpic{0.5}{pics/28nov/3.png}{Geometric intuition of the usage of variable $\mu$.}{fig:28nov3}
+It might be not ery easy to compute once chosen the value for $\mu$.
+
+We are solving a problem which is different from the original one and would be exactly the same if $\mu$ where $0$.
+
+On the other hand for $\mu=0$ we have the problem which is not differentiable once again, so we need to keep close to $0$ but not too close.
+
+At this point we are in the situation of $f_{\mu}(x) \leq f(x) \leq f_{\mu}(x) + \mu R$, such that as $\mu \searrow 0$, ``argmin $\{ \, f_{\mu}(x) \, \} \to x_*$''.
+
+The new function is not only convex, but it is also Lipshitz continuous: $\nabla f_{\mu}$ Lipschitz with $L = \sqrnorm{A} / \mu$, but it is ``less and less Lipschitz'' as $\mu \searrow 0$.
+
+\begin{proposition}
+  If $f_* > -\infty$ and picking a very special value of $\mu$ ($\mu = \varepsilon / (2R)$), then an appropriate ACCG obtains $f(x^i) - f_* \leq \varepsilon$ for $i \geq 4 \cdot \norm{A} \cdot \norm{x_*} \cdot \sqrt{R} / \eps$.
+\end{proposition}
+
+We observe that the convergence is much better, because it depends on $O(1 / \eps)$ instead of $O(1/\varepsilon^2)$.
+
+\addtwopics{0.48}{pics/28nov/kgh4_1_i.pdf}{0.48}{pics/28nov/kgh6_1_i.pdf}{At the beginning we eill make a lot of bad steps (the upper gray line). We can improve (pick the black line) changing the $\eps$ value and we obtain something that looks more stable. The more precision we want, the smaller the step we make. At the ending it pays, but at the beginning it is not so.}{fig:28nov4}
+
+\subsection{Cutting-plane algorithm}
+We cheated to get first order information, we want to do more. We want to cheat and have also the second order information.
+
+We want to use the same idea of limited memory quasi Newton methods. Using some limited memory of the Hessian, in order to understand th curvature.
+
+The point is that the directional derivatives are defined and (if computed massively) give me a hint of the curvature of the function (cfr. \Cref{fig:28nov5}).
+Notice that it is not possible to build a matrix, because it is not defined.
+
+\addpic{0.7}{pics/28nov/4.png}{The idea is that we do not compute a subgradient and discard it. We store it, thus resulting in a model}{fig:28nov5}
+
+Let us say we have performed $i$ iterates, then we have collected $i$ subgradients ($\mathscr{B} = \{(x^i,~f^i = f(x^i),~g^i \in \partial f(x^i))\} \equiv$ bundle of first-order information) and function values.
+
+We can now define a piece wise linear function defined as the maximum of the first order model:
+\[
+  f_{\mathscr{B}}(x) = \max \{f^i + g^i (x - x^i)~:~(x^i, f^i, g^i) \in \mathscr{B}\}
+\]
+
+At this point we can apply Newton method: first we minimize the model and the use the minimum as next point. We collect information in that specific point and then we repeat.
+
+ Notice that the model is always below the objective function ($f_{\mathscr{B}}(x) \leq f(x) \; \forall x$), hence $\min \{f_{\mathscr{B}}(x)\} \leq f_*$, so $x^*_{\mathscr{B}} \in \mbox{argmin} \{f_{\mathscr{B}}(x) \} \approx~x_*$.
+
+ This function has many kinky points, so how to minimize it?
+Dirty trick from Ricerca Operativa: 
+\[
+  \min \{ \, f_{\mathscr{B}}(x) \, \} = \min \{ \, v \,:\, v \geq f^i + g^i (x - x^i),\text{ where } (x^i,f^i,g^i) \in \mathscr{B}\}
+\]
+
+And on this problem, we can use the simplex method.
+
+\addtwopics{0.4}{pics/28nov/bundle01.pdf}{0.4}{pics/28nov/bundle04.pdf}{A geometric representation of how the model (blue line) changes after one iteration.}{fig:28nov6}
+
+At this point we have obtained both an upperbound and a lower bound, which go one towards the other.
+
+We may decide to stop iterating when they are ``close enough''.
+
+The problem is that at each step we need to solve a minimization problem and the convergence is very slow.
+
+It's also possibile that the blue function (the model) does not have a minimum (unbounded below).
+
+How to overcome this problem? Use so-called bundle methods.
+
+\subsection{Bundle methods}
+
+The intuition behind this is that we want to keep quite close to the point where the model corresponds to the function, because the further we get the more the difference from the function.
+
+A way to express this is to add a quadratic quantity to the function
+that grows when we move outside the current point.
+
+\begin{definition}[Stabilized master problem]
+  We term \textbf{stabilized master problem} the following
+  \[
+    \min \{f_{\mathscr{B}}(x) + \mu \sqrnorm{x - \bar{x}} / 2\}
+  \]
+\end{definition}
+
+ This improved model cannot be undounded below (quadratic function), but we need to choose $\mu$ and $\bar{x}$ wisely.
+
+ A possible way is to move the \textbf{stability center} whenever the current value is better the the best encountered so far.
+
+\algo{alg:28novPBM}{Pseudocode for boundle method.}{
+  \Procedure{\bf PBM}{$f, g, \bar{x}, m_1, \varepsilon$}
+      \State~choose $\mu$;
+      \State~$\mathscr{B} \gets \{(\bar{x},~f(\bar{x}),~g(\bar{x}))\}$;
+      \While{( \textbf{true} )}
+        \State~$x^* \gets$ argmin $\{f_{\mathscr{B}}(x) + \mu \sqrnorm{x - \bar{x}} / 2 \}$;
+        \If{($\mu \| \, x^* - \bar{x} \, \|_2 \leq \varepsilon$)}
+          \State~\textbf{break};
+        \EndIf%  
+        \If{($f(x^*) \leq f(\bar{x}) + m_1 (f_{\mathscr{B}}(x^*) - f(\bar{x}))$)}
+          \State~$\bar{x} \gets x^*$;
+          \State~possibly decrease $\mu$;      
+        \Else%
+          \State~possibly increase $\mu$;
+        \EndIf%
+        \State~$\mathscr{B} \gets \mathscr{B} \cup ( \, x^* \,,\, f(x^*) \,,\, g(x^*) \, )$;
+      \EndWhile%
+    \EndProcedure%
+}
+
+This algorithm may never move (without cycling, luckily), but at least we gained some information.
+
+The bundle method converges in few steps, although each step is quite costly.
+
+We reached a point where to solve an unconstrained problem we need to solve a contrained one, so from next lecture we will start dealing with constrained optimization problems.
+
+\end{document}

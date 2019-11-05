@@ -1,0 +1,268 @@
+%chktex-file 36
+%chktex-file 23
+%chktex-file 10
+%chktex-file 17
+%chktex-file 9
+\documentclass[computationalMathematics.tex]{subfiles}
+
+\begin{document}
+
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+\section{25th of October 2018 --- A. Frangioni}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+
+We need to choose a descending direction, we have more choices than the opposite of the gradient.
+
+We want the derivative to be almost zero, given a tolerance value. 
+
+Let's see another variant of line search.
+
+\subsubsection{Line search: second order approaches}
+
+\begin{theorem}
+  Given $f \in C^2$,  $\exists \varphi''(\alpha) = \tr{d} \nabla^{2} f(x + \alpha d ) d$ and it's continuous.
+\end{theorem}
+\begin{proof}
+Via chain rule.
+\end{proof}
+
+Since we are looking for a point where the derivative $\varphi'(\alpha) = 0$, we may use the second derivative to write a model and, assuming to trust the model, it can be studied.
+
+\begin{definition}[Model$-$Newton tangent method]
+Our model, in this case is
+  \[
+    \varphi'(\alpha) \approx \varphi'(\alpha^k) + \varphi''(\alpha^k)(\alpha - \alpha^k)
+  \]
+\end{definition}
+
+In this context, solving $\varphi'(\alpha) = 0$ implies finding those $\alpha$ such that $\alpha = \alpha^k - \varphi'(\alpha^k) \varphi''(\alpha^k)$ 
+
+\algo{alg:25ottNewton}{Pseudocode for Newton method.}{
+  \Procedure{\bf LSNM}{$\varphi', \varphi'', \alpha, \varepsilon$}
+    \While{($|\varphi'(\alpha) | > \varepsilon$)}
+      \State~$\alpha \gets \alpha - \frac{\varphi'(\alpha)}{\varphi''(\alpha)}$;
+    \EndWhile%
+  \EndProcedure%
+}
+
+We need to understand when and why $\varphi''(\alpha) \ne 0$ and when and why this method converges.
+\begin{theorem}
+Let $\varphi \in C^{3}$ such that $\varphi'(\alpha_*) = 0$ and $\varphi''(\alpha_*) \neq 0$. $\exists~\delta > 0$ s.t.~if $\alpha^0 \in [\alpha_* - \delta, \alpha_* + \delta]$ then $\{\alpha^k \}~\to \alpha_*$, with $p = 2$.
+\end{theorem}
+
+\begin{proof}
+  We are in the hypothesis that the function $\varphi$ is three times differentiable and we would like to prove that $\alpha^{k+1} - \alpha_* \rightarrow 0$
+
+We want to compute how much the error is, if compared to the error at the previous iteration.
+  Since $\varphi(\alpha_{*}) = 0$ we can use a dirty trick. 
+  \begin{enumerate}
+    \item Since $\alpha^{k+1} \numeq{(1)} \alpha^k - \frac{\varphi'({\alpha}_*)}{\varphi''(a^k)}$ and $\varphi'(\alpha_*) \numeq{(2)} 0$, we obtain:
+  \begin{equation}
+    \begin{split}
+      \alpha^{k+1} - \alpha_* & \numeq{(1)} \alpha^k - \alpha_* - \frac{(\varphi'(\alpha^k))}{\varphi''(\alpha^k)}\\
+      & \numeq{(2)} \alpha^k - \alpha_* - \frac{(\varphi'(\alpha^k) - \varphi'(\alpha_*))}{\varphi''(\alpha^k)}\\
+      & = \frac{[\varphi'(\alpha^k) -\varphi'(\alpha_*) + \varphi''(\alpha^k) \cdot (\alpha^k - \alpha_*)]}{\varphi''(\alpha^k)} 
+    \end{split}
+  \end{equation}
+ Where the term inside the square parenthesis  is the first order model, centered in $\alpha_*$ computed in $\alpha^k$.
+  \item Now we can use the first form of Taylor's formula, which says$\exists ~ \beta \in [\alpha^k, \alpha^*]$ s.t. $\varphi'(\alpha_{*}) \numeq{(3)} \varphi'(\alpha^{k}) + \varphi''(\alpha^{k}) (\alpha^{k} - \alpha_{*}) + \varphi'''(\beta) \frac{{(\alpha^{k} - \alpha_{*})}^{2}}{2}$.
+    Let's see what happens to $\alpha^{k+1} - \alpha_*$:
+  \begin{equation}
+    \begin{split}
+      \alpha^{k+1} - \alpha_* & \numeq{(5)} \frac{[\varphi'(\alpha^k) -\varphi'(\alpha_*) + \varphi''(\alpha^k) \cdot (\alpha^k - \alpha_*)]}{\varphi''(\alpha^k)}\\
+      & \numeq{(3)} \frac{-\varphi'''(\beta)}{2 \varphi''(\alpha^k)} \cdot {(\alpha^k - \alpha_*)}^2
+    \end{split}
+  \end{equation}
+\item We can say that the quantity $2\varphi''(\alpha^{k})$ doesn't become too small and that the numerator $\varphi'''(\beta)$ doesn't become too big. This is proved since $\exists \delta > 0$ s.t.~$\varphi''(\alpha) \geq k_2 > 0$ and also  $| \varphi'''(\beta) | \leq k_1 < \infty$. We can go on bounding the difference between $\alpha^{k+1}$ and $\alpha_*$ as follows: for $\alpha$, $\beta \in [ \, \alpha_* - \delta \,,\, \alpha_* + \delta$
+       
+  \begin{equation}
+    \begin{split}
+      |\alpha^{k+1} - \alpha_*| & \numeq{(6)} \frac{-\varphi'''(\beta)}{2 \varphi''(\alpha^k)} \cdot {(\alpha^k - \alpha_*)}^2\\
+      & = |\alpha^{k+1} - \alpha_{*}| \leq [\frac{k_1}{2 k_{2}}] {(\alpha^{k} - \alpha_{*})}^{2}
+    \end{split}
+  \end{equation}
+      We may notice that $[\frac{k_1}{2 k_2}]$ may be very large, but it's multiplied for ${(\alpha^k - \alpha_*)}^{2}$, which means that if we start close enough to $\alpha^{*}$  it's ok.
+  \begin{equation}
+    \begin{split}
+      |\alpha^{k+1} - \alpha_*| & = |\alpha^{k+1} - \alpha_{*}| \leq [\frac{k_1}{2 k_{2}}] {(\alpha^{k} - \alpha_{*})}^{2}\\
+      &= |\alpha^{k+1} - \alpha_{*}| \leq [\frac{k_1}{2 k_{2}}] {(\alpha^{k} - \alpha_{*})} \cdot {(\alpha^{k} - \alpha_{*})}
+    \end{split}
+  \end{equation}
+      Where $[\frac{k_1}{2 k_2}] {(\alpha^k - \alpha_*)} < 1$, so $\frac{k_1 (\alpha^k - \alpha_*)}{2 k_2} \leq 1 \Longrightarrow
+        \abs{\alpha^{k+1} - \alpha_*} < \abs{\alpha^k - \alpha_*}$
+       At this point, if we start from a point $a^{0}$ close enough to $\alpha^{*}$ (according to this formula) then $\{ \, \alpha^k \, \} \to \alpha_*$ and the convergence is quadratic.
+ %
+  \end{enumerate}
+\end{proof}
+
+In the end, we may conclude that if we start from the right point we converge with a quadratic speed.
+
+\textbf{Problem:} This solution makes us compute all the derivatives until the third one. We will now see a solution to this issue.
+
+\subsubsection{Exact line search: zeroth-order approaches}
+Can we do line search without computing derivatives at all? Following this approach we can circumvent the problem of the existence of derivatives. In the case of derivatives definite, it's better if we don't have to compute them.
+
+\textbf{Key idea:} The more derivatives we have, the smallest number of points we need (second derivative $\rightarrow$ two points, third derivative $\rightarrow$ zero points). The opposite holds as well.
+
+\addpic{0.5}{pics/25ott/1.png}{The interesting interval is $[x_1, x_2]$, since $\varphi(x_2) > \varphi(x_1)$ and we are allowed to exclude the interval $[x_3, +\infty)$ since the value in $x_3$ is bigger than $\varphi(x_2)$.}{fig:25ott1}
+Obs: We have to minimize a function we know nothing about, except for its value in a point where we compute it. We would like to reduce to the interval which has as extremes the smallest point.
+
+How can we choose these points? The idea is to choose the points that imply that the interval shrinks as fast as possible.
+
+Obs: We have no guarantee that the interval that we are discarding doesn't contain a very deep minimum.
+
+Elegant solution via golden ratio:
+\[
+  r = (\sqrt{5} - 1)/2 \; (\approx 0.618), ~ r : 1 = ( 1 - r ) : r
+\]
+
+\addpic{0.5}{pics/25ott/2.png}{The relationship between $r$ and $1-r$ is $r ~ : ~ 1 = (1-r) ~ : ~ r$.}{fig:25ott2}
+
+\algo{alg:25ottnonDeriv}{Pseudocode for non differentiable functions for local minimum detection.}{ 
+  \Procedure{\bf LSGRM}{$\varphi, \alpha, \varepsilon$}
+    \State~${\alpha}_{i-} \gets 0$; ${\alpha}_{+} \gets \alpha$;
+    \State~$\alpha'_- \gets (1 - \Cb{r}) \, \alpha$;
+    \State~$\alpha'_+ = \Cb{r} \, \alpha$;
+    \While{($\alpha_+ - \alpha_- \leq \, \Cr{\varepsilon}$)} // note: not the same $\varepsilon$
+        \If{$\varphi(\alpha'_{-}) > \varphi(\alpha'_{+})$}
+          \State~$\alpha_{-} \gets \alpha'_{-}$;
+          \State~$\alpha'_{-} \gets \alpha \gets \alpha'_{+}$;
+          \State~$\alpha'_{+} \gets \Cb{r} (\alpha_{+} - \alpha_{-})$;
+        \Else%
+          \State~$\alpha_{+} \gets \alpha'_{+}$;
+          \State~$\alpha'_{+} \gets \alpha \gets \alpha'_{-}$;
+          \State~$\alpha'_{-} \gets (1 - \Cb{r}) ( \alpha_{+} - \alpha_{-})$;
+    \EndIf%
+  \EndWhile%
+\EndProcedure%
+}
+
+\subsubsection{Inexact line search: Armijo-Wolfe}
+\textbf{Key idea:} Take your favourite line search (it also suggest a simpler one), and run it, but you don't have to wait for the derivative to become zero.
+
+\addpic{0.5}{pics/25ott/armijo01.pdf}{The dotted line represents the line which has the derivative as slope.}{fig:25ott3}
+
+\begin{definition}[Armijo condition]
+  Let $0 < m_1 < (\ll) 1$
+  \[
+    \varphi(\alpha)\leq \varphi(0) + m_1 \alpha \varphi'(0) ~ (A)
+  \]
+\end{definition}
+Problem of Armijo condition: small steps satisfy the armijo condition, but make convergence very slow.
+
+\addtwopics{0.4}{pics/25ott/armijo02.pdf}{0.4}{pics/25ott/armijo04.pdf}{In the left picture Armijo condition chooses a new line which slope is still negative, but less stip than the original one. In the right one, the ranges where to search are highlighted.}{fig:25ott4}
+
+We need another condition, in order to have a lower bound for the step size:
+
+\begin{definition}[Goldstein condition]
+Let $m_1 < m_2 < 1$
+  \[
+    \varphi(\alpha) \geq \varphi(0) + m_2 \alpha \varphi'(0) ~ (G)
+  \]
+\end{definition}
+
+\addpic{0.5}{pics/25ott/armijo05.pdf}{Goldstein condition chooses a new line which slope is still negative, less stip than the original one, but stipper than the one obtained by Armijo.}{fig:25ott5}
+
+Problem: the point that satisfies both Goldstein and Armijo may not contain a local minimum.
+
+\addpic{0.5}{pics/25ott/armijo06.pdf}{Here are the intervals that satisfy both Armijo and Goldstein conditions.}{fig:25ott6}
+
+To circumvent this problem another condition comes to help us.
+
+\begin{definition}[Wolfe condition]
+Let $m_1 < m_3 < 1$
+\[
+  \varphi'(\alpha) \geq m_3 \varphi'(0) ~ (W)
+\]
+\end{definition}
+
+\addtwopics{0.4}{pics/25ott/armijo07.pdf}{0.4}{pics/25ott/armijo08.pdf}{On the left Wolfe condition (which chooses derivatives that are substantially zero). On the right part the intervals selected by Wolfe.}{fig:25ott7}
+
+
+Another issue of this conditions is that the derivative in the interval is quite big on the right side.
+
+\begin{definition}[Strong Wolfe condition]
+  \[
+    \abs{\varphi'(\alpha)} \leq m_3 \abs{\varphi'(0)} = -m_3 \varphi'(0)
+  \]
+\end{definition}
+
+\addpic{0.5}{pics/25ott/armijo09.pdf}{Strong Wolfe condition.}{fig:25ott8}
+
+\begin{proposition}
+  If $\varphi'(\alpha) \not\gg 0$ and (A) $\cap$ (W) / (W') then all local minima (\& maxima) are captured unless $m_1$ too close to $1$ (that's why usually $m_1 \approx 0.0001$)
+\end{proposition}
+
+\addpic{0.5}{pics/25ott/armijo11.pdf}{If the line is too close to the original one only a few points will satisfy Armijo condition which means that the intersection between Armijo and Wolfe will almost be empty.}{fig:25ott9}
+
+The $m_{i}$ are like the hyperparameters of machine learning. Less formally, if we choose an $m_{1}$ far enough from $1$ everything works fine.
+
+\begin{theorem}
+Let $\varphi \in C^1$ and $\varphi(\alpha)$ bounded below for $\alpha \geq 0$ then $\exists ~ \alpha$ s.t.~(A) $\cap$ (W') holds.
+\end{theorem}
+
+\begin{proof}
+$l(\alpha) = \varphi(0) + m_1 \alpha \varphi'(0)$, $d(\alpha) = l(\alpha) - \varphi(\alpha) \Longrightarrow$
+
+$d(0) = 0$, $d'(0) = (m_1 - 1) \varphi'(0) > 0$ ($m_1 < 1$)
+\end{proof}
+
+\addpic{0.5}{pics/25ott/3.png}{If the function isn't going to $-\infty$ the blue line and the function will meet again and we denote the value along the $x$ axis $\bar{\alpha}$.}{fig:25ott10}
+
+$0$ and $\bar{\alpha}$ are the two roots of the function $d$, so we can use Rolle's theorem, in order to prove that the function $d$ has a stationary point in the interval $[0, \bar{\alpha}]$.
+
+\[
+  d(\alpha) = \varphi (0) + \alpha (m_{1} \varphi'(0)) - \varphi(\alpha)
+\]
+
+\[
+  d'(\alpha) = m_{1} \varphi' (0) +  \varphi'(\alpha)
+\]
+So $d'(\alpha^*)$ iif $\varphi'(\alpha^*) = m_1 \varphi'(0)$. Then strong Wolfe requests that $\abs{\varphi'(\alpha^*)} \le m_1 \abs{\varphi'(0)}$.
+
+How can we find such a point? 
+
+\algo{alg:25ottback}{Pseudocode for backtracking line search.}{
+    \Procedure{\bf BLS}{$\varphi, \varphi', \alpha, m_{1}, \tau$}
+      \While{($\varphi(\alpha) > \varphi(0) + m_1 \alpha \varphi'(0)$)}
+          \State~$\alpha \gets \tau \, \alpha$; $\tau < 1$;
+      \EndWhile%
+  \EndProcedure%
+}
+
+\begin{itemize}
+ \item Fundamental assumption: $\nabla f$ Lipschitz $\Longrightarrow ~ \varphi'$ Lipschitz and $L$ does not depend on $x^i$ ({\bf check})
+ \item Recall: $\exists \bar{\alpha}$ s.t.~(A) holds $\forall \alpha \in ]0, \bar{\alpha}]$ and $\varphi'(\bar{\alpha}) > m_1 \varphi'(0) > \varphi'(0)$;
+ \item $\varphi'$ Lipschitz $\Longrightarrow \bar{\alpha}$ is ``large'' if $\norm{\nabla f(x^i)}$ is: 
+   \[
+     L(\bar{\alpha} - 0) \geq \varphi'(\bar{\alpha}) - \varphi'(0)
+        > (1 - m_1) (- \varphi'(0)) \Longrightarrow 
+        \bar{\alpha} > (1 - m_1) \frac{\norm{\nabla f(x^i)}|}{L}
+  \]
+       (recall $- \varphi'(0) = \norm{\nabla f(x^i)}$);
+ \item Fundamental trick: $\bar{\alpha}$ can $\searrow 0$, but only as fast as $\norm{\nabla f(x^i)}$ does;
+ \item Enough to prove that $\alpha^i \geq \bar{\alpha}$, or ``not too smaller''.
+\end{itemize}
+
+Now we can prove the following
+
+\begin{theorem}
+  If (A) $\cap$ (W) holds $\forall i$ then either $\{f(x^i)\} \to -\infty$ or $ \{\norm{\nabla f(x^i)}\} \to 0$. 
+\end{theorem}
+
+\begin{proof}
+  \textbf{By contraddiction}, we assume $- \varphi'(0) = \norm{\nabla f(x^i)} \geq \varepsilon > 0 \forall i$. Then
+  \begin{enumerate}
+    \item (W) $\Longrightarrow \alpha^i \geq \bar{\alpha} > (1 - m_1) \frac{\norm{\nabla f(x^i)}}{L} \Longrightarrow \alpha^i \geq \delta > 0$;
+    \item (A) $\Longrightarrow f(x^{i+1}) \leq f(x^i) - m_1 \alpha^i \norm{\nabla f(x^i)} \leq f(x^i) - m_1 \delta \varepsilon$;
+    \item So $\{f(x^i)\} \to -\infty$ (or $ \{\norm{\nabla f(x^i)}\} \to 0$).
+  \end{enumerate}
+\end{proof}
+
+Backtracking is similar: for simplicity, $\alpha = 1$ (input)
+
+      $\norm{\nabla f(x^i)} > \varepsilon \forall i \Longrightarrow \bar{\alpha} > \delta > 0 \forall i$
+
+      $h = \min \{k : \tau^{-k} \leq \delta\} \Longrightarrow \alpha^i \geq \tau^{-h} > 0 \forall i \Longrightarrow$ $f(x^{i+1}) \leq f(x^i) - m_1 \tau^{-h} \varepsilon \Longrightarrow \{f(x^i)\} \to -\infty$ or \faFlash.
+
+\end{document}

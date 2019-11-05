@@ -1,0 +1,388 @@
+%chktex-file 36
+%chktex-file 8
+%chktex-file 11
+%chktex-file 24
+\documentclass[computationalMathematics.tex]{subfiles}
+
+\begin{document}
+
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+\section{26th of October 2018 --- F. Poloni}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+
+\subsection{How to construct a QR factorization}
+
+In the previous lecture we introduced the $QR$ factorization and we defined what an Householder reflector is.
+
+At the end of the lecture we gave a first MatLab implementation of {\tt householder\_vector}:
+
+\begin{center}
+\begin{minipage}{.9\linewidth}
+  \begin{algorithm}[H]
+    \caption{Householder vector Matlab implementation.}\label{alg:26ott1}
+    \begin{minted}[linenos=true]{matlab}
+      function[v,s] = householdervector(x)
+      s = norm(x);
+      v = x;
+      v(1) = v(1) - s;
+      v = v / norm(v);
+    \end{minted}
+  \end{algorithm}
+\end{minipage}
+\end{center}
+\vspace{0.5cm}
+
+What's the problem of this algorithm? That the subtraction may create a problem with machine numbers, if $s$ and $\|x\|$ are very close. If we take $\|x\| = - s$ the subtraction becomes and addition, and everything works well.
+
+In the end, we would like to obtain this behaviour for every possible value for $x$ and $s$, so line $2$ may be modified as {\tt s = - sign(x(1)) * norm(x)}.
+
+
+\addpic{0.5}{pics/26ott/1.png}{If $x$ is oriented as in the plot it's better if we choose $-\|x\| e_{1}$ verse, since it's opposite to $x$.}{fig:26ott1}
+
+\begin{example}
+Given $A = \begin{pmatrix}
+  \times & \times & \times & \times & \times\\
+  \times & \times & \times & \times & \times\\
+  \times & \times & \times & \times & \times\\
+  \times & \times & \times & \times & \times\\
+  \times & \times & \times & \times & \times\\
+\end{pmatrix} \in \mathcal{M}(m, m, \R)$, where $m=5$, we would like to calculate the $QR$ factorization of $A$.
+\begin{description}
+  \item[{\sc Step 1}]: costruct a Householder matrix that sends $A(:, 1)$ (first column of $A$) to a multiple of $e_{1}$. Then we have $H_{1}A = \begin{pmatrix}
+  \times & \times & \times & \times & \times\\
+  0 & \times & \times & \times & \times\\
+  0 & \times & \times & \times & \times\\
+  0 & \times & \times & \times & \times\\
+  0 & \times & \times & \times & \times\\
+  \end{pmatrix}$
+ 
+  \item[{\sc Step 2}]: take $H_{2} \in \mathcal{M}(m-1, m-1, \mathds{R})$ such that $H_{2}A(2:end, 2) = \begin{pmatrix} \times\\ 0\\ 0\\ 0\\ \end{pmatrix}$ and compute:
+    \begin{equation}
+      \begin{aligned}
+        \begin{pmatrix}
+          1 & 0 & 0 & 0 & 0\\
+          0 & & & &\\
+          0 & && \text{\Huge H}_2\\
+          0 &&&\\
+          0 &&&\\
+        \end{pmatrix} \cdot H_1 A
+        &= 
+        \begin{pmatrix}
+          1 & 0 & 0 & 0 & 0\\
+          0 & & &\\
+          0 && & \text{\Huge H}_2\\
+          0 &&& \\
+          0 &&&\\
+        \end{pmatrix} \cdot  \begin{pmatrix}
+          \times & \times & \times & \times & \times\\
+          0 & \times & \times & \times & \times\\
+          0 & \times & \times & \times & \times\\
+          0 & \times & \times & \times & \times\\
+          0 & \times & \times & \times & \times\\
+        \end{pmatrix}\\
+        &= \begin{pmatrix}
+          \times & \times & \times & \times & \times\\
+          0 & \times & \times & \times & \times\\
+          0 & 0 & \times & \times & \times\\
+          0 & 0 & \times & \times & \times\\
+          0 & 0 & \times & \times & \times\\
+        \end{pmatrix}
+      \end{aligned}
+    \end{equation}
+    
+    And we denote $Q_{2} =\begin{pmatrix}
+        I_{1 \times 1} & 0\\
+        0 & H_{2}\\
+      \end{pmatrix}$, $Q_{1}=H_1$;
+  \item[{\sc Step 3}]: take $H_{3} \in \mathcal{M}(m-2, m-2, \mathds{R})$ such that $H_{3}A(3:end, 3) = \begin{pmatrix} \times\\ 0\\ 0\\ \end{pmatrix}$
+      and we compute:
+      \begin{equation}
+        \begin{aligned}
+          Q_3 \cdot (Q_2 Q_1 A)
+          &=  \begin{pmatrix}
+          1 & 0 & 0 & 0 & 0\\
+          0 & 1 & 0 & 0 & 0\\
+          0 & 0 & & \\
+          0 & 0 && \text{\huge H}_3\\
+          0 & 0 &&\\
+        \end{pmatrix} \cdot  \begin{pmatrix}
+          \times & \times & \times & \times & \times\\
+          0 & \times & \times & \times & \times\\
+          0 & 0 & \times & \times & \times\\
+          0 & 0 & \times & \times & \times\\
+          0 & 0 & \times & \times & \times\\
+        \end{pmatrix}\\
+        &= \begin{pmatrix}
+          \times & \times & \times & \times & \times\\
+          0 & \times & \times & \times & \times\\
+          0 & 0 & \times & \times & \times\\
+          0 & 0 & 0 & \times & \times\\
+          0 & 0 & 0 & \times & \times\\
+        \end{pmatrix}
+        \end{aligned}
+      \end{equation}
+
+      So, $Q_{3} =
+      \begin{pmatrix}
+        I_{2 \times 2} & 0\\
+        0 & H_{3}\\
+      \end{pmatrix}$;
+
+  \item[{\sc Step 4}]: take $H_{4} \in \mathcal{M}(m-3, m-3, \mathds{R})$ such that $H_{4}A(4:end, 4) = \begin{pmatrix} \times\\ 0\\ \end{pmatrix}$ and we compute:
+
+   \begin{equation}
+        \begin{aligned}
+          Q_4 \cdot (Q_3 Q_2 Q_1 A)
+          &=  \begin{pmatrix}
+          1 & 0 & 0 & 0 & 0\\
+          0 & 1 & 0 & 0 & 0\\
+          0 & 0 & 1 & \\
+          0 & 0 && \text{\Large H}_4\\
+          0 & 0 &&\\
+        \end{pmatrix} \cdot  \begin{pmatrix}
+          \times & \times & \times & \times & \times\\
+          0 & \times & \times & \times & \times\\
+          0 & 0 & \times & \times & \times\\
+          0 & 0 & 0 & \times & \times\\
+          0 & 0 & 0 & \times & \times\\
+        \end{pmatrix}\\
+        &= \begin{pmatrix}
+          \times & \times & \times & \times & \times\\
+          0 & \times & \times & \times & \times\\
+          0 & 0 & \times & \times & \times\\
+          0 & 0 & 0 & \times & \times\\
+          0 & 0 & 0 & 0 & \times\\
+        \end{pmatrix}
+        \end{aligned}
+      \end{equation}
+
+Where, $Q_{4} =
+      \begin{pmatrix}
+        I_{3 \times 3} & 0\\
+        0 & H_{4}\\
+      \end{pmatrix}$. 
+\end{description}
+
+  In the end, since $Q_{i}$ is an orthogonal matrix and the product of orthogonal matrices is orthogonal, $Q_{1} \cdot Q_{2} \cdot Q_{3} \cdot Q_{4} A = T$, which is an upper triangular matrix.
+\end{example}
+
+
+\begin{theorem}[Product of block matrices]
+  Let $I \in \mathcal{M}(k, k, \R)$, let $H_{i} \in \mathcal{M}(m-k, m-k, \R)$ and let $B_{i} \in \mathcal{M}(k, k, \R)$, $C_{i} \in \mathcal{M}(k, m-k, \R)$ and $A_{i} \in \mathcal{M}(m-k, m-k, \R)$, then the product between the two following block matrices is exactly the one showed below.
+
+\[\begin{pmatrix}
+    I & 0\\
+    0 & H_{i}\\
+  \end{pmatrix}
+  \cdot 
+  \begin{pmatrix}
+    B_{i} & C_{i}\\
+    0 & A_{i}\\
+  \end{pmatrix}
+  = 
+  \begin{pmatrix}
+    B_{i}I & C_{i}\\
+    0 & H_{i} \cdot A_{i}\\
+  \end{pmatrix}
+\]
+\end{theorem}
+
+\begin{proof}
+  It's trivial computation, using the definition of matrix product.
+\end{proof}
+
+\subsubsection{Matlab implementation}
+
+\begin{center}
+\begin{minipage}{.9\linewidth}
+\begin{algorithm}[H]
+\begin{minted}[linenos=true]{matlab}
+function [Q, R] = myqr(A)
+[m, n] = size(A);
+Q = eye(m);
+for j = 1:n
+    v = householder_vector(A(j:end, j));
+    H = eye(length(v)) - 2*v*v';
+    A(j:end,j:end) = H * A(j:end,j:end);
+    Q(:, j:end) = Q(:, j:end) * H;
+end
+R = A;
+\end{minted}
+  \label{alg:26ottQR1}
+\caption{First implementation of QR factorization.}
+\end{algorithm}
+\end{minipage}
+\end{center}
+
+\begin{proposition}
+  The cost of this implementation when $A$ is a square matrix is $O(n^{3} + {(n-1)}^{3} + \cdots + 1^{3})$. If $A$ is a rectangular matrix, then the computational complexity is $O(m \cdot n^{2} + {(m-1) \cdot (n-1)}^{2} + \cdots + {(m - n + 1)}^{3})$.
+\end{proposition}
+
+\begin{proof}
+  Line $7$ does a matrix product between matrices of size $n$, $n-1$, \ldots, $1$, so the resulting cost is  $O(m \cdot n^{2} + {(m-1) \cdot (n-1)}^{2} + \cdots + {(m - n + 1)}^{3})$.
+
+\end{proof}
+
+We may design a faster algorithm, since $HA_j = A_j - 2v(v^T A_j)$.
+\begin{center}
+\begin{minipage}{.9\linewidth}
+\begin{algorithm}[H]
+\begin{minted}[linenos=true]{matlab}
+function [Q, A] = myqr(A)
+[m, n] = size(A);
+Q = eye(m);
+for j = 1:n-1
+    [v, s] = householder_vector(A(j:end, j));
+    A(j,j) = s; A(j+1:end,j) = 0;
+    A(j:end,j+1:end) = A(j:end,j+1:end) - ...
+        2*v*(v'*A(j:end,j+1:end));
+    Q(:, j:end) = Q(:, j:end) - Q(:,j:end)*v*2*v';
+end
+\end{minted}
+  \label{alg:26ottQR2}
+\caption{More efficient implementation of QR factorization.}
+\end{algorithm}
+\end{minipage}
+\end{center}
+
+Let's suppose that $A$ is square matrix, partitioned as: 
+$A = \begin{pmatrix}
+  &\\
+  A_{1} & A_{2}\\
+  &\\
+\end{pmatrix} =
+ \begin{pmatrix}
+   &\\
+   Q_{1} & Q_{2}\\
+   &\\
+\end{pmatrix} \cdot
+\begin{pmatrix}
+  R_{1, 1} & R_{1,2}\\
+  0 & R_{2,2}\\
+\end{pmatrix}$
+Then we can recover the factorization of $A_{1}$ from the factorization of $A$, since $A_{1} = Q \cdot R_{11}$.
+
+\begin{proposition}[Thin QR factorization] 
+  we may replace $Q \in \mathcal{M}(m, m, \R)$ and $R \in \mathcal{M}(m, m, \R)$ with $Q_1 \in \mathcal{M}(m, n, \R)$ and $R_1 \in \mathcal{M}(n, n, \R)$ and the same factorization holds: $A=QR=Q_1R_1$. This is called \textbf{thin QR factorization}.
+\end{proposition}
+\begin{proof}
+ $A_{1} \in \mathcal{M}(m, n, \R)$, $ A =\begin{pmatrix}
+    &\\
+    Q_{1} & Q_{2}\\
+    &\\
+  \end{pmatrix}
+  \cdot
+  \begin{pmatrix}
+    R_{1}\\
+    0
+  \end{pmatrix}
+  =
+  Q \cdot R
+  =
+  \begin{pmatrix}
+   \\
+    Q_{1}\\
+    \\
+  \end{pmatrix}
+  \cdot
+  \begin{pmatrix}
+    R_{1}\\
+  \end{pmatrix}
+  +
+  \begin{pmatrix}
+    Q_{2}\\
+  \end{pmatrix}
+  \begin{pmatrix}
+    0\\
+  \end{pmatrix}
+  =
+  Q_{1} \cdot R_{1}$
+\end{proof}
+In order to save space we may work in the following way:
+
+$Q \cdot B =
+  \begin{pmatrix}
+    1 & \times &\cdots & \times\\
+    0 &&&&\\
+    \vdots &&\text{\Large I-2V}_1 \tr{\text{\Large V}_1}&\\
+    0 &&&&\\
+    0 &&&&
+  \end{pmatrix} \cdot 
+  \begin{pmatrix}
+    1 & \times & \times & \cdots & \times\\
+    0 & 1 &\times & \cdots& \times\\
+    \vdots & 0 &&\text{\Large I-2V}_2 \tr{\text{\Large V}_2}\\
+    0 & \vdots &&&\\
+    0 & 0 &&
+  \end{pmatrix}\cdot\\ \cdot \ldots \cdot
+  \begin{pmatrix}
+    1 & \times & \times & \cdots & \times\\
+    0 & 1 & \times & \cdots & \times\\
+    \vdots & 0 & 1 &\\
+    0 & \vdots & 0 &&\text{\Large I-2V}_n \tr{\text{\Large V}_n}\\
+    0 & 0 & 0 &
+  \end{pmatrix} \cdot B$.
+
+\begin{myframe}{\bf Fun fact}
+There are some libraries that store the $v_{i}$ vectors in the lower part of matrix $R$ which is upper triangular and has only zeros below the main diagonal.
+\end{myframe}
+
+\subsection{How to use the thin QR factorization to solve a least squares problem}
+
+We would like to solve $\norm{Ax-b}$ $\forall A \in \mathcal{M}(m, n, \R)$ and $\forall B \in \R^n$ where $m > n$ (a.k.a $A$ is a tall, thin matrix),through the $QR$ factorization.
+We would like to solve $\min \norm{Ax-b}$ through the $QR$ factorization.
+
+We may write first the $QR$ factorization of $A$, so $\forall A \in \mathcal{M}(m, n, \R)$, $\exists Q \in \mathcal{M}(m, m, \R)$, $\exists R \in \mathcal{M}(m, n, \R)$ such that $A = QR$, where 
+$Q = \begin{pmatrix}
+  &\\
+  Q_1 & Q_2\\
+  &\\
+\end{pmatrix}$ and $R = \begin{pmatrix}
+    R_1\\0
+\end{pmatrix}$.
+
+Then, 
+\begin{equation}
+\begin{aligned}
+  \norm{A\x-\bb} &= \norm{\tr{Q}(A\x-\bb)} = \norm{\tr{Q}QR\x - \tr{Q}\bb} \\
+  & = \norm{R\x-\tr{Q}\bb} = \norm{\begin{pmatrix}
+    R_1\\0
+\end{pmatrix}\x - \begin{pmatrix}
+  \tr{Q_{1}}\\
+    \tr{Q_{2}}
+\end{pmatrix}\bb}\\
+&=\norm{\begin{pmatrix}
+  R_{1} \x - \tr{Q_{1}} \bb\\
+    \tr{Q_{2}}\bb
+\end{pmatrix}}
+\end{aligned}
+\end{equation}
+How can we pick $\x$ to minimize the norm of $A\x - \bb$?
+
+Can we choose $x$ such that $R_{1} \x - \tr{Q_{1}} \bb = 0$? Yes, we can, since this is a linear square system, so $\x = \inv{R_{1}} \tr{Q_{1}} \bb $
+
+$\norm{A\x - \bb} = \norm{\tr{Q_{2}} \bb}$
+
+
+We used the fact that $R_{1}$ is invertible, but is it always true that $R_{1}$ is invertible?
+
+\begin{lemma}
+  $R_{1}$ is invertible $\Leftrightarrow$ $A$ has full column rank.
+\end{lemma}
+
+\begin{proof}
+  $A$ has full column rank $\Leftrightarrow$ $\tr{A}A$ is positive definite $\Leftrightarrow$ $\tr{A}A$ is positive semidefinite and invertible, but $\tr{A}A$ is positive semidefinite, so we only need to prove its invertibility.
+  
+  Let's compute $\tr{QR} QR = \tr{R} \tr{Q} Q R = \tr{R} R = \begin{pmatrix} \tr{R_{1}} & 0 \end{pmatrix} \cdot \begin{pmatrix} R_{1}\\ 0 \end{pmatrix} = \tr{R_{1}} \cdot R_1$.
+    
+    So, $\tr{A}A$ is invertible $\Leftrightarrow$ $R_1$ is inverbile.
+\end{proof}
+
+\begin{myframe}{\bf Note}
+$\tr{R_{1}}R_{1}$ is the Cholesky factorization of $\tr{A}A$.
+\end{myframe}
+
+The computational complexity is asymptotically equal to the one of computing the $QR$ factorization, since the other operations are cheaper (the product $Q_1^T\bb$ costs $O(mn)$ and solving the triangular linear system by back-substitution costs $O(n^2)$).
+\end{document}
+
+

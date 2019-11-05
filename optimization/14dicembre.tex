@@ -1,0 +1,325 @@
+%chktex-file 36
+%chktex-file 8
+%chktex-file 24
+%chktex-file 35
+%chktex-file 44
+%chktex-file 1
+%chktex-file 39
+\documentclass[computationalMathematics.tex]{subfiles}
+\begin{document}
+
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+\section{14th of December 2018 --- A. Frangioni}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+
+In the previous lecture we addressed the problem of linear constrained optimization.
+Our first approach was to deal very little with constraints (projected gradient method), after a few improvements we took all of them and modify the function (Frank-Wolfe method).
+
+\subsection{Dual methods for linear constrained optimization}
+In this class of methods constraints are first class citizens.
+
+Let us be given the following optimization problem:
+
+\[
+  \min \bigg \{\frac{1}{2} \tr{x} Q x + q x~:~Ax \leq b \bigg \}
+\]
+
+We would like to work with dual feasibility.
+
+$\forall$ fixed $\lambda \geq 0$, this is the lagrangian problem $\psi(\lambda) = \min\limits_x \{\frac{1}{2} \tr{x} Q x + q x + \lambda (b - Ax)\} \leq v$ and the Lagrangian dual is the following
+
+\[
+  (D) ~ \max \{\psi(\lambda)~:~\lambda \geq 0\}
+\]
+
+which is equivalent to the primal problem.
+
+The solution of the Lagrangian problem is \textbf{unique} and this is due to the fact that $\psi$ is concave  and $Q \succ 0$. The optimal solution is then $x(\lambda) = \inv{Q}(\lambda A - q)$.
+
+The function is differentiable in the solution, because we have only one sub (or super) gradient which is $\nabla \psi(\lambda) = b - Ax(\lambda)$.
+
+At this point we only need to solve the dual problem, which has the shape of a box constrained optimization, where the box has only one boundary and this can be solved via quasi-Newton methods.
+
+Notice that $\psi \notin C^2$ so the Hessian is not defined.
+
+This dual approach is advantageous in the case of a small number of constraints, because the size of the problem decreases.
+For example, in the case of one constraint, the Lagrangian dual becomes a problem in one variable, hence solvable through a line search.
+
+In this method the degenerate case (more than one constraint active at a time) is not an issue.
+
+If the quadratic function is convex we may use quasi Newton method.
+Othewise the global optimality is not guaranteed and may be used if we accept not to be able to solve the original problem, but only to find a lower bound.
+
+\subsubsection{Separable problems and partial dual}
+
+Let us assume that our constraints are separable, which means that it is not mandatory to work with all of them, but they can be splitted into constraints of groups of variables.
+
+\[
+\min \{f(x)~:~Ax \leq b,~Ex \leq d\}
+\]
+
+We can decide to use a \textbf{partial dual}, writing the Lagrangian problem picking only some constraints that we chose:
+
+\[
+\psi(\lambda) = \min\limits_x \{f(x) + \lambda (b - Ax)~:~Ex \leq d\}
+\]
+
+The Lagrangian dual method may be better than projected gradient or worse and it depends on the instance.
+
+In the dual approaches we can't move inside the feasible solution. We find an optimum for the dual, which surely breaks feasibility.
+Then, if the variable is above the upperbound it gets decreased to the upper bound, otherwise if it is below the lower bound it takes the value of the lower bound.
+
+This way we get an upperbound for the function to be minimized.
+
+\subsection{Primal/dual methods or barrier methods}
+
+This kind of methods are designed to overcome the cons of dual approaches, namely the fact that $\psi$ does not have the Hessian (and this creates problems to quasi Newton method) and the fact that $x$ is not feasible until the end.
+
+At the same time this methods keep the unconstrained property of the Lagrangian dual.
+
+\subsubsection{Barrier function and central path}
+
+The rationale behind this algorithm is to minimize a function which penalizes the value of the original function when the solution is getting closer and closer to the boundaries of the feasible set.
+
+\[
+  (P_{\mu})~\min \{ f_{\mu}(x) = f(x) - \mu \sum\limits_{i=1}^m \log(b_i - A_i x)\}
+\]
+ 
+The parameter $\mu$ is there to weight the proximity to the boundary.
+
+\begin{property}
+  \begin{itemize}
+    \item If $f$ is convex, $f_\mu$ is strictly convex;
+    \item If $f \in \mathcal{C}^2$ then $f_{\mu} \in \mathcal{C}^2$, since $\log \in \mathcal{C}^{\infty}$;
+    \item $\forall \mu~ \exists!~x_\mu$ optimal of (P$_{\mu}$), since $\mu \sum\limits_{i=1}^m \log(b_i - A_i x)$ is striclty convex;
+    \item As $\mu \to 0 ~ x_{\mu}$ converges to the analytic center of the optimal face. 
+      An example of this behaviour may be seen in \Cref{fig:14dic1}.
+  \end{itemize}
+\end{property}
+
+\addfourpics{0.2}{pics/14dic/1.png}{pics/14dic/2.png}{pics/14dic/3.png}{pics/14dic/4.png}{The trajectory converges to the optimal solution of the problem, when $\mu \to 0$.}{fig:14dic1}
+
+Another interesting property is that, since the barrier function is \textbf{self concordant} $x^i$ gets ``close'' to $x(\mu^i)$ in very few Newton's steps.
+
+In one step $x^{i+1}$ is ``much closer'' to $x(\mu^i)$ than $x^{i}$ was and $x^{i+1}$ is ``close'' to $x(\mu^{i+1})$, with $\mu^{i+1} \ll \mu^i$ (more formally, $\mu^{i+1} = \tau \mu^i$, $\tau < 1$).
+
+This behaviour may be observed in \Cref{fig:14dic2}
+
+\addpic{0.4}{pics/14dic/5.png}{The dotted line represents a region where the Newton method is very efficient. We are starting from a point $x_1$, which belongs to that region and we want to move towards $x_{\mu^1}$. At next iterate $x_2$ is closer to $x_{\mu^2}$ than the current iterate.
+}{fig:14dic2}
+
+The convergence is exponential if $\tau$ is very small, but these iterations are very costly, because the Hessian changes at each step, hence it needs to be recomputed.
+
+Let us focus on computing the \textbf{Newton's step}.
+
+First, we write the Karusch-Kuhn-Tucker conditions:
+
+\begin{description}
+  \item[{\sc Primal feasibility:}] $Ax + s = b,~s \geq 0$;
+  \item[{\sc Dual feasibility:}] $Q x + \lambda A = -q,~\lambda \geq 0$;
+  \item[{\sc Complementary slackness:}] $\lambda_i s_i = 0, ~ i = 1, \ldots, m$.
+\end{description}
+
+We can write a slackened version of KKT, imposing $\lambda_i s_i =\mu,~i = 1, \ldots, m$, where $\mu \in \R^n$ and should be decreased over iterations until it gets closer engough to $0$.
+
+Let us construct $\Lambda,~S \in \text{Diag}(m, \R)$ such that the diagonal is made of $\lambda_i$ and $s_i$ respectively.
+
+At this point, we rewrite the problem in terms of the displacement from the fixed current point we are in:
+
+\begin{itemize}
+  \item $x \to x + \Delta x$
+  \item $s \to s + \Delta s$
+  \item $\lambda \to \lambda + \Delta \lambda$
+\end{itemize}
+
+The KKT system becomes:
+
+\begin{description}
+  \item[{\sc Primal feasibility:}] $Ax + A\Delta x + s + \Delta s= b,~s \geq 0$;
+  \item[{\sc Dual feasibility:}] $Qx + Q\Delta x + \lambda A + \Delta \lambda A= -q,~\lambda \geq 0$;
+  \item[{\sc Complementary slackness:}] $ \lambda_i s_i + \lambda_i \Delta s_i + s_i \Delta \lambda_i + \Delta \lambda_i \Delta s_i = \mu, ~ i = 1, \ldots, m$.
+\end{description}
+
+In this new system of coordinates the first two KKT remain linear, while the third one is no longer linear ($\Delta \lambda_i \Delta s_i$).
+
+\begin{equation}\label{eq:14dic1}
+  \left[\begin{array}{ccc}
+    Q & A^T & 0 \\ A & 0 & I \\ 0 & S & \Lambda
+  \end{array}\right]
+  \left[\begin{array}{r}
+    \Delta x \\ \Delta \lambda \\ \Delta s
+  \end{array}\right]
+  \numeq{(1)}
+  \left[\begin{array}{c}
+    - ( Q x + q ) - \lambda A \\
+    b - A x - s \\
+    \mu u - \Lambda S u - \Cr{\Delta \Lambda \Delta S u}
+  \end{array}\right]
+  \,\Cr{\approx}\,
+  \left[\begin{array}{c}
+    0 \\
+    0 \\
+    \mu u - \Lambda S u
+  \end{array}\right]
+\end{equation}
+
+Where $(1)$ holds since $\Delta \lambda A = \tr{A} \tr{\Delta \lambda}$, although $\Delta \lambda$ is written without the ``transpose'' sintax to ease notation.
+
+Notice that $u= 
+\left[\begin{array}{c}
+1\\
+\vdots\\
+1
+\end{array}\right]\in \R^m$ and has the purpose of adjusting dimension: 
+\[
+  S \Delta \lambda = \left[\begin{array}{c}
+  s_1 {\Delta \lambda}_1\\
+\vdots\\
+  s_m {\Delta \lambda}_m\\
+\end{array}\right] \in \R^m;~
+\Lambda \Delta s = \left[\begin{array}{c}
+  \lambda_1 {\Delta s}_1\\
+\vdots\\
+  \lambda_m {\Delta s}_m \in \R^m\\
+\end{array}\right] \in \R^m;~
+\mu u =  \left[\begin{array}{c}
+  \mu\\
+\vdots\\
+  \mu\\
+\end{array}\right] \in \R^m;
+\]
+
+\[
+  \Lambda S u = \left[\begin{array}{c}
+  - s_1 {\lambda}_1\\
+\vdots\\
+  - s_m {\lambda}_m\\
+\end{array}\right] \in \R^m;~
+\Delta \Lambda \Delta s u = \left[\begin{array}{c}
+  - {\Delta \lambda}_1 {\Delta s}_1\\
+\vdots\\
+  - {\Delta \lambda}_m {\Delta s}_m \in \R^m\\
+\end{array}\right] \in \R^m;
+\]
+The Newton method can be applied if we discard the non-linear part (written in red), pretending it does not exist. Notice that vector $u$ is the vector of all $1$s.
+
+\subsection{Primal-dual interior point method}
+This method is based on the observation that we can solve the dual problem
+\[
+(D)~~~ \max \{- \lambda b - \frac{1}{2} x^T Q x~:~Q x + \lambda A  = - q,~\lambda \geq 0\}
+\]
+
+thus obtaining both a lower and upper bound for the solution $x$.
+
+We term \textbf{complementarity gap} $(\frac{1}{2} x^T Q x + q x) - ( - \lambda b - \frac{1}{2} x^T Q x) = \lambda s = \mu$.
+
+Once we found a solution for \Cref{eq:14dic1}, we perform a step and compute a new couple of primal and dual solutions and reduce the gap $\mu$.
+
+We are left with solving \Cref{eq:14dic1}. The trick is to express one between $\Delta s$ and $\Delta \lambda$ as a linear combination of the other.
+
+For example, let us take the third line of \Cref{eq:14dic1}:
+\begin{equation}\label{eq:14dic2}
+  \begin{split}
+    0 \Delta x + S \Delta \lambda + \Lambda \Delta s &= \mu u -\Lambda S u\\
+    \Lambda \Delta s &= \mu u -\Lambda S u - S \Delta \lambda\\
+    \Delta s &= \inv{\Lambda}\mu u -\cancel{\inv{\Lambda}}\cancel{\Lambda} S u - \inv{\Lambda}S \Delta \lambda\\
+    \Delta s &= \inv{\Lambda}\mu u -S u - \inv{\Lambda}S \Delta \lambda\\
+    \Delta s &= \inv{\Lambda} \cdot (\mu u - S \Delta \lambda) - Su\\
+    \Delta s &= \inv{\Lambda} \cdot (\mu u - S \Delta \lambda) - s\\
+  \end{split}
+\end{equation}
+
+We obtain the modified normal equations (or KKT system)
+
+\begin{equation}\label{eq:14dic3}
+  \left[\begin{array}{cc}
+    Q & A^T \\ A & - \Lambda^{-1} S
+  \end{array}\right]
+  \left[\begin{array}{r}
+    \Delta x \\ \Delta \lambda
+  \end{array}\right]
+  =
+  \left[\begin{array}{c}
+    0 \\
+    s - \mu \Lambda^{-1} u
+  \end{array}\right]
+\end{equation}
+
+where the last row is derived working on the second row of \Cref{eq:14dic1} ($A \Delta x + 0 \Delta \lambda + I \Delta s = 0 \Leftrightarrow A \Delta x = - \Delta s$), substituting \Cref{eq:14dic2}:
+
+\begin{equation}
+  \begin{split}
+    A \Delta x - [\Lambda^{-1} S] \Delta \lambda &= -\Delta s -[\Lambda^{-1} S] \Delta \lambda\\
+    &= -\inv{\Lambda} (\mu u - S \Delta \lambda) + s - \inv{\Lambda} S \Delta \lambda\\
+    &= -\inv{\Lambda} \mu u + \cancel{\inv{\Lambda} S \Delta \lambda} + s - \cancel{\inv{\Lambda} S \Delta \lambda}\\
+    &= s -\mu \inv{\Lambda} u\\
+  \end{split}
+\end{equation}
+
+With respect to normal equations of \Cref{eq:12dic1}, we have in position $(2,2)$ a quantity ($- \Lambda^{-1} S$), which is not $0$, but it is the opposite of a striclty positive definite matrix.
+
+A possible approach for solving this system is making some calculations and obtain something of the shape of reduced KKT (see \Cref{sec:12dic_lec}).
+
+\begin{equation}
+  \begin{cases}
+    Q \Delta x + \tr{A} \Delta \lambda = 0\\
+    (Q + \tr{A} \Lambda \inv{S} A) \Delta x = \tr{A} (\lambda - \mu S^{-1} u)\\
+  \end{cases}
+\end{equation}
+
+where the first set of equations follows from the expansion of the first row of the KKT system (\Cref{eq:14dic3}) and the second one is obtained taking the same row of the same system and substituting the value of $\Delta \lambda$ as follows:
+
+\begin{equation}
+  \begin{split}
+    A \Delta x - \inv{\Lambda} S \Delta \lambda &= s - \mu \inv{\Lambda} u\\
+    \inv{\Lambda} S \Delta \lambda &= A \Delta x - s + \mu \inv{\Lambda} u\\
+    \Delta \lambda &= \inv{(\inv{\Lambda} S)} A \Delta x - \inv{(\inv{\Lambda} S)}s + \inv{(\inv{\Lambda} S)}\mu \inv{\Lambda} u\\
+    \Delta \lambda &= \inv{S} \Lambda A \Delta x - \inv{S} \Lambda s + \mu \inv{S} \cancel{\Lambda} \cancel{\inv{\Lambda}} u\\
+    \Delta \lambda &= \inv{S} \Lambda A \Delta x - \inv{S} \Lambda s + \mu \inv{S} u\\
+    \Delta \lambda &= \mu \inv{S} u + \Lambda \inv{S} A \Delta x - \Lambda \inv{S} s\\
+    \Delta \lambda &= \mu \inv{S} u + \Lambda \inv{S} A \Delta x - \Lambda u\\
+    \Delta \lambda &= \mu \inv{S} u + \Lambda \inv{S} A \Delta x - \lambda\\
+  \end{split}
+\end{equation}
+
+Hence, 
+\begin{equation}
+  \begin{split}
+    Q \Delta x + \tr{A} \Delta \lambda &= 0\\
+    Q \Delta x + \tr{A} \cdot (\mu S^{-1} u + \Lambda S^{-1} A \Delta x - \lambda) &= 0\\
+    Q \Delta x + \tr{A} \mu S^{-1} u + \tr{A} \Lambda S^{-1} A \Delta x - \tr{A} \lambda &= 0\\
+    Q \Delta x + \tr{A} \Lambda S^{-1} A \Delta x &= - \tr{A} \mu S^{-1} u + \tr{A} \lambda\\
+    (Q + \tr{A} \Lambda \inv{S} A) \Delta x &= \tr{A} (\lambda - \mu S^{-1} u)\\
+  \end{split}
+\end{equation}
+ 
+We term $M = Q + \tr{A} \Lambda \inv{S} A$ and the following holds.
+
+\begin{proposition}
+  If $A$ has full column rank (aka it is invertible), $M \succ 0$.
+\end{proposition}
+
+At this point we need to factorize the matrix $M$, that changes at each iteration (since $\Lambda \inv{S}$ does) and this is the bottleneck.
+
+Cholesky factorization may be used, although its complexity is cube. Another downside of this approach is that the matrix $M$ is much denser than $A$, $\Lambda$ and $\inv{S}$.
+
+An orthogonal approach to the reduced KKT is called \textbf{predictor-corrector} and it works computing a solution without taking into account the non linear term $\Delta \Lambda \Delta S u$, then computing it according to the approximated solution and repeat until convergence.
+
+The bottlneck again is solving the system in \Cref{eq:14dic1}.
+
+For what concerns implementation, we should start from a triplet $(x, \lambda, s)$, that could be not feasible and then compute the residuals and iterate until feasibility is reached.
+
+$r^D = - ( Q x + q ) - \lambda A$, $r^P = b - A x - s$.
+
+When dealing with the step size we need to highlight the fact that $\lambda + \Delta \lambda \geq 0$, $s + \Delta s \geq 0$ should hold.
+
+In order to achieve this we find the maximum $\alpha$ that satisfies the equality and then multiply it by a constant $\bar{\alpha}=0.995$ (or $0.9995$), in order to get closer.
+
+Let us assume that we also have a bunch of box contraints, hence our problem becomes
+
+\[
+  (P)~~~~\min \bigg \{\frac{1}{2} x^T Q x + q x~:~Ax = b,~0 \leq x \leq u \bigg \}
+\]
+
+In this special case, things simplify a lot.
+  \end{document}
