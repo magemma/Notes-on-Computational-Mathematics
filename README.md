@@ -7,7 +7,7 @@ Anyone who wants to contribute to this repository is very welcome to do so, repr
 
 Want to push your changes? Make a pull request ;-)
 
-###Folder organization
+### Folder organization
 Inside folder ```numerical_methods``` there are the ```.tex``` files belonging to the numerical methods lectures, conversely ```optimization``` folder contains the optimization-related files.
 
 The ```picture``` folder contains all the pictures that have been used in the notes.
