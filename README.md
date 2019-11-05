@@ -5,7 +5,12 @@ This repository was created with the aim of writing some notes, based on the Com
 The idea behind this repository is to build something useful to many students through a cooperative system.
 Anyone who wants to contribute to this repository is very welcome to do so, reproduction is allowed in any form, but we forbid anyone to sell these notes and manke economical profit out of it.
 
-To become a contributor in the master branch, send an email to martini.gemma3@gmail.com
+Want to push your changes? Make a pull request ;-)
+
+### Folder organization
+Inside folder ```numerical_methods``` there are the ```.tex``` files belonging to the numerical methods lectures, conversely ```optimization``` folder contains the optimization-related files.
+
+The ```pics``` folder contains all the pictures that have been used in the notes.
 
 ### Todos
 * Fix references across the whole document, which do not work
