@@ -51,23 +51,23 @@ In the case of presence of linearly dependent columns such columns may be elimin
 
 The intuition behind what follows is that each linear constraint kills one degree of freedom, formally $det(A_B) \neq 0 \Rightarrow Ax = b \equiv x_B = A_B^{-1}(b - A_N x_N) \Rightarrow$.
 
-        We want to extract a submatrix $A_B$ from $A \in M(m, n, \R)$, such that $A_B \in M(m, \R)$ and then the system induces a partitioning in the variables as well.
+We want to extract a submatrix $A_B$ from $A \in M(m, n, \R)$, such that $A_B \in M(m, \R)$ and then the system induces a partitioning in the variables as well.
 
 $A = [A_B,A_N]$, $x = [x_B,x_N]$, so the system becomes $A_B x_B + A_N x_N =  b$ and (since $A_B$ is non singular) $X_B + \inv{A_B} x_N = \inv{A_B} b$ in other words, given the indepedent variables we can compute the values of the dependent ones and this is a linear operation.
 
 The original optimization problem becomes an optimization problem on a reduced space, formally $\min \{ r(w) = f(Dw+d): w \in \R^{n-m}\}$, where $D = \left[ \begin{array}{c} - A_B^{-1} A_N \\ I \end{array}\right]$ and $d = \left[\begin{array}{c} A_B^{-1} b \\ 0 \end{array}\right]$.
 For each point in the smaller space we can compute the function in the larger space.
 
-How can we compute the gradient of $r(w)$? The gradient is $\nabla~r(w) = \tr{D}\nabla~f(Dw +d)$.
-The fact that $w^*$ is an optimum implies that $\nabla~r(w^*) = 0$.
+How can we compute the gradient of $r(w)$? The gradient is $\nabla r(w) = \tr{D}\nabla f(Dw +d)$.
+The fact that $w^*$ is an optimum implies that $\nabla r(w^*) = 0$.
 
-$D = \left[ \begin{array}{c} - A_B^{-1} A_N \\ I \end{array}\right]$ then $AD = \left[ A_B, A_N \right] \cdot \left[ \begin{array}{c} - A_B^{-1} A_N \\ I \end{array}\right] = -A_B \cdot \inv{A_B} \cdot A_N + A_N = 0$.
+$D = \left[ \begin{array}{c} - A_B^{-1} A_N \\ I \end{array}\right]$ then $AD = \left[ A_B, A_N \right] \left[ \begin{array}{c} - A_B^{-1} A_N \\ I \end{array}\right] = -A_B \inv{A_B} A_N + A_N = 0$.
 
   Now the point is taking a multiple of matrix $A$, finding a feasible $x$ and corresponding $w$ (because there is a bijection), then finding the value $\mu$ that allows the equality.
 
 \begin{theorem}
   Let $Ax=b$ be a linear system and $w$ such that $x = \left[ \inv{A_B} (b - A_N w), w \right]$.
-  If $\exists~\mu~\in~\R^m~s.t.~\mu A = \nabla~f(x)$ then $r(w) = \tr{D} \nabla~f(x) = 0$, see \Cref{fig:30nov4}.
+  If $\exists~\mu~\in~\R^m~s.t.~\mu A = \nabla f(x)$ then $r(w) = \tr{D} \nabla f(x) = 0$, see \Cref{fig:30nov4}.
   In other words, it is equivalent to find a stationary point x for the original problem $(P)$ or finding the stationary point $w$ for $(R)$.
 \end{theorem}
 
@@ -79,7 +79,7 @@ $D = \left[ \begin{array}{c} - A_B^{-1} A_N \\ I \end{array}\right]$ then $AD = 
 Let $f$ be a convex function, then KKT conditions are enough for optimality.
 \end{theorem}
 
-A very naive explanation of the theorem is that if the function is convex also the restriction is convex and a tationary point of a convex function is a minimum.
+A very naive explanation of the theorem is that if the function is convex also the restriction is convex and a stationary point of a convex function is a minimum.
 
 Our idea is to characterize the directions we can move along in order to find new points that satisy the constraint.
 Formally, $Ax=b$ is our contstraint and we want to move towards $x+d$ and stay in the feasible region.
@@ -92,7 +92,7 @@ In order to do this we need some mathematical background.
 \subsubsection{Background for linear inequality contstraints}
 
 \begin{definition}[Tangent cone]
-  We call \textbf{tangent cone} of $X$ at $x$ $\mathbf{T_X(x)}=$t.
+  We call \textbf{tangent cone} of $X$ at $x$ $\mathbf{T_X(x)}~=~t$.
 \[
   \big\{d \in \R^n~:~\exists~ \{z_i \in X\} \to x \;\wedge\;
   \{t_i \geq 0\} \to 0 \mbox{ s.t. } d = \lim\limits_{i \to \infty}
@@ -144,9 +144,9 @@ In order to do this we need some mathematical background.
 
 Now we need a more manageable object for $T_X(x)$.
 
-\begin{definition}[Cone of feasible directions]~\\
+\begin{definition}[Cone of feasible directions]
   Intuitively, we are in $x$ and we want to find al directions \textbf{feasible cone} such that there exist small but not $0$ steps such that all the points on this direction are feasible.
-  Formally, a \textbf{feasible cone} is $F_X(x) = \{ d \in \R^n~:~ \exists \bar{\varepsilon} > 0 \text{ such that } x + \varepsilon d \in X, ~ \forall \varepsilon \in [0, \bar{\varepsilon}]\}$.
+  Formally, a \textbf{feasible cone} is $F_X(x) = \{ d \in \R^n~:~ \exists \bar{\varepsilon} > 0$ s.t. $x + \varepsilon d \in X, ~ \forall \varepsilon \in [0, \bar{\varepsilon}]\}$.
 \end{definition}
 
 \begin{proposition}
@@ -158,7 +158,7 @@ The properties of such cone are:
   \end{enumerate}
 \end{proposition}
 
-We are now interested in finding a better characterization of the cone fo feasible directions, hence we introduce a new characterization fo the set of constraints $X$.
+We are now interested in finding a better characterization of the cone of feasible directions, hence we introduce a new characterization fo the set of constraints $X$.
 
 \begin{description}
   \item[{\sc First representation:}]
@@ -268,7 +268,7 @@ Then $\exists \lambda \in \R^{|\mathcal{I}|}_{+}$ and $\mu \in \R^{|\mathcal{I}|
 It is interesting to notice that we did not impose $\mu \ge 0$.
 Let us take an equality constraint $h_j(x) = 0$. This is equivalent to write $h_j(x) \le 0 ~ \wedge h_j(x) \ge 0$, thus leading to two different multipliers, say $\lambda_j^{+}$ and $\lambda_j^{-}$.
 
-The term of the sum concerning $h_j$ looks like this $\lambda_j^+ \nabla h_j(x_*) - \lambda_j^-\nabla h_j(x_*) = (\lambda_j^+ - \lambda_j^-) \cdot \nabla h_j(x_*)$, where both $\lambda_j^+$ and $\lambda_j^-$ are $\ge 0$, hence their difference (denoted by $\mu_j$) may be either positive or negative.
+The term of the sum concerning $h_j$ looks like this $\lambda_j^+ \nabla h_j(x_*) - \lambda_j^-\nabla h_j(x_*) = (\lambda_j^+ - \lambda_j^-)$. $\nabla h_j(x_*)$, where both $\lambda_j^+$ and $\lambda_j^-$ are $\ge 0$, hence their difference (denoted by $\mu_j$) may be either positive or negative.
 
 \begin{proposition}
 The Karush-Kuhn-Tucker conditions are also written as:
