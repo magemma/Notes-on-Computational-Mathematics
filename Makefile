@@ -12,7 +12,7 @@ numerical_methods: NumericalMethods.tex pics/cherubino.jpg numerical_methods/20s
 	lualatex -shell-escape -pdf NumericalMethods.tex
 	make clean
 
-optimization: Optimization.tex pics/cherubino.jpg optimization/19settembre.tex optimization/21settembre.tex optimization/27settembre.tex optimization/3ottobre.tex optimization/5ottobre.tex optimization/11ottobre.tex optimization/17ottobre.tex optimization/19ottobre.tex optimization/24ottobre.tex optimization/25ottobre.tex optimization/8novembre.tex optimization/14novembre.tex optimization/16novembre.tex optimization/22novembre.tex 28novembre.tex optimization/30novembre.tex optimization/6dicembre.tex optimization/12dicembre.tex optimization/14dicembre.tex
+optimization: Optimization.tex pics/cherubino.jpg optimization/19settembre.tex optimization/21settembre.tex optimization/27settembre.tex optimization/3ottobre.tex optimization/5ottobre.tex optimization/11ottobre.tex optimization/17ottobre.tex optimization/19ottobre.tex optimization/24ottobre.tex optimization/25ottobre.tex optimization/8novembre.tex optimization/14novembre.tex optimization/16novembre.tex optimization/22novembre.tex optimization/28novembre.tex optimization/30novembre.tex optimization/6dicembre.tex optimization/12dicembre.tex optimization/14dicembre.tex
 	lualatex -shell-escape -pdf Optimization.tex
 	lualatex -shell-escape -pdf Optimization.tex
 	make clean

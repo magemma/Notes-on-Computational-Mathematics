@@ -68,7 +68,7 @@ We expect that this change does not lead to a significative change in the eigenv
 Formally, $\norm{\widetilde{H}_m - H_m} = h_{n+1, n}$.
 
 \subsubsection{Better explanation}
-The space $K_n(A, b) = \operatorname{span}(b,Ab,\dots,A^{n-1}b)$ contains the right ``features'' to represent the eigenvectors of $A$ with largest eigenvalues: if $A = V \Lambda V^{-1}$ is diagonalizable, then
+The space $K_n(A, b) = \operatorname{span}(b,Ab,\dots,A^{n-1}b)$ contains the right ``features'' to represent the eigenvectors of $A$ with largest eigenvalues: if $A = V \Lambda V^{-1}$ is diagonalizable, then:
 \begin{equation}
   \begin{aligned}
     A^k b &= (V \Lambda \inv{V}) \cdots (V\Lambda \inv{V}) b\\
@@ -77,7 +77,8 @@ The space $K_n(A, b) = \operatorname{span}(b,Ab,\dots,A^{n-1}b)$ contains the ri
     \\
     V^1 & V^2 & \cdots & V^m\\
     \\
-    \end{pmatrix}\cdot \begin{pmatrix}
+    \end{pmatrix} 
+    \begin{pmatrix}
         {\lambda_1}^n\\
         & {\lambda_2}^n\\
         && \ddots\\
@@ -134,7 +135,7 @@ We would like to understand how to compute some eigenvalues that are not the big
     \item $(\lambda_i^k, \mathbf{v}_i)$ are eigenvalues/vectors of $A^k$.
 \end{enumerate}
 \end{lemma}
-\begin{proof}
+\begin{proof}~\\
   Let us omit the subscript $i$ to ease notation:~\\
   \begin{enumerate}
     \item $(A + \alpha I)\mathbf{v} = A \mathbf{v} + \alpha \mathbf{v} = \lambda \mathbf{v} + \alpha \mathbf{v} = (\lambda + \alpha) \mathbf{v}$;

@@ -92,7 +92,7 @@ In order to do this we need some mathematical background.
 \subsubsection{Background for linear inequality contstraints}
 
 \begin{definition}[Tangent cone]
-  We call \textbf{tangent cone} of $X$ at $x$ $\mathbf{T_X(x)}~=~t$.
+  We call \textbf{tangent cone} of $X$ at $x$ $\mathbf{T_X(x)} = t$.
 \[
   \big\{d \in \R^n~:~\exists~ \{z_i \in X\} \to x \;\wedge\;
   \{t_i \geq 0\} \to 0 \mbox{ s.t. } d = \lim\limits_{i \to \infty}
@@ -158,7 +158,7 @@ The properties of such cone are:
   \end{enumerate}
 \end{proposition}
 
-We are now interested in finding a better characterization of the cone of feasible directions, hence we introduce a new characterization fo the set of constraints $X$.
+We are now interested in finding a better characterization of the cone of feasible directions, hence we introduce a new characterization of the set of constraints $X$.
 
 \begin{description}
   \item[{\sc First representation:}]
@@ -235,7 +235,7 @@ The following holds:
   \begin{description}
     \item[{\sc Affine constraints (AffC):}] Let $g_i$ and $h_j$ be affine constraints. Then, $\forall~i \in \mathcal{I}$ and $j \in \mathcal{J}~ T_X(x) = D_X(x)~\forall x \in X$.
     \item[{\sc Slater's condition (SlaC):}] Let $g_i$ convex $\forall ~i \in \mathcal{I}$ and let $h_j$ affine $\forall~j \in \mathcal{J}$ $\exists~\bar{x} \in X$ s.t. $g_i(\bar{x}) < 0~\forall~i \in \mathcal{I}$. Then $T_X(x) = D_X(x)~\forall \, x \in X$;
-    \item[{\sc Linear independence (LinI):}] $\bar{x} \in X~\wedge$ the vectors $\{\nabla g_i(\bar{x})~:~i \in \mathcal{A}(\bar{x})\} \cup~\{\nabla h_j(\bar{x})~:~j \in \mathcal{J}\}$ linearly independent $\Longrightarrow T_ X(\bar{x}) = D_X(\bar{x})$.
+    \item[{\sc Linear independence (LinI):}] $\bar{x} \in X~\wedge$ the vectors $\{\nabla g_i(\bar{x})~:~i \in \mathcal{A}(\bar{x})\}~\cup~\{\nabla h_j(\bar{x})~:~j \in \mathcal{J}\}$ linearly independent $\Longrightarrow T_ X(\bar{x}) = D_X(\bar{x})$.
       Among all these conditions this is the only local one.
    \end{description}
 \end{proposition}
@@ -253,13 +253,13 @@ Intuitively, this lemma says that pick a vector: either it belongs to the dual c
 
 Equivalently, either $c \in \mathcal{C}^*$ or $c \notin \mathcal{C}^*$.
 
-More formally, either $\exists \, \lambda \geq 0$ s.t.~$c = \sum_{i = 1}^k \lambda_i A_i$ or $\exists \, d$ s.t.~$Ad \leq 0 \wedge \ps{c}{d} > 0$.
+More formally, either $\exists \, \lambda \geq 0$ s.t.~$c = \sum_{i = 1}^k \lambda_i A_i$ or $\exists \, d$ s.t.~$Ad \leq 0~\wedge \ps{c}{d} > 0$.
 \end{lemma}
 
 \begin{theorem}[Karush-Kuhn-Tucker conditions]
 Let us assume that we found an optimal solution $x_*$ and the constraints qualification holds.
 
-Then $\exists \lambda \in \R^{|\mathcal{I}|}_{+}$ and $\mu \in \R^{|\mathcal{I}|}$ such that
+Then $\exists \lambda \in \R^{|\mathcal{I}|}_{+}$ and $\mu \in \R^{|\mathcal{I}|}$ such that:
     \[
     \nabla f(x) + \sum_{i \in \mathcal{A}(x)} \lambda_i \nabla g_i(x) + \sum_{j \in \mathcal{J}} \mu_j \nabla h_j(x) = 0
   \]
