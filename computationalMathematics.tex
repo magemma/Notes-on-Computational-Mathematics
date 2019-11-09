@@ -22,6 +22,7 @@
 \usepackage{chngcntr}
 \usepackage{cleveref}
 \usepackage{color,listings}
+\usepackage[customcolors]{hf-tikz}
 
 \usepackage{dsfont}
 
@@ -151,7 +152,7 @@ Gemma Martini
 \end{titlepage}
 
 %%%%%%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%
-\shipout\null
+\shipout\null%
 \newpage
 
 
@@ -167,11 +168,15 @@ improving these notes in style and contents.\\
 \end{flushleft}
 \newpage
 
+%%%%%%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+\let\tableofcontents\relax
+\shipout\null%
 
-\newpage
-\subfile{numerical_methods}
-\newpage
-\subfile{optimization}
+\input{numerical_methods.txt}
+
+\input{optimization.txt}
+
 \end{document}
 
 

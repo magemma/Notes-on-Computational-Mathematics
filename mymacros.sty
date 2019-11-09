@@ -60,7 +60,7 @@
                            %~~~~~New commands~~~~~%
 \newcommand{\ps}[2]{<#1, #2>}
 \newcommand{\R}{\mathds{R}}
-\newcommand{\C}[1]{{\mathcal{C}}^{#1}}
+\renewcommand{\C}[1]{{\mathcal{C}}^{#1}}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\x}{\mathbf{x}}
 \newcommand{\bb}{\mathbf{b}}
@@ -174,7 +174,7 @@
 \end{minipage}
 \end{center}
 }
-
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
 \newcommand{\recap}[1]{  
   \begin{myrecap}{{\Large \faLightbulbO} \,  Do you recall?\\}
     #1
@@ -286,7 +286,29 @@
 \tikzstyle{arr} = [->, rounded corners]
 
 \definecolor{bg}{rgb}{0.95,0.95,0.95}
-
+\tikzset{style green/.style={
+    set fill color=green!50!lime!60,
+    set border color=white,
+  },
+  style cyan/.style={
+    set fill color=cyan!90!blue!60,
+    set border color=white,
+  },
+  style orange/.style={
+    set fill color=orange!80!red!60,
+    set border color=white,
+  },
+  hor/.style={
+    above left offset={-0.15,0.31},
+    below right offset={0.15,-0.125},
+    #1
+  },
+  ver/.style={
+    above left offset={-0.1,0.3},
+    below right offset={0.15,-0.15},
+    #1
+  }
+}
 
 
 

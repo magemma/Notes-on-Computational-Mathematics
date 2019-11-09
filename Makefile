@@ -1,5 +1,5 @@
-#all: computationalMathematics.pdf
-all: numerical_methods optimization
+all: computationalMathematics.pdf numerical_methods optimization
+#all: numerical_methods optimization
 numerical_methods: numerical_methods.pdf
 optimization: optimization.pdf
 
