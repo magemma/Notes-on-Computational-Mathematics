@@ -25,13 +25,13 @@ We would like to understand what is the function of which this is the gradient.
 \begin{definition}[Lagrangian function]
   Let (P) be our minimum problem over $f: \R^n \to \R$. We term \textbf{Lagrangian function} the following:
   \[
-    L(x~\lambda,~\mu) = f(x) + \sum_{i \in \mathcal{I}} \lambda_i g_i(x) +\sum_{j \in \mathcal{I}} \mu_j h_j(x)
+    L(x,~\lambda,~\mu) = f(x) + \sum_{i \in \mathcal{I}} \lambda_i g_i(x) +\sum_{j \in \mathcal{I}} \mu_j h_j(x)
   \]
 \end{definition}
 
 \begin{proposition}
 A necessary condition for optimality is that the gradient of the Lagrangian function is $0$.
-  Formally, $\nabla L(x; \lambda, \mu) = 0$.
+  Formally, $\nabla L(x, \lambda, \mu) = 0$.
 \end{proposition}
 
 A first approach to use the Lagrangian function would be taking $\lambda$ and $\mu$ such that the Langrangian is positive semidefinite.
@@ -39,7 +39,7 @@ A first approach to use the Lagrangian function would be taking $\lambda$ and $\
 But this is a too strict requirement, in fact we impose:
 
 \begin{definition}[Critical cone]
-  Let us assume $(x,\lambda,\mu)$ satisfies (KKT). We define the \textbf{critical cone} as
+  Let us assume $(x,\lambda,\mu)$ satisfies (KKT). We define the \textbf{critical cone} as:
        \[
         C(x,~\lambda,~\mu) =
         \left\{ d\in\R^n \,:\,
