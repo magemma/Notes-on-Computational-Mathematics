@@ -109,7 +109,7 @@ As long as the complexity is concerned, multiplying two matrices $m \times n$ an
 \begin{myframe}{\bf Order of operations}
   Usual algebra properties hold, e.g.: $A(B + C) = AB + AC, A(BC) = (AB)C, \ldots$.
   
-  Parenthesization matters a lot: if $A, B \in \R^{n \times n }, \, v \in \R^n$, then $(AB)v$ costs $O(n^3)$, but $A(Bv)$ costs $O(n^2)$.
+  Parenthesization matters a lot: if $A, B \in M(n, \R), \, v \in \R^n$, then $(AB)v$ costs $O(n^3)$, but $A(Bv)$ costs $O(n^2)$.
   Programming languages usually do not rearrange parentheses to help.
 \end{myframe}
 
@@ -189,6 +189,23 @@ regardless of the basis we use. E.g. $w$, $v$ and $w + v$ in two different bases
     \includegraphics[scale=0.45]{pics/20sett/3.png}
     \caption{How a change of basis reflects on the space.}\label{fig:20sett1}
 \end{figure}
+
+\begin{definition}[Triangular matrix]
+  Let $A \in M(n, \R)$. We term $A$ \textbf{upper triangular} if ${(A)}_{ij} =0$ for each $i<j$.
+  Conversely, we term $A$ \textbf{lower triangular} if ${(A)}_{ij} =0$ for each $j<i$.
+  The set of all triangular $n \times n$ real matrices is a group and it is denoted as $T(n, \R)$.
+\end{definition}
+
+\begin{definition}[Diagonal matrix]
+  Let $A \in M(n, \R)$. We term $A$ \textbf{diagonal} if ${(A)}_{ij} = 0$ for each $i \neq j$.
+  The set of all diagonal $n \times n$ real matrices is a group and it is denoted as $D(n, \R)$.
+\end{definition}
+
+\begin{definition}[Symmetric matrix]
+  Let $A \in M(n, \R)$. We term $A$ \textbf{symmetric} if ${(A)}_{ij} = {(A)}_{ji}$ for each $i,j = 1, \ldots, n$.
+  The set of all diagonal $n \times n$ real matrices is a group and it is denoted as $D(n, \R)$.
+
+\end{definition}
 
 \subsection{Solving Linear Systems}
 The objective of this course, for the part concerning numerical methods, is solving linear systems efficiently.
@@ -329,7 +346,7 @@ than hand-coded loops (Blas/Lapack).
 \]
 \end{proposition}
 
-\begin{proposition}[Properties of triangular matrices]~\\
+\begin{proposition}[Properties of block triangular matrices]~\\
     Let M be a block triangular matrix, where all the blocks on the diagonal are square
    \[
      M 
@@ -427,19 +444,32 @@ Informal idea: we can start solving from the variables multiplied by C.
 
 From now on in this part of the course, if not explicitly specified, we will refer to norm-2 only.
 
-
-
-\begin{definition}[Orthogonal matrix]
-    Let $A \in M(n, \R)$ a square matrix. $A$ is orthogonal iff:
-    \begin{itemize}
-        \item $\tr{A} A  = I_{n}$
-        \item $A \tr{A} = I_{n}$
-        \item $A^{-1} = U^T$
-    \end{itemize}
-  where $I_n$ is the identity matrix of size $n$ ($1$ on the diagonal, $0$ elsewhere).
+\begin{definition}[Scalar product]
+  Let $v, w \in \R^n$ we term \textbf{standard scalar product} between $v$ and $w$ the real number $\tr{v} w = \sum\limits_{i=1}^n v_i w_i$.
 \end{definition}
 
+\begin{definition}[Orthogonal vectors]
+  Let $v, w \in \R^n$. We say that $v$ is \textbf{orthogonal} to $w$ (in symbols $x \bot y$) if their scalar product is zero.
+  
+  Formally, $\tr{x} v = 0$.
+\end{definition}
 
+\begin{definition}[Orthogonal matrix]
+  Let $A \in M(n, \R)$ a square matrix.
+  We term $A$ \textbf{orthogonal} if $\tr{A} A = A \tr{A} = I_{n}$ where $I_n$ is the identity matrix of size $n$ ($1$ on the diagonal, $0$ elsewhere) or equivalenlty if $\inv{A} = \tr{U}$.
+
+  The set of all orthogonal matrices in $M(n, \R)$ is a group and it called orthogonal group and denotes as $O(n, \R)$.
+\end{definition}
+
+\begin{proposition}\label{fact:20sett}
+  Let $A \in O(n, \R)$, $\forall x \in \R^n$ we have that $\norm{Ax} = \norm{x}$. 
+\end{proposition}
+
+\begin{proof}
+  \[
+    \norm{Ax} = \sqrt{\tr{(Ax)} Ax} = \sqrt{\tr{x}\tr{A} A x} = \sqrt{\tr{x} I_n x} = \sqrt{\tr{x} x} = \norm{x}
+  \]
+\end{proof}
 \end{document}
 
 

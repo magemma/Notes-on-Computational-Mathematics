@@ -58,6 +58,8 @@
 
 
                            %~~~~~New commands~~~~~%
+
+\newcommand\bigzero{\makebox(0,0){\text{\normalfont \huge0}}}
 \newcommand{\ps}[2]{<#1, #2>}
 \newcommand{\R}{\mathds{R}}
 \renewcommand{\C}[1]{{\mathcal{C}}^{#1}}
@@ -180,7 +182,11 @@
     #1
   \end{myrecap}
 }
-
+\newcommand{\term}[1]{  
+	\begin{myframe}{{\large \faTag} \,  Terminology}{cy}
+		#1
+	\end{myframe}
+}
 \newcommand{\syntax}[1]{  
   \begin{mysyntax}{{\Large \faCogs} \, Something on Matlab \ldots\\}
     #1

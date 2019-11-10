@@ -17,7 +17,7 @@
 In the previous lecture we introduced some sufficent conditions for matrix orthogonality.
 
 \begin{theorem}
-  Let $U \in M(n, \R)$ be an orthogonal matrix and let $x \in \R^n$. Then $\norm{Ux} = \norm{x}$.
+  Let $U \in O(n, \R)$ and let $x \in \R^n$. Then $\norm{Ux} = \norm{x}$.
 \end{theorem}
 
 \begin{proof}
@@ -30,23 +30,21 @@ In the previous lecture we introduced some sufficent conditions for matrix ortho
   where $\numeq{(1)}$ follows from the definition of transpose of a product.
 \end{proof}
 
-\textbf{Geometrically} an orthogonal preserve the norm, so a matrix $A$ represents a symmetry or a rotations on vector $x$ and these operations do not alter the size of vectors.
+\textbf{Geometrically} an orthogonal transformations (aka matrices) preserve the norm, so an orthogonal matrix $A$ represents a symmetry or a rotation these operations do not alter the size of vectors.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale = 0.5]{pics/26sett/orthgonal.png}
+    \includegraphics[scale = 2]{pics/26sett/orthgonal.png}
+    \caption{Matrix $U_1$ represents a rotation, while $U_2$ is a symmetry operation.}\label{fig:26sett_ortho}
 \end{figure}
-
-\begin{definition}[Orthogonality]
-  Let $x, y \in R^n$ we say that $x$ and $y$ are \textbf{orthonormal} if $\ps{x}{y} = 0$.
-\end{definition}
 
 \begin{definition}[Orthonormality]
   Let $x, y \in R^n$ we say that $x$ and $y$ are \textbf{orthonormal} if $\ps{x}{y} = 0$ and $\norm{x} = \norm{y} = 1$.
 \end{definition}
 
 \begin{proposition}
-  Let us take $U \in M(n, \R)$ such that $U$ is orthogonal. Then its columns $U^1, U^2, \ldots, U^n$ are \textbf{orthonormal} and the same holds for its rows.
+  Let us take $U \in )(n, \R)$.
+  Then its columns $U^1, U^2, \ldots, U^n$ are \textbf{orthonormal} and the same holds for its rows.
   \[
   \tr{U^i} U^j = \begin{cases}
     1 \text{ if } i=j\\
@@ -63,23 +61,23 @@ In the previous lecture we introduced some sufficent conditions for matrix ortho
 \end{proposition}
 
 \begin{proposition}
-  Let $U, V \in M(n, \R)$, such that $U$ and $V$ are orthogonal, then $U \cdot V$ is orthogonal. Orthogonal are closed under the product.
+  The set of orthogonal matrices is closed under product operations.
+  Let $U, V \in O(n, \R)$, then $U \cdot V$ is orthogonal.
 \end{proposition}
+
 \begin{proof}
   $\tr{(UV)} \cdot (UV) = \tr{V} \tr{U} U V = \tr{V} I_n V = \tr{V} V = I_n$
 \end{proof}
 
+Since we will often deal with tall-thin rectangular matrices with
+orthonormal columns as $U_1$
+  \[
+    U_1 = \begin{pmatrix} U^1 & U^2 & \cdots & U^n\end{pmatrix} \in M(m, n, \R) \text{where} m \geq n
+  \]
+the following fact may come in handy
 
 \begin{proposition}
-We will often deal with tall thin rectangular matrices with
-orthonormal columns:
-  \[
-    U_1 = [u_1 \; \; u_2 \; \; \dots \; \; u_n] \in \R^{m \times n} \quad (m \geq n)
-  \]
-
-There exists a matrix $U_2$ s.t. $[U_1 \; U_2]$ is square orthogonal.
-
-  
+  $\forall U_1 \in M(m, n, \R)$ where $M \ge n$ and the columns of $u_1$ are orthogonal $\exists U_2$ s.t. $\begin{pmatrix} U_1 & U_2 \end{pmatrix} \in O(m, \R)$.
 \end{proposition}
 
 \subsection{Eigenvalues / Eigenvector}
@@ -90,30 +88,33 @@ There exists a matrix $U_2$ s.t. $[U_1 \; U_2]$ is square orthogonal.
   If $Ax = \lambda x$ we say that $x$ is an \textbf{eigenvector} of \textbf{eigenvalue} $\lambda$.
 \end{definition}
 
-\begin{proposition}
+\begin{theorem}
   Let $A \in M(n, \R)$ (real triangular matrix). The eigenvalues of $A$ are the scalars on the diagonal.
-\end{proposition}
+\end{theorem}
 
+\term{
+  In this notes we refer to the columns to a generic matrix $A$ as $A^1$ for the first column, $A^2$ for the second column and so on and so forth.
 
-\noindent \textbf{NOTE}: Eigenvectors and eigenvalues are interesting because we can use it to get a special decomposition of a matrix $A$.\\
+  Conversely, we represent the rows of a matrix $A$ as $A_i$.
+}
 
-\noindent \textbf{Eigendecomposition of a matrix}:\\
-For almost almost all matrices $A \in \R^{n \times n}$ under some conditions we can decompose $A$ as:
+\begin{definition}[Diagonalizable matrix]
+ \emph{Some} matrices $A \in M(n, \R)$ under some conditions can be decomposed as:
 \[
   A = V \Lambda \inv{V}
 \]
 \[
   A = V \Lambda \inv{V} = \begin{pmatrix}
     \\
-    v_1 & v_2 & \cdots & v_n\\
+    V^1 & V^2 & \cdots & V^n\\
     \\
   \end{pmatrix}
   \cdot 
   \begin{pmatrix}
-    \lambda_1\\
+    \lambda_1&&\bigzero\\
     &\lambda_2\\
-    && \ddots\\
-    &&&&&\lambda_n\\
+    &\bigzero& \ddots\\
+    &&&\lambda_n\\
   \end{pmatrix}
   \cdot 
   \begin{pmatrix}
@@ -124,20 +125,19 @@ For almost almost all matrices $A \in \R^{n \times n}$ under some conditions we 
   \end{pmatrix}
 \]
 
-where $v_i, \; \forall i=1, \ldots, n$ are eigenvectors of $A$ of eigenvalue $\lambda_i$ and $w_i = \text{rows of } V^{-1}$.\\
+  where $V \in GL(n, \R)$ is the matrix that has as columns the eigenvectors of $A$ $(V^i, \lambda_i)~\forall i=1, \ldots, n$ and $w_i = \inv{V_i}$ are the rows of the inverse of matrix $V$.\\
+\end{definition}
 
-%% not in 2019
-\begin{comment}
-This is due to the fact that $\forall B \in R^n$ s.t. $Vx=b$, $x = \begin{pmatrix}
-  0\\
-  \vdots\\
-  0\\
-  1\\
-  0\\
-  \vdots\\
-  0
-\end{pmatrix}$, where the $1$ is found at position $i$ and so $AV^i=V \Lambda \inv{V} V^i = V \Lambda e_i = \lambda_i V^i$.
-\end{comment}
+\begin{proposition}
+  $\forall V^i \in \R$ eigenvectors of $A$ they are still eigenvector of the diagonalized form of $A=V \Lambda \inv{V}$
+\end{proposition}
+
+\begin{proof}
+  \[
+    AV^i = V \Lambda \inv{V} V^i = V \Lambda e_i = \lambda_i V^i
+  \]
+\end{proof}
+
 Another way to see the diagonalized form of $A$ is the following:
 \[
   A = V \Lambda \inv{V} = \sum\limits_{i=1}^{n} v_i\lambda_i w_i^T = 
@@ -149,16 +149,10 @@ Another way to see the diagonalized form of $A$ is the following:
 \syntax{Notice that in Matlab the eigenvalues and eigenvectors of a matrix are computed using the command \texttt{[V, Lambda] = eig(U)} and this operation has a computational complexity of $O(n^3)$.
 
 We can check that the matrix \texttt{A} is equal to the decomposition in this way:
-\texttt{A - V*Lambda*inv(V)} or \texttt{norm(A - V*Lambda*inv(V))} (both should be near to zero) }
+\texttt{A - V*Lambda*inv(V)} or \texttt{norm(A - V*Lambda*inv(V))} (both should be close to zero).}
 
 Notice that not all matrices $A \in M(n, \R)$ allow a diagonal decomposition.
-It may happen that such a matrix is diagonalizable in $\mathds{C}$ and its eigenvalues are complex.
-
-\begin{proposition} If this factorization with eigenvalues and eigenvectors holds, then:
-  \[
-     A = V \Lambda \inv{V} \Longrightarrow Av_i = v_i\lambda \; , \; \forall i = 1, \; \dots \; n
-   \]
-\end{proposition}
+It may happen that such a matrix $A$ is diagonalizable in $\mathds{C}$ and its eigenvalues are complex.
 
 \noindent This decomposition tell us the behavior under repeated application of a matrix $A$ to a vector $x$. This process allow to scale a general vector $x$.\\
 
@@ -167,28 +161,23 @@ e.g \texttt{A = [1 1; 1 1]} and \texttt{x = [ 1 1 ]}\\
 then \texttt{A*x} is equal to \texttt{[2 2]'} and \texttt{A*A*x} is equal to \texttt{[4 4]'}
 }
 
-\begin{comment}
-
-
 \begin{proposition}
   If $A \in M(n, \R)$ is diagonalizable (aka may be written as $A = V \Lambda \inv{V}$) then $A^k x = \sum\limits_{i=1}^{n} \lambda_i^k \alpha_i V^i$, for some $\alpha_i \in \R$.
 \end{proposition}
 
 \begin{proof}
-  \begin{description}
-
-
-    \item[{\sc Algebraic view point:}]
-      Let us write $x$ in the base of $R^n$ made of the linearly independent columns of $V$:
+  Let us write $x$ in the base of $\R^n$ made of the linearly independent columns of $V$:
   \[
 x = V^1 \alpha_1 + V^2 \alpha_2 + \cdots + V^n \alpha_n
   \]
   for some $\alpha_i \in \R$.
 
+ \begin{itemize}
+   \item \textsc{Algebraic view point:}
   \begin{equation}
     \begin{split}
       Ax &= A \cdot ( V^1 \alpha_1 + V^2 \alpha_2 + \cdots + V^n \alpha_n)\\
-      &= A V_1 \alpha_1 + A V_2 \alpha_2 + \cdots + A V_n \alpha_n\\
+      &= A V^1 \alpha_1 + A V^2 \alpha_2 + \cdots + A V^n \alpha_n\\
       & = \lambda_1 V^1 \alpha_1 + \lambda_2 V^2 \alpha_2 + \cdots + \lambda_n V^n \alpha_n\\
       &= V^1 (\lambda_1 \alpha_1) + V^2 (\lambda_2 \alpha_2) + \cdots + V^n (\lambda_n \alpha_n)\\
     \end{split}
@@ -202,9 +191,9 @@ x = V^1 \alpha_1 + V^2 \alpha_2 + \cdots + V^n \alpha_n
       &= {\lambda_1}^2 V^1 \alpha_1 + {\lambda_2}^2 V^2 \alpha_2 + \cdots + A {\lambda_n}^2 V^n \alpha_n\\
     \end{split}
   \end{equation}
-Inductively, we have proved the theorem.
+The thesis follows inductively.
   
-  \item[{\sc Linear algebra view point:}]
+  \item \textsc{Linear algebra view point:}
     \begin{equation}
       \begin{split}
         A^k x &= A \cdot A \cdot \ldots \cdot A \cdot x\\
@@ -232,49 +221,19 @@ Inductively, we have proved the theorem.
       \end{split}
     \end{equation}
 
-  \end{description}
-\end{proof}
-\end{comment}
-
-\begin{proposition}
-  If $A \in M(n, \R)$ is diagonalizable (aka may be written as $A = V \Lambda \inv{V}$) 
-  then:
-  \[
-    A^k x = \sum\limits_{i=1}^{n} v_i\lambda^k_i w_i^T
-  \]
-\end{proposition}
-
-\begin{proof}
-  \begin{description}
-  \item[{\sc Linear algebra view point:}]
-    \begin{equation}
-      \begin{split}
-        A^k x &= A \cdot A \cdot \ldots \cdot A \cdot x\\
-        &=V \Lambda \cancel{\inv{V}} \cancel{V} \Lambda \cancel{\inv{V}} \ldots \cancel{V} \Lambda \inv{V} x\\
-        &= V \Lambda^k \inv{V} x\\
-        &=V \begin{pmatrix}
-          {\lambda_1}^k\\
-          & {\lambda_2}^k\\
-          && \ddots\\
-          &&&& {\lambda_n}^k\\
-        \end{pmatrix}
-        \inv{V} x
-      \end{split}
-    \end{equation}
-
-  \end{description}
+  \end{itemize}
 \end{proof}
 
-\noindent \textbf{NOTE}: if $A$ is not square, $Av$, $\lambda v$ have different sizes and it doesn't make sense to talk about eigenvalues.\\
+Notice that if $A$ is not square, $Av$, $\lambda v$ have different sizes and it doesn't make sense to talk about eigenvalues.
 
-\noindent \textbf{What can go wrong with eigenvalue decomposition}
+\subsubsection{Eigenvector: what could possibly go wrong?}
 \begin{enumerate}
     \item  The eigenvalue decomposition is highly non-unique, we can:
     \begin{itemize}
         \item Reorder eigenvalues/vectors
         \item Replace an eigenvector $v_i$ with $2v_i \;,\; −3.5v_i\; \dots$
-        \item For matrices with repeated eigenvalues, even more possibilities:\\
-        e.g $I = VIV^-1$ for every invertible $V$
+        \item For matrices with repeated eigenvalues we have even more possibilities:\\
+          e.g $I = VIV^{-1}$ for every invertible $V$
     \end{itemize}
     
     \item  some matrices have only complex eigenvalues: e.g. $\begin{pmatrix} 2 & 4\\ -3 & 3\end{pmatrix}$
@@ -317,7 +276,7 @@ Inductively, we have proved the theorem.
   \end{pmatrix}
 \]
 
-  Let us now consider a reordering of $V$'s columns and apply the same permutations to the ``diagonal vector'' of $\Lambda$ such that
+  Let us now consider a reordering of $V$'s columns and apply the same permutation to the ``diagonal vector'' of $\Lambda$ such that
   
 \[
     \hat{V} = \begin{pmatrix}
@@ -335,7 +294,7 @@ Inductively, we have proved the theorem.
   \end{pmatrix}
 \]
 
-  A can be diagonalized through such $\hat{V}$ and $\hat{\Lambda}$: $A = V \Lambda \inv{V} = \hat{V} \hat{\Lambda} \inv{\hat{V}}$.
+  A can be diagonalized through such $\hat{V}$ and $\hat{\Lambda}$ as $A = V \Lambda \inv{V} = \hat{V} \hat{\Lambda} \inv{\hat{V}}$.
 \end{proposition}
 
 Moreover, in the case of repeated eigenvalues
@@ -351,39 +310,45 @@ Moreover, in the case of repeated eigenvalues
 \end{proposition}
 
 \begin{theorem}[Spectral theorem]
-  Let $A \in S(n, \R)$ ($A$ is a real symmetric matrix). Then $A$ is diagonalizable $A = U\Lambda U^-1$, where eigenvalues are all real numbers and we can take $U$ orthogonal matrix.
+  Let $A \in S(n, \R)$ ($A$ is a real symmetric matrix). Then $A$ is diagonalizable $A = U\Lambda \inv{U}$, where eigenvalues are all real numbers and we can take $U$ orthogonal matrix.
 \end{theorem}
 
 
-\noindent For symmetric matrices, nothing goes wrong: eigenvalues decomposition always exists (Spectral theorem). The matrix will not have complex eigenvalues and not fewer eigenvectors. We can choose an $U$ orthogonal because we said it was possible to reorder eigenvalues/vectors and replace eigenvector $v_i$. \\
+Notice that for symmetric matrices none of the ``unlucky'' situations enumerated above may happen (it is justified by the spectral theorem).
 
 \syntax{
 If we have an symmetric matrix \texttt{B} and we compute \texttt{[V, D] = eig(B)}, matlab will always return an orthogonal matrix $V$.
 }
 
-\noindent \textbf{Quadratic forms}: for a fixed symmetric matrix $Q = Q^T$, consider $x \in \R^{n}$ and $Q \in \R^{n \times n}$ $f(x) = x^T Qx$ (Geometric idea: paraboloids):\\
-
-Let's see two example in a Geometric point of view:\\
-Example 1:
-\[
-   f(\begin{pmatrix} x_1\\ x_2 \end{pmatrix}) = \begin{pmatrix} x_1 & x_2 \end{pmatrix}
-\begin{pmatrix} 3 & 2 \\ 2 & 4 \end{pmatrix}\begin{pmatrix} x_1\\ x_2 \end{pmatrix}
-\]
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale = 0.45]{pics/26sett/quadratic_form_1.png}
-\end{figure}
-
-Example 2: 
-\[
-  \text{with a matrix } Q = \begin{pmatrix} 3 & 2 \\ 2 & -4 \end{pmatrix}
+\begin{definition}[Quadratic form]
+  Let $Q \in S(n, \R)$ we define \textbf{quadratic form}
+  \[
+    f(x) = \tr{x} Q x
   \]
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale = 0.45]{pics/26sett/quadratic_form_2.png}
+  for each $x \in \R^{n}$.
+\end{definition}
+
+Geometrically, a quadratic form defines a paraboloids.
+
+\begin{example}
+  Let $f_1(\begin{pmatrix} x_1\\ x_2 \end{pmatrix}) = \begin{pmatrix} x_1 & x_2 \end{pmatrix} \begin{pmatrix} 3 & 2 \\ 2 & 4 \end{pmatrix}\begin{pmatrix} x_1\\ x_2 \end{pmatrix} = 3 {x_1}^2 + 4 x_1 x_2 + 4 {x_2}^2$ and let $f_2(\begin{pmatrix} x_1\\ x_2 \end{pmatrix}) = \begin{pmatrix} x_1 & x_2 \end{pmatrix} \begin{pmatrix} 3 & 2 \\ 2 & -4 \end{pmatrix}\begin{pmatrix} x_1\\ x_2 \end{pmatrix} = 3 {x_1}^2 + 4 x_1 x_2 -4 {x_2}^2$
+
+For a graphic hint see \Cref{fig:26sett_quadratic}.
+
+\begin{figure}[h!]
+	\centering\scriptsize
+	\hspace*{\fill}
+  \subfigure[$f_1(x)$]{
+		\includegraphics[scale=.5]{pics/26sett/quadratic_form_1.png}\label{subfig:quad1}
+	} \hfill
+  \subfigure[$f_2(x)$]{
+		\includegraphics[scale=2]{pics/26sett/quadratic_form_2.png}\label{subfig:quad2}
+	} \hspace*{\fill}
+	\caption{The plot of functions.}\label{fig:26sett_quadratic}
 \end{figure}
 
-\newpage
+\end{example}
+
 \begin{proposition}
   Let $Q \in S(n, \R)$ (For a fixed symmetric matrix) and let $x \in \R^n$. Then 
   \[
@@ -394,7 +359,7 @@ Example 2:
 
 \begin{proof}
   \begin{description}
-    \item[{\sc Easy case with $Q = \Lambda$ diagonal:}]
+    \item[{\sc Easy case with $Q$ diagonal:}]
     
       \[\tr{x}Qx = \tr{x} \cdot \begin{pmatrix}
     \lambda_2\\
@@ -410,7 +375,7 @@ Example 2:
     \lambda_{\text{min}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) \le  \lambda_1 {x_1}^2 + \lambda_2 {x_2}^2 + \cdots + \lambda_n {x_n}^2 \le \lambda_{\text{max}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2)
   \]
 
-      The following holds: $ \lambda_{\text{min}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) =  \lambda_{\text{min}} \cdot \tr{x} x =  \lambda_{\text{min}} \cdot \sqrnorm{x}$ and, on the other hand, $ \lambda_{\text{max}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) =  \lambda_{\text{max}} \cdot \tr{x} x =  \lambda_{\text{max}} \cdot \sqrnorm{x}$ and this proves the fact in the special case of diagonal matrix $Q$.
+   The following holds: $ \lambda_{\text{min}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) =  \lambda_{\text{min}} \cdot \tr{x} x =  \lambda_{\text{min}} \cdot \sqrnorm{x}$ and, on the other hand, $ \lambda_{\text{max}} \cdot ({x_1}^2 +{x_2}^2 + \cdots + {x_n}^2) =  \lambda_{\text{max}} \cdot \tr{x} x =  \lambda_{\text{max}} \cdot \sqrnorm{x}$ and this proves the fact in the special case of diagonal matrix $Q$.
     \item[{\sc General case:}]
       Let us represent $Q$ through its eigendecomposition: $A = U \Lambda \inv{U} = U \Lambda \tr{U}$, where $U$ is an orthogonal matrix.
       \[
@@ -423,8 +388,8 @@ Example 2:
       \[
         \lambda_{\text{min}} \cdot \sqrnorm{y} \le \tr{y} \Lambda y \le \lambda_{\text{max}} \cdot \sqrnorm{y}
       \]
-      Now the point is that if we can replace $\sqrnorm{y}$ with $\sqrnorm{x}$ we have proved the theorem.
-      In fact this is true, due to the orthogonality of matrix $U$ ($U\tr{U} = \tr{U}U = I$).
+      Now the point is that if we can replace $\sqrnorm{\tr{U}x} = \sqrnorm{y}$ with $\sqrnorm{x}$ we have proved the theorem.
+      In fact this is true, due to the orthogonality of matrix $U$ and \Cref{fact:20sett}.
   \end{description}
 \end{proof}
 
@@ -433,47 +398,45 @@ Example 2:
 \end{corollary}
 
 \begin{definition}[Positive semidefinite]
-  Let $Q \in S(n, \R)$. If $\lambda_i \geq 0$ for each eigenvalue of $Q$ then $\tr{x} Q x \ge 0$ for each vector $x$. $Q$ is called positive semidefinite.
+  Let $Q \in S(n, \R)$. We say that $Q$ is \textbf{positive semidefinite} (and we indicate $\succeq 0$) if 
   \[
     \tr{x} Q x \ge 0\norm{x}^2 \geq 0
   \]
-  This is Iff, so the reverse holds: if $\tr{x} Q x \ge 0$ for all $x$, then eigenvalues of $Q$ are $\geq 0$.
-  \end{definition}
+\end{definition}
 
 \begin{definition}[Positive definite]
-    Let $Q \in S(n, \R)$. If $\lambda_i > 0$ for each eigenvalue of $Q$ then $\tr{x} Q x > 0$ for each vector $x \neq 0$. $Q$ is called positive semidefinite.
-    \[
-      \tr{x} Q x \ge \lambda_{\text{min}} \sqrnorm{x} > 0 \sqrnorm{x} = 0
-    \]
-    This is Iff, so the reverse holds: if $\tr{x} Q x > 0$ for all $x$, then eigenvalues of $Q$ are $> 0$.
-
+   Let $Q \in S(n, \R)$. We say that $Q$ is \textbf{positive definite} (and we indicate $\succ 0$) if 
+  \[
+    \tr{x} Q x \ge 0\norm{x}^2 > 0
+  \]
 \end{definition}
 
 \begin{proposition}
-  Let $Q \in S(n, \R)$. Iff $Q$ is \textbf{positive semidefinite} then $\lambda \ge 0 \; \forall \lambda$ eigenvalue of $Q$ iff $Q$ is \textbf{positive semidefinite}. On the other hand, all eigenvalues are \textbf{strictly} positive iff $Q$ is positive definite.
+  Let $Q \in S(n, \R)$. The following holds
+  
+  \[
+    Q \text{ is positive semidefinite} \iff \forall \lambda \text{ eigenvalue of } Q ~ \lambda \ge 0
+  \]
+
+  And this holds with the $>0$ in the positive definite case.
 \end{proposition}
 
 \begin{proof}~\\
-Let's prove that Iff $Q$ is \textbf{positive semidefinite} then $\lambda \ge 0 \; \forall \lambda$ by contradiction:\\
-if $Q$ has a eigenvalue $\lambda_i < 0$ then 
-  \[
-    \tr{v_i}Qv_i = \tr{v_i} \lambda v_i = \lambda_i \sqrnorm{v_i} < 0
-  \]
-for the eigenvector $v_i$ associated to $\lambda_i$
-  
-\begin{comment}
-  %not 2019
-  \indent ($\Rightarrow$) $\tr{x} A x \ge \lambda_{\text{min}}$.
 
-  ($\Leftarrow$)Let $v_i$ be an eigenvector of $A$.
+  \indent ($\Leftarrow$) $\tr{x} Q x \ge \lambda_{\text{min}} \geq 0$ since we are in the hypothesis that all the eigenvalues are $\geq 0$
 
-  \indent $0 \le \tr{v_i} A v_i = \tr{v_i} \cdot ( \lambda_i v_i) = \lambda_i  \tr{v_i} v_i = \lambda_i \sqrnorm{v_i} \Rightarrow \lambda_i \ge 0$.
-\end{comment}  
+  \indent  ($\Rightarrow$) $ \forall v_i$ eigenvector of $Q$ $0 \le \tr{v_i} A v_i = \tr{v_i} \cdot ( \lambda_i v_i) = \lambda_i  \tr{v_i} v_i = \lambda_i \sqrnorm{v_i} \Rightarrow \lambda_i \ge 0$.
 \end{proof}
 
+\begin{corollary}
+  Let $Q \in S(n, \R)$ such that $Q \succeq 0$. The following holds:
+  \[
+    A \text{ is invertible} \iff Q \text{ is strictly positive definite}
+  \]
+\end{corollary}
+
 \begin{proposition}
-  Let $B \in M(m, n, \R)$ (possibly rectangular), $\tr{B} B \in S(n, \R)$ is a valid product
-and gives a square, symmetric matrix and is positive semidefinite.
+  Let $B \in M(m, n, \R)$ (possibly rectangular), $\tr{B} B \in S(n, \R)$ is a valid product and it is a square, symmetric, positive semidefinite matrix.
 \end{proposition}
 
 \begin{proof}
@@ -484,34 +447,19 @@ and gives a square, symmetric matrix and is positive semidefinite.
 \end{proof}
 
 \begin{corollary}
-The same holds for $B\tr{B}$, since we can define $C = \tr{B}$.
+  The same holds for $B\tr{B} \in S(m, \R)$ and it is easily proved taking $C = \tr{B} \in M(n, m, \R)$.
 \end{corollary}
-
-\begin{proposition}
-  Let $Q \in S(n, \R)$. $A \succeq 0$ and $A$ invertible iff $Q$ is \textbf{strictly positive definite}.
-\end{proposition}
-
 \syntax{
   In ordert to check if a matrix $A$ is positive definite in Matlab we can look at its eigenvalues (cfr. \texttt{eig(A)}).
 }
 
-\noindent \textbf{NOTE for complex matrices}:\\
-Most of these properties work also for matrices with complex
-entries, with one change: replace $A^T$ with $\overline{A^T}$ (transpose +
-entrywise conjugate). Often denoted with $A^*$ or $A^H$.\\
+Notice that in the \textbf{complex} case most of these properties work as well, but it is needed to replace $A^T$ with $\overline{A^T}$\footnote{Often denoted with $A^*$ or $A^H$ and called \textbf{Hermitian matrix}.} (transpose and entrywise conjugate).
 
-\noindent The norm of a complex vector:
+\noindent The norm of a complex vector is computed as
 \[
-  \norm{x}_2^2 = x^*x = \overline{x_1}x_1 + \overline{x_2}x_2 + \dots + \overline{x_n}x_n = \abs{x_1}^2 + \dots + \abs{x_n}^2 \; \; \text{which is always real} \geq 0
+  \norm{x}_2^2 = x^*x = \overline{x_1}x_1 + \overline{x_2}x_2 + \dots + \overline{x_n}x_n = \abs{x_1}^2 + \dots + \abs{x_n}^2 \in \R^+ \cup \{0\}
 \]
 
-\noindent Some terminology changes:
-\begin{itemize}
-    \item $UU^* = I$: unitary matrix (orthogonal + complex)
-    \item $Q = Q^*$: Hermitian matrix (capital letter, after Charles Hermite).
-\end{itemize}
-
-
-
+\noindent Moreover, in the complex case, $UU^* = I$ is called \textbf{unitary matrix} (orthogonal + complex)
 
 \end{document}
