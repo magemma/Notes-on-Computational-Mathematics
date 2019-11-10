@@ -72,7 +72,7 @@ Often you need more than one, say:
 \[
   \qquad \min \{[f_1(x),f_2(x)]~:x \in X\}~(P)
 \]
-with $f_1$, $f_2$ contrasting and/or with incomparable units (apples vs. oranges)
+with $f_1$, $f_2$ contrasting and/or with incomparable units (apples vs oranges)
 
 In multi-objective optimization, there does not typically exist a feasible solution that minimizes all objective functions simultaneously. Therefore, attention is paid to \emph{Pareto optimal solutions}; that is, solutions that cannot be improved in any of the objectives without degrading at least one of the other objectives.
 \begin{definition}[Pareto frontier]
@@ -110,9 +110,12 @@ It may happen that the function decreases and increases along a certain directio
 As an example, let us take the following:
 
 \[
-  \min \left\{f(x) =\bigg\{\begin{array}{ll} x & \mbox{ if } x > 0 \\
-        1 & \mbox{ if } x = 0
-        \end{array} \; \; : \; \; x \in [0, 1]\right\}
+  \min \left\{f(x) =
+    \begin{cases}
+      x \hspace{0.4cm} \text{ if } x > 0 \\
+      1 \hspace{0.4cm} \text{ if } x = 0
+    \end{cases}
+    x \in [0, 1]\right\}
 \]
 \end{itemize}
 \newpage
@@ -233,7 +236,9 @@ Notes for vector space:
 \subsubsection{(Euclidean) norm}
 \begin{definition}
  Let $x \in \R^n$ we define the \textbf{euclidean norm} of a vector:
- $$\norm{x}_2 = \sqrt{\sum\limits_{i=1}^n {x_i}^2} = \sqrt{ \ps{x}{x}}$$
+  \[
+    \norm{x}_2 = \sqrt{\sum\limits_{i=1}^n {x_i}^2} = \sqrt{ \ps{x}{x}}
+  \]
 \end{definition}
 
 \begin{proposition}
@@ -253,18 +258,24 @@ The norms on a vector space have the following properties:
 \end{proposition}
 
 \begin{proposition}[Parallelogram Law]
-$$ 2\norm{x}^2 + 2\norm{y}^2 = \norm{x + y}^2 + \norm{x - y}^2$$
+  \[
+    2\norm{x}^2 + 2\norm{y}^2 = \norm{x + y}^2 + \norm{x - y}^2
+  \]
 \end{proposition}
 
 \begin{proposition}
-$$ \norm{x + y}^2 = \norm{x}^2 + \norm{y}^2 + 2\ps{x}{y}$$
+  \[
+    \norm{x + y}^2 = \norm{x}^2 + \norm{y}^2 + 2\ps{x}{y}
+  \]
 \end{proposition}
 
 
 \subsubsection{A useful norm generalization: p-norm}
 Many (but not all) derive from p-norm:
 \begin{definition}[p-norm] Let $p \geq 1$ be a real number, the p-norm of a vector $x = ( x_1, \dots , x_n )$ is defined as follow:
-$$ \norm{x}_p := \left( \sum_{i = 1}^n \abs{x_i}^p\right)^{1/p} $$
+  \[
+    \norm{x}_p := {\left( \sum_{i = 1}^n \abs{x_i}^p\right)}^{1/p}
+  \]
 We require $p \geq 1$ for the general definition of the p-norm because the
 triangle inequality fails to hold if $p < 1$.  The p-norm is convex for $p \geq 1$, nonconvex for $p < 1$.
 \end{definition}
@@ -273,16 +284,20 @@ Here some norm derived from p-norm:
     \item $\norm{x}_1 := \sum_{i = 1}^n \abs{x_i}$
     \item $\norm{x}_\infty := \max\{ \abs{x_i}\; :\; i = 1, \dots, n \}$
     \item $\norm{x}_i := \abs{\{ i \; : \; \abs{x_i} > 0\}}$
-    \item Other ones (e.g. for matrices, etc.)
+    \item Other ones (e.g. for matrices, \ldots)
 \end{itemize}
 \begin{proposition}
 For any given finite-dimensional vector space $V$ (e.g. $\R^n$ is a finite vector space), all norms on $V$ are equivalent in the sense that given two norms $\norm{\cdot}_A\, ,\,\norm{\cdot}_B$:
-$$ \exists \; 0 < \alpha < \beta \;\; s.t\;\; \alpha\norm{x}_A \leq \norm{x}_B \leq \beta\norm{x}_A \qquad \forall x \in V$$
+  \[
+    \exists \; 0 < \alpha < \beta \;\; s.t\;\; \alpha\norm{x}_A \leq \norm{x}_B \leq \beta\norm{x}_A \qquad \forall x \in V
+  \]
 Therefore convergence in one norm implies convergence in any other norm. This rule
 may not apply in infinite-dimensional vector spaces such as function spaces, though:
 \end{proposition}
 \begin{proposition}[Holder’s inequality]
-$$ \ps{x}{y}^2 \leq \norm{x}_p\norm{y}_q \; \; 1/p + 1/q = 1$$
+  \[
+    \ps{x}{y}^2 \leq \norm{x}_p\norm{y}_q \; \; 1/p + 1/q = 1
+  \]
 
 \end{proposition}
 
@@ -290,7 +305,7 @@ $$ \ps{x}{y}^2 \leq \norm{x}_p\norm{y}_q \; \; 1/p + 1/q = 1$$
 We term \textbf{ball} centered in $\bar{x}$ and having $\varepsilon$ as radius as the set of points that are close enough to $x \in \R^n$: $B(\bar{x}, \varepsilon) = \{x \in \R^n~:~ \norm{x - \bar{x}} \le \varepsilon\}$.
 \end{definition}
 
-Let's take a unit ball, if the center of the unit-ball is in the origin (0,0), then each point on the unit-ball will have the same p-norm (i.e. 1). The unit ball therefore describes all points that have "distance" 1 from the origin, where "distance" is measured by the p-norm.
+Let's take a unit ball, if the center of the unit-ball is in the origin (0,0), then each point on the unit-ball will have the same p-norm (i.e. 1). The unit ball therefore describes all points that have ``distance'' 1 from the origin, where ``distance'' is measured by the p-norm.
 In \Cref{fig:21sett1} we may observe the different shapes of the same ball varying the value of $p$ in the $p$-norm.\\
 
 \addpic{0.4}{pics/21sett/pnorms.pdf}{The shapes of balls centered in the origin of radius $1$ varying the value of $p$-norm.}{fig:21sett1}
@@ -316,19 +331,21 @@ A scalar product has the following properties:
 \end{proposition}
 
 Geometric interpretation of the scalar product, an important characterization of the scalar product is the one that uses angles:
-$$\ps{x}{y} = \norm{x} \norm{y} \cos \theta$$ 
+\[
+  \ps{x}{y} = \norm{x} \norm{y} \cos \theta
+\]
 \begin{itemize}
     \item $x \perp y \iff \ps{x}{y} = 0$ (orthogonality condition)
     \item $\ps{x}{y} \; >\;  0 \iff$ ``$x$ and $y$ point in the same direction''
 \end{itemize}
 
-\noindent More General: $ \ps{x}{y}_M := y^TMx $ with $M \succ 0$  $( x \longrightarrow M^{-1/2}x)$
+\noindent More General: $ \ps{x}{y}_M := \tr{y}Mx $ with $M \succ 0$  $( x \longrightarrow M^{-1/2}x)$
 
 \subsubsection{(Euclidean) Distance}
 \begin{definition}[(Euclidean) distance]
-The \textbf{Euclidean distance} between points $x$ and $y$ is the length of the line segment connecting them. In Cartesian coordinates, if $x = (x_{1}, x_{2},..., x_{n})$ and $y = (y_{1}, y_{2},..., y_{n})$ are two points in Euclidean n-space, then the distance ($d$) from $x$ to $y$, or from $y$ to $x$ is given by:
+The \textbf{Euclidean distance} between points $x$ and $y$ is the length of the line segment connecting them. In Cartesian coordinates, if $x = (x_{1}, x_{2}, \ldots, x_{n})$ and $y = (y_{1}, y_{2}, \ldots, y_{n})$ are two points in Euclidean n-space, then the distance ($d$) from $x$ to $y$, or from $y$ to $x$ is given by:
   \[
-    d(x,y) := \lVert x - y \rVert = \sqrt{(x_{1} - y_{1})^{2} + ... + (x_{n} - y_{n})^{2}} 
+    d(x,y) := \lVert x - y \rVert = \sqrt{{(x_{1} - y_{1})}^{2} + \cdots + {(x_{n} - y_{n})}^{2}} 
   \]
   
 \end{definition}
