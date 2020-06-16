@@ -1,3 +1,7 @@
+%%%%%%%%%%%%LASCIARE QUESTI COMMENTI!!!%%%%%%%%%%%%%%%%
+% !TeS document-id = {02478c5b-a4cd-4f4c-a426-82311f1967ba}
+% !TeS TSS-program:compile = txs:///lualatex/[--shell-escape]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %chktex-file 36
 %chktex-file 23
 %chktex-file 10
@@ -8,49 +12,75 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{21st of September 2018 --- A. Frangioni}
+\chapter{21st of September 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Mathematical background for optimization problems}
+\section{Mathematical background for optimization problems}
 
 \begin{definition}[Minimum problem]\label{def:min_prob}
-  Let $X$ be a set, called \textbf{feasible region} and let $f : X \to \R$ be \emph{any} function, called \textbf{objective function} we call \textbf{problem} the following
-\[
-  (P) \qquad f_* = \min \{f(x)~:x \in X\}
-\]
+  Let $S$ be a set, called \textbf{feasible region} and let $f : S \to \R$ be \emph{any} function, called \textbf{objective function}.
+  We term \textbf{minimum problem} the problem of finding the minimum value of such $f$.
+  Formally,
+\begin{equation}
+\tag{P}
+f_* = \min\limits_x \{f(x)~:x \in S\}
+\end{equation}
 \end{definition}
 
 
 \begin{definition}[Feasible solution]
-  Let $x \in F$ be a solution of the minimum problem in which the domain is a superset of $X \subset F$. 
-  We say that $x$ is a \textbf{feasible solution} if $x \in X$.
-  On the other hand, $x$ is \textbf{unfeasible} if $x \in F~\setminus~X$.
+  Let $x \in F$ be a solution of the minimum problem in which the domain is a superset of $S \subset F$. 
+  We say that $x$ is a \textbf{feasible solution} if $x \in S$.
+  Conversely, $x$ is \textbf{unfeasible} if $x \in F~\setminus~S$.
 \end{definition}
 
 \begin{definition}[Optimal solution]
-  Under the same hypothesis of the above definition, we define $x_*$ such that $f(x_*) = f_*$ an \textbf{optimal solution}, where $f_* \leq f(x) \, \forall x \in X$, $\forall v > f_* \, \exists \, x \in X$ s.t.~$f(x) < v$.
+  Under the same hypothesis of the above definition, we call $x_*$ that realizes $f(x_*) = f_*$ an \textbf{optimal solution}, where $f_* \leq f(x) \, \forall x \in S$, $\forall v > f_* \, \exists \, x \in S$ s.t.~$f(x) < v$.
 \end{definition}
 
-It is possible to find problems where there is no optimal solution at all.
+\noindent It is possible to find problems where there is no optimal solution at all.
 
-\begin{example}
+\begin{obs}
   There are two cases in which it is not possible to find an optimal solution:
   \begin{enumerate}
     \item The domain is empty, which may be not trivial to prove, since it is an NP-hard problem sometimes;
-    \item We want to find the minimum of the objective function but it is unbounded below (\,$\forall M \, \exists x_M \in X$
+    \item We want to find the minimum of the objective function but the function is unbounded below (\,$\forall M \, \exists x_M \in S$
       s.t.~$f(x_M) \leq M$\,).
-      On the other hand, we need to maximize the function, but it is unbounded above.
+      Conversely, we aim to maximize a function, which is unbounded above.
   \end{enumerate}
+\end{obs}
+
+\begin{example}[Bad optimization problems]
+	The following practical cases are examples of problems that do not admit an optimal solution:
+	\begin{itemize}
+		\item empty case ($S = \emptyset$): $\min \{ f(x) = x ~:~x \in \R \land x \leq -1 \land x \geq 1\}$
+		\item unbounded (below):  $\min\{ f(x) = x \; : \; x \in \R \land x \leq 0\}$
+		\item bad $f$ and  $S$:  $\min\{ f(x) = x \; : \; x \in \R \land x > 0\}$
+		\item bad $f$: let us consider an iterative algorithm that moves towards the optimum.
+		It may happen that the function decreases and increases along a certain direction, such function is not continuous so it is impossible to reach the optimum:
+		
+		\[
+		\min \left\{f(x) =
+		\begin{cases}
+		x \hspace{0.4cm} \text{ if } x > 0 \\
+		1 \hspace{0.4cm} \text{ if } x = 0
+		\end{cases}
+		x \in [0, 1]\right\}
+		\]
+	\end{itemize}	
 \end{example}
 
-\noindent We can now rewrite the problem of solving an optimization problem as:
+\noindent Solving an optimization problem can be one of the following procedures: 
 \begin{enumerate}
   \item Finding $x_*$ and proving it is optimal
-  \item Or proving $X = \emptyset$
-  \item Or constructively prove $\forall M \, \exists x_M \in X$ s.t.~$f(x_M) \leq M$.
+  \item Proving $S = \emptyset$
+  \item Constructively proving that the function is unbounded ($\forall M \, \exists x_M \in S$ s.t.~$f(x_M) \leq M$).
 \end{enumerate}
 
-Typically “$x \in \R$” actually mean “$x \in \mathbb{Q}$” with up to k digits precision and most of the times we consider optimal a solution which is close to the true optimal value, modulo some error ($\bar{x}$, the approximately optimal).
+
+
+Typically ``$x \in \R$'' actually means ``$x \in \mathbb{Q}$'' with up to k digits precision and most of the times we consider optimal a solution which is close to the true optimal value, modulo some error (we call $\bar{x}$, the approximated optimal).
 
 \begin{definition}[Absolute error]
   We call \textbf{absolute error} the gap between the real value and the one we obtained. Formally,
@@ -60,107 +90,100 @@ Typically “$x \in \R$” actually mean “$x \in \mathbb{Q}$” with up to k d
 \end{definition}
 
 \begin{definition}[Relative error]
-  We define as \textbf{relative error} the absolute error, normalized by the true value of the function
+  We term \textbf{relative error} the absolute error, normalized by the true value of the function
 \[
   ( \, f(\bar{x}) - f_* \, ) / | \, f_* \, | \leq \varepsilon
 \]
 \end{definition}
 
-\noindent \textbf{Multi-objective Optimization}:\\
-What happens if we have more than one objective function?\newline
-Often you need more than one, say:
-\[
-  (P) \qquad \min \{[f_1(x),f_2(x)]~:x \in X\}
-\]
-with $f_1$, $f_2$ contrasting and/or with incomparable units (apples vs oranges)
+\subsection{Multi-objective Optimization}
+It may happen that there are more than one function that need to be minimized (maximized) and they could be constrasting or have incomparable units (apples vs oranges).
 
-In multi-objective optimization, there does not typically exist a feasible solution that minimizes all objective functions simultaneously. Therefore, attention is paid to \emph{Pareto optimal solutions}; that is, solutions that cannot be improved in any of the objectives without degrading at least one of the other objectives.
+In multi-objective optimization, typically there is not a feasible solution that minimizes all objective functions simultaneously.
+It is in this context that \emph{Pareto optimal solutions} are introduced: such solutions cannot be improved in any of the objectives without degrading at least one of the other objectives.
+
 \begin{definition}[Pareto frontier]
-   A feasible solution $x^{1} \in X$is said to (Pareto) dominate another solution $x^{2} \in X$, if
-  \[
-  f_{i}(x^{1})\leq f_{i}(x^{2})\quad for\quad all\quad indices\quad i \in \{ 1,2,\dots ,k\}\quad and
-\]
+	Let $(P)$ be the minimum multi-objective optimization problem formalized as
+	\[
+	\min\limits_x \{ [f_1(x), \ldots, f_k(x)] : x \in S\}
+	\]
+   A feasible solution $x^1 \in S$ is said to \textbf{(Pareto) dominate} another solution $\vect{x^2} \in S$, if
 \[
-  f_{j}(x^{1})\leq f_{j}(x^{2})\quad for\quad all\quad indices\quad j \in \{ 1,2,\dots ,k\}
+  \begin{cases}
+  f_{i}(x^1)\leq f_{i}(x^2)\quad \forall i \in \{ 1,2,\dots ,k\}\\
+  f_{j}(x^{1})\leq f_{j}(x^{2})\quad \forall j \in \{ 1,2,\dots ,k\}
+  \end{cases}
 \]
-A solution $x^{*}\in X$ (and the corresponding outcome $f(x^{*})$) is called Pareto optimal, if there does not exist another solution that dominates it. The set of Pareto optimal outcomes is often called the \textbf{Pareto frontier}.
+A solution $x^{*}\in S$ (and the corresponding outcome $f(x^{*})$) is called \textbf{Pareto optimal}, if there does not exist another solution that dominates it. The set of Pareto optimal outcomes is often called the \textbf{Pareto frontier}.
 \end{definition}
 
 \addpic{0.5}{pics/21sett/paretofront.png}{An example of Pareto frontier}{fig:21sett1}
-\newpage
-We are provided with two practical solutions:
 
-\begin{description}
-  \item[{\sc Scalarization:}] using a linear combination of the two functions: $f(x) = \alpha f_1(x) + \beta f_2(x)$;
-  \addpic{0.4}{pics/21sett/scalar.png}{Maximize risk-adjusted return, $\min \{f_{1}(x) + \alpha f_{2}(x) ~:x \in X\}$}{fig:21sett1}
-  \item[{\sc Budgeting:}] $f(x) = f_1(x)$, $X := X \cup \{ \, f_2(x) \leq b \, \}$, which intuitively corresponds to taking into account only one objective function and add the others as constraints, provided that the values of the other functions are not too high.
-  \addpic{0.4}{pics/21sett/budget2.png}{Maximize return with budget on maximum risk, $\min \{f_{1}(x)~: f_{2}(x) \leq \beta ~:x \in X\}$}{fig:21sett1}
-  \addpic{0.4}{pics/21sett/budget1.png}{Minimize risk with budget on minimum return,, $\min \{f_{2}(x)~: f_{1}(x) \leq \beta ~:x \in X\}$}{fig:21sett1}
-\end{description}
 
-\subsubsection{Examples of “Bad” optimization problems}
-Here some problems that has no optimal solution:
-\begin{itemize}
-    \item empty case ($X = \emptyset$): $\min\{ x \; : \; x \in \R \land x \leq -1 \land x \geq 1\}$
-    \item unbounded [below]:  $\min\{ x \; : \; x \in \R \land x \leq 0\}$
-    \item bad $X$:  $\min\{ x \; : \; x \in \R \land x > 0\}$
-    \item bad $f$ and  $X$:  $\min\{ x \; : \; x \in \R \land x > 0\}$
-    \item bad $f$: let us consider an iterative algorithm that moves towards the optimum.
-It may happen that the function decreases and increases along a certain direction but its non-continuity leads to the impossibility of reaching the optimum.
-As an example, let us take the following
+\begin{example}
+	Let us take two functions $f_1$ and $f_2$. We want to solve the minimization problem
+	\begin{equation}
+	\tag{P}\min\limits_x \{[f_1(x),f_2(x)]~:x \in S\}
+	\end{equation}
+	
+	and to do so we present two different approaches:
 
-\[
-  \min \left\{f(x) =
-    \begin{cases}
-      x \hspace{0.4cm} \text{ if } x > 0 \\
-      1 \hspace{0.4cm} \text{ if } x = 0
-    \end{cases}
-    x \in [0, 1]\right\}
-\]
-\end{itemize}
-\newpage
-\subsection{Infima, suprema and extended reals}
-\noindent Since we minimize/maximize stuff, infima/suprema are important:
+	\begin{description}
+		\item[{\sc Scalarization.}] Using a linear combination of the two functions, formally, $f(x) = \alpha f_1(x) + \beta f_2(x)$. An example, where $\alpha =1$ is shown in \Cref{fig:21sett_scalar}.
+		\addpic{0.4}{pics/21sett/scalar.png}{Maximize risk-adjusted return}{fig:21sett_scalar}
+		\item[{\sc Budgeting.}]  Intuitively corresponds to taking into account only one objective function and add the others as constraints, provided that the values of the other functions are not too high. In formal terms, $f(x) = f_1(x)$, where $S := S \cup \{ x \in S~:~f_2(x) \leq b \}$. As an example see \Cref{fig:21sett_budgeting}.
+		
+		\begin{figure}[htb]
+			\centering
+			\subfigure[Maximize return with budget on maximum risk, $\min \{f_{1}(x)~: f_{2}(x) \leq \beta ~:x \in S\}$]{\includegraphics[width=0.35\textwidth]{pics/21sett/budget1.png}\label{subfig:21sett_budget1}}
+			\hspace{0.5cm}
+			\subfigure[Minimize risk with budget on minimum return,, $\min \{f_{2}(x)~: f_{1}(x) \leq \beta ~:x \in S\}$]{\includegraphics[width=0.35\textwidth]{pics/21sett/budget2.png}\label{subfig:21sett_budget2}}\\
+			\caption{Budgeting}
+			\label{fig:21sett_budgeting}
+		\end{figure}
+	
+	\end{description}
+\end{example}
+
+\section{Infima, suprema and extended reals}
+Let us introduce some mathematical background on minimization (maximization).
+
 \begin{definition}[Totally ordered set]
-  We say that  set $X$ is \textbf{totally ordered} if $\forall \, x, y \in X$, either $f(x) \leq f(y)$ or $f(y) \leq f(x)$.
+  We say that a set $S$ is \textbf{totally ordered} if $\forall \, x, y \in S$, either $f(x) \leq f(y)$ or $f(y) \leq f(x)$.
 \end{definition}
 
 \begin{definition}[Infima and suprema]
-  Given a totally ordered set $R$ and one of its subsets (say $S \subseteq R$)
+  Let $R$ be a totally ordered set and let $s$ be one of its subsets ($S \subseteq R$):
 \[
-  s\text{ is the {\bf infimum} of } S \Leftrightarrow \underline{s} = \inf S
-  \quad\Leftrightarrow\quad
-  \underline{s} \leq s \;\; \forall s \in S
-  \;\;\wedge\;\;
-  \forall t > \underline{s} \; \exists \, s \in S \mbox{ s.t. } s \leq t
+  \underline{s}\text{ is the {\bf infimum} of } S (\underline{s} = \inf S) \text{ iff } \underline{s} \leq s \;\; \forall s \in S  \;\;\wedge\;\;  \forall t > \underline{s} \; \exists \, s \in S \mbox{ s.t. } s \leq t
 \]
 \[
-  s \text{ is the {\bf supremum} of } S \Leftrightarrow \bar{s} = \sup S
-  \quad\Leftrightarrow\quad
-  \bar{s} \geq s \;\; \forall s \in S
-  \;\;\wedge\;\;
-  \forall t < \bar{s} \; \exists \, s \in S \mbox{ s.t. } s \geq t
+  \bar{s} \text{ is the {\bf supremum} of } S (\bar{s} = \sup S) \text{ iff } \bar{s} \geq s \;\; \forall s \in S  \;\;\wedge\;\;  \forall t < \bar{s} \; \exists \, s \in S \mbox{ s.t. } s \geq t
 \]
 \end{definition}
 
-\noindent \textbf{Issue}: inf S/sup S may not exist in $\R$
+\noindent An attentive reader may notice that it is possible that infima (suprema) do not exist in $\R$.
 
 \begin{definition}[Extended real]
   In the case of unbounded functions the value of infima or suprema are $\infty$, and we call \textbf{extended reals} $\overline{\R} = {-\infty} \cup \R \cup {+\infty}$.
 \end{definition}
 
+\begin{property}
+	The following holds for the extended reals:
 \begin{itemize}
     \item For all $S \subseteq \R, \sup / \inf S \in \overline{\R}$
-    \item $\inf S = -\infty $ just a convenient notation for “there is no (finite) inf”
+    \item $\inf S = -\infty $ indicates that there is no (finite) infimum
     \item $\inf \emptyset = \infty$, $\sup \emptyset = -\infty$
 \end{itemize}
+\end{property}
 
-\subsection{(Monotone) Sequences in $\R$ and optimization}
-\noindent We are interested in studying sequences, because iterative methods start from a certain point and move towards the optimal, hopefully.\\
+\section{(Monotone) Sequences in $\R$ and optimization}
+\noindent We are interested in studying sequences, because iterative methods start from a certain point and move towards the optimal.
 
-Sequence of iterates $\{ x_i \} \subset X$ and $v_i = f ( x_i )$. Typically we can’t get $f_∗$ in finite time ($\exists i v_i = f_∗$), but we can
-“get as close as we want”: there in the limit.
 
+\term{
+	We denote a sequence of iterates as $\{ x_i \} \subset S$ and we denote the plugging a function $f$ into such a sequence as $v_i = f ( x_i )$.
+}
 
 \begin{definition}[Limit]
   Given a sequence $\{ x_i \}$ the \textbf{limit} for $i \to \infty$ is defined as
@@ -169,229 +192,216 @@ Sequence of iterates $\{ x_i \} \subset X$ and $v_i = f ( x_i )$. Typically we c
 \]
 \end{definition}
 
-It may happen that a sequence has or does not have a limit. For example $\{ \frac{1}{n}\}$ has limit $0$ for $n \to +\infty$, while $\{ {(-1)}^n \}$ does not.
+\noindent It may happen that a sequence has or does not have a limit. For example $\{ \frac{1}{n}\}$ has limit $0$ for $n \to +\infty$, while $\{ {(-1)}^n \}$ does not have any.
 
 \begin{proposition}
   Let us be given a monotone sequence, then the sequence \textbf{does} have a limit.
 \end{proposition}
 
-Notice that given a sequence either it is monotone or it can be ``split'' into two monotone sequences (for example $\{ {(-1)}^n\}$ can be transformed into $\{ {(-1)}^{2n}\}$ and $\{ {(-1)}^{2n+1}\}$ and these two sequences are both monotone).\\
+Notice that a sequence either is monotone or it can be ``split'' into two monotone sequences.
 
-The obvious way to make $\{ vi \}$ monotone: keep aside the best
-\[
-    v_i^* = \min \{v_h: h\leq i\} \qquad \text{(best value at interaction i)}
-\]
+\begin{example}
+	Let us consider the sequence $\{ {(-1)}^n\}$. It does not converge to any value, but it can be split into $\{ {(-1)}^{2n}\}$ and $\{ {(-1)}^{2n+1}\}$ and these two subsequences are both monotone.\\
+\end{example}
 
-\begin{itemize}
-    \item  $v_1^* \geq v_2^* \geq v_3^* \geq \, \dots \, \Rightarrow v_\infty^* = \lim_{i \to \infty} v_i^* \geq f_*$ ∗ (asymptotic estimate)
-    \item $\lim_{i \to \infty} v_i^* = v_\infty^* = f_* \Rightarrow \{v_i\}$ minimizing sequence (of values)
-\end{itemize}
+Forcing monotonicity on sequences in $\R$ can be performed splitting the sequence into a non-decreasing sequence and a non-increasing sequence:
+	\[
+	\underline{v}_i^* = \inf \{v_h: h\leq i\} \text{ and } \bar{v}_i^* = \sup \{v_h: h\leq i\}
+	\]
 
-\begin{figure}
-    \centering
-    \includegraphics[scale = 0.6]{pics/21sett/forcing_monotonicity.png}
-    \caption{Forcing monotonicity on sequences in $\R$: the hard way}
-\end{figure}
+This way we get $\underline{v}_1 \le \underline{v}_2 \le \ldots$ and $\bar{v}_1 \ge \bar{v}_2 \ge \ldots$ and they have a limit: $\liminf\limits_{i \to \infty} v_i  \lim\limits_{i \to \infty} \underline{v_i}^* = v_\infty^* = f_*$ and  $\limsup\limits_{i \to \infty} v_i  \lim\limits_{i \to \infty} \bar{v}_i^* = v_\infty^* = f_*$
 
+\begin{proposition}
+	The following holds:
+	\begin{itemize}
+		\item $\bar{v}_i \ge \underline{v}_i \Rightarrow \limsup\limits_{i\to \infty} v_i \ge \liminf\limits_{i \to \infty} v_i$
+		\item $\lim\limits_{i \to \infty} v_i = v \iff \limsup\limits_{i\to \infty} v_i = v = \liminf\limits_{i \to \infty} v_i$ 
+	\end{itemize}	
+\end{proposition}
 
-\subsection{Vector spaces and topology}
-\subsubsection{Euclidean space $\R^n$}
-Single numbers are not enough, except for objective function values.
+\section{Vector spaces and topology}\label{21sett_sec:vector_space}
+For the problems we are going to study, real numbers are used to describe each feature of a dataset and this has the mathematical equivalent in the term ``vector''.
+
 \begin{definition}[Euclidean vector space]
 We call \textbf{Euclidean space}
 \[
-  \R^n := \{ \, \begin{pmatrix}x_1\\ x_2\\ \vdots\\ x_n\end{pmatrix}~:~x_i \in \R,~i = 1, \ldots, n\}
+  \R^n :=\biggl \{ \, \begin{pmatrix}x_1\\ x_2\\ \vdots\\ x_n\end{pmatrix}~:~x_i \in \R,~i = 1, \ldots, n \biggr \}
 \]
-Equivalently, we can characterize the Euclidean space as Cartesian product of $\R$ $n$ times: $\R^n = \R \times \R \times \ldots \R$. Closed under sum and scalar multiplication
+Equivalently, we can characterize the Euclidean space as Cartesian product of $\R$ $n$ times: $\R^n = \R \times \R \times \ldots \R$.
+Every vector space and in particular Euclidean spaces are closed under sum and scalar multiplication.
 \end{definition}
 
-The main operations on elements of the Euclidean space (vectors) are:
+\noindent The main operations on elements of the Euclidean space (vectors) are:
 
 \begin{description}
-  \item[{\sc Sum:}] $x + y := \begin{pmatrix}x_1 + y_1\\
+  \item[{\sc Sum:}] $\vect{x} + \vect{y} := \begin{pmatrix}x_1 + y_1\\
       x_2 + y_2\\
       \vdots\\
       x_n + y_n\\
   \end{pmatrix}$
-\item[{\sc Scalar multiplication:}] $\alpha x = \begin{pmatrix}\alpha x_1\\
+\item[{\sc Scalar multiplication:}] $\alpha \vect{x} = \begin{pmatrix}\alpha x_1\\
     \alpha x_2\\
     \vdots\\
     \alpha x_n\\
   \end{pmatrix}$
 \end{description}
 
-Usually $x \in \R^n$ usually considered “column vector” $\in \R^{n \times 1}$, otherwise a row vector is  $x^T$.
+In linear algebra, $\vect{x} \in \R^n$ is a column vector $\in \R^n$, whenever a row vector is needed for dimensionality issues it is denoted as $\tr{x}$.
 
-\begin{definition}[Finite vector space] each $x \in \R^n$ can be obtained from a finite basis. (canonical base is $u_i$ having 1 in position $i$ and 0 elsewhere)
+\begin{definition}[Basis]
+	Any vector $\vect{x} \in \R^n$ can be obtained from a linear combination of a set of vectors that is called ``basis''.
+	In Euclidean spaces there exists a special basis that is called ``canonical'', where each vector $\vect{u^i}$ has a $1$ in position $i$ and a $0$ elsewhere.
 \end{definition}
-Notes for vector space:
-\begin{itemize}
-    \item Not all vector spaces are finite
-    \item Not a totally ordered set
-\end{itemize}
 
-\noindent Concept of “limit” requires topology. So, in order to be able to compute limits in a vector space we need some topology definitions: norm, scalar product,  distance.\\
+\begin{definition}[Finite vector space] Let $V(K, n, m)$ be a vector space. It is said to be \textbf{finite} if its basis have a finite cardinality.
+\end{definition}
 
+At this point, it is crucial to observe that not all vector spaces are finite nor they are a totally ordered set.
 
-\subsubsection{(Euclidean) norm}
-\begin{definition}
- Let $x \in \R^n$ we define the \textbf{euclidean norm} of a vector:
+\noindent In this course we will deal with the concept of limit over a vector space very often and for this purpose we are going to introduce a topology on vector spaces (i.e. norm, scalar product,  distance).
+
+\begin{definition}[Euclidean norm]
+ Let $\vect{x} \in \R^n$, we define \textbf{euclidean norm} of $\vect{x}$:
   \[
-    \norm{x}_2 = \sqrt{\sum\limits_{i=1}^n {x_i}^2} = \sqrt{ \ps{x}{x}}
+    \norm{\vect{x}}_2 = \sqrt{\sum\limits_{i=1}^n {x_i}^2} = \sqrt{ \ps{\vect{x}}{\vect{x}}}
   \]
 \end{definition}
 
 \begin{proposition}
-The norms on a vector space have the following properties:
+Any norm on a vector space has the following properties:
 \begin{enumerate}
-  \item $\norm{x} \ge 0$ and $\forall x \in \R^n$, $\norm{x}=0~\iff~x=0$;
-  \item $\norm{\alpha x} = \abs{\alpha} \norm{x},~\forall x \in \R^n,~\alpha \in \R$;
-  \item $\norm{x+y} \le \norm{x} + \norm{y},~\forall x,y \in \R^n$ (triangle inequality).
+  \item $\norm{\vect{x}} \ge 0$ and $\forall \vect{x} \in \R^n$, $\norm{\vect{x}}=0~\iff~\vect{x}=\vect{0}$;
+  \item $\norm{\alpha \vect{x}} = \abs{\alpha} \norm{\vect{x}},~\forall \vect{x} \in \R^n,~\alpha \in \R$;
+  \item $\norm{\vect{x}+\vect{y}} \le \norm{\vect{x}} + \norm{\vect{y}},~\forall \vect{x},\vect{y} \in \R^n$ (triangle inequality).
 \end{enumerate}
 \end{proposition}
 
 \begin{proposition}[Cauchy-Schwartz inequality]
-  Let $x, y \in \R^n$. The following holds:
+  Let $\vect{x}, \vect{y} \in \R^n$. The following holds:
   \[
-    \ps{x}{y}^2 \;\leq \; \ps{x}{x}\ps{y}{y}\equiv \abs{\ps{x}{y}} \leq \norm{x} \norm{y},~\forall x,y \in \R^n
+    \ps{\vect{x}}{\vect{y}}^2 \;\leq \; \ps{\vect{x}}{\vect{x}}\ps{\vect{y}}{\vect{y}}\equiv \abs{\ps{\vect{x}}{\vect{y}}} \leq \norm{\vect{x}} \norm{\vect{y}},~\forall \vect{x},\vect{y} \in \R^n
   \]
 \end{proposition}
 
 \begin{proposition}[Parallelogram Law]
   \[
-    2\norm{x}^2 + 2\norm{y}^2 = \norm{x + y}^2 + \norm{x - y}^2
+    2\norm{\vect{x}}^2 + 2\norm{\vect{y}}^2 = \norm{\vect{x} +\vect{y}}^2 + \norm{\vect{x} - \vect{y}}^2
   \]
 \end{proposition}
 
 \begin{proposition}
   \[
-    \norm{x + y}^2 = \norm{x}^2 + \norm{y}^2 + 2\ps{x}{y}
+    \norm{\vect{x}+ \vect{y}}^2 = \norm{\vect{x}}^2 + \norm{\vect{y}}^2 + 2\ps{\vect{x}}{\vect{y}}
   \]
 \end{proposition}
 
+The $2$-norm is a special case of the more general $p$-norm.
 
-\subsubsection{A useful norm generalization: p-norm}
-Many (but not all) derive from p-norm:
-\begin{definition}[p-norm] Let $p \geq 1$ be a real number, the p-norm of a vector $x = ( x_1, \dots , x_n )$ is defined as follow:
+\begin{definition}[p-norm] Let $p \geq 1$ be a real number, the p-norm of a vector $\vect{x} = ( x_1, \dots , x_n )$ is defined as follow:
   \[
-    \norm{x}_p := {\left( \sum_{i = 1}^n \abs{x_i}^p\right)}^{1/p}
+    \norm{\vect{x}}_p := {\left( \sum_{i = 1}^n \abs{x_i}^p\right)}^{1/p}
   \]
-We require $p \geq 1$ for the general definition of the p-norm because the
-triangle inequality fails to hold if $p < 1$.  The p-norm is convex for $p \geq 1$, nonconvex for $p < 1$
+We require $p \geq 1$ for the general definition of the $p$-norm because the triangle inequality fails to hold if $p < 1$. 
+The $p$-norm is convex for $p \geq 1$ and non convex for $p < 1$.
 \end{definition}
-Here some norm derived from p-norm:
-\begin{itemize}
-    \item $\norm{x}_1 := \sum_{i = 1}^n \abs{x_i}$
-    \item $\norm{x}_\infty := \max\{ \abs{x_i}\; :\; i = 1, \dots, n \}$
-    \item $\norm{x}_i := \abs{\{ i \; : \; \abs{x_i} > 0\}}$
-    \item Other ones (e.g.~for matrices \ldots)
-\end{itemize}
-\begin{proposition}
-For any given finite-dimensional vector space $V$ (e.g. $\R^n$ is a finite vector space), all norms on $V$ are equivalent in the sense that given two norms $\norm{\cdot}_A\, ,\,\norm{\cdot}_B$:
-  \[
-    \exists \; 0 < \alpha < \beta \;\; s.t\;\; \alpha\norm{x}_A \leq \norm{x}_B \leq \beta\norm{x}_A \qquad \forall x \in V
-  \]
-Therefore convergence in one norm implies convergence in any other norm. This rule
-may not apply in infinite-dimensional vector spaces such as function spaces, though
-\end{proposition}
-\begin{proposition}[Holder’s inequality]
-  \[
-    \ps{x}{y}^2 \leq \norm{x}_p\norm{y}_q \; \; 1/p + 1/q = 1
-  \]
 
+The most important $p$-norms are the following:
+\begin{itemize}
+    \item $\norm{\vect{x}}_1 := \sum_{i = 1}^n \abs{x_i}$
+    \item $\norm{\vect{x}}_\infty := \max\{ \abs{x_i}\; :\; i = 1, \dots, n \}$
+    \item $\norm{\vect{x}}_i := \abs{\{ i \; : \; \abs{x_i} > 0\}}$
+\end{itemize}
+
+\begin{proposition}
+For any given finite-dimensional vector space $V(K, n)$ (e.g. $\R^n$), all norms on $V$ are \emph{equivalent} (therefore, convergence in one norm implies convergence in any other norm).
+Formally, $ \forall \norm{\cdot}_A\, ,\,\norm{\cdot}_B$:
+  \[
+    \exists \; 0 < \alpha < \beta \;\; s.t\;\; \alpha\norm{x}_A \leq \norm{x}_B \leq \beta\norm{x}_A \qquad \forall \vect{x} \in V
+  \]
+\end{proposition}
+
+This rule may not apply in infinite-dimensional vector spaces such as function spaces. For such cases we define the 
+
+\begin{proposition}[Holder's inequality]
+  Let $V(K, n)$ be a (possibly infinite) vector space, for any two norms $ \forall \norm{\cdot}_A\, ,\,\norm{\cdot}_B$ the \textbf{Holder's inequality} holds
+  \[
+    \ps{x}{y}^2 \leq \norm{x}_A \norm{y}_B \; \; 1/A + 1/B = 1
+  \]
 \end{proposition}
 
 \begin{definition}[Ball]
-We term \textbf{ball} centered in $\bar{x}$ and having $\varepsilon$ as radius as the set of points that are close enough to $x \in \R^n$: $B(\bar{x}, \varepsilon) = \{x \in \R^n~:~ \norm{x - \bar{x}} \le \varepsilon\}$.
+Let $\vect{\bar{x}} \in \R^n$. We term \textbf{ball} centered in $\bar{\vect{x}}$ and having $\varepsilon$ as radius as the set of points that are close enough to $\vect{x}$: $B(\bar{\vect{x}}, \varepsilon) = \{\vect{x}\in \R^n~:~ \norm{\vect{x} - \bar{\vect{x}}} \le \varepsilon\}$.
 \end{definition}
 
-Let's take a unit ball, if the center of the unit-ball is in the origin (0,0), then each point on the unit-ball will have the same p-norm (i.e. 1). The unit ball therefore describes all points that have ``distance'' 1 from the origin, where ``distance'' is measured by the p-norm.
+Let us take a unit ball, if the center of the unit-ball is in the origin $(0,0)$, then each point on the unit-ball will have the same $p$-norm (i.e. $1$). The unit ball therefore describes all points that have ``distance'' $1$ from the origin, where ``distance'' is measured by the $p$-norm.
 In \Cref{fig:21sett1} we may observe the different shapes of the same ball varying the value of $p$ in the $p$-norm.\\
 
 \addpic{0.4}{pics/21sett/pnorms.pdf}{The shapes of balls centered in the origin of radius $1$ varying the value of $p$-norm.}{fig:21sett1}
 
-
-\subsubsection{(Euclidean) Scalar Product}
-
-\begin{definition}[Scalar product]
-  Let $x, y \in \R^n$ we define the \textbf{scalar product} between these two vectors 
+\begin{definition}[Standard scalar product]
+  Let $\vect{x}, \vect{y} \in \R^n$ we define the \textbf{standard scalar product} between these two vectors as
   \[
-\ps{x}{y} \; := \; y^T x = \sum_{i=1}^n x_i y_i = x_1 y_1 + \cdots + x_n y_n
+\ps{\vect{x}}{\vect{y}} \; := \; \tr{\vect{y}} \vect{x} = \sum_{i=1}^n x_i y_i = x_1 y_1 + \cdots + x_n y_n
   \]
 \end{definition}
 
 \begin{proposition}
 A scalar product has the following properties:
 \begin{enumerate}
-  \item $\ps{x}{y} = \ps{y}{x} \quad \forall x, y \in \R^n$ (symmetry)
-  \item $\ps{x}{x} \ge 0,~\forall x \in \R^n$, $\ps{x}{x}=0~\iff~x=0$;
-  \item $\ps{\alpha x}{y} = \alpha \ps{x}{y},~\forall x\in\R^n, \alpha \in \R$;
-  \item $\ps{x + y}{z} = \ps{x}{z} + \ps{y}{z},~\forall x,y, z \in \R^n$.
+  \item $\ps{\vect{x}}{\vect{y}} = \ps{\vect{y}}{\vect{x}} \quad \forall \vect{x}, \vect{y} \in \R^n$ (symmetry)
+  \item $\ps{\vect{x}}{\vect{x}} \ge 0,~\forall \vect{x} \in \R^n$, $\ps{\vect{x}}{\vect{x}}=0~\iff~\vect{x}=\vect{0}$;
+  \item $\ps{\alpha \vect{x}}{\vect{y}} = \alpha \ps{\vect{x}}{\vect{y}},~\forall \vect{x}\in\R^n, \alpha \in \R$;
+  \item $\ps{\vect{x} + \vect{y}}{\vect{z}} = \ps{\vect{x}}{\vect{z}} + \ps{\vect{y}}{\vect{z}},~\forall \vect{x},\vect{y}, \vect{z} \in \R^n$.
 \end{enumerate}
 \end{proposition}
 
-Geometric interpretation of the scalar product, an important characterization of the scalar product is the one that uses angles:
+\noindent An important geometric characterization of the scalar product is the one that uses angles:
 \[
-  \ps{x}{y} = \norm{x} \norm{y} \cos \theta
+  \ps{\vect{x}}{\vect{y}} = \norm{\vect{x}} \norm{\vect{y}} \cos \theta
 \]
-\begin{itemize}
-    \item $x \perp y \iff \ps{x}{y} = 0$ (orthogonality condition)
-    \item $\ps{x}{y} \; >\;  0 \iff$ ``$x$ and $y$ point in the same direction''
-\end{itemize}
+According to this new definition, we can observe that $\vect{x}$ and $\vect{y}$ are orthogonal ($\vect{x} \perp \vect{y}$) iff $\ps{\vect{x}}{\vect{y}} = 0$ and in all the other cases they somehow point in the same direction.
 
-\noindent More General: $ \ps{x}{y}_M := \tr{y}Mx $ with $M \succ 0$  $( x \longrightarrow M^{-1/2}x)$
+We could rewrite the scalar product between $\vect{x}$ and $\vect{y}$ as $\tr{\vect{y}} I \vect{x}$, where $I \in D(\R, n)$ is the identity matrix.
+Thanks to this observation. we can state the more general form of the scalar product:
 
-\subsubsection{(Euclidean) Distance}
-\begin{definition}[(Euclidean) distance]
-The \textbf{Euclidean distance} between points $x$ and $y$ is the length of the line segment connecting them. In Cartesian coordinates, if $x = (x_{1}, x_{2}, \ldots, x_{n})$ and $y = (y_{1}, y_{2}, \ldots, y_{n})$ are two points in Euclidean n-space, then the distance ($d$) from $x$ to $y$, or from $y$ to $x$ is given by
+\begin{definition}[Scalar product]
+Let $\vect{x}, \vect{y} \in `R^n$ and let $M \in M(\R, n)$ be a positive definite matrix (for further details see).
+We call \textbf{scalar product} the following 
+\[
+\ps{\vect{x}}{\vect{y}}_M := \tr{\vect{y}}M\vect{x}
+\]
+\end{definition}
+
+\todo[inline]{Aggiungere reference al punto in cui si definisce una matrice definita positiva}
+
+\begin{definition}[Euclidean distance]
+The \textbf{Euclidean distance} between points $\vect{x}$ and $\vect{y}$ in $\R^n$ is the length of the line segment connecting them.
+In Cartesian coordinates, if $\vect{x} = (x_{1}, x_{2}, \ldots, x_{n})$ and $\vect{y} = (y_{1}, y_{2}, \ldots, y_{n})$ are two points in the $n$-dimensional Euclidean space, then the distance ($d$) from $\vect{x}$ to $\vect{y}$, or from $\vect{y}$ to $\vect{x}$ is given by
   \[
-    d(x,y) := \lVert x - y \rVert = \sqrt{{(x_{1} - y_{1})}^{2} + \cdots + {(x_{n} - y_{n})}^{2}} 
+    d(\vect{x},\vect{y}) := \lVert \vect{x} - \vect{y} \rVert = \sqrt{{(x_{1} - y_{1})}^{2} + \cdots + {(x_{n} - y_{n})}^{2}} 
   \]
   
 \end{definition}
  
  \begin{proposition}
-The distance has the following properties:
+The Euclidean distance has the following properties:
 \begin{enumerate}
-  \item $d(x,y) \geq 0  \; \forall x,y \in \R^n \; , \; d(x,y) = 0 \iff x = y$
-  
-  \item $d(\alpha x,0) = \abs{\alpha}d(x,0) \; \; \forall x \in \R^n \, , \, \alpha \in \R $
-  
-  \item $ d(x,y) \leq d(x,z) + d(z, y) \; \; \forall x,y,z  \in \R^n$ (triangle inequality)
+  \item $d(\vect{x},\vect{y}) \geq 0  \; \forall \vect{x},\vect{y} \in \R^n \; , \; d(\vect{x},\vect{y}) = 0 \iff \vect{x} = \vect{y}$
+  \item $d(\alpha \vect{x},0) = \abs{\alpha}d(\vect{x},0) ~ \forall \vect{x} \in \R^n,~ \alpha \in \R$
+  \item $ d(\vect{x},\vect{y}) \leq d(\vect{x},\vect{z}) + d(\vect{z}, \vect{y}) ~ \forall \vect{x},\vect{y},\vect{z}  \in \R^n$ (triangle inequality)
 \end{enumerate}
 \end{proposition}
 
-\subsection{Limit of a sequence in $\R^n$}
+\section{Limit of a sequence in $\R^n$}
 We have now all the tools to define the notion of limit of a sequence in $\R^n$.
-\noindent\textbf{Limit of a sequence in $R^n$}
 
 \begin{definition}[Limit of a sequence in the Euclidean space]
-  Let $\{ x_i \} \subset \R^n$ be a sequence in $\R^n$. The \textbf{limit} of $\{x_i\}$ for $i \to +\infty$ is the following:
-  \[
-    \lim_{i \to \infty} x_i = x \equiv \{ x_i \} \to x
-  \]
-  \[
-    \Updownarrow
-  \]
-  \[
-    \forall \varepsilon > 0~\exists h~\text{s.t.}~d(x_i , x) \leq \varepsilon~\forall i \geq h
-  \]
-  \[
-    \Updownarrow
-  \]
-  \[
-    \forall \varepsilon > 0~\exists h~\text{s.t.}~x_i \in \mathcal{B}( x , \varepsilon ) \; \forall i \geq h
-  \]
-  \[
-    \Updownarrow
-  \]
-  \[
-    \lim_{i \to \infty} d( x_i , x ) = 0
-  \]
+  Let $\{ \vect{x_i }\} \subset \R^n$ be a sequence in $\R^n$.
+  We say that $\{\vect{x_i}\}$ converges to a \textbf{limit} $\vect{x}$ for $i \to +\infty$ and denote $\lim_{i \to \infty} x_i = x$ or $\{ x_i \} \to x$ if $\forall \varepsilon > 0~\exists h~\text{s.t.}~d(\vect{x_i} , \vect{x}) \leq \varepsilon~\forall i \geq h$\\
+  or, equivalently, $\forall \varepsilon > 0~\exists h~\text{s.t.}~\vect{x_i} \in \mathcal{B}( \vect{x} , \varepsilon ) \; \forall i \geq h$ \\
+  or, even $\lim_{i \to \infty} d( \vect{x_i} , \vect{x} ) = 0$.
 \end{definition}
-\noindent \textbf{Note}: 
-\begin{itemize}
-    \item Points of ${x_i}$ eventually all come arbitrarily close to $x$
-    \item No obvious lim inf / lim sup ($\R^n$ is not totally ordered)
-\end{itemize}
+
+In the definition of limit there is the idea that the points of $\{\vect{x_i}\}$ eventually all come arbitrarily close to $\vect{x}$.
+Moreover, since $\R^n$ is not totally ordered, there is no obvious $\liminf$ nor $\limsup$.
 \end{document}

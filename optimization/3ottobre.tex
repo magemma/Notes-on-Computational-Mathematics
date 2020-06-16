@@ -8,34 +8,52 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{3rd of October 2018 --- A. Frangioni}
+\chapter{3rd of October 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 \begin{example}[On derivatives]
-Let $f:\R^2 \to \R$ such that $f(x, y) = x^2 e^y$. Compute the partial derivatives.
+Let $f:\R^2 \to \R$ such that $f(x, y) = x^2 e^y$.
+Compute the partial derivatives and the directional derivatives in the two directions $\vect{d_1} = \tr{(0,1)}$ and $\vect{d_2} = \tr{(1,0)}$.
 
-$\frac{\partial f}{\partial x} = 2x e^y $i; $\frac{\partial f}{\partial y} = x^2 e^y $
+\begin{itemize}
+	\item $\frac{\partial f}{\partial x} = 2x e^y $
+	\item $\frac{\partial f}{\partial y} = x^2 e^y $
+	\item $\parder{f}{\vect{d_1}} = \lim\limits_{t \to 0} \frac{f(x + t \cdot 0, y + t \cdot 1)}{t} =  \lim\limits_{t \to 0} \frac{f(x, y+ t)}{t}$.
+	An attentive reader may notice that the directional derivative in direction $\vect{d_1}$ is equivalent to the derivative on the second component.
+	\item $\parder{f}{\vect{d_2}} = \lim\limits_{t \to 0} \frac{f(x + t \cdot 1, y + t \cdot 0)}{t} =  \lim\limits_{t \to 0} \frac{f(x + t, y)}{t}$. Conversely with respect to what stated before, the directional derivative of $f$ along the direction $\vect{d_2}$ is equivalent to the partial derivative w.r.t the first component.
+\end{itemize}
 
-$\frac{\partial f}{\partial [0, 1]} = \lim\limits_{t \to 0} \frac{f(x + t_1, y + t_0)}{t} =  \lim\limits_{t \to 0} \frac{f(x + t, y)}{t}$, which is equivalent to the derivative of the second component.
-
-Conversely, $\frac{\partial f}{\partial [1, 0]}$ is equivalent to the derivative in the first component.
-\end{example}
-We have that the partial derivative on a certain direction $d$ is the scalar product between the gradient and the direction, formally
+Let us compute the scalar product between the gradient and the direction $\vect{d_1}$:
 
 \[
-  \frac{\partial f}{\partial d} = \ps{\begin{pmatrix}2x e^y\\ x^2 e^y\end{pmatrix}}{\begin{pmatrix} d_1\\ d_2 \end{pmatrix}}
+\frac{\partial f}{\partial d} = \ps{\begin{pmatrix}2x e^y\\ x^2 e^y\end{pmatrix}}{\begin{pmatrix} 0\\ 1 \end{pmatrix}} = 
 \]
 
+\end{example}
+
+The intuition of this example is formalized in the following
+
+\begin{proposition}
+Let $f: \R^n \to \R$. 
+The partial derivative on a certain direction $\vect{d} \in \R^n$ is the scalar product between the gradient of the function and the direction, formally
+\[
+\frac{\partial f}{\partial d} = \ps{\nabla f}{ \vect{d}}
+\]
+\end{proposition}
+\todo[inline]{Rivedere prima e seconda componente + parallelo con $e_1, \ldots, e_n$}
+
 \begin{definition}[Vector-valued function]
-  Let $f: \R^n \to \R^m$ is termed \textbf{vector-valued function}, where $f(x) =  [f_1(x),~f_2(x), \ldots,~f_m(x)]$.
+  A function which codomain is multi-dimensional is called \textbf{vector-valued function}.
+  Formally, $f: \R^n \to \R^m$, where $f(x) =  \begin{pmatrix} f_1(x)\\f_2(x)\\ \vdots\\ f_m(x)\end{pmatrix} \in \R^m$.
 \end{definition}
 
-For such functions the computation of the derivative requires to specify not only the component, but also the index of the function.
+For such functions the computation of the derivative requires to specify not only the component with respect the one the derivation should be performed, but also the index of the function.
 
 \begin{definition}[Partial derivative for vector-valued functions]
-Let $f: \R^n \to \R^m$, the partial derivative of the $j$-th function of the $i$-th component is
+Let $f: \R^n \to \R^m$, the partial derivative of the $j$-th function with respect to the $i$-th component is
 \[
-   \frac{\partial f_{j}}{\partial x_i}(x) =
-   \lim_{t \to 0} \frac{f_{j}(x_1, x_2, \ldots, x_{i-1}, \ldots, x_i + t, x_{i+1}, \ldots, x_n) - f_{j}(x)}{t}
+   \frac{\partial f_{j}}{\partial x_i}(\vect{x}) =
+   \lim_{t \to 0} \frac{f_{j}(x_1, x_2, \ldots, x_{i-1}, \ldots, x_i + t, x_{i+1}, \ldots, x_n) - f_{j}(\vect{x})}{t}
 \]
 \end{definition}
 
@@ -124,12 +142,12 @@ In optimization, we like to work with Hessians, but they need to be handled, bec
 In most cases, the Hessian is symmetric, meaning that the order in which we derive is not relevant and this happens when $\exists \delta > 0$ s.t.~$\forall y \in \mathcal{B}(x, \delta)$ $\frac{\partial^2 f}{\partial x_j \partial x_i}(y)$ and  $\frac{\partial^2 f}{\partial x_i \partial x_j}(y)$ exist and $\frac{\partial^2 f}{\partial x_j \partial x_i}(y)$ and  $\frac{\partial^2 f}{\partial x_i \partial x_j}(y)$ are continuous at $x$.
 
 
-\begin{definition}[$C^2$ functions]
-  Let $f: \R^n \to \R^m$. We say that $f$ \textbf{belongs to $C^2$ class} iff $\nabla^2 f(x)$ is continuous.
+\begin{definition}[$\C{2}$ functions]
+  Let $f: \R^n \to \R^m$. We say that $f$ \textbf{belongs to $\C{2}$ class} iff $\nabla^2 f(x)$ is continuous.
 \end{definition}
 
 \begin{property}
-Let $f: \R^n \to \R^m$ such that $f \in C^2$, then
+Let $f: \R^n \to \R^m$ such that $f \in \C{2}$, then
 \begin{itemize}
   \item $\nabla^2 f(x)$ symmetric
   \item $\nabla f(x)$ continuous
@@ -200,22 +218,23 @@ The limitation is that we cannot take too be steps, because the derivative infor
 
 Moreover, we need to take into account the fact that if the model is too simple (but efficient) the approximation is not very good; on the other hand, complex and accurate approximations are computationally heavy.
 
-\subsection{Simple functions}
+\section{Simple functions}
 
-\subsubsection{Linear functions}
+\subsection{Linear functions}
 In this scenario, $f$ has the following shape: $f(x) = cx$, for a fixed $c \in \R^n$.
 
 It holds that $\nabla f(x) = c$, $\nabla^2 f(x) = 0$ and that level sets are parallel hyperplanes orthogonal to $c$ ($= [ \, 1 \,,\, 1 \, ]$ here)
 
 \begin{figure}[h]
   \centering
+  
   \subfigure[Linear function]{\includegraphics[width=0.35\textwidth]{pics/3ott/simplef1.png}\label{subfloat:3ott_1}}
   \hspace{0.5cm}
   \subfigure[Level sets]{\includegraphics[width=0.29\textwidth]{pics/3ott/simplef2.png}\label{subfloat:3ott_2}}\\
   \caption{Graphical example of linear function.}\label{fig:3ott_1}
 \end{figure}
 
-\subsubsection{Quadratic functions}
+\subsection{Quadratic functions}
 Let us move to more interesting objects, aka quadratic functions: $f(x) = \frac{1}{2} x^T Q x + qx$, where $Q \in \R^{n\times n}$, $q \in \R^n$.
 
 In \Cref{fig:3ott_2} we can see the plot of the quadratic function where 

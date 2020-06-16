@@ -1,4 +1,4 @@
-\documentclass[preview,12pt]{article}
+\documentclass[10pt,openright,twoside]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[section]{algorithm}
@@ -28,7 +28,8 @@
 
 \usepackage{eurosym}
 
-\counterwithin{figure}{section}
+\counterwithin{figure}{chapter}
+\counterwithin{equation}{chapter}
 \usepackage{fixltx2e}
 \usepackage{float}
 \usepackage{fontawesome}
@@ -37,7 +38,7 @@
 \usepackage{fontspec}
 
 \usepackage{frcursive}
-\usepackage{fullpage}
+%\usepackage{fullpage}
 
 \usepackage{graphicx}
 
@@ -61,10 +62,11 @@
 
 \usepackage{relsize}
 
-\usepackage{subfiles}
-%\usepackage{subfig}
+%\usepackage{subcaption}
 \usepackage[normal]{subfigure}
 \subfigcapskip=3pt
+\usepackage{subfiles}
+%\usepackage{subfig}
 
 \usepackage{tableof}
 \usepackage{tabto}
@@ -76,6 +78,8 @@
 
 \usepackage{verbatim}
 \usepackage{vwcol}  
+
+\usepackage{wrapfig}
 
 \usepackage{xparse} % Add support for \NewDocumentEnvironment
 %\usepackage[framemethod=tikz]{mdframed,xcolor}
@@ -121,6 +125,18 @@
   pdfborder = {0 0 0}
 }
 \captionsetup[algorithm]{font=small, labelfont=sc}
+
+\makeatletter
+\newcommand{\chapterauthor}[1]{%
+	{\parindent0pt\vspace*{-25pt}%
+		\linespread{1.1}\Large\bf \sf #1%
+		\par\nobreak\vspace*{35pt}}
+	\@afterheading%
+}
+\makeatother
+
+\addto\captionsenglish{\renewcommand{\chaptername}{Lecture}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

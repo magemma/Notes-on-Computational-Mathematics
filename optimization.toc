@@ -1,0 +1,97 @@
+\babel@toc {english}{}
+\@ifundefined {tof@begin}{\global \let \tof@begin \relax \global \let \tof@finish \@empty \global \let \tof@starttags \@gobble \global \let \tof@stoptags \@gobble \global \let \tof@tagthis \@gobble \global \let \tof@untagthis \@gobble }{}
+\tof@begin 
+\contentsline {chapter}{\numberline {1}19th of September 2018}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Introduction to machine learning problems}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Optimization}{7}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Linear estimation}{7}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Low-rank approximation}{8}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Support vector machines}{9}{subsection.1.2.3}%
+\contentsline {chapter}{\numberline {2}21st of September 2018}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Mathematical background for optimization problems}{11}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Multi-objective Optimization}{12}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}Infima, suprema and extended reals}{14}{section.2.2}%
+\contentsline {section}{\numberline {2.3}(Monotone) Sequences in $\mathds {R}$ and optimization}{15}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Vector spaces and topology}{15}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Limit of a sequence in $\mathds {R}^n$}{19}{section.2.5}%
+\contentsline {chapter}{\numberline {3}27th of September 2018}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Continuity}{24}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Derivatives}{24}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Multivariate differentiability}{25}{subsection.3.2.1}%
+\contentsline {chapter}{\numberline {4}3rd of October 2018}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Simple functions}{32}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Linear functions}{32}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Quadratic functions}{33}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}5th of October 2018 --- A. Frangioni}{34}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Unconstrained optimization}{34}{subsection.4.2.1}%
+\contentsline {subsubsection}{First order model}{34}{section*.21}%
+\contentsline {subsubsection}{Second order model}{35}{section*.22}%
+\contentsline {subsection}{\numberline {4.2.2}Convexity}{36}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}11th of October 2018 --- A. Frangioni}{41}{section.4.3}%
+\contentsline {subsubsection}{Subgradients and subdifferentials}{43}{section*.28}%
+\contentsline {section}{\numberline {4.4}17th of October 2018 --- A. Frangioni}{46}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Optimization algorithms}{46}{subsection.4.4.1}%
+\contentsline {subsubsection}{Gradient method for quadratic functions}{46}{section*.31}%
+\contentsline {section}{\numberline {4.5}19th of October 2018 --- A. Frangioni}{49}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Gradient method for quadratic functions}{49}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}MatLab implementation}{51}{subsection.4.5.2}%
+\contentsline {subsubsection}{Error}{51}{section*.33}%
+\contentsline {section}{\numberline {4.6}24th of October 2018 --- A. Frangioni}{53}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Gradient method for non quadratic functions}{53}{subsection.4.6.1}%
+\contentsline {subsubsection}{How fast does it converge?}{53}{section*.34}%
+\contentsline {subsubsection}{Exact line search, first orderd approach}{55}{section*.36}%
+\contentsline {section}{\numberline {4.7}25th of October 2018 --- A. Frangioni}{58}{section.4.7}%
+\contentsline {subsubsection}{Line search: second order approaches}{58}{section*.40}%
+\contentsline {subsubsection}{Exact line search: zeroth-order approaches}{59}{section*.41}%
+\contentsline {subsubsection}{Inexact line search: Armijo-Wolfe}{61}{section*.44}%
+\contentsline {section}{\numberline {4.8}8th of November 2018 --- A. Frangioni}{66}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Good practice of designing a project}{66}{subsection.4.8.1}%
+\contentsline {section}{\numberline {4.9}14th of November 2018 --- A. Frangioni}{67}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}Taylor method}{67}{subsection.4.9.1}%
+\contentsline {subsubsection}{Interpretation of Newton method}{70}{section*.54}%
+\contentsline {subsubsection}{Non convex case}{70}{section*.55}%
+\contentsline {section}{\numberline {4.10}16th of November 2018 --- A. Frangioni}{72}{section.4.10}%
+\contentsline {subsection}{\numberline {4.10.1}Quasi-newton methods}{72}{subsection.4.10.1}%
+\contentsline {subsubsection}{Davidson-Fletcher-Powell}{73}{section*.56}%
+\contentsline {subsubsection}{Broyden-Fletcher-Goldfarb-Shanno}{74}{section*.57}%
+\contentsline {subsubsection}{Poorman's approach}{74}{section*.58}%
+\contentsline {subsection}{\numberline {4.10.2}Conjugate gradient method}{74}{subsection.4.10.2}%
+\contentsline {section}{\numberline {4.11}22nd of November 2018 --- A. Frangioni}{77}{section.4.11}%
+\contentsline {subsection}{\numberline {4.11.1}Deflected gradient methods}{77}{subsection.4.11.1}%
+\contentsline {subsubsection}{Heavy ball gradient method}{77}{section*.60}%
+\contentsline {subsubsection}{Accelerated gradient}{78}{section*.62}%
+\contentsline {subsection}{\numberline {4.11.2}Incremental gradient methods}{79}{subsection.4.11.2}%
+\contentsline {subsection}{\numberline {4.11.3}Subgradient methods}{80}{subsection.4.11.3}%
+\contentsline {section}{\numberline {4.12}28th of November 2018 --- A. Frangioni}{83}{section.4.12}%
+\contentsline {subsection}{\numberline {4.12.1}Subgradient methods}{83}{subsection.4.12.1}%
+\contentsline {subsubsection}{Target level stepsize}{85}{section*.66}%
+\contentsline {subsection}{\numberline {4.12.2}Deflected subgradient}{87}{subsection.4.12.2}%
+\contentsline {subsection}{\numberline {4.12.3}Smoothed gradient methods}{87}{subsection.4.12.3}%
+\contentsline {subsection}{\numberline {4.12.4}Cutting-plane algorithm}{89}{subsection.4.12.4}%
+\contentsline {subsection}{\numberline {4.12.5}Bundle methods}{90}{subsection.4.12.5}%
+\contentsline {section}{\numberline {4.13}30th of November 2018 --- A. Frangioni}{92}{section.4.13}%
+\contentsline {subsection}{\numberline {4.13.1}Constrained optimization}{92}{subsection.4.13.1}%
+\contentsline {subsubsection}{Linear equality constraints}{92}{section*.74}%
+\contentsline {subsubsection}{Background for linear inequality contstraints}{94}{section*.78}%
+\contentsline {section}{\numberline {4.14}6th of December 2018 --- A. Frangioni}{100}{section.4.14}%
+\contentsline {subsection}{\numberline {4.14.1}Duality}{100}{subsection.4.14.1}%
+\contentsline {subsection}{\numberline {4.14.2}Lagrangian duality}{101}{subsection.4.14.2}%
+\contentsline {subsection}{\numberline {4.14.3}Specialized dual}{103}{subsection.4.14.3}%
+\contentsline {subsubsection}{Linead programs}{103}{section*.85}%
+\contentsline {subsubsection}{Quadratic programs}{103}{section*.86}%
+\contentsline {subsubsection}{Conic program}{103}{section*.87}%
+\contentsline {subsection}{\numberline {4.14.4}Fenchel's duality}{105}{subsection.4.14.4}%
+\contentsline {section}{\numberline {4.15}12th of December 2018 --- A. Frangioni}{106}{section.4.15}%
+\contentsline {subsection}{\numberline {4.15.1}Quadratic problem with linear equality constraints}{106}{subsection.4.15.1}%
+\contentsline {subsection}{\numberline {4.15.2}Inequality constrained problems}{107}{subsection.4.15.2}%
+\contentsline {subsubsection}{Projected gradient method}{108}{section*.89}%
+\contentsline {subsubsection}{Projected gradient method with box constraints}{111}{section*.91}%
+\contentsline {subsubsection}{Active-set method for quadratic programs}{112}{section*.92}%
+\contentsline {subsubsection}{Frank-Wolfe method}{113}{section*.93}%
+\contentsline {section}{\numberline {4.16}14th of December 2018 --- A. Frangioni}{114}{section.4.16}%
+\contentsline {subsection}{\numberline {4.16.1}Dual methods for linear constrained optimization}{114}{subsection.4.16.1}%
+\contentsline {subsubsection}{Separable problems and partial dual}{114}{section*.94}%
+\contentsline {subsection}{\numberline {4.16.2}Primal/dual methods or barrier methods}{115}{subsection.4.16.2}%
+\contentsline {subsubsection}{Barrier function and central path}{115}{section*.95}%
+\contentsline {subsection}{\numberline {4.16.3}Primal-dual interior point method}{117}{subsection.4.16.3}%
+\tof@finish 
