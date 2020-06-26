@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{  function}[x, status] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{SDQ}\PYG{p}{(}Q, q, x, fStar, eps, MaxIter\PYG{p}{)}
+\end{Verbatim}

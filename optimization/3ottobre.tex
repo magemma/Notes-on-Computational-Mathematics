@@ -1,8 +1,3 @@
-%chktex-file 36
-%chktex-file 23
-%chktex-file 10
-%chktex-file 17
-%chktex-file 9
 \documentclass[computationalMathematics.tex]{subfiles}
 
 \begin{document}
@@ -20,34 +15,35 @@ Compute the partial derivatives and the directional derivatives in the two direc
 	\item $\frac{\partial f}{\partial y} = x^2 e^y $
 	\item $\parder{f}{\vect{d_1}} = \lim\limits_{t \to 0} \frac{f(x + t \cdot 0, y + t \cdot 1)}{t} =  \lim\limits_{t \to 0} \frac{f(x, y+ t)}{t}$.
 	An attentive reader may notice that the directional derivative in direction $\vect{d_1}$ is equivalent to the derivative on the second component.
-	\item $\parder{f}{\vect{d_2}} = \lim\limits_{t \to 0} \frac{f(x + t \cdot 1, y + t \cdot 0)}{t} =  \lim\limits_{t \to 0} \frac{f(x + t, y)}{t}$. Conversely with respect to what stated before, the directional derivative of $f$ along the direction $\vect{d_2}$ is equivalent to the partial derivative w.r.t the first component.
+	\item $\parder{f}{\vect{d_2}} = \lim\limits_{t \to 0} \frac{f(x + t \cdot 1, y + t \cdot 0)}{t} =  \lim\limits_{t \to 0} \frac{f(x + t, y)}{t}$. Conversely, with respect to what stated before, the directional derivative of $f$ along the direction $\vect{d_2}$ is equivalent to the partial derivative w.r.t the first component.
 \end{itemize}
 
 Let us compute the scalar product between the gradient and the direction $\vect{d_1}$:
 
 \[
-\frac{\partial f}{\partial d} = \ps{\begin{pmatrix}2x e^y\\ x^2 e^y\end{pmatrix}}{\begin{pmatrix} 0\\ 1 \end{pmatrix}} = 
+\frac{\partial f}{\partial \vect{d_1}} = \ps{\begin{pmatrix}2x e^y\\ x^2 e^y\end{pmatrix}}{\begin{pmatrix} 0\\ 1 \end{pmatrix}} =  \begin{pmatrix}
+2x e^y \cdot 0\\ x^2 e^y \cdot 1 \end{pmatrix} = \begin{pmatrix}
+0\\ x^2 e^y \end{pmatrix}
 \]
 
 \end{example}
 
-The intuition of this example is formalized in the following
+\noindent The intuition of this example is formalized in the following
 
 \begin{proposition}
 Let $f: \R^n \to \R$. 
-The partial derivative on a certain direction $\vect{d} \in \R^n$ is the scalar product between the gradient of the function and the direction, formally
+The directional derivative along a certain direction $\vect{d} \in \R^n$ can be computed as the scalar product between the gradient of the function and the direction, formally
 \[
-\frac{\partial f}{\partial d} = \ps{\nabla f}{ \vect{d}}
+\frac{\partial f}{\partial \vect{d}} = \ps{\nabla f}{ \vect{d}}
 \]
 \end{proposition}
-\todo[inline]{Rivedere prima e seconda componente + parallelo con $e_1, \ldots, e_n$}
 
 \begin{definition}[Vector-valued function]
   A function which codomain is multi-dimensional is called \textbf{vector-valued function}.
-  Formally, $f: \R^n \to \R^m$, where $f(x) =  \begin{pmatrix} f_1(x)\\f_2(x)\\ \vdots\\ f_m(x)\end{pmatrix} \in \R^m$.
+  Formally, $f: \R^n \to \R^m$, where $f(\vect{x}) =  \begin{pmatrix} f_1(\vect{x})\\f_2(\vect{x})\\ \vdots\\ f_m(\vect{x})\end{pmatrix} \in \R^m$.
 \end{definition}
 
-For such functions the computation of the derivative requires to specify not only the component with respect the one the derivation should be performed, but also the index of the function.
+For such functions the computation of the derivative requires to specify not only the component with respect to the one the derivation should be performed, but also the index of the function.
 
 \begin{definition}[Partial derivative for vector-valued functions]
 Let $f: \R^n \to \R^m$, the partial derivative of the $j$-th function with respect to the $i$-th component is
@@ -55,12 +51,14 @@ Let $f: \R^n \to \R^m$, the partial derivative of the $j$-th function with respe
    \frac{\partial f_{j}}{\partial x_i}(\vect{x}) =
    \lim_{t \to 0} \frac{f_{j}(x_1, x_2, \ldots, x_{i-1}, \ldots, x_i + t, x_{i+1}, \ldots, x_n) - f_{j}(\vect{x})}{t}
 \]
+where $t \in \R$.
 \end{definition}
 
 \begin{definition}[Jacobian]
-  Let $f: \R^n \to \R^m$ we call \textbf{Jacobian} the matrix of all its first-order partial derivatives.
+  Let $f: \R^n \to \R^m$ be a vector-valued function. 
+  We call \textbf{Jacobian} the matrix of all its first-order partial derivatives.
 \[
-  Jf(x) =
+  Jf(\vect{x}) =
   \begin{pmatrix}
     \frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n}\\
     \vdots & \ddots & \vdots\\
@@ -68,21 +66,19 @@ Let $f: \R^n \to \R^m$, the partial derivative of the $j$-th function with respe
   \end{pmatrix}
   =
   \begin{pmatrix}
-    \nabla f_1(x)\\
-    \nabla f_2(x)\\
+    \nabla f_1(\vect{x})\\
+    \nabla f_2(\vect{x})\\
     \vdots\\
-    \nabla f_m(x)
+    \nabla f_m(\vect{x})
   \end{pmatrix}
 \]
 \end{definition}
 
-Notice that when the number of variables increases the first derivative is a vector of numbers, the second derivative contains $n^2$ numbers.
 
 \begin{example}
-Let $f:\R^2 \to \R$ such that $f(x, y) = x^2 e^y$. The gradient was computed above, resulting in
-  
+Let $f:\R^2 \to \R$ such that $f(x, y) = x^2 e^y$ as before, where the gradient was
 \[
-  \nabla f(x)
+  \nabla f(\vect{x})
   =
   \begin{pmatrix}
     \frac{\partial f}{\partial x}\\
@@ -97,7 +93,7 @@ Let $f:\R^2 \to \R$ such that $f(x, y) = x^2 e^y$. The gradient was computed abo
 
 Let us compute the second derivative of this function:
 \[
-  \nabla^2 f(x)
+  \nabla^2 f(\vect{x})
   =
   \begin{pmatrix}
     \frac{\partial^2 f}{\partial x \partial x} & \frac{\partial^2 f}{\partial y \partial x}\\
@@ -113,33 +109,35 @@ Let us compute the second derivative of this function:
 \]
 \end{example}
 
+\noindent The second order derivative of a vector function is a matrix, defined as 
+
 \begin{definition}[Hessian]
-  Let $f: \R^n \to \R^m$, we call \textbf{Hessian} of $f$
+  Let $f: \R^n \to \R$, we call \textbf{Hessian} of $f$
   \[
-  \nabla^2 f(x) := J \nabla f(x) =
+  \nabla^2 f(\vect{x}) := J \nabla f(\vect{x}) =
   \begin{pmatrix}
-   \frac{\partial^2 f}{\partial x_1^2}(x) &
-   \frac{\partial^2 f}{\partial x_2 \partial x_1}(x) & \cdots &
-   \frac{\partial^2 f}{\partial x_n \partial x_1}(x)\\
+   \frac{\partial^2 f}{\partial x_1^2}(\vect{x}) &
+   \frac{\partial^2 f}{\partial x_2 \partial x_1}(\vect{x}) & \cdots &
+   \frac{\partial^2 f}{\partial x_n \partial x_1}(\vect{x})\\
    %
-   \frac{\partial^2 f}{\partial x_1 \partial x_2}(x) &
-   \frac{\partial^2 f}{\partial x_2^2}(x) & \cdots &
-   \frac{\partial^2 f}{\partial x_n \partial x_2}(x) \\
+   \frac{\partial^2 f}{\partial x_1 \partial x_2}(\vect{x}) &
+   \frac{\partial^2 f}{\partial x_2^2}(\vect{x}) & \cdots &
+   \frac{\partial^2 f}{\partial x_n \partial x_2}(\vect{x}) \\
    %
    \vdots & \vdots & \ddots & \vdots \\
    %
-   \frac{\partial^2 f}{\partial x_1 \partial x_n}(x) &
-   \frac{\partial^2 f}{\partial x_2 \partial x_n}(x) & \cdots &
-   \frac{\partial^2 f}{\partial x_n^2}(x)
+   \frac{\partial^2 f}{\partial x_1 \partial x_n}(\vect{x}) &
+   \frac{\partial^2 f}{\partial x_2 \partial x_n}(\vect{x}) & \cdots &
+   \frac{\partial^2 f}{\partial x_n^2}(\vect{x})
   \end{pmatrix}
 \]
 \end{definition}
 
-The size of the matrix grows very rapidly with the number of derivatives that we make.
+\noindent The size of the matrix grows very rapidly with the number of derivatives that we make.
 
-In optimization, we like to work with Hessians, but they need to be handled, because they are very large, hence a trade off is needed.
+In optimization, handling Hessians is a crucial task, because such matrices are very large hence unfeasible most of the times.
 
-In most cases, the Hessian is symmetric, meaning that the order in which we derive is not relevant and this happens when $\exists \delta > 0$ s.t.~$\forall y \in \mathcal{B}(x, \delta)$ $\frac{\partial^2 f}{\partial x_j \partial x_i}(y)$ and  $\frac{\partial^2 f}{\partial x_i \partial x_j}(y)$ exist and $\frac{\partial^2 f}{\partial x_j \partial x_i}(y)$ and  $\frac{\partial^2 f}{\partial x_i \partial x_j}(y)$ are continuous at $x$.
+In most cases, the Hessian is symmetric, meaning that the order in which we derive is not relevant and this happens when $\exists \delta > 0$ s.t. $\forall \vect{x}' \in \mathcal{B}(x, \delta)$ $\frac{\partial^2 f}{\partial x_j \partial x_i}(\vect{x}')$ and  $\frac{\partial^2 f}{\partial x_i \partial x_j}(\vect{x}')$ exist and $\frac{\partial^2 f}{\partial x_j \partial x_i}(\vect{x}')$ and  $\frac{\partial^2 f}{\partial x_i \partial x_j}(\vect{x}')$ are continuous at $\vect{x}$.
 
 
 \begin{definition}[$\C{2}$ functions]
@@ -147,83 +145,102 @@ In most cases, the Hessian is symmetric, meaning that the order in which we deri
 \end{definition}
 
 \begin{property}
-Let $f: \R^n \to \R^m$ such that $f \in \C{2}$, then
-\begin{itemize}
-  \item $\nabla^2 f(x)$ symmetric
-  \item $\nabla f(x)$ continuous
-\end{itemize}
+Let $f: \R^n \to \R^m$ such that $f \in \C{2}$, then the Hessian is \emph{symmetric} and the gradient is \emph{continuous}.
 \end{property}
 
+\noindent We are now interested in providing some approximations to a generic function $f$.
+Such approximations are useful tools to have ah hint on where the function moves along a decreasing direction, but the information is accurate only locally.
+
 \begin{definition}[First order Taylor model]
-Let $f : \R^n \to \R \in C^1$ in some $\mathcal{B}(x, \delta)$, we define the \textbf{first-order Taylor's formula}  $\forall y \in \mathcal{B}(x, \delta)~\exists ~ \alpha \in (0, 1)$ s.t.
+Let $f : \R^n \to \R \in C^1$, we define the \textbf{first-order Taylor's formula} as a linear approximation of the function $f$ in a neighbourhood of $\vect{x}$.
+
+Formally,  for a given ball $\mathcal{B}(\vect{x}, \delta)$, $\forall \vect{x}' \in \mathcal{B}(\vect{x}, \delta)~\exists ~ \alpha \in (0, 1)$ s.t.
 \[
-  f(y) = \ps{\nabla f(\alpha x + (1 - \alpha) y}) {y - x} + f(x)
+  f(\vect{x}') = \ps{\nabla f(\alpha \vect{x}+ (1 - \alpha) \vect{x}')} {\vect{x}' - \vect{x}} + f(\vect{x})
 \]
-Intuitively, it is a linear approximation of the function $f$ in a neighbourhood of $x$. 
 
-  Equivalently, we can write the so-called \textbf{remainder version of first-order Taylor formula} as
+Equivalently, we can write the so-called \textbf{remainder version of first-order Taylor formula} as
 
 \[
-  f(y) = \ps{\nabla f(x)}{y - x} + f(x)+ R(y - x)
+  f(\vect{x}') = \ps{\nabla f(\vect{x})}{\vect{x}' - \vect{x}} + f(\vect{x})+ R(\vect{x}' - \vect{x})
 \]
   where $\lim\limits_{h \to 0} \frac{R(h)}{\norm{h}} = 0$, in other words the error that we make is at most quadratic.
 \end{definition}
 
-Notice that this is a completely local thing, the furthest we get from $x$ the mor distant the function and the model are.
-
-\begin{example}
-Let $f:\R^2 \to \R$ such that $f(x, y) = x^2 e^y$. The gradient was computed above and now we have $f(1, 0) = 1$, $\nabla f(1, 0) = \begin{pmatrix}2\\1\end{pmatrix}$.
-
-The linear model has the following shape $L_{(1, 0)} (x, y) = 1 + \ps{\begin{pmatrix}2\\ 1\end{pmatrix}}{\begin{pmatrix} x-1\\ y-0\end{pmatrix}} = -1 + 2x + y$.
-
-And the quadratic model is 
-  \begin{equation}
-    \begin{split}
-      Q_{[1, 0]} (x, y) &= -1 + 2x + y + \frac{1}{2} \cdot \begin{pmatrix}x-1 & y-0\end{pmatrix} \cdot \begin{pmatrix} 2 & 2\\ 2 & 1 \end{pmatrix} \cdot \begin{pmatrix} x-1 \\ y-0 \end{pmatrix}\\ 
-      &= -1 +2x + y + \frac{1}{2} \cdot \begin{pmatrix} 2x -2 +2y, & 2x -2 +y \end{pmatrix} \cdot \begin{pmatrix} x-1\\ y-0\end{pmatrix}\\
-      &= -1 + 2x + y + \frac{1}{2} \cdot (2x -2 + 2y) \cdot (x-1)  + (2x -x +y) \cdot y
-    \end{split}
-    \end{equation}
-\end{example}
+\noindent Notice that the Taylor's approximation works \emph{only locally}: the furthest we get from $\vect{x}$ the more distant the function and the model are.
 
 \begin{definition}[Second order Taylor model]
-Let $f : \R^n \to \R \in C^1$ in some $\mathcal{B}(x, \delta)$, we define the \textbf{second-order Taylor's formula}  
+Let $f : \R^n \to \R \in C^1$, we define the \textbf{second-order Taylor's formula}  as a quadratic approximation of the function $f$ in a neighbourhood of $\vect{x}$.
+Formally, given a ball $\mathcal{B}(\vect{x}, \delta)$, $\forall \vect{x}' \in \mathcal{B}(\vect{x}, \delta)$
 \[
-  f(y) = L_x(y) + \frac{1}{2} \tr{(y - x)} \nabla^2 f(x) (y - x) + R(y - x)
+  f(\vect{x}') = L_x(\vect{x}') + \frac{1}{2} \tr{(\vect{x}' - \vect{x})} \nabla^2 f(\vect{x}) (\vect{x}' - \vect{x}) + R(\vect{x}' - \vect{x})
 \]
-  with $\lim\limits_{h \to 0} R(h) \norm{h}^2 = 0 \equiv$ the error is $O(\norm{y - x}^3) \equiv$ the remainder vanishes at least cubically.
+  with $\lim\limits_{h \to 0} R(h) \norm{h}^2 = 0$ or, equivalently, the remainder vanishes at least cubically, or the error is $O(\norm{\vect{x}' - \vect{x}}^3)$ .
 \end{definition}
 
-Notice that the $k$-th order Taylor expansion with $k$-th order derivatives, but $\nabla^k f(x)$ tensor of order $k \equiv n^k$ numbers.
-Often $k > 2$ is unfeasible, so this approach cannot be followed.
+\begin{example}
+	Let $f:\R^2 \to \R$ such that $f(x, y) = x^2 e^y$, as above and $\nabla f(\vect{x})=\begin{pmatrix}
+	2x e^y\\
+	x^2 e^y
+	\end{pmatrix}$ and $\nabla^2 f(\vect{x}) =	\begin{pmatrix}
+	2 e^y & 2x e^y\\
+	2x e^y & x^2 e^y\\
+	\end{pmatrix}$.
+	In $\vect{x} = \begin{pmatrix}1\\0\end{pmatrix} \in \R^2$ we have $f(\vect{x}) = 1$ and $\nabla f(\vect{x}) = \begin{pmatrix}2\\1\end{pmatrix}$.
+	
+	The linear model has the following shape 
+	\[
+	L_{(1, 0)} (x, y) = 1\ps{\begin{pmatrix}2\\ 1\end{pmatrix}}{\begin{pmatrix} x-1\\ y-0\end{pmatrix}} + 1= 2x -  2 + y + 1 = 2x + y -1
+	\]
+	
+	And the quadratic model is 
+	\begin{equation}
+	\begin{split}
+	Q_{[1, 0]} (x, y) &= 2x + y -1 + \frac{1}{2} \cdot \begin{pmatrix}x-1, & y-0\end{pmatrix} \cdot \begin{pmatrix} 2 & 2\\ 2 & 1 \end{pmatrix} \cdot \begin{pmatrix} x-1 \\ y-0 \end{pmatrix}\\ 
+	&= 2x + y -1 + \frac{1}{2} \cdot \begin{pmatrix} 2x -2 +2y, & 2x -2 +y \end{pmatrix} \cdot \begin{pmatrix} x-1\\ y-0\end{pmatrix}\\
+	&= 2x + y -1 + \frac{1}{2} \cdot \biggl ( (2x -2 + 2y) \cdot (x-1)  + (2x -2 +y) \cdot y \biggr )\\
+	&= 2x + y -1 + \frac{1}{2} \cdot (2 x^2 - 2x + 2xy -2x +2 -2y +2xy -2y +y^2)\\
+	&= 2x +y -1 + \frac{1}{2} \cdot (2 x^2 -4x + 4xy +2 -4y + y^2)\\
+	&= 2x +y -1 + x^2 -2x + 2xy +1 -2y + \frac{1}{2}y^2)\\
+	&= x^2 + 2xy -y + \frac{1}{2}y^2\\	
+	\end{split}
+	\end{equation}
+\end{example}
+
+The Taylor model can be extended to the more general $k$-th order.
+Such an expansion requires the computation of the  $k$-th order derivatives, but $\nabla^k f(\vect{x})$ is a tensor of order $k \equiv n^k$ numbers.
+For $k > 2$ this approach is practically unfeasible.
+
+As it happens often in computer science, it is important to find a good trade-off between the complexity of the model and the accuracy of the approximation: if the model is too simple (but efficient) the approximation is not very good; conversely, complex and accurate approximations are computationally heavy.
 
 \begin{proposition}
-  Let $f : \R^n \to \R \in C^1$. If $f$ Lipschitz continuous on $S$, then $\sup \{\norm{\nabla f(x)}~:~x \in S\} \leq L$ ($\iff$, and $= L$ if $S$ convex).
+  Let $f : \R^n \to \R \in \C{1}$.
+  If $f$ is Lipschitz continuous on $S \in \R^n$, then in such set the norm of the gradient is bounded by the Lipshitz constant.
+  
+  Formally, $\sup \{\norm{\nabla f(\vect{x})}~:~\vect{x} \in S\} \leq L$.
+  If $S$ convex  $\sup \{\norm{\nabla f(\vect{x})}~:~\vect{x} \in S\} = L$.
 \end{proposition}
 
 Moreover, we can prove
 
 \begin{proposition}
-Let $f : \R^n \to \R \in C^1$. $f$ is Lipschitz continuous on $S$ iff $\nabla^2 f$ is bounded on $S$.
-
-Equivalently, iff $\lambda_1(\nabla^2 f)$ is bounded.
+Let $f : \R^n \to \R \in \C{1}$. $f$ is Lipschitz continuous on $S \in \R^n$ iff its Hessian in bounded on $S$.
+Formally, $\sup \{\norm{\nabla^2 f(\vect{x})}~:~\vect{x} \in S\} \leq L$.
 \end{proposition}
 
 \begin{proposition}
-  Let $f : \R^n \to \R \in C^1$. If $\nabla f$ is Lipschitz continuous, then $f(y) \leq L_x(y) + \frac{L}{2} \norm{y - x}^2$.
+  Let $f : \R^n \to \R \in \C{1}$.
+  If the gradient of $f$ is Lipschitz continuous in all points $\vect{x}' \in \R^n$ that are close to $\vect{x} \in \R^n$, then $f(\vect{x}') \leq L_x(\vect{x}') + \frac{L}{2} \norm{\vect{x}' - \vect{x}}^2$.
 \end{proposition}
 
-The approximations are good because they give an hint about where the function is decreasing.
-The limitation is that we cannot take too be steps, because the derivative information is accurate only locally.
-
-Moreover, we need to take into account the fact that if the model is too simple (but efficient) the approximation is not very good; on the other hand, complex and accurate approximations are computationally heavy.
-
 \section{Simple functions}
+In the rest of the course we will deal mostly with some linear and quadratic approximations of the objective function.
+In this section, we introduce a couple of examples and considerations on such functions.
 
 \subsection{Linear functions}
-In this scenario, $f$ has the following shape: $f(x) = cx$, for a fixed $c \in \R^n$.
+In this scenario, $f: \R^n \to \R$ has the following shape: $f(\vect{x}) = \tr{\vect{c}}\vect{x}$, for a fixed $\vect{c} \in \R^n$.
 
-It holds that $\nabla f(x) = c$, $\nabla^2 f(x) = 0$ and that level sets are parallel hyperplanes orthogonal to $c$ ($= [ \, 1 \,,\, 1 \, ]$ here)
+It holds that $\nabla f(\vect{x}) = \vect{c}$, $\nabla^2 f(\vect{x}) = 0$ and that level sets are parallel hyperplanes orthogonal to $\vect{c}$.
 
 \begin{figure}[h]
   \centering
@@ -235,7 +252,7 @@ It holds that $\nabla f(x) = c$, $\nabla^2 f(x) = 0$ and that level sets are par
 \end{figure}
 
 \subsection{Quadratic functions}
-Let us move to more interesting objects, aka quadratic functions: $f(x) = \frac{1}{2} x^T Q x + qx$, where $Q \in \R^{n\times n}$, $q \in \R^n$.
+A quadratic function $f:\R^n \to \R$ is formalized as $f(\vect{x}) = \frac{1}{2} \tr{\vect{x}} Q \vect{x} + \vect{q}\vect{x}$, where $Q \in \mathcal{M}(n, \R)$, $\tr{\vect{q}} \in \R^n$.
 
 In \Cref{fig:3ott_2} we can see the plot of the quadratic function where 
 \[
@@ -251,37 +268,34 @@ In \Cref{fig:3ott_2} we can see the plot of the quadratic function where
   \caption{Graphical example of a quadratic function.}\label{fig:3ott_2}
 \end{figure}
 
-In quadratic functions the gradient is a linear function on $x$ ($\nabla f(x) = Q x + q$), while the Hessian is just $Q$ ($\nabla^2 f(x) = Q$) and the level sets are ellipsoids.
+In quadratic functions the gradient is a linear function on $\vect{x}$ $\nabla f(\vect{x}) = Q \vect{x} + \vect{q}$, while the Hessian is just $Q$ and the level sets are ellipsoids.
 Sometimes such ellipses can degenerate to lines, in the case that one of the axis has become $+\infty$.
 
 \begin{proposition}
-  We can always assume that if $Q$ is symmetric, then it has spectral decomposition.
+  Let $f:\R^n \to \R$ be a quadratic function with parameters $Q \in \mathcal{M}(n, \R)$ and $\tr{\vect{q}} \in \R^n$.
+  If $Q$ is symmetric, then it has spectral decomposition.
 \end{proposition}
 
 \begin{proof}
-$x^T Q x = \frac{[(x^T Q x) + {(x^T Q x)}^T]}{2} = x^T [\frac{(Q + Q^T )}{2}] x = H \Lambda H^T$
+$\vect{x}^T Q \vect{x} = \frac{[(\vect{x}^T Q \vect{x}) + {(\vect{x}^T Q \vect{x})}^T]}{2} = \vect{x}^T [\frac{(Q + Q^T )}{2}] \vect{x} = H \Lambda H^T$
 \end{proof}
 
-We will almost always assume that $Q$ is symmetric.
-
-Let us consider the ``easy case'', where $Q$ is non singular (aka $\lambda_i \neq 0 \forall i$).
-
-In this case,  $\bar{x} = - \inv{Q} q$, where $\bar{x}$ is called the center of the ellipsoid.
-Let us assume that we moved the origin in such $\bar{x}$, so $y = x - \bar{x}$ and $f_{\bar{x}}(y) = \frac{1}{2} y^T Q y$.
+\noindent In the rest of the course we will assume for simplicity that $Q$ is symmetric.
+Another ``lucky case'' is when $Q$ is non singular (i.e. all its eigenvalues are not $0$): in this case,  $\bar{\vect{x}} = - \inv{Q} \vect{q}$, where $\bar{\vect{x}}$ is called the center of the ellipsoid.
+Let us assume that we moved the origin in such $\bar{\vect{x}}$, so $\vect{x}' = \vect{x} - \bar{\vect{x}}$ and $f_{\bar{\vect{x}}}(\vect{x}') = \frac{1}{2} \tr{\vect{x}'} Q \vect{x}'$.
 
 \begin{proposition}
-Along $H_i$: $f(\alpha) = f_{\bar{x}}( \alpha H_i ) = \alpha^2 \lambda_i$
+Along $H_i$: $f(\alpha) = f_{\bar{\vect{x}}}( \alpha H_i ) = \alpha^2 \lambda_i$
 \end{proposition}
 
-Moreover, the size of the axes of the level curves is proportional to $\sqrt{1 / \lambda_i}$.
-If the eigenvalues are $0$ then the axes get very long (but we would be in the case of $Q$ singular), on the other hand, if $\lambda_i < 0$, we no longer have axes.
+\noindent Moreover, the size of the axes of the level curves is proportional to $\sqrt{1 / \lambda_i}$, where $\lambda_i$ are the eigenvalues.
+If the eigenvalues are close to $0$, then the axes get very long, while when they are negative, we no longer have axes.
+
+This is formalized in
 
 \begin{proposition}
-We can state the following:
-\begin{itemize}
-  \item $\forall i \, \lambda_i > 0 \equiv Q \succ 0 \Longrightarrow \bar{x}$ minimum of $f$;
-  \item $\exists i \lambda_i < 0 \Longrightarrow f$ unbounded below.
-\end{itemize}
+	Let $f:\R^n \to \R$ such that $f(\vect{x}) = \frac{1}{2} \tr{\vect{x}} Q \vect{x} + \vect{q} \vect{x}$.
+	If $Q$ is positive definite $\bar{\vect{x}} = - \inv{Q} \vect{q}$ is the minimum of $f$, while if $Q$ is \emph{indefinite} (i.e. $\exists \lambda_i <0$) $f$ is unbounded below.
 \end{proposition}
 
 \end{document}
