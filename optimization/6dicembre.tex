@@ -6,13 +6,12 @@
 %chktex-file 1
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
-
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{6th of December 2018 --- A. Frangioni}
+\chapter{6th of December 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Duality}
+\section{Duality}
 \recap{
   The KKT-G condition:
   \[
@@ -68,7 +67,7 @@ $(x,~\lambda,~\mu)$ satisfies (KKT) $\wedge~\nabla^2_{xx} L(x,~\lambda,~\mu) \su
 
 We would like to say something more about $\lambda$ and $\mu$. Until now we considered the Lagrangian as a function of $x$, but what if we consider the Lagrangian in terms of $\lambda$ and $\mu$?
 
-\subsection{Lagrangian duality}
+\section{Lagrangian duality}
 
 \begin{definition}[Lagrangian relaxation]
   Let us consider the Lagrangian function. We term \textbf{Lagrangian relaxation} the function where we fixed $\lambda$ and $\mu$ and minimize on $x$:
@@ -177,9 +176,9 @@ At this point the Lagrangian dual has a single solution and the optimum of the L
 
 We only translated a minimum problem on convex functions to another minimum problem on other convex functions. We will see soon that in some cases this approach is advantageous in others it is not.
 
-\subsection{Specialized dual}
+\section{Specialized dual}
 
-\subsubsection{Linead programs}
+\subsection{Linead programs}
 (P) \;\; $\min \{ \, cx \,:\, Ax \geq b \, \}$
 
 Lagrangian function: $L(x, \lambda) = cx + \lambda (b - Ax) = \lambda b + (c - \lambda A) x$
@@ -201,7 +200,7 @@ $(D) \;\; \max\ \{ \, \psi(\, \lambda \, ) \,:\, \lambda \geq 0 \, \}
 
 Since the lagrangian is far from having an unique optimal solution  the dual does not have a unique maximum so the do not match usually.
 
-\subsubsection{Quadratic programs}
+\subsection{Quadratic programs}
 
 Notice that thwe quadratic case is simpler than the linear case.
 
@@ -223,7 +222,7 @@ $\min \big\{ \, \frac{1}{2} x^T Q x + q x \,:\, Ax \geq b \, \big\}$,
         (D) \; $\max \big\{ \; \lambda b - \frac{1}{2} v^T Q^{-1} v \,:~\lambda A - v = q \,,\, \lambda \geq 0 \; \big\}$
         strong duality $\equiv v(P) = v(D)$ (almost) always holds
 
-\subsubsection{Conic program}
+\subsection{Conic program}
 We can do duals of things that are not quadratic programs. Sometimes we want to have non linear things to be able to draw different shapes.
 
 \begin{definition}[Conic program]
@@ -284,7 +283,7 @@ $\min \{cx ~:~ \sum\limits_{i=1}^{n} x_i A^i \succeq B\}$, where $A^i, B \in M(k
 
 There is an even mroe general form of duality, that we are going to introduce next.
 
-\subsection{Fenchel's duality}
+\section{Fenchel's duality}
 
 \begin{definition}[Fenchel's conjugate]
 We denote \textbf{Fenchel's conjugate} of $f$ $f^*(z) = sup_x \{zx - f(x)\}$.
@@ -301,5 +300,3 @@ The following functions are such that $f^*$ can be computed easily:
 \begin{proposition}
   If we are minimizing the sum of two convex functions (P) $\min \{ f(x) + g(x)\}$, this problem is the same of maximizing the sum of ``almost'' the two conjugates: (D) $- \min \{f^*(z) + g^*(-z)\}$.
 \end{proposition}
-
-\end{document}

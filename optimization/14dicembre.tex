@@ -6,16 +6,16 @@
 %chktex-file 1
 %chktex-file 39
 \documentclass[computationalMathematics.tex]{subfiles}
-\begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{14th of December 2018 --- A. Frangioni}
+\chapter{14th of December 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
 In the previous lecture we addressed the problem of linear constrained optimization.
 Our first approach was to deal very little with constraints (projected gradient method), after a few improvements we took all of them and modify the function (Frank-Wolfe method).
 
-\subsection{Dual methods for linear constrained optimization}
+\section{Dual methods for linear constrained optimization}
 In this class of methods constraints are first class citizens.
 
 Let us be given the following optimization problem:
@@ -50,7 +50,7 @@ In this method the degenerate case (more than one constraint active at a time) i
 If the quadratic function is convex we may use quasi Newton method.
 Othewise the global optimality is not guaranteed and may be used if we accept not to be able to solve the original problem, but only to find a lower bound.
 
-\subsubsection{Separable problems and partial dual}
+\subsection{Separable problems and partial dual}
 
 Let us assume that our constraints are separable, which means that it is not mandatory to work with all of them, but they can be splitted into constraints of groups of variables.
 
@@ -71,13 +71,13 @@ Then, if the variable is above the upperbound it gets decreased to the upper bou
 
 This way we get an upperbound for the function to be minimized.
 
-\subsection{Primal/dual methods or barrier methods}
+\section{Primal/dual methods or barrier methods}
 
 This kind of methods are designed to overcome the cons of dual approaches, namely the fact that $\psi$ does not have the Hessian (and this creates problems to quasi Newton method) and the fact that $x$ is not feasible until the end.
 
 At the same time this methods keep the unconstrained property of the Lagrangian dual.
 
-\subsubsection{Barrier function and central path}
+\subsection{Barrier function and central path}
 
 The rationale behind this algorithm is to minimize a function which penalizes the value of the original function when the solution is getting closer and closer to the boundaries of the feasible set.
 
@@ -203,7 +203,7 @@ Notice that $u=
 \]
 The Newton method can be applied if we discard the non-linear part (written in red), pretending it does not exist. Notice that vector $u$ is the vector of all $1$s.
 
-\subsection{Primal-dual interior point method}
+\section{Primal-dual interior point method}
 This method is based on the observation that we can solve the dual problem
 \[
 (D)~~~ \max \{- \lambda b - \frac{1}{2} x^T Q x~:~Q x + \lambda A  = - q,~\lambda \geq 0\}
@@ -322,4 +322,3 @@ Let us assume that we also have a bunch of box contraints, hence our problem bec
 \]
 
 In this special case, things simplify a lot.
-  \end{document}

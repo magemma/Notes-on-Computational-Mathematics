@@ -1,9 +1,7 @@
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
-
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\chapter{3rd of October 2018}
+\chapter{3rd of October 2018}\label{chap:3ott}
 \chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 \begin{example}[On derivatives]
@@ -30,7 +28,7 @@ Let us compute the scalar product between the gradient and the direction $\vect{
 
 \noindent The intuition of this example is formalized in the following
 
-\begin{proposition}
+\begin{proposition}\label{fact:3ott_gradient}
 Let $f: \R^n \to \R$. 
 The directional derivative along a certain direction $\vect{d} \in \R^n$ can be computed as the scalar product between the gradient of the function and the direction, formally
 \[
@@ -137,72 +135,91 @@ Let us compute the second derivative of this function:
 
 In optimization, handling Hessians is a crucial task, because such matrices are very large hence unfeasible most of the times.
 
-In most cases, the Hessian is symmetric, meaning that the order in which we derive is not relevant and this happens when $\exists \delta > 0$ s.t. $\forall \vect{x}' \in \mathcal{B}(x, \delta)$ $\frac{\partial^2 f}{\partial x_j \partial x_i}(\vect{x}')$ and  $\frac{\partial^2 f}{\partial x_i \partial x_j}(\vect{x}')$ exist and $\frac{\partial^2 f}{\partial x_j \partial x_i}(\vect{x}')$ and  $\frac{\partial^2 f}{\partial x_i \partial x_j}(\vect{x}')$ are continuous at $\vect{x}$.
+In most cases, the Hessian is symmetric matrix, as stated in the following
 
+\begin{theorem}[Schwartz's theorem]
+	Let $f: \R^n \to \R^m$ such that $\nabla^2 f(\vect{x})$ exists and it is continuous and let us take $\vect{x} \in \R^n$.
+	 $\exists \delta > 0$ s.t. $\forall \vect{x}' \in \mathcal{B}(x, \delta)$ and $\forall i,j\in \{1,\,2,\,\ldots ,\,n\} ~ \frac{\partial^2 f}{\partial x_j \partial x_i}(\vect{x}')$ and  $\frac{\partial^2 f}{\partial x_i \partial x_j}(\vect{x}')$ exist and they are equal:
+	 \[
+	 	\frac{\partial^2 f}{\partial x_j \partial x_i}(\vect{x}') = \frac{\partial^2 f}{\partial x_i \partial x_j}(\vect{x}')
+	 \]
+\end{theorem}
 
 \begin{definition}[$\C{2}$ functions]
   Let $f: \R^n \to \R^m$. We say that $f$ \textbf{belongs to $\C{2}$ class} iff $\nabla^2 f(x)$ is continuous.
 \end{definition}
 
-\begin{property}
+\begin{corollary}\label{cor:hessian}
 Let $f: \R^n \to \R^m$ such that $f \in \C{2}$, then the Hessian is \emph{symmetric} and the gradient is \emph{continuous}.
-\end{property}
+\end{corollary}
 
 \noindent We are now interested in providing some approximations to a generic function $f$.
 Such approximations are useful tools to have ah hint on where the function moves along a decreasing direction, but the information is accurate only locally.
 
-\begin{definition}[First order Taylor model]
-Let $f : \R^n \to \R \in C^1$, we define the \textbf{first-order Taylor's formula} as a linear approximation of the function $f$ in a neighbourhood of $\vect{x}$.
+\begin{definition}[First order Taylor model]\label{def:taylor_1st}
+Let $f : \R^n \to \R \in \C{1}$, we define the \textbf{first-order Taylor's formula} as a \emph{linear} approximation of the function $f$ in a neighbourhood of $\vect{x}$.
 
-Formally,  for a given ball $\mathcal{B}(\vect{x}, \delta)$, $\forall \vect{x}' \in \mathcal{B}(\vect{x}, \delta)~\exists ~ \alpha \in (0, 1)$ s.t.
+\noindent Formally,  for a given ball $\mathcal{B}(\vect{x}, \delta)$, $\forall \vect{x}' \in \mathcal{B}(\vect{x}, \delta)~\exists ~ \alpha \in (0, 1)$ s.t.
 \[
-  f(\vect{x}') = \ps{\nabla f(\alpha \vect{x}+ (1 - \alpha) \vect{x}')} {\vect{x}' - \vect{x}} + f(\vect{x})
+  f(\vect{x}') \approx L_{\vect{x}}(\vect{x}')= \ps{\nabla f(\alpha \vect{x}+ (1 - \alpha) \vect{x}')} {\vect{x}' - \vect{x}} + f(\vect{x})
 \]
 
-Equivalently, we can write the so-called \textbf{remainder version of first-order Taylor formula} as
+\noindent Equivalently, we can write the so-called \textbf{remainder version of first-order Taylor formula} as
 
-\[
-  f(\vect{x}') = \ps{\nabla f(\vect{x})}{\vect{x}' - \vect{x}} + f(\vect{x})+ R(\vect{x}' - \vect{x})
-\]
-  where $\lim\limits_{h \to 0} \frac{R(h)}{\norm{h}} = 0$, in other words the error that we make is at most quadratic.
+\begin{equation}\label{eq:taylor_1st}
+ f(\vect{x}') \approx L_{\vect{x}}(\vect{x}')= \ps{\nabla f(\vect{x})}{\vect{x}' - \vect{x}} + f(\vect{x})+ R_2(\vect{x}')
+\end{equation}
+  where $R_2$ is called \textbf{quadratic remainder} and is such that $\lim\limits_{h \to 0} \frac{R(h)}{\norm{h}} = 0$.
+  
+  Notice the general Lagrangian form of the remainder:
+  \[
+  	R_k (\vect{x}') = \frac{f^{(k+1)} (\beta)}{(k+1)!} \cdot {(\vect{x}' - \vect{x})}^2 
+  \]
+  where $\beta \in [\vect{x}, \vect{x}']$ and $f$ is $k+1$ times differentiable.
 \end{definition}
 
 \noindent Notice that the Taylor's approximation works \emph{only locally}: the furthest we get from $\vect{x}$ the more distant the function and the model are.
 
-\begin{definition}[Second order Taylor model]
-Let $f : \R^n \to \R \in C^1$, we define the \textbf{second-order Taylor's formula}  as a quadratic approximation of the function $f$ in a neighbourhood of $\vect{x}$.
+\begin{definition}[Second order Taylor model]\label{def:taylor_2nd}
+Let $f : \R^n \to \R \in \C{1}$, we define the \textbf{second-order Taylor's formula}  as a quadratic approximation of the function $f$ in a neighbourhood of $\vect{x}$.
 Formally, given a ball $\mathcal{B}(\vect{x}, \delta)$, $\forall \vect{x}' \in \mathcal{B}(\vect{x}, \delta)$
-\[
-  f(\vect{x}') = L_x(\vect{x}') + \frac{1}{2} \tr{(\vect{x}' - \vect{x})} \nabla^2 f(\vect{x}) (\vect{x}' - \vect{x}) + R(\vect{x}' - \vect{x})
-\]
+\begin{equation}\label{eq:taylor_2nd}
+  f(\vect{x}') \approx Q_{\vect{x}}(\vect{x}') = L_{\vect{x}}(\vect{x}') + \frac{1}{2} \tr{(\vect{x}' - \vect{x})} \nabla^2 f(\vect{x}) (\vect{x}' - \vect{x}) + R_3(\vect{x}' - \vect{x})
+\end{equation}
   with $\lim\limits_{h \to 0} R(h) \norm{h}^2 = 0$ or, equivalently, the remainder vanishes at least cubically, or the error is $O(\norm{\vect{x}' - \vect{x}}^3)$ .
 \end{definition}
 
 \begin{example}
-	Let $f:\R^2 \to \R$ such that $f(x, y) = x^2 e^y$, as above and $\nabla f(\vect{x})=\begin{pmatrix}
-	2x e^y\\
-	x^2 e^y
+	Let $f:\R^2 \to \R$ such that $f(\vect{x}) = f\begin{pmatrix}x_1\\ x_2 \end{pmatrix} = {x_1}^2 e^{x_2}$, as above and $\nabla f(\vect{x})=\begin{pmatrix}
+	2 x_1 e^{x_2}\\
+	{x_1}^2 e^{x_2}
 	\end{pmatrix}$ and $\nabla^2 f(\vect{x}) =	\begin{pmatrix}
-	2 e^y & 2x e^y\\
-	2x e^y & x^2 e^y\\
+	2 e^{x_2} & 2 x_1 e^{x_2}\\
+	2{x_1} e^{x_2} & {x_1}^2 e^{x_2}\\
 	\end{pmatrix}$.
 	In $\vect{x} = \begin{pmatrix}1\\0\end{pmatrix} \in \R^2$ we have $f(\vect{x}) = 1$ and $\nabla f(\vect{x}) = \begin{pmatrix}2\\1\end{pmatrix}$.
 	
+	\noindent Compute the first and second order Taylor models for $f$ with $\alpha = 1$.
+	
 	The linear model has the following shape 
 	\[
-	L_{(1, 0)} (x, y) = 1\ps{\begin{pmatrix}2\\ 1\end{pmatrix}}{\begin{pmatrix} x-1\\ y-0\end{pmatrix}} + 1= 2x -  2 + y + 1 = 2x + y -1
+	L_{(1, 0)} (x_1, x_2) = \ps{\begin{pmatrix}2\\ 1\end{pmatrix}}{\begin{pmatrix} x_1 -1\\ x_2 -0\end{pmatrix}} + 1= 2 x_1 -  2 + x_2 + 1 = 2 x_1 + x_2 -1
 	\]
 	
 	And the quadratic model is 
+	\[
+		f(\vect{x}') = \ps{\nabla f \Biggl (\alpha \cdot  \begin{pmatrix}2\\1\end{pmatrix} + (1 - \alpha) \vect{x}' \Biggr )} {\vect{x}' -  \begin{pmatrix}2\\1\end{pmatrix}} + f \begin{pmatrix}2\\1\end{pmatrix} + \frac{1}{2}\cdot \nabla^2f\begin{pmatrix}2\\1\end{pmatrix} \cdot \Biggl ( {\vect{x}' -  \begin{pmatrix}2\\1\end{pmatrix}} \Biggr ) 
+	\]
+	
 	\begin{equation}
 	\begin{split}
-	Q_{[1, 0]} (x, y) &= 2x + y -1 + \frac{1}{2} \cdot \begin{pmatrix}x-1, & y-0\end{pmatrix} \cdot \begin{pmatrix} 2 & 2\\ 2 & 1 \end{pmatrix} \cdot \begin{pmatrix} x-1 \\ y-0 \end{pmatrix}\\ 
-	&= 2x + y -1 + \frac{1}{2} \cdot \begin{pmatrix} 2x -2 +2y, & 2x -2 +y \end{pmatrix} \cdot \begin{pmatrix} x-1\\ y-0\end{pmatrix}\\
-	&= 2x + y -1 + \frac{1}{2} \cdot \biggl ( (2x -2 + 2y) \cdot (x-1)  + (2x -2 +y) \cdot y \biggr )\\
-	&= 2x + y -1 + \frac{1}{2} \cdot (2 x^2 - 2x + 2xy -2x +2 -2y +2xy -2y +y^2)\\
-	&= 2x +y -1 + \frac{1}{2} \cdot (2 x^2 -4x + 4xy +2 -4y + y^2)\\
-	&= 2x +y -1 + x^2 -2x + 2xy +1 -2y + \frac{1}{2}y^2)\\
-	&= x^2 + 2xy -y + \frac{1}{2}y^2\\	
+	Q_{[1, 0]} (x_1, x_2) &= 2x_1 + x_2 -1 + \frac{1}{2} \cdot \begin{pmatrix} x_1 -1, & x_2-0\end{pmatrix} \cdot \begin{pmatrix} 2 & 2\\ 2 & 1 \end{pmatrix} \cdot \begin{pmatrix} x_1 -1 \\ x_2-0 \end{pmatrix}\\ 
+	&= 2x_1 + x_2 -1 + \frac{1}{2} \cdot \begin{pmatrix} 2x_1 -2 +2x_2, & 2x_1 -2 +x_2 \end{pmatrix} \cdot \begin{pmatrix} x-1\\ x_2-0\end{pmatrix}\\
+	&= 2x_1 + x_2 -1 + \frac{1}{2} \cdot \biggl ( (2x_1 -2 + 2x_2) \cdot (x_1 -1)  + (2x_1 -2 +x_2) \cdot x_2 \biggr )\\
+	&= 2x_1 + x_2 -1 + \frac{1}{2} \cdot (2 {x_1}^2 - 2 x_1 + 2{x_1}{x_2} -2x_1 +2 -2x_2 +2{x_1}{x_2} -2x_2 +{x_2}^2)\\
+	&= 2x_1 +x_2 -1 + \frac{1}{2} \cdot (2 {x_1}^2 -4{x}_1 + 4{x_1}x_2 +2 -4x_2 + {x_2}^2)\\
+	&= 2x_1 +x_2 -1 + {x_1}^2 -2{x_1} + 2{x_1}{x_2} +1 -2x_2 + \frac{1}{2}{x_2}^2)\\
+	&= {x_1}^2 + 2{x_1}{x_2} -x_2 + \frac{1}{2}{x_2}^2\\	
 	\end{split}
 	\end{equation}
 \end{example}
@@ -298,5 +315,4 @@ This is formalized in
 	If $Q$ is positive definite $\bar{\vect{x}} = - \inv{Q} \vect{q}$ is the minimum of $f$, while if $Q$ is \emph{indefinite} (i.e. $\exists \lambda_i <0$) $f$ is unbounded below.
 \end{proposition}
 
-\end{document}
 

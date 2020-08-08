@@ -1,0 +1,38 @@
+\documentclass[tikz,border=3.14mm]{standalone}
+\usepackage{pgfplots, tikz}
+\usepackage{txfonts} %font
+\pgfplotsset{compat=1.16}
+\begin{document}
+	\begin{tikzpicture}
+		\def\f{{\x}, {(\x)^5 - 8*(\x)^3 +10*(\x) +15}}
+		\draw[->] (-1.8, 0) -- (4.2, 0) node[right] {$x$};
+		\draw[->] (0, -.5) -- (0, 4.2) node[above] {$y$};
+		\draw[yscale=.15, domain=-1.4:2.66, smooth, variable=\x, blue] plot (\f);
+		\draw (-1.3, 2) -- (2.7, 2) node[right] {$v=2$};
+		
+		\def\x{-1.12}
+		\def\fx{((\x)^5 - 8*(\x)^3 +10*(\x) +15)*0.15}
+		\draw[dashed] ({\x}, {\fx}) -- ({\x, 0});
+		\filldraw[black] ({\x}, {\fx}) circle (1pt);
+		\def\y{-.18}
+		\def\fy{((\y)^5 - 8*(\y)^3 +10*(\y) +15)*0.15}
+		\draw[dashed] ({\y}, {\fy}) -- ({\y, 0});
+		\filldraw[black] ({\y}, {\fy}) circle (1pt);
+		\def\z{1.35}
+		\def\fz{((\z)^5 - 8*(\z)^3 +10*(\z) +15)*0.15}
+		\draw[dashed] ({\z}, {\fz}) -- ({\z, 0});
+		\filldraw[black] ({\z}, {\fz}) circle (1pt);
+		\def\w{2.513}
+		\def\fw{((\w)^5 - 8*(\w)^3 +10*(\w) +15)*0.15}
+		\draw[dashed] ({\w}, {\fw}) -- ({\w, 0});
+		\filldraw[black] ({\w}, {\fw}) circle (1pt);
+		\draw[color=orange, very thick] (\x, 0) -- (\y, 0);
+		\draw[color=orange, very thick] (\z, 0) -- (\w, 0);
+		
+		
+		%\def\fy{4*1/exp(((\y-3)^2)/2)}
+		%\def\fx{4*1/exp(((\x-3)^2)/2)}
+		%\fill [ fill=orange!60] ({\x},0) -- plot[domain={\x}:{\y}] ({\y },0);
+		%\draw[ color=blue ,domain=0:6] plot (\normaltwo) node[ right ] {};
+	\end{tikzpicture}
+\end{document}

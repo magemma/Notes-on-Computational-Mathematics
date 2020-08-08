@@ -8,74 +8,83 @@
 %chktex-file 16
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
-
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 \chapter{11th of October 2018}
 \chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-Last lecture we left with the task of understanding how to check if a function is convex.
+In the previous lecture we introduced many different definitions about convexity, while in this chapter we will deal with the task of checking when a function is convex, hence a local minimum is also a global minimum.
 
-As we already stated for convex sets, we can prove that a function is convex deriving from convex functions, though ``convex friendly'' operations.
+As we already stated for convex sets, we can prove that a function is convex if we are able to derive it from convex functions, through ``convex friendly'' operations.
 
 \begin{myframe}{\bf Note}
-There is a softare called~CVX, designed to model convex object. A pretty easy way to check if an object is convex is to try to write it in~CVX.
-  If such an operation is possible, then the object is convex. 
+	A useful tool to have insights about convexity is the software called~CVX, designed to model convex objects.
+	A pretty easy way to check if an object is convex is to try to write it in~CVX.
+	If such an operation is possible, then the object is convex. 
 \end{myframe}
 
-The following functions are convex:
+\noindent Let us enumerate some convex functions:
 
-\begin{enumerate}
-  \item $f(x) = w x$: linear functions are both convex and concave;
-  \item $f(x) = \frac{1}{2} x Q x + q x$ if convex iff $Q \succeq 0$;
-  \item $f(x) = e^{ax}$ for any $a \in \R$ and $x \in \R$
-  \item $f(x) = -\log(x)$ for $x > 0$
-  \item $f(x) = x^a$ for $a \geq 1$ or $a \leq 0$ on $x \geq 0$;
-  \item $f(x) = \norm{x}_p$ for $p \geq 1$;
-  \item $f(x) = \max \{x_1, \ldots, x_n\}$;
-  \item for any convex set $C$, its indicator function
-        \[
-         \mbox{\i}_C(x) =
-         \left\{\begin{array}{cc} 0 & \mbox{if } x \in C \\
-                            +\infty & \mbox{if } x \notin C
-                \end{array}\right.
-         \mbox{(l.s.c.} \iff C \mbox{ closed)}
-        \]
-  \item $A \in \R^{n \times n}$ symmetric, eigenvalues customarily ordered $\lambda_1 \geq \lambda_2 \geq \ldots \lambda_n$: $f_m(A) = \sum\limits_{i = 1}^m \lambda_i$ (sum of $m$ largest eigenvalues)
-\end{enumerate}
+\begin{description}
+	\item[Linear functions:] $f(\vect{x}) = \tr{\vect{w}} \vect{x}$ (they are both convex and concave);
+	\item[Quadratic functions:] $f(\vect{x}) = \frac{1}{2} \tr{\vect{x}} Q \vect{x} + \tr{\vect{q}} \vect{x}$ is convex iff $Q \succeq 0$;
+	\item[Exponential function:] $f(\vect{x}) = e^{a\vect{x}}$ for any $a \in \R$ and $\vect{x} \in \R^n$
+	\item[Anti-logaritmic function:] $f(x) = -\log(x)$ for $x > 0$
+	\item[Monomial:] $f(x) = x^a$ for $a \geq 1$ or $a \leq 0$ on $x \geq 0$;
+	\item[$p$-norm:] $f(\vect{x}) = \norm{\vect{x}}_p$ for $p \geq 1$;
+	\item[Maximum:] $f(x) = \max \{x_1, \ldots, x_n\}$;
+	\item[Indicator function:] for any convex set $C$, its indicator function $\mathds{1}_C(x)$ is convex:
+		\[
+		 \mathds{1}_C(x) =
+		 \begin{cases}
+		  0 & \text{if } x \in C \\
+		  +\infty & \mbox{if } x \notin C
+		 \end{cases}
+		\]
+	\item[Sum of $m$ largest eigenvalues:] Let $A \in S(n, \R)$ such that its eigenvalues (sorted in increasing order) are $\lambda_1 \geq \lambda_2 \geq \ldots \lambda_n$. $f_m(A) = \sum\limits_{i = 1}^m \lambda_i$ is soncex.
+\end{description}
 
 \begin{proposition}
 The following operations preserve convexity:
 
-\begin{enumerate}
- \item $f$, $g$ convex, $\alpha$, $\beta \in \R_+ \Longrightarrow \alpha f + \beta g$ convex (non-negative combination);
- \item ${\{f_i\}}_{i \in I}$ (infinitely many) convex functions $\Longrightarrow f(x) = \sup_{i \in I} f_i(x)$ convex, see \Cref{subfloat:11ott_1};
- \item Pre-composition with linear function is convex, formally $f$ convex $\Longrightarrow f(Ax + b)$ convex;
- \item Post-composition with increasing convex function is convex. Formally, $f : \R^n \to \R$ convex, $g : \R \to \R$ convex increasing $\Longrightarrow$ $g \circ f = g(f(x))$ is convex;
- \item $f_1$, $f_2$ convex $\Longrightarrow f(x) = \inf \{ \, f_1(x_1) + f_2(x_2)~:~x_1 + x_2 = x\}$ convex (infimal convolution);
- \item $g$ convex $\Longrightarrow f(x) = \inf \{g(y)~:~Ay = x\}$ convex (image under a linear mapping, aka value function of convex constrained problem);
- \item $g(x,y) : \R^{n + m} \to \R$ convex $\Longrightarrow f(x) = \inf \{g(x,y)~:~y \in \R^m\}$ convex (partial minimization);
- \item $f(x)$ convex $\Longrightarrow \tilde{f}(x,u) = u f(x / u)$ when $u > 0$, $\tilde{f}(x,u) = \infty$ otherwise, convex (perspective or dilation function of $f$), see \Cref{subfloat:11ott_2}.
-\end{enumerate}
+\begin{description}[labelindent=.5cm]
+	\item[Linear non-negative combination:] let $f, g: \R^n \to \R$ be convex functions and let $\alpha, \beta \in \R_+$, then $\alpha f + \beta g$ is convex ;
+	\item[Supremum:] let ${\{f_i\}}_{i \in I}$ be a set of infinitely many convex functions, then $\sup\limits_{i \in I} f_i(\vect{x})$ is convex, see \Cref{subfloat:11ott_1};
+	\item[Pre-composition with linear function:] let $f: \R^n \to \R$ be a convex function, then $f(A\vect{x} + \vect{b})$ is convex;
+	\item[Post-composition with increasing convex function:]let $f : \R^n \to \R$ be a  convex function and let $g : \R \to \R$ be a convex increasing function. Then $g \circ f = g(f(\vect{x}))$ is convex;
+	\item[Infimal convolution:] let $f_1, f_2: \R^n \to \R$ be convex functions. Then $f(\vect{x}) = \inf \{f_1(\vect{x_1}) + f_2(\vect{x_2})~:~\vect{x_1} + \vect{x_2} = \vect{x}\}$ is convex;
+	\item[Image under linear mapping:] let $g: \R^n \to \R$ be a convex function. Then $f(\vect{x}) = \inf \{g(\vect{y})~:~A\vect{y} = \vect{x}\}$ is convex;
+	\item[Partial minimization:] let $g\begin{pmatrix}\vect{x}\\\vect{y}\end{pmatrix} : \R^{n + m} \to \R$ be a convex function. Then $f(\vect{x}) = \inf \$g\begin{pmatrix}\vect{x}\\\vect{y}\end{pmatrix}~:~y \in \R^m\}$ is convex;
+	\item[Perspective or dilation:] let $f:\R^n \to \R$ be a convex function. Then
+	\[
+		\tilde{f}(\vect{x},u) = 
+			\begin{cases}
+				u \cdot f(\vect{x} / u) & \text{if } u > 0\\
+				\infty & \text{otherwise}
+			\end{cases}
+	\]
+	is convex, see \Cref{subfloat:11ott_2}.
+\end{description}
 \end{proposition}
 
 \begin{figure}[h]
   \centering
-  \subfigure[Suprema --- second property]{\includegraphics[width=0.35\textwidth]{pics/11ott/sup.png}\label{subfloat:11ott_1}}
+  \subfigure[Supremum]{\includegraphics[width=0.35\textwidth]{pics/11ott/sup.png}\label{subfloat:11ott_1}}
   \hspace{0.5cm}
-  \subfigure[Perspective --- eightth property]{\includegraphics[width=0.35\textwidth]{pics/11ott/perspective.png}\label{subfloat:11ott_2}}\\
-  \caption{Graphic hints.}\label{fig:11ott_1}
+  \subfigure[Perspective]{\includegraphics[width=0.35\textwidth]{pics/11ott/perspective.png}\label{subfloat:11ott_2}}\\
+  \caption{Examples of convexity-preserving operations.}\label{fig:11ott_1}
 \end{figure}
 
 \begin{proposition}
-  Let $f: \R^n \to \R \cup {\infty}$ a convex function. If $\exists \bar{x} \in dom(f)$ such that $f(\bar{x}) = - \infty$, then $f \equiv - \infty$. 
+  Let $f: \R^n \to \R \cup {\infty}$ be a convex function.
+  If $\exists \bar{\vect{x}} \in dom(f)$ such that $f(\bar{\vect{x}}) = - \infty$, then $f \equiv - \infty$. 
 \end{proposition}
 
-From now on we will solve the issue of functions with non convex domain, sayting that in those points where the function is not defined, we value it $+ \infty$.
+From now on we will solve the issue of functions with non a convex domain, saying that in those points where the function is not defined, we value it $+ \infty$.
 
 \begin{proposition}\label{prop:11ott_1}
-  Let $f: \R^n \to \R$ be a convex function. Then $f$ is Lipschitz continuous $\forall$ bounded convex set $S \subseteq \text{int(dom(}f$)) but on $\partial dom(f)$ (the border of the domain) anything can happen.
+  Let $f: \R^n \to \R$ be a convex function.
+  Then $f$ is Lipschitz continuous on each bounded convex set $S \subseteq \text{int(dom(}f$)), but we have no information on the behaviour on the border of the domain.
 
   Moreover, a function $f$, which is continuous but not Lipschitz continuous is not convex.
 \end{proposition}
@@ -84,27 +93,28 @@ A couple of examples of \Cref{prop:11ott_1} can be found in \Cref{fig:11ott_2}.
 
 \begin{figure}[h]
   \centering
-  \subfigure[Take a compact set in the interior of the domain (far from the boundaries) there the function is Lipschitz continuous.]{\includegraphics[width=0.35\textwidth]{pics/11ott/lip1.png}\label{subfloat:11ott_3}}
+  \subfigure[On a compact set in the interior of the domain (far from the boundaries) the function is Lipschitz continuous.]{\includegraphics[width=0.35\textwidth]{pics/11ott/lip1.png}\label{subfloat:11ott_2_1}}
   \hspace{0.5cm}
-  \subfigure[If a function is not Lipschitz on a compact subset it is not convex.]{\includegraphics[width=0.45\textwidth]{pics/11ott/lip2.png}\label{subfloat:11ott_4}}\\
+  \subfigure[If a function is not Lipschitz on a compact subset it is not convex.]{\includegraphics[width=0.45\textwidth]{pics/11ott/lip2.png}\label{subfloat:11ott_2_2}}\\
   \caption{}\label{fig:11ott_2}
 \end{figure}
 
 \begin{proposition}
-Let convex $f: \R^n \to \R$. Then it is Lipschitz continuous on any bounded set and continuous everywhere.
+Let $f: \R^n \to \R$ be a convex function.
+Then it is Lipschitz continuous on any bounded set and continuous everywhere.
 \end{proposition}
 
-It happens often that the set of points in which a function is non differentiable have measure $0$.
+\noindent It happens often that the set of points in which a function is non differentiable has measure $0$.
 
 \begin{theorem}[Convexity characterization]
-Let $f \in C^1$. It is convex on $C$ convex iff
+Let $f:\R^n \to \R$ be in $\C{1}$.
+It is convex on a convex set $C\subseteq \R^n$ iff
 \[
-  f(y) \geq f(x) + \nabla f(x) ( \, y - x \, ) \forall \, x,y \in C
+  f(\vect{y}) \geq f(\vect{x}) + \nabla f(\vect{x}) (\vect{y} -\vect{x}) ~ \forall \vect{x},\vect{y} \in C
 \]
-
-In other words, given a point $x$, we compute the derivative and the value fo the function is above the derivative in that point.
 \end{theorem}
 
+\todo[inline]{Riscrivere proof}
 \begin{proof}
   \begin{description}
     \item[$\Rightarrow)$]
@@ -114,118 +124,134 @@ In other words, given a point $x$, we compute the derivative and the value fo th
 \end{proof}
 
 \begin{theorem}
-Let $f \in C^1$ convex. $x$ is a stationary point iff $x$ is a global minimum.
+Let $f:\R^n \to \R$ in $\C{1}$ be a convex function.
+$\vect{x} \in \R^n$ is a stationary point for $f$ iff $\vect{x}$ is a global minimum.
 \end{theorem}
 
 \begin{proposition}
-  Let $f$ be twice differentiable (aka has Hessian). $f$ is convex iff the Hessian is positive semidefinite.
-
-  Formally, let $f \in C^2$. $f$ is convex on the open set $S$ iff $\nabla^2 f(x) \succeq 0~\forall x \in S$.
+  Let $f:\R^n \to \R$ be twice differentiable ($f \in \C{2}$).
+  $f$ is convex on an open set $S \subseteq \R^n$ iff the Hessian is positive semidefinite.
 \end{proposition}
 
 This proposition gives us an algorithm to check if a function is convex or not: we only need to compute the eigenvalues of the Hessian and check if they are positive.
 
 There are some functions which do not have differentiability property.
 
-A way to work with functions which are not defined on all $\R$ is to solve the following problem:
+A way to work with functions which are not defined on all $\R^n$ is to solve the following problem:
 
 \[
-  (P) \equiv \inf \{f_X(x) = f(x) + \i_X(x)~:~x \in \R^n\}
+  (P) \equiv \inf \{f_X(\vect{x}) = f(\vect{x}) + \mathds{1}_X(\vect{x})~:~\vect{x} \in \R^n\}
 \]
 
-thanks to
+thanks to the following
 
 \begin{theorem}[Essential objective]
-$x_*$ optimal for $(P)$ $\iff$ $x_*$ local minimum of $f_X$.
+$\vect{x_*}$ optimal for $(P)$ $\iff$ $\vect{x_*}$ local minimum of $f_X$.
 \end{theorem}
 
-\subsection{Subgradients and subdifferentials}
+\subsection{Non-differentiable functions}
+
+It is often the case that the objective function under consideration is not differentiable and in such situation we need to use different tools to be sure to move towards the optimum.
+It is in this context that we introduce \emph{subgradients} and \emph{subdifferentials}.
 
 \begin{definition}[Subgradient]
-  For each $s \in \R$ we term \textbf{s-subgradient} of $f$ at $x$ as
-  
-\[
-  f(y) \geq f(x) + s (y - x) \qquad \forall \, y \in \R^n
-\]
+	Let $f: \R^n \to \R$. We say that $\vect{s} \in R^n$ is a \textbf{subgradient} of $f$ at point $\vect{x} \in \R^n$ if $\forall \vect{y} \in \R^n$ the following holds:
+	\[
+		f(\vect{y}) \geq f(\vect{x}) + s (\vect{y} - \vect{x})
+	\]
 \end{definition}
 
-Let us assume that the minimum of the non differentiable function resides in one of its kiky points, then for $s=0$ we have a subgradient which is flat and this is a sufficient condition for minimality, for a pictorial example see \Cref{fig:11ott_3}.
+Let us assume that the minimum of the non differentiable function resides in one of its kinky points, then for $\vect{s}=\vect{0}$ we have a subgradient which is flat and this is a sufficient condition for minimality, for a pictorial example see \Cref{fig:11ott_3}.
 
 \addpic{0.5}{pics/11ott/convexnondiff09.pdf}{Pictorial example of subgradients of a non diffrentaible function.}{fig:11ott_3}
 
-The issue here is that it is unfeasible to check if the subgradient with $s=0$ is a subgradient for $f$.
+The issue here is that it is unfeasible to check if $\vect{s}=\vect{0}$ is a subgradient for $f$, since we should check all possible $\vect{y} \in \R^n$.
 
 \begin{definition}[Subdifferential]
-  We term \textbf{subdifferential} the set of all possible subgradients.
+  Let $f: \R^n \to \R$ and let $\vect{x} \in \R^n$. We call \textbf{subdifferential} the set of all possible subgradients at $\vect{x} \in \R^n$.
 
   Formally,
   \[
-    \partial f(x) := \{s \in \R^n~:~s \text{ is a subgradient at } x\} 
+    \partial f(\vect{x}) := \{\vect{s} \in \R^n~:~\vect{s} \text{ is a subgradient at } \vect{x}\} 
   \]
+\end{definition}
+
+\begin{definition}[Descent direction]
+	Let $f: \R^n \to \R$ and let $\vect{x} \in \R^n$.
+	We say that $\vect{d} \in \R^n$ is a \textbf{descent direction} if $\ps{\vect{s}}{\vect{d}} < 0~\forall~\vect{s} \in \partial f(\vect{x})$.
 \end{definition}
 
 
 \begin{theorem}
-$x$ global minimum $\iff 0 \in \partial f(x)$.
+Let $f: \R^n \to \R$. $\vect{x}$ global minimum $\iff 0 \in \partial f(\vect{x})$.
 \end{theorem}
 
 Notice that in general, when we are not in proximity of a border (where $f$ is unbounded above) we get that the subdifferential is a compact interval.
 
-Formally,$\partial f(x)$ closed and convex, compact $\forall \, x \in int \, dom(f)$.
+Formally,$\partial f(\vect{x})$ closed and convex, compact $\forall \, \vect{x} \in int \, dom(f)$.
 
 Moreover, we can prove the following
 
 \begin{proposition}
-$\partial f(x) = \{\nabla f(x)\} \iff f$ differentiable at $x$.
+Let $f: \R^n \to \R$.
+\[
+	\partial f(\vect{x}) = \{\nabla f(\vect{x})\} \iff f \text{ differentiable at } \vect{x}
+\]
 \end{proposition}
 
-An attentive reader may have noticed that in the case of non differentiable functions it is not possible to derive the directional derivative from the gradient ($\frac{\partial f}{\partial d}(x) = \ps{\nabla f(x)}{d}$), but we can prove the following
+\recap{
+In \Cref{chap:3ott}, in \Cref{fact:3ott_gradient} we derived the directional derivative from the gradient as $\frac{\partial f}{\partial \vect{d}}(\vect{x}) = \ps{\nabla f(\vect{x})}{\vect{d}}$.
+}
+
+The following fact tries to provide a similar characterization of the subdifferential.
 
 \begin{proposition}
-$\frac{\partial f}{\partial d}(x) = \sup \{\ps{s}{d}~:~s \in \partial f(x)\} \Longrightarrow$ $d$ is a descent direction  $\iff \ps{s}{d} < 0~\forall~s \in \partial f(x)$.
+Let $f: \R^n \to \R$ and let $\vect{x} \in \R^n$.
+If $\frac{\partial f}{\partial \vect{d}}(\vect{x}) = \sup \{\ps{\vect{s}}{\vect{d}}~:~\vect{s} \in \partial f(\vect{x})\} $ then $\vect{d}$ is a descent direction  $\iff \ps{\vect{s}}{\vect{d}} < 0~\forall~\vect{s} \in \partial f(\vect{x})$.
 \end{proposition}
 
-As in the differentiable case, we are interested in moving in the steepest descent direction, formally $s_* = - \mbox{argmin} \{\norm{s}~:~s \in \partial f(x)\}$.
+As in the differentiable case, we are interested in moving in the steepest descent direction, formally $\vect{s_*} = - \mbox{argmin} \{\norm{\vect{s}}~:~\vect{s} \in \partial f(\vect{x})\}$.
 
 \begin{example}
-Le us assume we are in $x$ and we want to move towards $x^*$ knowing only the subdifferentials.
-$(-)\partial f(x)$ is convex and compact and All $(-)g \in \partial f(x)$ ``point towards $x_*$'': $\ps{g}{x - x_*} < 0$.
+	Let us assume that we know the minimum point $\vect{x_*} \in \R^n$ for $f: \R^n \to \R$ and we are in $\vect{x}$ at the current iteration.
+	We would like to move towards $\vect{x_*}$ using only the information provided by the subdifferential.
+	$(-)\partial f(\vect{x})$ is convex and compact and all its elements $(-)g \in \partial f(\vect{x})$ (subgradients) ``point towards $\vect{x_*}$''.
+	Formally, $\ps{g}{\vect{x_*} - \vect{x}} < 0$.
 
-Not all of them are descent directions, but the (opposite to the) minimum-norm one is a descent direction.
-
-  \addpic{0.3}{pics/11ott/nondiffrn09.pdf}{There are many different subgradients in $x$. We pick the one with minimum norm among the ones which have a negative scalar product with $x - x^*$.}{fig:11ott_3}
+  \addpic{0.3}{pics/11ott/nondiffrn09.pdf}{There are many different subgradients in $\vect{x}$. We pick the one with minimum norm among the ones which have a negative scalar product with $\vect{x} -\vect{x_*}$.}{fig:11ott_4}
 \end{example}
 
-Notice that in $\R^2$ if we take a function and compute the subdifferential, we can scale both the function and the subdifferential by any positive constant (negative contants would lead to concave functions). Formally,
-
-\begin{proposition}
-Let $f,g: \R^n \to \R$ and take $\alpha, \beta \in \R_+$, then $\partial [\alpha f + \beta g](x) = \alpha \partial f(x) + \beta \partial g(x)$.
+\begin{proposition}[Linearity of subdifferential]
+Let $f,g: \R^n \to \R$ and take $\alpha, \beta \in \R_+$, then $\partial [\alpha f + \beta g](\vect{x}) = \alpha \partial f(\vect{x}) + \beta \partial g(\vect{x})$.
 \end{proposition}
 
 \begin{proposition}[Chain rule]
+	Let $f: \R^n \to \R$.
   \begin{itemize}
-    \item Let $f: \R^n \to \R$ and let $A \in M(n, \R)$ and $b \in R^n$ then $\partial [f(Ax + b)] = A^T [\partial f](Ax + b) $;
-    \item $g:\R \to \R$ increasing, then $\partial [g(f(x))] = [\partial g](f(x)) [\partial f](x)$.
+    \item Let $A \in M(n, \R)$ and $\vect{b} \in R^n$ then $\partial [f(A\vect{x} + \vect{b})] = A^T [\partial f](A\vect{x} + \vect{b}) $;
+    \item Let $g:\R \to \R$ be an increasing function. Then $\partial [g(f(\vect{x}))] = [\partial g](f(\vect{x})) [\partial f](\vect{x})$.
   \end{itemize}
 \end{proposition}
 
 \begin{definition}[$\eps$-subgradient]
-  Let $f: \R^n \to \R$. $s$ is $\varepsilon$\textbf{-subgradient} at $x$ if 
+  Let $f: \R^n \to \R$.
+  We say that $\vect{s} \in \R^n$ is $\varepsilon$\textbf{-subgradient} at $\vect{x} \in \R^n$ if it defines a support hyperplane passing $\varepsilon$ below $epi(f)$.
+  Formally,
 \[
-  f(y) \geq f(x) + s (y - x) - \varepsilon~ \forall y \in \R^n
+  f(\vect{y}) \geq f(\vect{x}) + \vect{s} (\vect{y} - \vect{x}) - \varepsilon~ \forall \vect{y} \in \R^n
 \]
-support hyperplane passing $\varepsilon$ below $epi(f)$
+
 \end{definition}
 
 \begin{proposition}
-Given a point $x$, the value of the finction in $x$ cannot be further from $\eps$ the minimum value fo the function.
-  Formally, $0 \in \partial_\varepsilon f(x) \iff x$ is $\varepsilon$-optimal. 
+	Let $f: \R^n \to \R$ and let $\vect{x} \in \R^n$.
+	Saying that $\vect{0} \in \R^n$ is a $\eps$-subgradient for $f$ in $\vect{x}$ means that the function value $f(\vect{x})$ cannot be at distance grater than $\eps$ from the minimum $f(\vect{x_*})$.
+	
+	Formally, $0 \in \partial_\varepsilon f(\vect{x}) \iff \vect{x}$ is $\varepsilon$-optimal. 
 \end{proposition}
 
-We are now allowed to compute $s_* = \mbox{argmin} \{\norm{s}~:~ s \in \partial_\varepsilon f(x)\}$.
+We are now allowed to compute $\vect{s_*} = \mbox{argmin} \{\norm{\vect{s}}~:~ \vect{s} \in \partial_\varepsilon f(\vect{x})\}$.
 
-If $s_* = 0$ then $x$ is $\eps$ optimal. Otherwise, $\exists \alpha > 0$ s.t.~$f(x - \alpha s_*) \leq f(x) - \varepsilon$ ($- s_*$ is of $\varepsilon$-descent).
+If $\vect{s_*} = \vect{0}$ then $\vect{x}$ is $\eps$ optimal. Otherwise, $\exists \alpha > 0$ s.t.~$f(\vect{x} - \alpha \vect{s_*}) \leq f(\vect{x}) - \varepsilon$ ($- \vect{s_*}$ is of $\varepsilon$-descent).
 
 The $\eps$-subgradient is very powerful, but the issue is that is even more expensive to compute than the subgradient.
-
-\end{document}

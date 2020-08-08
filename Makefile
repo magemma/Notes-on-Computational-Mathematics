@@ -1,3 +1,8 @@
+tikzpictures: tikzpics/*.tex
+	cd tikzpics; for i in *.tex; do pdflatex $$i; done
+	cd tikzpics; rm *.log
+	cd tikzpics; rm *.aux
+
 all: computationalMathematics.pdf numerical_methods optimization
 #all: numerical_methods #optimization
 #all: numerical_methods/26settembre.pdf
@@ -6,7 +11,6 @@ numerical_methods: numerical_methods.pdf
 optimization: optimization.pdf
 
 all_single: optimization/19settembre.pdf numerical_methods/20settembre.pdf optimization/21settembre.pdf numerical_methods/26settembre.pdf optimization/27settembre.pdf numerical_methods/28settembre.pdf optimization/3ottobre.pdf numerical_methods/4ottobre.pdf optimization/5ottobre.pdf numerical_methods/10ottobre.pdf optimization/11ottobre.pdf optimization/17ottobre.pdf numerical_methods/18ottobre.pdf optimization/19ottobre.pdf optimization/24ottobre.pdf optimization/25ottobre.pdf numerical_methods/26ottobre.pdf numerical_methods/7novembre.pdf optimization/8novembre.pdf numerical_methods/9novembre.pdf optimization/14novembre.pdf numerical_methods/15novembre.pdf optimization/16novembre.pdf numerical_methods/21novembre.pdf optimization/22novembre.pdf numerical_methods/23novembre.pdf optimization/28novembre.pdf numerical_methods/29novembre.pdf optimization/30novembre.pdf numerical_methods/5dicembre.pdf optimization/6dicembre.pdf numerical_methods/7dicembre.pdf optimization/12dicembre.pdf numerical_methods/13dicembre.pdf optimization/14dicembre.pdf computationalMathematics.pdf 
-
 
 computationalMathematics.pdf: computationalMathematics.tex  pics/Cherubino.jpg optimization.tex numerical_methods.tex
 	lualatex -shell-escape -pdf computationalMathematics.tex
@@ -17,7 +21,7 @@ computationalMathematics.pdf: computationalMathematics.tex  pics/Cherubino.jpg o
 	rm computationalMathematics.out
 	rm computationalMathematics.log
 
-optimization.pdf: optimization.tex optimization/19settembre.tex  optimization/21settembre.tex optimization/27settembre.tex optimization/3ottobre.tex  optimization/5ottobre.tex optimization/11ottobre.tex optimization/17ottobre.tex optimization/19ottobre.tex optimization/24ottobre.tex optimization/25ottobre.tex optimization/8novembre.tex optimization/14novembre.tex optimization/16novembre.tex optimization/22novembre.tex optimization/28novembre.tex optimization/30novembre.tex optimization/6dicembre.tex optimization/12dicembre.tex optimization/14dicembre.tex
+optimization.pdf: optimization.tex optimization/*.tex
 	lualatex -shell-escape -pdf optimization.tex
 	lualatex -shell-escape -pdf optimization.tex
 	rm optimization.toc
@@ -26,7 +30,7 @@ optimization.pdf: optimization.tex optimization/19settembre.tex  optimization/21
 	rm optimization.out
 	rm optimization.log
 	
-numerical_methods.pdf: numerical_methods.tex pics/Cherubino.jpg  numerical_methods/20settembre.tex numerical_methods/26settembre.tex numerical_methods/28settembre.tex numerical_methods/4ottobre.tex numerical_methods/10ottobre.tex numerical_methods/18ottobre.tex numerical_methods/26ottobre.tex numerical_methods/7novembre.tex numerical_methods/9novembre.tex numerical_methods/15novembre.tex numerical_methods/21novembre.tex numerical_methods/23novembre.tex numerical_methods/29novembre.tex numerical_methods/5dicembre.tex numerical_methods/7dicembre.tex numerical_methods/13dicembre.tex
+numerical_methods.pdf: numerical_methods.tex numerical_methods/*.tex
 	lualatex -shell-escape -pdf numerical_methods.tex
 	lualatex -shell-escape -pdf numerical_methods.tex
 	rm numerical_methods.toc

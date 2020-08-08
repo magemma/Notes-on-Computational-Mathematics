@@ -6,13 +6,12 @@
 %chktex-file 1
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
-
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{30th of November 2018 --- A. Frangioni}
+\chapter{30th of November 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Constrained optimization}
+\section{Constrained optimization}
 In this lecture we address the problem of finding the \textbf{optimum} of a function in a subset of its domain, called $X$. The term optimum differs from the minimum, because the optimum in that subset may not be a minimum of the whole function.
 
 $f_* = \min \{ \, f(x) \;:\; x \in X \, \}$
@@ -35,7 +34,7 @@ There are two kinds of contraints:
 
 At this point we want to decide if a point on the boundary is an optimum. In this context it is important how the boundary is defined.
 
-\subsubsection{Linear equality constraints}
+\subsection{Linear equality constraints}
 A constraint of this kind is very simple: it is a subspace, as shown in \Cref{fig:30nov2}.
 
 \addtwopics{0.3}{pics/30nov/eqKKT01.pdf}{0.3}{pics/30nov/eqKKT02.pdf}{Linear constraint and a point on the boundary.}{fig:30nov2}
@@ -89,7 +88,7 @@ From now on we would like to study the behaviour on contrained problems where th
 
 In order to do this we need some mathematical background.
 
-\subsubsection{Background for linear inequality contstraints}
+\subsection{Background for linear inequality contstraints}
 
 \begin{definition}[Tangent cone]
   We call \textbf{tangent cone} of $X$ at $x$ $\mathbf{T_X(x)}=$t.
@@ -284,5 +283,3 @@ The Karush-Kuhn-Tucker conditions are also written as:
 \begin{proposition}
   Let (P) be a convex problem. In this case, if the Karush-Kuhn-Tucker conditions hold then $x$ is a global optimum.
 \end{proposition}
-
-\end{document}

@@ -1,134 +1,192 @@
 %chktex-file 36
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
-
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{19th of October 2018 --- A. Frangioni}
+\chapter{19th of October 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
 
-\subsection{Gradient method for quadratic functions}
-This is the simplest possible family of functions where a minumum exists.
+\subsection{Gradient method for quadratic functions (cont.)}
 
-\recap{A quadratic function is defined as: $f(x) = \frac{1}{2} \tr{x} Q x + qx$, so its gradient is the following $\nabla f(x) = Qx + q$}
 
-We are interested in finding local minima of the function $f$.
+\recap{
+	The family of quadratic functions is the simplest possible family of functions where a minimum exists.
+	A quadratic function is defined as: $f(\vect{x}) = \frac{1}{2} \tr{\vect{x}} Q \vect{x} + \tr{\vect{q}}\vect{x}$, so its gradient is computed as $\nabla f(\vect{x}) = Q\vect{x} + \vect{q}$.
+	We are interested in finding local minima of the function $f$.
+}
+
+\noindent In last lecture we were left with analyzing the convergence of the algorithm
 
 \begin{proposition}
-  A quadratic function $f: {\R}^n \rightarrow {\R}^n$, s.t. $f(x) = \frac{1}{2} \tr{x} Q x + qx$ admits a minimum iff $Q \succeq 0$ ($Q$ is positive semidefinite).
+  A quadratic function $f: {\R}^n \rightarrow {\R}^n$, s.t. $f(\vect{x}) = \frac{1}{2} \tr{\vect{x}} Q \vect{x} + \tr{\vect{q}}\vect{x}$ admits a minimum iff $Q \succeq 0$ ($Q$ is positive semidefinite).
 \end{proposition}
 
-The gradient method generates points that move along orthognal directions. More formally, $x^{i+1} = x^{i} + \alpha^{i}d^{i}$, where $d^{i} = -\nabla f(x^{i}) = -Qx^{i} -q$
+The gradient method generates points that move along orthogonal directions. More formally, $\vect{x^{i+1}} = \vect{x^{i}} + \alpha^{i}\vect{d^{i}}$, where $\vect{d^{i}} = -\nabla f(\vect{x^{i}}) = -Q\vect{x^{i}} - \vect{q}$
 
 
 \addpic{0.5}{pics/19ott/1.png}{Some iterations of the gradient method}{fig:19ottorto}
 
-\begin{proposition}
-  $\forall i ~ <d^{i}, d^{i+1}> ~ = 0$.
+\begin{proposition}\label{prop:direction_orto}
+  Let $f:\R^n \to \R$ be a quadratic function and let us consider the gradient descent algorithm for minimizing $f$, where at iteration $i$ the moving direction $\vect{d^i} \in \R^n$ and the step size $\alpha^i \in \R$ are computed. The following holds:
+  $<\vect{d^{i}}, \vect{d^{i+1}}> ~ = 0$.
 \end{proposition}
 \begin{proof}
-TODO
+	Let us rewrite $\vect{d^{i+1}}$ in terms of $\vect{d^i}$:
+	\[
+		\begin{split}
+		\vect{d^{i+1}} &= -Q \vect{x^{i+1}} - \vect{q}\\
+		&= -Q (\vect{x^i} + \alpha^i \vect{d^i}) - \vect{q}\\
+		&= -Q \vect{x^i} - Q \alpha^i \vect{d^i} - \vect{q}\\
+		&= \vect{d^i} - Q \alpha^i \vect{d^i}
+		\end{split}
+	\]
+	If we plug this into the scalar product $\ps{\vect{d^{i}}}{\vect{d^{i+1}}}$ we get
+	\[
+	\begin{split}
+		\ps{\vect{d^{i}}}{\vect{d^{i+1}}} &= \ps{\vect{d^{i}}}{\vect{d^i} - Q \alpha^i \vect{d^i}}\\
+		&= \sqrnorm{\vect{d^i}} - \tr{\vect{d^i}} Q \alpha^i \vect{d^i}\\
+		&= \sqrnorm{\vect{d^i}} - \alpha^i \tr{\vect{d^i}} Q \vect{d^i}\\
+		&\stareq \sqrnorm{\vect{d^i}} - \frac{\sqrnorm{\vect{d^i}}}{\cancel{\tr{\vect{d^i}} Q \vect{d^i}}} \cdot \cancel{\tr{\vect{d^i}} Q \vect{d^i}}
+		\end{split}
+	\]
+	where $\stareq$ follows from $\alpha^i := \frac{\sqrnorm{\vect{d^i}}}{\tr{\vect{d^i}} Q \vect{d^i}}$.
 \end{proof}
 
-$i{\alpha}^{i} = \frac{{\|d^{i}\|}^{2}}{\tr{d^{i}}Q d^{i}}$, $x^{i} \rightarrow \barr{x}$
-
-Our aim is to estimate how fast this converges.
-
-$f(x^{i}) - f_{*}= - \frac{1}{2} \tr{q} \inv{Q} q $ we know everything for this function, from last lecture ($x^{*} = -\inv{Q} q$).
-
-What  can we say about $f(x^{i+1}) - f_{*} = \frac{1}{2} \tr{(x^{i+1} - x_{*})} A (x^{i+1} - x_{*})$?
-
-I want it in terms of $x^{i+1} = x^{i} - \frac{{\|Qx^{i} - q\|}^{2}}{\tr{(Q{x}^{i} - q)}Q(Qx^{i}-q)}$
-
-From this fomula we can say that the error at the current step ($i+1$) is equal to the error of the step before ($i$) divided by something. 
-More precisely, $f_*(x) = \frac{1}{2} \tr{(x-x_*)} Q (x-x_*) = f(x) + \frac{1}{2}\tr{x_*}Qx_* = f(x) - f_*$
-
-If the quantity after the minus is positive but less than 1 the error at the next step will be less than the error at the previous step. This means not only \textbf{linear convergence}, but a bit more, because linear convergence only takes into consideration steps in proximity to the limit, while this formula holds also at the beginning.
-
-\begin{proposition}
-  If $Q$ is positive semidefinite $\tr{d}Qd = {\|d\|}_{Q}^{2}$
-\end{proposition}
-
-\begin{proposition}
-  If $Q$ is positive definite we can say that the error goes like $1 - \left( \frac{{\|d_i\|}^{2}}{(\tr{d^{i}} Q d^{i}) (\tr{d^{i}} \inv{Q} d^{i})} \right)$ or, equivalently, $1 - \frac{{{\norm{d_i}}_I}^2}{{{\norm{d_i}}_Q}^2} \cdot \frac{{{\norm{d_i}}_I}^2}{{{\norm{d_i}}_{\inv{Q}}}^2}$.
-\end{proposition}
-  
-We are measuring a vector with three different norms.
-
-We would like to estimate $\frac{<d_{i}, d_{i}>}{\tr{d_{i}}Qd_{i}}$.
-  
-  Given $\lambda_{i}$ the eigenvalues of $Q$, $\frac{1}{\lambda_{i}}$ are the eigenvalues of the matrix $\inv{Q}$. 
-
-  We can say that $\lambda^{n} \sqrnorm{x} \le \tr{x}Qx \le \lambda^{1} \sqrnorm{x}$, where $\lambda^{n}$ is the smallest eigenvalue, while $\lambda^{1}$ is the biggest.
-
-We are looking for a close formula for calculating the convergence rate, since it depends reursivley by the steps done. So we want to do a worst case analysis in order to find a faster way to calculate convergence rate.
-
-  We want to prove that R is smaller than 1 so we are looking for an upperbound. A coarse upperbound is $(1 - \frac{\lambda^{n}}{\lambda^{1}})$, but we can prove more: 
+\noindent Let us go back to the error function 
 \[
-  \forall \, x \in \mathds{R}^n \quad
-  \frac{{\| x \|}^{4}}{(x^{T} Q x)(x^{T} Q^{-1} x)} \geq
-  \frac{ 4 {\lambda}^{1} {\lambda}^{n} }{{( {\lambda}^{1} + {\lambda}^{n} )}^2}
+	\bar{f}(\vect{x^{i+1}}) = f(\vect{x^{i+1}}) - f_{*} = \frac{1}{2} \tr{(\vect{x^{i+1}} - \vect{x_{*}})} Q (\vect{x^{i+1}} - \vect{x_{*}})
 \]
-  We won't see the proof of this fact.
 
-  $R$ close to $0$ means that the algorithm is converging fast, so when the larger eigenvalue ($\lambda^{1}$) and the smallest eigenvalue ($\lambda^{n}$) are very close to eachother the algorithm is converging fast. We can say that, since the eigenvalues are the axis of the ellipsoid, the algorithm is converging fast when the ellipsoid has a round shape.
+\noindent The $(i+1)$th iteration is computed as 
+\[
+	\begin{split}
+		\vect{x^{i+1}} &= \vect{x^{i}} + \alpha^i \vect{d^i}\\
+		&\numeq{(a)}  \vect{x^{i}} + \frac{\sqrnorm{\vect{d^i}}}{\tr{\vect{d^i}} Q \vect{d^i}} \vect{d^i}\\
+		&\numeq{(b)} \vect{x^{i+1}} = \vect{x^{i}} + \frac{\sqrnorm{-Q\vect{x^{i}} - \vect{q}}}{\tr{(-Q\vect{{x}^{i}} - \vect{q})}Q(-Q\vect{x^{i}}-\vect{q})}
+	\end{split}
+\]
+where $\numeq{(a)}$ follows from the definition $ \alpha^i := \frac{\sqrnorm{\vect{d^i}}}{\tr{\vect{d^i}} Q \vect{d^i}}$ and $\numeq{(b)}$ from the fact that the moving direction is the opposite of the gradient (formally, $\vect{d^i} = - Q \vect{x^i} - q$).
 
-  We can provide an even better estimate, which is ${(\frac{\lambda^{1} - \lambda^{n}}{\lambda^{1}+\lambda^{n}})}^{2}$
+This means not only \textbf{linear convergence}, but a bit more, because linear convergence only takes into consideration steps in proximity to the limit, while this formula holds at the beginning as well.
 
-  How can we understand if the number of iterations needed to converge is a good result? Well, it depends on how that number is obtained. If it's dimensional independent it's very good, because it scales well (when the size of the space --- number of variables --- increases). It only depends on the conditioning of the matrix $Q$.
+\begin{proposition}
+  Let $A \in M(n, \R)$  be a positive semidefinite matrix.
+  $\forall \vect{v} \in \R^n$ $\tr{\vect{v}}A\vect{v} = {\|\vect{v}\|}_{A}^{2}$.
+\end{proposition}
+
+
+\begin{proposition}
+  If $Q$ is positive definite we can say that the error goes like $1 - \left( \frac{{\norm{\vect{d_i}}}^4}{(\tr{\vect{d^{i}}} Q \vect{d^{i}}) (\tr{\vect{d^{i}}} \inv{Q} \vect{d^{i}})} \right)$ or, equivalently, $1 - \frac{{{\norm{\vect{d_i}}}_I}^2}{{{\norm{\vect{d_i}}}_Q}^2} \cdot \frac{{{\norm{\vect{d_i}}}_I}^2}{{{\norm{\vect{d_i}}}_{\inv{Q}}}^2}$.
+\end{proposition}
+  
+  \todo[inline]{Fare proof, 
+  	$\bar{f}(\vect{x^{i+1}}) = 1 -  \left( \frac{{\norm{\vect{d_i}}}^4}{(\tr{\vect{d^{i}}} Q \vect{d^{i}}) (\tr{\vect{d^{i}}} \inv{Q} \vect{d^{i}})} \right) \bar{f}(\vect{x^i})$(hint: for $y^i = x^i - x_*$, $d^i = Q y^i$)
+  }
+\noindent We are measuring a vector with three different norms.
+We would like to estimate $\frac{\ps{\vect{d_{i}}}{\vect{d_{i}}}}{\tr{\vect{d_{i}}}Q\vect{d_{i}}}$.
+  
+  \begin{proposition}
+  	Let $A \in M(n, \R)$  be a positive semidefinite matrix. Given $\lambda_{i}$ the eigenvalues of $A$, $\frac{1}{\lambda_{i}}$ are the eigenvalues of the matrix $\inv{A}$.
+  \end{proposition}
+
+\noindent We can say that $\lambda_n \sqrnorm{\vect{x}} \le \tr{\vect{x}}Q\vect{x} \le \lambda_1 \sqrnorm{\vect{x}}$, where $\lambda_n$ is the smallest eigenvalue, while $\lambda_1$ is the biggest.
+
+We are looking for a close formula for calculating the convergence rate, since it depends recursivley by the steps done.
+So we want to do a worst case analysis in order to find a faster way to calculate convergence rate.
+
+We want to prove that $R$ is smaller than $1$ so we are looking for an upper-bound.
+
+A coarse upperbound is $(1 - \frac{\lambda_n}{\lambda_1})$, but we can prove more: 
+
+ \begin{proposition}
+	Let $A \in M(n, \R)$  be a positive definite matrix. Given $\lambda_{i}$ the eigenvalues of $A$,
+	\[
+	\forall \, \vect{v} \in \mathds{R}^n \quad
+	\frac{{\| \vect{v} \|}^{4}}{(\tr{\vect{v}} A \vect{v})(\tr{\vect{v}} \inv{A} \vect{v})} \geq
+	\frac{ 4 {\lambda}^{1} {\lambda}^{n} }{{( {\lambda}^{1} + {\lambda}^{n} )}^2}
+	\]
+\end{proposition}
+
+We won't see the proof of this fact.
+
+$R$ close to $0$ means that the algorithm is converging fast, so when the larger eigenvalue ($\lambda_1$) and the smallest eigenvalue ($\lambda_n$) are very close to each-other the algorithm is converging fast.
+  We can say that, since the eigenvalues represent the length of the axis of the ellipsoids (level sets), the algorithm is converging fast when the ellipsoid has a round shape.
+
+We can provide an even better estimate, which is ${(\frac{\lambda_1 - \lambda_n}{\lambda_1+\lambda_n})}^{2}$.
+
+ \noindent At this point, provided that we can estimate the number of iterations needed to reach convergence, how can we say that such a number is a good result?
+ As usual, it depends on how that number is obtained.
+ If it is dimensional independent it is very good, because it scales well (when the size of the space - number of variables - increases).
+ It only depends on the conditioning of the matrix $Q$.
 
 Of course as $n$ grows $Q$ changes, so in practice it may happen that the conditioning of the problem is worsening as $n$ grows. 
 
 If the balls are very rounded the zig zags needed to start converging are very few. 
 
-\textbf{Obs:} We found a bound for the convergence speed of the algorithm when $Q$ is positive definite. What can we say when $Q$ is positive semidefinite? The algorithm works, but we can't provide an upperbound for the convergence rate. We are even more restrictive when dealing with machine precision, since if there is an eigenvalue which is bigger than zero, but very close to zero, becomes $0$ on the machine, so we can't give an upperbound.
+\begin{myframe}{\bf Note}
+	So far, we provided a bound for the convergence speed of the algorithm when $Q$ is positive definite.
+	What can we say when $Q$ is positive semidefinite?
+	The algorithm works, but we can't provide an upper-bound for the convergence rate.
+	We are even more restrictive when dealing with machine precision, since if there is an eigenvalue which is bigger than zero, but very close to zero, it turns out to be $0$ on the machine, so we cannot provide an upper-bound.
+	We will see how to deal with this case. TODO: mettere reference
+\end{myframe}
 
-We will see how to deal with this case.
-\subsection{MatLab implementation}
 
-Let's talk about the implementation. First of all we need to set a proper value for $\epsilon$. A good idea would be the norm of the gradient. We need to give also some performance bound, like maximum number of iterations or the maximum amount of time.
+\subsection{Quadratic gradient descent in Matlab}
 
-\textbf{MatLab call:}
+When we are trying to move from theory to practice we need to take into account some practical issue, such as picking a good value for $\eps$.
+A good idea would be the norm of the gradient, but in order not to end up in a loop we need to provide also some performances bound, e.g. the maximum number of iterations or the maximum amount of time.
+
+Let us suppose that we implemented the quadratic gradient descent algorithm in Matlab, with the following signature:
+
 \begin{minted}[linenos=true,bgcolor=bg]{matlab}
   function[x, status] = SDQ(Q, q, x, fStar, eps, MaxIter)  
 \end{minted}
 
-where fStar is the optimal value, which should give us an idea of the convergence.
+where \texttt{fStar} is the optimal value, which is used to provide an estimate of the convergence.
+
 \begin{myframe}{\bf Note}
+	When implementing functions for optimization is important to:
   \begin{itemize}
-  \item Always check the coherence of input values (check if the user passed allowed parameters);
-  \item Always give all possible information about your result (for example if the algorithm stopped because the maximum number of iterations was reached or because the epsilon value was reached);
-  \item Always check in your code the accepted values of variables during calculations: for example if you need to divide by a quantity that may be smaller than the precision check it before computing the ratio;
-  \item Design a good log, in order to understand what's happening at each step.
+	  \item check the coherence of input values (namely, if the user passed allowed parameters);
+	  \item give all possible information about your result (for example if the algorithm stopped because the maximum number of iterations was reached or because the epsilon value was reached);
+	  \item check at any iteration the values of variables during computations (e.g. before dividing by a quantity that may be smaller than the precision check it before computing the ratio);
+	  \item design a good log, in order to understand what is going on at each step.
   \end{itemize}
 \end{myframe}
 
-In the code of that function we also kept track of the actual ratio between the error at one step and the error at the next one. This information tells us how many orders of magnitude the error decrease. We can find starting points where the ratio is exaclty $R$. We can observe that when the conditioning is quite good the error decrease faster than the $R$ limitation, but as soon as we change the values for $Q$ and $q$ things may be worse.
+\begin{example}
+In the implementation of \href{http://www.latex-tutorial.com}{\texttt{SDQ}}\footnote{https://elearning.di.unipi.it/mod/resource/view.php?id=5033} provided by professor Frangioni, the execution keeps track of the actual ratio between the error at one step and the error at the next step.
+This information provides insights about how many orders of magnitude the error decreases.
+We can find starting points where the ratio is exactly $R$.
+We can observe that when the conditioning is quite good the error decrease faster than the $R$ limitation, but as soon as we change the values for $Q$ and $q$ things may change completely.
 
-We saw from some examples that if the conditioning grows the number of iterations needed to find the minumum increases as well.
+If the reader wants to run some examples, he should notice that if the conditioning grows, the number of iterations needed to find the minimum increases as well.
 
-Trying the algorithm on some examples shows that the theoric results are reflected well in the practical case.
+Trying the algorithm on some examples shows that the theoretical results are reflected well in the practical case.
+\end{example}
 
 \subsubsection{Error}
-When we are running an algorithm, starting from a point that will not lead to the optimum we would like to stop anyway, at a certain point, when we are close enough to the solution.
-\quad $\varepsilon_A = f(x^i) - f_* \leq \varepsilon$ \hspace{3.55cm}
-       (absolute error)
- 
-In this context, we introduce the consept of \textbf{relative error}, since the error may be big or small if compared with the value of the function.
+As mentioned above, if we picked as starting point for the algorithm a value that does not lead to a minimizing sequence, we need to stop iterating after a while, possibly when we are close enough to the solution, i.e. the absolute error $\eps_A$ is small enough: $\varepsilon_A = f(x^i) - f_* \leq \varepsilon$.
+It is in this context that we introduce the concept of \textbf{relative error}, that compares the error with the value of the function.
 
-This relative error is invriant for scaling transformations.
-Notice that if $f^{*}$ might be zero the forumla should be changed.
+\begin{definition}[Relative error]
+	Let $f:\R^n \to \R$ be a quadratic function and let us consider the gradient descent algorithm for minimizing $f$, where at iteration $i$ the moving direction $\vect{d^i} \in \R^n$ and the step size $\alpha^i \in \R$ are computed. 
+	We term \textbf{relative error} at the $i$-th iteration with respect to the optimal value and denote $\eps_R$
+	 \[
+	 \varepsilon_R = ( \, f(x^i) - f_* \, ) \,/\, | \, f_* \, |
+	= \varepsilon_A  \,/\, | \, f_* \, | \leq \varepsilon
+	\]
+\end{definition}
 
-       \quad $\varepsilon_R = ( \, f(x^i) - f_* \, ) \,/\, | \, f_* \, |
-              = \varepsilon_A  \,/\, | \, f_* \, | \leq \varepsilon$
-       \qquad (relative error)
+This relative error is invariant for scaling transformations.
+Notice that if $f^{*}$ might be zero the formula should be changed.
 
-The problem is that often we don't know $f^{*}$, so it's impossible to compute this kind of error.
+In practice, computing such error is unfeasible because we do not know $f^{*}$.
+In this very common case we can substitute $f^*$ with a good lower bound $\underline{f} \le f^{*}$for $f^{*}$, but in this course we will not focus on finding $\underline{f}$.
 
-In this very common case a good lower bound $\underline{f} \le f^{*}$for $f^{*}$. In this course we won't focus on finding $\underline{f}$.
-
-Another stopping conditions may be the following:
+Alternative stopping conditions are bounds on the norm of the gradient:
 \begin{itemize}
   \item \quad $\| \, \nabla f(x^i) \, \| \leq \varepsilon$
        \hspace{2.45cm} (``absolute version'')
@@ -138,13 +196,13 @@ Another stopping conditions may be the following:
        \qquad (``relative version'')
 \end{itemize}
 
-The sencond stopping condition is expressed in relation to the first value for the norm of the gradient.
+The second stopping condition is expressed in relation to the value of the norm of the gradient at the starting point.
 
-We usually chose the norm of the gradient as a threshold for precision, but we don't know how this quantity relates to $\epsilon_{A}$ or $\epsilon_{B}$.
+We usually choose the norm of the gradient as a threshold for precision, but we do not know how this quantity relates to $\eps_{A}$ or $\eps_{B}$.
 
 \begin{example}
-for $X = \mathcal{B}(0, r)$ and $f$ convex, estimate $\varepsilon_A$ when  $\| \, \nabla f(x^i) \, \| \leq \varepsilon$
-  
-  I've got a convex function and I know the the minimum is in a ball. We can minimize the linear function in the range of the ball and that minumum is surely a lower bound.
+	Let $f:\R^n \to \R$ a convex function and let $X = \mathcal{B}(\vect{0}, r)$.
+	Estimate $\varepsilon_A$ when  $\norm{\nabla f(\vect{x^i})} \leq \varepsilon$.
+	Provided that we are studying a convex function we can easily find the minimum in a ball.
+	We can then minimize the linear function in the range of the ball and that minumum is surely a lower bound.
 \end{example}
-\end{document}

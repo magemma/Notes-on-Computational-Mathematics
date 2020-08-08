@@ -3,11 +3,11 @@
 %chktex-file 24
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
+\chapter{16th of November 2018}
+\chapterauthor{A. Frangioni}
+%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{16th of November 2018 --- A. Frangioni}
-%%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 What happens when the Hessian isn't strictly positive definite? If there are some negative eigenvaues, I can desume that there are some directions in which the function goes to $-\infty$. The model has no minimum, unless we restrict to a \textbf{compact set}.
 
 In particular, we may decide to restrict to a part of the space where we can trust our model, which is called \textbf{trust region}.
@@ -15,12 +15,12 @@ In particular, we may decide to restrict to a part of the space where we can tru
 Finding such a region is a NP-hard problem, if we don't restrict to a ball.
 
 \begin{definition}[Karush-Khun-Tucker conditions]
-  Any optimal solution of the problem $x^{i+1}$ must satisfy that $\equiv$ $\exists \, \lambda \geq 0$ s.t.
+  Any optimal solution of the problem $\vect{x^{i+1}}$ must satisfy that $\equiv$ $\exists \, \lambda \geq 0$ s.t.
 
   \begin{description}
-    \item[{\sc Karush:}]$[H^i +\lambda I ] x^{i+1} = - \nabla f(x^i)$ [linear];
+    \item[{\sc Karush:}]$[H^i +\lambda I ] \vect{x^{i+1}} = - \nabla f(\vect{\vect{x^i}})$ [linear];
     \item[{\sc Kuhn:}] $H^i + \lambda I~\succeq~ 0$ [semidefinite];
-    \item[{\sc Tucker:}] $\lambda (r - \norm{x^{i+1}}) = 0$ [nonlinear].
+    \item[{\sc Tucker:}] $\lambda (r - \norm{\vect{x^{i+1}}}) = 0$ [nonlinear].
   \end{description}
 Where the last condition means that $\lambda$ has to be $0$, unless the solution we get is exaclty on the border of the ball.
 \end{definition}
@@ -28,7 +28,7 @@ Where the last condition means that $\lambda$ has to be $0$, unless the solution
 What's the difference between this approach and what we used to do before? 
 We have two different cases:
   \begin{itemize}
-    \item $\norm{x^{i+1}} < r \Longrightarrow \lambda = 0 \Longrightarrow$ normal Newton step ($\mathcal{T}$ has no effect);
+    \item $\norm{\vect{x^{i+1}}} < r \Longrightarrow \lambda = 0 \Longrightarrow$ normal Newton step ($\mathcal{T}$ has no effect);
     \item $\lambda > 0 \text{(= small radius r)} \Longrightarrow$ like in line search with $\varepsilon^i = \lambda$.
   \end{itemize}
 
@@ -38,24 +38,24 @@ The problem is computing these systems of equations taking less than $O(n^3)$.
 We don't need to compute the Hessian, we can use the first order information to infer things on the second order matrix, although we don't really need to compute the Hessian.
 \end{myframe}
 
-\subsection{Quasi-newton methods}
+\section{Quasi-newton methods}
 At a step we have:
-$m^i(x) = \nabla f(x^i) (x - x^i) + \frac{1}{2} \tr{(x - x^i)} H^i (x - x^i)$, $x^{i+1} = x^i + \alpha^i d^i$
+$m^i(x) = \nabla f(\vect{x^i}) (x - \vect{x^i}) + \frac{1}{2} \tr{(x - \vect{x^i})} H^i (x - \vect{x^i})$, $\vect{x^{i+1}} = \vect{x^i} + \alpha^i d^i$
 
-At the next step we recompute the gradient in $x^{i+1}$ and the matrix $H^{i+1}$:
- $m^{i+1}(x) =\nabla f(x^{i+1}) (x - x^{i+1}) + \frac{1}{2} \tr{(x - x^{i+1})} H^{i+1} (x - x^{i+1})$
+At the next step we recompute the gradient in $\vect{x^{i+1}}$ and the matrix $H^{i+1}$:
+ $m^{i+1}(x) =\nabla f(\vect{x^{i+1}}) (x - \vect{x^{i+1}}) + \frac{1}{2} \tr{(x - \vect{x^{i+1}})} H^{i+1} (x - \vect{x^{i+1}})$
 
 How should $H^i$ be chosen? It should satisfy the following:
 \begin{enumerate}
   \item positive definite ($H^{i+1} \succ 0$);
-  \item we know the gradient in the previous point, we know the gradient in the current point, we construct $H^{i+1}$ such that the model works: $\nabla m^{i+1}(x^i) = \nabla f(x^i)$;
+  \item we know the gradient in the previous point, we know the gradient in the current point, we construct $H^{i+1}$ such that the model works: $\nabla m^{i+1}(\vect{x^i}) = \nabla f(\vect{x^i})$;
   \item $\norm{H^{i+1} - H^i}$ is ``small''.
 \end{enumerate}
 
-This new model isn't too different from the previous one, because of the third preerty. Or equivalently $H^{i+1} ( \, x^{i+1} - x^i \, ) = \nabla f(x^{i+1}) - \nabla f(x^i)$, which we call \textbf{secant equation} and we denote (S).
+This new model isn't too different from the previous one, because of the third preerty. Or equivalently $H^{i+1} ( \, \vect{x^{i+1}} - \vect{x^i} \, ) = \nabla f(\vect{x^{i+1}}) - \nabla f(\vect{x^i})$, which we call \textbf{secant equation} and we denote (S).
 
 To ease notation we define $s^i$ such that:
-$s^i = x^{i+1} - x^i = \alpha^i d^i$ and $y^i = \nabla f(x^{i+1}) - \nabla f(x^i)$.
+$s^i = \vect{x^{i+1}} - \vect{x^i} = \alpha^i d^i$ and $y^i = \nabla f(\vect{x^{i+1}}) - \nabla f(\vect{x^i})$.
 
 $s^i$ is chosen, while $y^i$ is decided by the function.
 
@@ -67,13 +67,13 @@ In order to have a matrix $H^i$ that satifies the first two condition we could c
 
 \begin{proof}
   \[
-    \varphi'(\alpha^i) = \nabla f(x^{i+1}) d^i \geq m_3 \varphi'(0) = m_3 \nabla f(x^i) d^i
+    \varphi'(\alpha^i) = \nabla f(\vect{x^{i+1}}) d^i \geq m_3 \varphi'(0) = m_3 \nabla f(\vect{x^i}) d^i
   \]
   \[
     \Downarrow
   \]
   \[
-    (\nabla f(x^{i+1}) - \nabla f(x^i)) d^i \geq (m_3 - 1) \varphi'(0) > 0
+    (\nabla f(\vect{x^{i+1}}) - \nabla f(\vect{x^i})) d^i \geq (m_3 - 1) \varphi'(0) > 0
   \]
 \end{proof}
 
@@ -81,7 +81,7 @@ In order to have a matrix $H^i$ that satifies the first two condition we could c
   We may observe that this theorem implies that if we perform Armijo Wolf exact line search condition (C) can always be satisfied.
 \end{obs}
 
-\subsubsection{Davidson-Fletcher-Powell}
+\subsection{Davidson-Fletcher-Powell}
 How can we choose a $H^i$ that satisfies the three conditions enumerated above? Taking $H^{i+1} =argmin \{\norm{H - H^i}~:~H \in$(S) and $ ~ H \succeq 0\}$ is a good idea and for this minimum problem holds the following:
 
 \begin{theorem}[Davidson-Feltcher-Powell]
@@ -104,7 +104,7 @@ It's important to notice that this operation has a cost of $O(n^2)$.
 
 We can do better, in terms of computational complexity.
 
-\subsubsection{Broyden-Fletcher-Goldfarb-Shanno}
+\subsection{Broyden-Fletcher-Goldfarb-Shanno}
 
 We can use directly $B^i$, the inverse of $H^i$.
 Write (S) for $B^{i+1}$: $s^i = B^{i+1} y^i \Longrightarrow B^{i+1} =$ argmin $\{\norm{B - B^i}~:~\ldots~ \}$.
@@ -130,7 +130,7 @@ Let us see a couple of choices for $B^1$:
 
 Let us compute the space needed to store the $B^i$s: order of $n^2$ is still a lot. What happens if we restrict to working with information of the last $k$ operations?
 
-\subsubsection{Poorman's approach}
+\subsection{Poorman's approach}
 
 At each step we only consider $B^{i-k}$ and $k$ rank one operations. This operations cost $n$ each, and we have $k$ lines. The problem is that $B^{i-k}$ takes $O(n^2)$ space. We can optimize if we choose $B^{i-k}$ to be simpler, say a multiple of the identity, or finite difference of the gradient. Then the space complexity is $O(kn)$.
 
@@ -142,7 +142,7 @@ We may notice that this variation of Newton method doesn't get trapped in local 
 \end{myframe}
 
 
-\subsection{Conjugate gradient method}
+\section{Conjugate gradient method}
 
 \recap{In the gradint method, the angle between two consecutive directions is exactly $\ang{90}$, as can be seen in \Cref{fig:16nov1}.}
 
@@ -177,7 +177,7 @@ The number of iterations needed to converge is proportional to the clusterizatio
 
 The algorithm that was presented is for quadratic functions, but the same algorithm works for non quadratic function as well, as long as we change the fomula for $\beta$.
 
-The pseudocode of \Cref{alg:16novCGA} is referred to Fletcher-Reeves definition of $\beta^i$ $\beta^i = \norm{\nabla f(x^i)} / \sqrnorm{\nabla f(x^{i-1})}$.
+The pseudocode of \Cref{alg:16novCGA} is referred to Fletcher-Reeves definition of $\beta^i$ $\beta^i = \norm{\nabla f(\vect{x^i})} / \sqrnorm{\nabla f(x^{i-1})}$.
 
 This algorithm converges in at most $n$ iterations.
 
@@ -188,7 +188,7 @@ This algorithm converges in at most $n$ iterations.
         \If{($\nabla f^- = 0$)}
           \State~$d \gets - \nabla f(x)$;
         \Else%
-          \State~$\beta = \sqrnorm{\nabla f(x^i)} / \sqrnorm{\nabla f^- }$;
+          \State~$\beta = \sqrnorm{\nabla f(\vect{x^i})} / \sqrnorm{\nabla f^- }$;
           \State~$d \gets - \nabla f(x) + \beta d^-$;
         \EndIf%
         \State~$\alpha \gets$ AWLS($f(x + \alpha d)$);
@@ -202,10 +202,10 @@ This algorithm converges in at most $n$ iterations.
 We have three different formulas for $\beta_i$, which coincide in the quadratic case.
 
 \begin{enumerate}
-  \item Polak-Ribi\`ere: $\beta^i = \frac{[\nabla \tr{f(x^i)} (\nabla f(x^i) - \nabla f(x^{i-1}))]}{\sqrnorm{\nabla f(x^{i-1})}}$  
-  \item Hestenes-Stiefel: $\beta^i = \frac{\tr{\nabla f(x^i)}(\nabla f(x^i) - \nabla f(x^{i-1}))}{\tr{(\nabla f(x^i) - \nabla f(x^{i-1}))}d^{i-1}}$
+  \item Polak-Ribi\`ere: $\beta^i = \frac{[\nabla \tr{f(\vect{x^i})} (\nabla f(\vect{x^i}) - \nabla f(x^{i-1}))]}{\sqrnorm{\nabla f(x^{i-1})}}$  
+  \item Hestenes-Stiefel: $\beta^i = \frac{\tr{\nabla f(\vect{x^i})}(\nabla f(\vect{x^i}) - \nabla f(x^{i-1}))}{\tr{(\nabla f(\vect{x^i}) - \nabla f(x^{i-1}))}d^{i-1}}$
     
-  \item Dai-Yuan: $\beta^i = \frac{\sqrnorm{\nabla f(x^i)}}{\tr{(\nabla f(x^i) - \nabla f(x^{i-1}))} d^{i-1}}$
+  \item Dai-Yuan: $\beta^i = \frac{\sqrnorm{\nabla f(\vect{x^i})}}{\tr{(\nabla f(\vect{x^i}) - \nabla f(x^{i-1}))} d^{i-1}}$
 \end{enumerate}
 
 Some of these algorithms require some hypothesis on the function in order for the conjugate method to converge.
@@ -220,4 +220,3 @@ Sometimes it's important to restart from scratches if the algorithm isn't conver
 The idea of taking the gradient and modify it instead of multiplying by a factor, adding the previous direction.
 
 It's possibile to design hybrids between quasi-Newton and conjugate method.
-\end{document}

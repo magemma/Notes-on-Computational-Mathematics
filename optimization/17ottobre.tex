@@ -5,94 +5,120 @@
 %chktex-file 9
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
-
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{17th of October 2018 --- A. Frangioni}
+\chapter{17th of October 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\subsection{Optimization algorithms}
+\section{Optimization algorithms}
 
-\recap{We are interested in finding the minimum of a function through an iterative procedure, such that we start form an initial guess $x_0$ and go on $x^i \rightsquigarrow x^{i+1}$. We want to move towards the otimum.}
+\recap{We are interested in finding the minimum of a function through an iterative procedure, such that we start form an initial guess $\vect{x_0}$ and go on ($\vect{x^i} \rightsquigarrow \vect{x^{i+1}}$). We want to move towards the optimum.
+
+Notice that with $\vect{x^i} \in \R^n$ we refer to the point $\vect{x}$ at $i$-th iteration.}
 
 How to be sure we are in an optimum?
 \begin{itemize}
-  \item (strong) $\{x^i\} \to x_*$: the whole sequence converges to an optimal solution;
-  \item (weaker) all accumulation points of $\{x^i\}$ are optimal solutions;
-  \item (weakest) at least one accumulation point of $\{x^i\}$ is optimal.
+  \item (strong) $\{\vect{x^i}\} \to \vect{x_*}$: the whole sequence converges to an optimal solution;
+  \item (weaker) all accumulation points of $\{\vect{x^i}\}$ are optimal solutions;
+  \item (weakest) at least one accumulation point of $\{\vect{x^i}\}$ is optimal.
 \end{itemize}
 
-Such iterative process, can be held in two different forms:
+Such iterative process, can be held in two different ways:
 \begin{description}
-  \item[{\sc line search}:] first choose $d^i \in \R^n$ (direction), then choose $\alpha^i \in \R$ (that we term stepsize or equivalently ``learning rate'') s.t. $x^{i+1} \gets x^i + \alpha^i d^i$;
-  \item[{\sc trust region}:] first choose $\alpha^i$ (trust radius), then choose $d^i$.
+  \item[{\sc line search}:] first choose $\vect{d^i} \in \R^n$ (direction), then choose $\alpha^i \in \R$ (that we term stepsize or equivalently ``learning rate'') s.t. $\vect{x^{i+1}} \gets \vect{x^i} + \alpha^i \vect{d^i}$;
+  \item[{\sc trust region}:] first choose $\alpha^i$ (that we call \emph{trust radius} and somehow indicates the ball in which we think that the information that we have is accurate), then choose $\vect{d^i}$.
 \end{description}
 
-In both these alternatives, it is crucial to choose a proper model to approximate function $f$.
+In both these alternatives, it is crucial to choose a proper model to approximate function the objective function $f$.
 
-\subsubsection{Gradient method for quadratic functions}
-The simplest model we can build is a linear one, namely $L^i(x) = L_{x^i}(x) = f(x^i) + \nabla f(x^i) (x - x^i)$ and find the direction according to the model.
+\subsection{Gradient method for quadratic functions}
+The simplest model we can build is a linear one, namely $L^i(\vect{x}) = L_{\vect{x^i}}(\vect{x}) = f(\vect{x^i}) + \nabla f(\vect{x^i}) (\vect{x} - \vect{x^i})$ and find the descending direction of the model.
 
-We should not move too far from $x^i$, so we want $\alpha_i \to 0$ and then $d_i = argmin \{\lim\limits_{t \to 0} \frac{f(x + td)}{t}\} = - \nabla f(x^i)$, aka the steepest descent direction.
+The first order information is accurate only around $\vect{x^i}$ and this is why we should not move too far from $\vect{x^i}$, so we want $\alpha_i \to 0$ and then we pick the steepest descent direction, computed as $\vect{d_i} = \argmin\limits_{d} \{\lim\limits_{t \to 0} \frac{f(\vect{x} + t\vect{d})}{t}\} = - \nabla f(\vect{x^i})$.
 
-Notice that a too short step is bad either, because the gain in the value of the function is very little.
+\noindent Notice that a too short step is bad either, because the gain in the value of the function is very little.
 
-At each step we want $\alpha^i \in \mbox{argmin} \{f(x^i + \alpha d^i)~:~\alpha \geq 0\}$.
+\noindent Alternatively, we can choose to pick a different step size at each iteration $\alpha^i = \argmin\limits_\alpha f(\vect{x^i} + \alpha \vect{d^i})$ s.t. $\alpha \geq 0$.
 
-Linear functions are unbounded below, so we would like to use a different family of functions. The easiest family of functions which are still more complex than linear ones are quadratic functions.
+The main drawback of choosing linear functions to approximate the objective function is that linear functions are unbounded below.
+The easiest family of functions which are still simple, yet more complex than linear ones are quadratic functions:
 
 \[
-  f(x) = \frac{1}{2} x^T Q x + q x
+  f(\vect{x}) = \frac{1}{2} \vect{x}^T Q \vect{x} + \tr{\vect{q}} \vect{x}
 \]
-where $Q \succeq 0$ otherwise $f$ is unbounded below.
+where $Q \succeq 0$, otherwise $f$ would be unbounded below.
 
-The minimum here is the point in which the gradient ($\nabla f(x) = Qx + q$) is $0$.
+\noindent The minimum is the point in which the gradient ($\nabla f(\vect{x}) = Q\vect{x} + \vect{q}$) is $0$.
+
+\noindent A formalization of the gradient descent algorithm for quadratic functions can be found in \Cref{alg:17ottquad}.
 
 \algo{alg:17ottquad}{Pseudocode for quadratic functions local minimum detection.}{
-    \Procedure{\bf SDQ}{$f, x, \varepsilon$}
-      \While{($\norm{\nabla f(x)} > \varepsilon$)}
-        \State~$d \gets - \nabla f(x)$;
-        \State~$\alpha \gets \frac{\sqrnorm{d}}{(\tr{d} Q d)}$;
-        \State~$x \gets x + \alpha d$;
+    \Procedure{\bf SDQ}{$f, \vect{x}, \varepsilon$}
+      \While{($\norm{\nabla f(\vect{x})} > \varepsilon$)}
+        \State~$d \gets - \nabla f(\vect{x})$;
+        \State~$\alpha \gets \frac{\sqrnorm{\vect{d}}}{(\tr{\vect{d}} Q \vect{d})}$;
+        \State~$x \gets \vect{x} + \alpha \vect{d}$;
       \EndWhile%
     \EndProcedure%
 }
 
-For the time being we do not go into detail of how to chose the $\eps$ such that we can stop when the norm of the gradient is smallert than such a constant.
+\noindent As usual, we need to choose an error threshold $\varepsilon$ under the one we feel allowed to think that the optimum has been reached and we set it as the norm of the gradient.
 
-Let us see how to obtain the formula for $\alpha$.
+\noindent As far as the step size is concerned, let us find the minimum of $f(\vect{x^i} + \alpha \vect{d^i})$ such that $\alpha \ge 0$:
+\[
+	\begin{split}
+	\min\limits_\alpha  f(\vect{x^i} + \alpha \vect{d^i}) &= \min\limits_\alpha \frac{1}{2} \tr{(\vect{x^i} + \alpha \vect{d^i})} Q (\vect{x^i} + \alpha \vect{d^i}) + \tr{\vect{q}} (\vect{x^i} + \alpha \vect{d^i})\\
+	&= \min\limits_\alpha \frac{1}{2} \tr{\vect{x^i}} Q \vect{x^i} + \frac{1}{2} \tr{\vect{x^i}} Q \alpha \vect{d^i} + \frac{1}{2} \alpha \tr{\vect{d^i}} Q \vect{x^i} + \frac{1}{2} \alpha \tr{\vect{d^i}} Q \alpha \vect{d^i} +  \tr{\vect{q}} \vect{x^i} + \alpha \tr{\vect{q}} \vect{d^i}\\
+	 &\numeq{(1)} \min\limits_\alpha \frac{1}{2} \tr{\vect{x^i}} Q \vect{x^i} + \alpha \tr{\vect{x^i}} Q \vect{d^i} + \frac{1}{2} \alpha^2 \tr{\vect{d^i}} Q \vect{d^i} + \tr{\vect{q}} \vect{x^i} + \alpha \tr{\vect{q}} \vect{d^i}\\
+	&\numeq{(2)}\min\limits_\alpha \alpha \tr{\vect{x^i}} Q \vect{d^i} + \frac{1}{2} \alpha^2 \tr{\vect{d^i}} Q \vect{d^i} + \alpha \tr{\vect{q}} \vect{d^i}\\
+	&= \min\limits_\alpha [\frac{1}{2} \tr{(\vect{d^i})} Q \vect{d^i}] \alpha^2  + \alpha [(\tr{\vect{x^i}} Q + \tr{\vect{q}}) \vect{d^i}]\\
+	&= \min\limits_\alpha \Biggl ( \biggl ( \frac{1}{2} \tr{\vect{d^i}} Q \vect{d^i} \biggr ) \alpha^2 + \alpha \cdot \biggl (\tr{\vect{x^i}} Q + \tr{\vect{q}} \biggr ) \vect{d^i}\Biggr )
+	\end{split}
+\]
 
-We are interested in computing the minimum of $\{ f(x^i + \alpha d^i) : \alpha \ge 0\}$.
+where $\numeq{(1)}$ is due to the fact that $Q$ is symmetric and $\numeq{(2)}$ follows from the fact that $\frac{1}{2}  \tr{\vect{x^i}} Q \vect{x^i}$ and $ \tr{\vect{q}} \vect{x^i}$ are constant with respect to $\alpha$.
 
-Let us do come algebra to describe better such an $f$:
+\noindent The minimum of such $f$ can be found deriving and imposing the gradient to $0$.
+
+\[
+	\begin{split}
+	\parder{f(\vect{x^i} + \alpha \vect{d^i})}{\alpha} = 0\\
+	\parder{\Biggl ( \biggl ( \frac{1}{2} \tr{\vect{d^i}} Q \vect{d^i} \biggr ) \alpha^2 + \alpha \cdot \biggl (\tr{\vect{x^i}} Q + \tr{\vect{q}} \biggr ) \vect{d^i}\Biggr )}{\alpha}=0\\
+	\cancel{2} \cdot \frac{1}{\cancel{2}} \tr{\vect{d^i}} Q \vect{d^i} \cdot \alpha + \bigl (\tr{\vect{x^i}} Q + \tr{\vect{q}} \bigr ) \vect{d_i}=0\\
+	\tr{\vect{d^i}} Q \vect{d^i} \cdot \alpha = - \bigl ( \tr{\vect{x^i}} Q + \tr{\vect{q}} \bigr ) \vect{d_i}\\
+	\alpha = -\frac{\bigl (\tr{\vect{x^i}} Q + \tr{\vect{q}} \bigr ) \vect{d_i}}{\tr{\vect{d^i}} Q \vect{d^i}}
+	\end{split}
+\]
+
+\todo[inline]{Per me da qui non ha senso...}
+\noindent Hence, the minimum value of $f$ is computed as 
 
 \begin{equation}
   \begin{split}
-    f(x^i + \alpha d^i) &= \frac{1}{2} (x^i + \alpha d^i) Q (x^i + \alpha d^i) + q (x^i + \alpha d^i)\\
-    &= \cancel{\frac{1}{2} \tr{x^i}Q x^i}  + \tr{(x^i)} Q (\alpha d^i) + \frac{1}{2} \tr{(d^i)} Q d^i + \cancel{q x^i} + \alpha (q d^i)\\
-    &= [\frac{1}{2} \tr{(d^i)} Q d^i] \alpha^2  + \alpha [(x^i Q + q) d^i]\\
-    &\numeq{(1)} [\frac{1}{2} \tr{(d^i)} Q d^i] \alpha  - \norm{d^i}\\
+    f(\vect{x^i} + \alpha \vect{d^i}) &= \frac{1}{2} \tr{(\vect{x^i} + \alpha \vect{d^i})} Q (\vect{x^i} + \alpha \vect{d^i}) + \vect{\tr{q}} (\vect{x^i} + \alpha \vect{d^i})\\
+    &= \cancel{\frac{1}{2} \tr{\vect{x^i}}Q \vect{x^i}}  + \tr{(\vect{x^i})} Q (\alpha \vect{d^i}) + \frac{1}{2} \alpha^2 \tr{(\vect{d^i})} Q \vect{d^i} + \cancel{\vect{\tr{q}} \vect{x^i}} + \alpha (\vect{\tr{q}} \vect{d^i})\\
+    &\numeq{(1)} \biggl (\frac{1}{2} \tr{(\vect{d^i})} Q \vect{d^i} \biggr )\alpha^2  + \alpha \biggl ((\vect{x^i} Q + \vect{\tr{q}}) \vect{d^i}\biggr )\\
+    &\numeq{(2)} \biggl (\frac{1}{2} \tr{(\vect{d^i})} Q \vect{d^i} \biggr ) \alpha  - \norm{\vect{d^i}}\\
   \end{split}
 \end{equation}
 
-What if $\tr{(d^i)} Q d^i = 0$? If $Q$ is strictly positive definite this cannot happen, so the algorithm never breaks down.
 
-Can we prove that the sequence of iterates is moving towards the optimum?
+What if $\tr{(\vect{d^i})} Q \vect{d^i} = 0$? If $Q$ is strictly positive definite this cannot happen, so the algorithm never breaks down.
 
-For this proof let us assume that $\eps = 0$, hence the procedure will neve stop. We want to prove that the sequence $\{x^i\}$ is (or contains) a minimizing sequence.
+\todo[inline]{... Fino a qui}
 
-First of all we can state that the sequence is monotone, so it has a limit for sure.
+At this point we are left with a few issues:
+\begin{itemize}
+	\item Pick a proper $\varepsilon > 0$ (e.g. $\varepsilon = 0$ does not lead to convergence with machine precision)
+	\item Check if $\{\vect{x^i}\}$ converges. This an be easily proved by construction:
+	\[
+	\lim\limits_{i \to \infty} \ps{\nabla f(\vect{x^i})}{\nabla f(\vect{x^{i+1}})} \numeq{(*)} \ps{\nabla f(\vect{x_*})}{\nabla f(\vect{x_*})} = 0
+	\]
+	because at each step the gradients are orthogonal and $\numeq{(*)}$ follows from the fact that the gradient is continuous.
+	\item Assess the convergence speed.
+\end{itemize}
 
-What we can prove is that the the point where the sequence is converging is a stationary point.
-$\lim\limits_{i \to \infty} \ps{\nabla f(x^i)}{\nabla f(x^{i+1})} = 0 \numeq{(*)} \ps{\nabla f(x)}{\nabla f(x)}$ and this holds because of the fundamental relationship $\ps{\nabla f(x^i)}{\nabla f(x^{i+1})} = 0$.
-
-Notice that $\numeq{(*)}$ follows from the fact that the gradient is continuous.
-
-How fast is the convergence?
-
-In general, showing how fast $\| \, x^i - x_* \, \|$ decreases is more involved that showing how fast $f(x^i) - f_*$ decreases, but we do not know $f_*$.
-
-We concentrate on computing $\lim\limits_{i \to \infty} \frac{f(x^{i+1}) - f_*}{{f(x^i) - f_*}^p}=R$.
-
+\noindent In general, showing how fast $\norm{\vect{x^i} - \vect{x_*}}$ decreases is more involved that showing how fast $f(\vect{x^i}) - f_*$ decreases, but we do not know $f_*$.
+We concentrate on computing $\lim\limits_{i \to \infty} \frac{f(\vect{x^{i+1}}) - f_*}{{f(\vect{x^i}) - f_*}^p}=R$.
 According to the values of $p$ and $R$ we get the following alternatives:
 \begin{description}
   \item[{\sc Sublinear:}] $p = 1, R = 1$;
@@ -101,19 +127,32 @@ According to the values of $p$ and $R$ we get the following alternatives:
   \item[{\sc Quadratic:}] $p = 2, R > 0$.
 \end{description}
 
-Since the optimum is in $x^* = -\inv{Q} q$, we get that $f(x^*) = \frac{1}{2} \tr{q} \inv{Q} Q \inv{Q} q - \tr{q} \inv{Q} q = \frac{1}{2}  \tr{q} \inv{Q} q - \tr{q} \inv{Q} q = -\frac{1}{2} \tr{q} \inv{Q} q$.
+\noindent Since the optimum is in $\vect{x_*} = -\inv{Q} \vect{q}$, we get that 
+\[
+\begin{split}
+	f(\vect{x_*}) &= \frac{1}{2} \tr{(-\inv{Q} \vect{q})} Q (-\inv{Q} \vect{q}) - \tr{\vect{q}} \inv{Q} \vect{q}\\
+	&= \frac{1}{2} \tr{\vect{q}} \tr{\inv{Q}} \cancel{Q} \cancel{\inv{Q}} \vect{q} - \tr{\vect{q}} \inv{Q} \vect{q}\\
+	&\numeq{(*)} \frac{1}{2}  \tr{\vect{q}} \inv{Q} \vect{q} - \tr{\vect{q}} \inv{Q} \vect{q}\\
+	&= -\frac{1}{2} \tr{\vect{q}} \inv{Q} \vect{q}
+	\end{split}
+\]
 
-Let us use a nifty trick: let us define 
+Algebraically speaking, the minimum $\vect{x_*}$ of a quadratic function is a stationary point i.e. $\nabla f (\vect{x}) = Q \vect{x} + \vect{q} = 0$ iff $\vect{x_*} = -\inv{Q} \vect{q}$ when $Q$ is invertible.
+At this point, we need to assess the convergence speed of the algorithm, thus we need to define an error function $\bar{f}$, such that ``the error at $\vect{x}$ is the distance between $\vect{x}$ and $\vect{x_*}$ in $\norm{\cdot}_Q$'': 
+
 \begin{equation}
   \begin{split}
-    \bar{f}(x) &= \frac{1}{2} \tr{(x-x_*)} Q (x-x_*)\\
-    &= \frac{1}{2} \tr{x}Qx + \frac{1}{2} \tr{x_*}Qx_* - \tr{x} (Qx)\\
-    &\numeq{(2)} \frac{1}{2} \tr{x} Q x + \frac{1}{2} \tr{\inv{Q} q} Q (\inv{Q} q) + qx\\
-    &= \frac{1}{2} \tr{x} Q x + \frac{1}{2} \tr{q} \cancel{\inv{Q}} \cancel{Q} \inv{Q} q + qx\\
-    &= \frac{1}{2} \tr{x} Q x + \frac{1}{2} \tr{q} \inv{Q} q + qx\\
-    &= f(x) - f_*
+    \bar{f}(\vect{x}) &= \frac{1}{2} \tr{(\vect{x}-\vect{x_*})} Q (\vect{x}-\vect{x_*})\\
+    &= \frac{1}{2} \tr{\vect{x}}Q\vect{x} + \frac{1}{2} \tr{\vect{x_*}}Q\vect{x_*} - \tr{\vect{x}} (Q\vect{x_*})\\
+    &\numeq{(2)} \frac{1}{2} \tr{\vect{x}}Q\vect{x} + \frac{1}{2} \tr{(\inv{Q} \vect{q})} Q (\inv{Q} \vect{q}) - \tr{\vect{x}} \cancel{Q} (\cancel{-\inv{Q}}\vect{q})\\
+    &= \frac{1}{2} \tr{\vect{x}} Q \vect{x} + \frac{1}{2} \tr{\inv{Q} \vect{q}} Q (\inv{Q} \vect{q}) + \tr{\vect{q}}\vect{x}\\
+    &= \frac{1}{2} \tr{\vect{x}} Q \vect{x} + \frac{1}{2} \tr{\vect{q}} \cancel{\inv{Q}} \cancel{Q} \inv{Q} \vect{q} + \tr{\vect{q}}\vect{x}\\
+    &= \frac{1}{2} \tr{\vect{x}} Q \vect{x} + \frac{1}{2} \tr{\vect{q}} \inv{Q} \vect{q} + \tr{\vect{q}}\vect{x}\\
+    &= \frac{1}{2} \tr{\vect{x}} Q \vect{x} + \tr{\vect{q}}\vect{x} + \frac{1}{2} \tr{\vect{q}} \inv{Q} \vect{q}\\
+    &= f(\vect{x}) - f(\vect{x}_*)
   \end{split}
 \end{equation}
 
+where $\numeq{(2)}$ follows from the equality $\vect{x_*} = - \inv{Q} \vect{q}$.
 
-\end{document}
+\todo[inline]{Rispetto alle slide, qui denoto con $\bar{f}(\cdot)$ la funzione che quantifica l'errore, anzichè chiamarla $f_*(\cdot)$, perchè questa seconda notazione si confonde con $f_*$ (senza argomento), che è il valore ottimo della funzione obiettivo.}

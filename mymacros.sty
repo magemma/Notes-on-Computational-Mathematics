@@ -71,6 +71,7 @@
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
 \newcommand\y{\cellcolor{green!10}}
+\DeclareMathOperator*{\argmin}{arg\,min}
 \newcommand\stareq{\stackrel{\mathclap{\normalfont\mbox{*}}}{=}}
 \newcommand\numeq[1]{\stackrel{\mathclap{\normalfont\mbox{\textbf{\tiny #1}}}}{=}}
 \newcommand\numineq[2]{\stackrel{\mathclap{\normalfont\mbox{\textbf{\tiny #1}}}}{#2}}
@@ -195,6 +196,12 @@
   \end{mysyntax}
 }
 
+\newcommand{\mantra}[1]{
+	\begin{myframe}{{\large \ding{74}} \,  Mantra}
+		#1
+	\end{myframe}
+}
+
 \newcommand{\blockmatrix}[3]{%These end of the line comments are neccessary
   \begin{minipage}[t][#2][c]{#1}%
     \center%
@@ -276,6 +283,7 @@
 \usetikzlibrary{shapes,arrows}
 \usetikzlibrary{automata,positioning}
 \usetikzlibrary{fit}
+\usetikzlibrary{decorations.pathmorphing}
 \tikzset{%
   highlight/.style={rectangle,rounded corners,
     fill opacity=0.5,thick,inner sep=0pt}

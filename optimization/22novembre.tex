@@ -3,21 +3,20 @@
 %chktex-file 24
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
-
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{22nd of November 2018 --- A. Frangioni}
+\chapter{22nd of November 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 %from line 1209 of 4-uncontrained optimization
 
-\subsection{Deflected gradient methods}
+\section{Deflected gradient methods}
 The idea behind this family of algorithms, is to determine the next position $x^{i+1}$ using the gradient and summing to it something else that gives us more information.
 
 This kind of algorithms work also in cases in which the gradient isn't continuous.
 
 This methods use the information about the prevous iterations without exploiting properties about the second order derivative.
 
-\subsubsection{Heavy ball gradient method}
+\subsection{Heavy ball gradient method}
 The intuition behind this algorithm may be expressed through the following metaphore: an object is moving in the space and it's subject to a force. We can observe that the heavier the object, the stronger should be the force imposed in order to make it describe a certain trajectory.
 
 In this interpretation, we may define the $(i+1)$-th iteration as 
@@ -59,7 +58,7 @@ The plot of the convergenc of the heavy ball method gives a graphical idea of th
 
 In particular, the bigger $\beta^i$ the ``less orthogonal'' the steps are. This feature allows the algorithm to have good performances on elongated functions.
 
-\subsubsection{Accelerated gradient}
+\subsection{Accelerated gradient}
 This method works only on convex functions, it has some similarities with heavy ball, but it's slightly different.
 
 \algo{alg:22novACCG}{Pseudocode for accelerated gradient method.}{
@@ -101,7 +100,7 @@ The state of the art provides a lot of different formulas for $\beta$, which of 
 
 From now on we will move towards a different family of functions, that aren't even differentiable, hence we can't compute the gradient.
 
-\subsection{Incremental gradient methods}
+\section{Incremental gradient methods}
 This method has good performances in real world machine learning cases, where the function is differentiable but we do not want to compute the gradient.
 
 Let $I = \{1, \ldots , m \}$ be the set of observations, $X = {[X^i \subset \mathcal{X}]}_{i \in I}$ the set of inputs and $y = {[y^i]}_{i \in I}$ the set of outputs.
@@ -145,7 +144,7 @@ $\Omega$ function is not differentiable, so the function gets non differentiable
 
 \addpic{0.5}{pics/22nov/lasso.pdf}{This function has a lot of kinky points.}{fig:22novlasso}
 
-\subsection{Subgradient methods}
+\section{Subgradient methods}
 These methods are thought for convex functions that are not differentiable.
 
 Let us consider a kinky point: how can we choose between all the subgradients of that point?
@@ -165,4 +164,3 @@ The intuition behind this algorithm is to move in the direction of $-g$, but wit
 In that point we may find a point where perform line search, because that point isn't kinky.
 In this context we won't try to minimize $\norm{f(x) - f(x^*)}$, but we will minimize $\norm{x - x^*}$, because the function may zigzag near that point.
 It goes without saying that choosing a too small value for $\alpha$ leads to a too slow convergence speed.
-\end{document}

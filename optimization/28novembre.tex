@@ -6,13 +6,12 @@
 %chktex-file 37
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
-
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{28th of November 2018 --- A. Frangioni}
+\chapter{28th of November 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Subgradient methods}
+\section{Subgradient methods}
 We are still in the hypothesis of convex objective functions that are not differentiable in the whole domain.
 
 \recap{
@@ -133,7 +132,7 @@ It comes without saying that although this algorithm is not very good it is the 
 
 There are some lucky cases in which we do know the optimal value, but this is not the case usually.
 
-\subsubsection{Target level stepsize}
+\subsection{Target level stepsize}
 Let us assume $f(x_*)$ is unknown. The only information available is that this value is below any value in any iteration.
 
 The rationale behind this algorithm is to assume to know the optimal value and as soon as we realize it is not correct we change it.
@@ -179,7 +178,7 @@ A way to choose them is to use the ML approach: try many possible values.
 
 Two big issues of this algorithm are that it does not provide a good stopping criterion and it is very sensitive to many parameters.
 
-\subsection{Deflected subgradient}
+\section{Deflected subgradient}
 
 The idea is to use the same trick of ball-step (also called primal-dual).
 
@@ -201,7 +200,7 @@ In order to choose them we have two different approaches:
 
 This algorithm gets the optimal $O(1/\varepsilon^2)$ on average, sadly not worst case.
 
-\subsection{Smoothed gradient methods}
+\section{Smoothed gradient methods}
 
 Let us assume that the target function is a \textbf{Lagrangian function}.
 
@@ -245,7 +244,7 @@ We observe that the convergence is much better, because it depends on $O(1 / \ep
 
 \addtwopics{0.48}{pics/28nov/kgh4_1_i.pdf}{0.48}{pics/28nov/kgh6_1_i.pdf}{At the beginning we eill make a lot of bad steps (the upper gray line). We can improve (pick the black line) changing the $\eps$ value and we obtain something that looks more stable. The more precision we want, the smaller the step we make. At the ending it pays, but at the beginning it is not so.}{fig:28nov4}
 
-\subsection{Cutting-plane algorithm}
+\section{Cutting-plane algorithm}
 We cheated to get first order information, we want to do more. We want to cheat and have also the second order information.
 
 We want to use the same idea of limited memory quasi Newton methods. Using some limited memory of the Hessian, in order to understand th curvature.
@@ -286,7 +285,7 @@ It's also possibile that the blue function (the model) does not have a minimum (
 
 How to overcome this problem? Use so-called bundle methods.
 
-\subsection{Bundle methods}
+\section{Bundle methods}
 
 The intuition behind this is that we want to keep quite close to the point where the model corresponds to the function, because the further we get the more the difference from the function.
 
@@ -329,5 +328,3 @@ This algorithm may never move (without cycling, luckily), but at least we gained
 The bundle method converges in few steps, although each step is quite costly.
 
 We reached a point where to solve an unconstrained problem we need to solve a contrained one, so from next lecture we will start dealing with constrained optimization problems.
-
-\end{document}

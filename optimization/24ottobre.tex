@@ -1,83 +1,85 @@
 %chktex-file 36
 \documentclass[computationalMathematics.tex]{subfiles}
 
-\begin{document}
-
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{24th of October 2018 --- A. Frangioni}
+\chapter{24th of October 2018}
+\chapterauthor{A. Frangioni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Gradient method for non quadratic functions}
-We want to move from quadratic functions to wider families of functions.
+As we said so far, dealing with quadratic (approximations of) functions is pretty straightforward.
+In this chapter and a few subsequent ones, we will explore functions that have different shapes.
+\section{Gradient method for non quadratic functions}
 
-\recap{The step size $\alpha$ in the quadratic case is defined as follows: $\alpha = \frac{\sqrnorm{d}}{\tr{d}Qd}$}
-
-We would like to find a more general form for the step size, which doesn't depend on the fact that the function is quadratic.
-
-The algorithm for finding local minima of non quadratic functions has the same structure of the one used for quadratic ones, i.e.~first compute the direction of the step and then compute its size.
-
-We will see that, differently from the quadratic case (where the gradient was $\nabla f(x) = Qx + q$) computing the gradient in this more general case isn't easy at all.
-
-We may recall from last lecture that the proof of the orthogonality of the gradient doesn't depend on the quadratic nature of our functions, so it works in this case too.
-
-\subsubsection{How fast does it converge?}
-Given \Cref{alg:24ottnonQuad} for finding minima of quadratic functions (that differs from the one provided for quadratic ones for the step size) we would like to understand how fast the convergence is.
-
-\algo{alg:24ottnonQuad}{Pseudocode for non quadratic functions local minimum detection.}{
-    \Procedure{\bf SDQ}{$f, x, \varepsilon$}
-      \While{($\norm{\nabla f(x)} > \varepsilon$)}
-        \State~$d \gets - \nabla f(x)$;
-        \State~$\alpha \gets \frac{\sqrnorm{d}}{(\tr{d} Q d)}$;
-        \State~$x \gets x + \alpha d$;
-      \EndWhile%
-    \EndProcedure%
+\recap{
+	Let us consider that we are sitting in a point $\vect{x^i}$ at the $i$-th iteration.
+	In order to compute the next step, in the case of quadratic functions, we decided to put $\alpha^i = \frac{\sqrnorm{\vect{d^i}}}{\tr{\vect{d^i}}Q\vect{d^i}}$ and $\vect{d^i} = -\nabla f(\vect{x^i}) = -Q\vect{x^i} - \vect{q}$.
+	We may recall from last lecture that the proof of the orthogonality of the gradient (\Cref{prop:direction_orto}) does not depend on the quadratic nature of our functions, so it could work in the non-quadratic case as well.
 }
 
-\begin{theorem}
-  Let $f$ be a function in $C^2$ and let $x_*$ be a local minimum for $f$ s.t.~$\nabla^2 f(x_*)~\succ~0$ (which means that the Hessian matrix is strictly positive definite):
-       \[
-       \{ \, x^i \, \} \to x_*
-        \Longrightarrow \{ \, f(x^i) \, \} \to f(x_*)
-      \]
-        linearly, with same $R$ as the quadratic case, depending on
-       $\lambda_1$ and $\lambda_n$ of $\nabla^2 f(x_*)$
+We would like to find a more general form for the step size, which does not depend on the fact that the function is quadratic.
+
+The algorithm for finding local minima of non quadratic functions has the same structure of the one used for quadratic ones, i.e.~first compute the direction of the step and then compute its size and it is formalized in \Cref{alg:24ottnonQuad}.
+
+\algo{alg:24ottnonQuad}{Pseudocode for non quadratic functions local minimum detection.}{
+	\Procedure{\bf SDQ}{$f, \vect{x}, \varepsilon$}
+	\While{($\norm{\nabla f(\vect{x})} > \varepsilon$)}
+	\State~$\vect{d} \gets - \nabla f(\vect{x})$;
+	\State~$\alpha \gets \frac{\sqrnorm{\vect{d}}}{(\tr{\vect{d}} Q \vect{d})}$;
+	\State~$\vect{x} \gets \vect{x} + \alpha \vect{d}$;
+	\EndWhile%
+	\EndProcedure%
+}
+
+We will see that, differently from the quadratic case (where the gradient was $\nabla f(\vect{x}) = Q\vect{x} + \vect{q}$) computing the gradient in this more general case is not trivial.
+
+\noindent We are now interested in assessing the converge speed of \Cref{alg:24ottnonQuad}.
+
+\begin{theorem}[Convergence speed]
+	Let $f:\R^n \to \R$ be a function in $\C{2}$ and let $\vect{x_*}$ be a local minimum for $f$ such that the Hessian of $f$ is strictly positive definite ($\nabla^2 f(\vect{x_*})~\succ~0$).
+	If $\{\vect{x^i}\}$ converges it is a minimizing sequence.
+	Formally,
+	\[
+		\{ \, \vect{x^i} \, \} \to \vect{x_*} \Longrightarrow \{ \, f(\vect{x^i}) \, \} \to f(\vect{x_*})
+	\]
+	linearly, with same $R$ as the quadratic case, depending on $\lambda_1$ and $\lambda_n$, respectively the biggest and smallest eigenvalues of the Hessian.
 \end{theorem}
 
 This theorem means that if the function is differentiable and the Hessian is strictly positive definite then when getting closer and closer to the minimum, the function is more and more similar to a quadratic function.
 
-This similarity is a good new, since we can use the same methods of the quadratic case, but, as we recall from the previous lecture, we must pay attention to \textbf{conditioning}.
+This similarity is a good new, since we can use the same methods of the quadratic case, but, as usual, we must pay attention to \textbf{conditioning}.
 
-At this point we need to work on finding the local minimum of the one dimensional function $\varphi^{i}$, s.t.
+\subsection{Finding the best step size}
+
+At this point we are left with the task of computing a step length, say $\alpha^i$ such that $f(\vect{x^i} + \alpha^i \vect{d^i}) < f(\vect{x^k})$.
+This may necessitate a one-dimensional (or line) search, i.e. finding the local minimum of the one dimensional function $\varphi^{i}$, s.t.
+
 \[
-  \varphi^{i}(\alpha) = f(x^{i} + \alpha d^{i}),
+  \varphi^{i}(\alpha) = f(\vect{x^{i}} + \alpha \vect{d^{i}}),
 \]
 
-where $d^{i} = - \nabla f(x^{i})$.
+where $\vect{d^{i}} = - \nabla f(\vect{x^{i}})$.
 
-Let's omit the $i$, since we are concentrating on a single iteration.
-
-We are interested in finding a $\alpha^{*}$ such that $ \varphi'(\alpha^{*}) = 0$
+\noindent Let us omit the index $i$, since we are concentrating on a single iteration.
+We are interested in finding $\alpha^{*} \in \R$ such that $ \varphi'(\alpha^{*}) = 0$
 
 \begin{example}
-  Let's suppose we are in $\R^{2}$ and $f(x, y) = x^{2} e^{y}$. We can differentiate $F$ and $\nabla f(x, y) = (2x e^{y}, x^{2} e^{y})$.
+  Let us take $f: \R^2 \to \R$ s.t. $f(x_1, x_2) = x_1^{2} e^{x_2}$. We can differentiate $f$ and obtain $\nabla f(x_1, x_2) = \tr{(2x_1 e^{x_2}, x_1^{2} e^{x_2})}$.
 
-  At the $i$-th iteration $(x, y) = (1,0)$, so $\nabla f(1,0) = (2, 1)$. Now $x(\alpha) = (1, 0)- \alpha (2, 1) = (1 -2 \alpha, 0 - \alpha)$.
+  \noindent Let us suppose that at the $i$-th iteration $\vect{x} = \tr{(0, 1)}$, so $\nabla f(1,0) = (2, 1)$.
+  Now $\vect{x}(\alpha) = \vect{x} - \alpha \nabla f(\vect{x})= \tr{(1, 0)} - \alpha \tr{(2, 1)} = \tr{(1 -2 \alpha, 0 - \alpha)}$.
 
-At this point we obtain $\varphi(\alpha) = f(x(\alpha)) = {(1-2 \alpha)} ^{2} e^{- \alpha}$.
+\noindent At this point we obtain $\varphi(\alpha) = f(\vect{x}(\alpha)) = {(1-2 \alpha)} ^{2} e^{- \alpha}$.
 \end{example}
 
-
-\todo{Chi è $x(\alpha)$?}
-
-It's hard to find the roots of this function. The points we can find are not $\varphi '(\alpha) = 0$, but instead $\abs{\varphi ' (\alpha) \le \varepsilon'}$, where the meaning of $\varepsilon$ is bounding the directional derivative to be small.
+In general, we are not interested in finding those points where $\varphi'(\alpha) = 0$, instead we want to force the directional derivative to be small (by picking a threshold $\eps'$ s.t. $\abs{\varphi ' (\alpha)} \le \varepsilon'$).
 
 \begin{proposition}\label{24ottps}
-  Let $\varphi: \R \to \R$, such that $\varphi(\alpha) = f(x^{i} + \alpha d^{i})$, $\varphi'(\alpha) =\ps{\nabla f(x^i + \alpha d^i)}{d}$.
+  Let $\varphi: \R \to \R$, such that $\varphi(\alpha) = f(\vect{x^{i}} + \alpha \vect{d^{i}})$, $\varphi'(\alpha) =\ps{\nabla f(\vect{x^i} + \alpha \vect{d^i})}{\vect{d^i}}$.
 \end{proposition}
 \begin{proof}
-  TODO:~using the \textbf{chain rule}: $f : \R^m \to \R^k$, $g : \R^n \to \R^m$, $h : \R^n \to \R^k$ such that $h(x) = f(g(x)) \Rightarrow~\mathbf{J h(x) = J f(g(x)) \cdot J g(x)}$
-
-  Obs: $J f \in \R^{ k \times m }$, $J g \in \R^{ m \times n }$ and $J h \in \R^{ k \times m } \cdot \R^{ m \times n }  = \R^{ k \times n }$.
+\[
+	\parder{f(\vect{x^i} + \alpha \vect{d^i})}{\alpha} = \parder{f}{\vect{x}^i + \alpha \vect{d^i}} \cdot \parder{\vect{x^i} + \alpha \vect{d^i}}{\alpha} = \nabla f(\vect{x^i} + \alpha \vect{d^i}) \cdot \vect{d^i} 
+\]
 \end{proof}
 
 
@@ -89,126 +91,139 @@ We want to find the relationship between the two parameters $\varepsilon$ and $\
 
   \textbf{Key idea:} Normalization of the direction.
 
-  We may normalize the direction of movement $d^{i}$ without perturbing the behaviour of the algorithm: $d^i = - \frac{\nabla f(x^i)}{\norm{\nabla f(x^i)}}$. Note that we're not worried of dividing by the norm of the gradient, since if it gets $0$ we have already stopped the procedure.
+  We may normalize the direction of movement $\vect{d^{i}}$ without perturbing the behaviour of the algorithm: $\vect{d^i} = - \frac{\nabla f(\vect{x^i})}{\norm{\nabla f(\vect{x^i})}}$. Note that we're not worried of dividing by the norm of the gradient, since if it gets $0$ we have already stopped the procedure.
 
-In this new context $\norm{d^i} = 1$ and 
-\begin{equation}
+In this new context $\norm{\vect{d^i}} = 1$ and 
+\[
   \begin{split}
-    \varphi'(0) &= \frac{\partial f}{\partial d}(x)\\
-    \text{(From \Cref{24ottps})} & = \ps{\nabla f(x)}{d}\\
-    & = \ps{\nabla f(x)}{\frac{- \nabla f(x)}{\norm{\nabla f(x)}}}\\
-    & = -\frac{<\nabla f(x) , \nabla f(x) >}{\norm{\nabla f(x)}}\\
-    & = - \frac{{\norm{\nabla f(x)}}^{2}}{\norm{\nabla f(x)}}\\
-    & = -\norm{\nabla f(x^i)}
+    \varphi'(0) &= \parder{f(\vect{x})}{\vect{d}}\\
+    \text{\footnotesize (From \Cref{24ottps})}&= \ps{\nabla f(\vect{x})}{\vect{x}}\\
+    & = \ps{\nabla f(\vect{x})}{\frac{- \nabla f(\vect{x})}{\norm{\nabla f(\vect{x})}}}\\
+    & = - \frac{<\nabla f(\vect{x}) , \nabla f(\vect{x}) >}{\norm{\nabla f(\vect{x})}}\\
+    & = - \frac{{\norm{\nabla f(\vect{x})}}^{2}}{\norm{\nabla f(\vect{x})}}\\
+    & = - \norm{\nabla f(\vect{x^i})}
     \end{split}
-  \end{equation}
-
+  \]
 
  $\abs{\varphi'(\alpha^i)} =
-        \lvert \ps{\nabla f(x^{i+1})}{d^{i}} \rvert =
-        \abs{\ps{\nabla f(x^{i+1})}{-\frac{\nabla f(x^{i})}{\norm{\nabla f(x^i)}}}}$
+        \abs{\ps{\nabla f(\vect{x^{i}} + \alpha \vect{d^i})}{\vect{d^{i}}}} =
+        \abs{\ps{\nabla f(\vect{x^{i+1}})}{\vect{d^{i}}}} =
+        \abs{\ps{\nabla f(\vect{x^{i+1}})}{-\frac{\nabla f(\vect{x^{i}})}{\norm{\nabla f(\vect{x^i})}}}}$
 
- Hence, if $\{x^{i}\} \to x$
-  \begin{equation}
-      \lim_{i \to \infty} \abs{\ps{\frac{\nabla f(x^i)}{\norm{\nabla f(x^i)}}}{\nabla f(x^{i+1})}} 
-       = \ps{\frac{\nabla f(x)}{\norm{\nabla f(x)}}}{\nabla f(x)}
-       = \norm{\nabla f(x)} \leq \varepsilon
-  \end{equation}
- Since $\norm{\nabla f(x^i)} > \varepsilon$ we have the thesis.
+ If the iterations converge to the optimum point (formally, $\{\vect{x^{i}}\} \to \vect{x}$)
+ \[
+  \begin{split}
+      \lim_{i \to \infty} \abs{\varphi'(\alpha^i)} &=
+      \lim_{i \to \infty} \abs{\ps{\nabla f(\vect{x^{i+1}})}{\frac{\nabla f(\vect{x^i})}{\norm{\nabla f(\vect{x^i})}}}}\\
+       &= \abs{\ps{\nabla f(\vect{x})}{\frac{\nabla f(\vect{x})}{\norm{\nabla f(\vect{x})}}}}\\
+       &= \abs{\frac{\ps{\nabla f(\vect{x})}{\nabla f(\vect{x})}}{\norm{\nabla f(\vect{x})}}}\\
+       &= \norm{\nabla f(\vect{x})} \leq \varepsilon'
+  \end{split}
+  \]
+ At each iteration of the gradient descent algorithm we check the condition $\norm{\nabla f(\vect{x^i})} > \varepsilon$, hence we have the thesis.
 \end{proof}
 
-Per each phase the new epsilon is obtained $\varepsilon \gets \varepsilon \norm{\nabla f(x^i)}$.
+\noindent Per each phase the new epsilon is obtained $\varepsilon \gets \varepsilon \norm{\nabla f(\vect{x^i})}$.
 
-If we can prove that the algorithm is converging we know when to stop.
+\noindent If we can prove that the algorithm is converging we know when to stop.
 
-This convergence isn't the perfect mathematical convergence, since $\varepsilon \ne 0$, because the line search will never terminate.
+\noindent This convergence is not the perfect mathematical convergence, since $\varepsilon \ne 0$, because the line search will never terminate.
 
+In the rest of this subsection we will propose three different kinds of algorithms for performing the line search on $\varphi$:
+\begin{itemize}
+	\item First order algorithms;
+	\item Second order algorithms;
+	\item Zero order algorithms;
+	\item Inexact line search;
+\end{itemize}
 
-\subsubsection{Exact line search, first orderd approach}
-We want to find the minimum points of $\varphi$, which corresponds to points where the first order derivative is zero and it goes from negative to positive. Since we are talking about numerical algorithms we are going to stop a little before the minimum is reached.
+where the first three approaches provide an exact solution, while the fourth one is less accurate but faster.
 
-\textbf{Key idea:} We would like to reduce the range in which performing the search, at each step.
+\subsubsection{First order algorithms}
+This class of algorithms makes use of the first derivative of the function $\varphi$ for finding the exact minimum of $\varphi$, namely we want to find the minimum points of $\varphi$, which corresponds to points where the first order derivative is zero and it goes from negative to positive.
 
-How can we be sure that in a given range there is a point where the derivative is $0$? Rolle's theorem, as shown in \Cref{fig:24ott1}.
+We will present three different algorithms for this class, two of them are iterative, while the last one is a direct method.
+For the first two methods,  we would like to reduce the range in which performing the search, at each step.
 
-\addtwopics{0.4}{pics/24ott/1.png}{0.4}{pics/24ott/2.png}{First, we restrict from $\R$ to $[x_{1}, x_{2}]$, then double $\alpha$ until the derivative is greater than $0$}{fig:24ott1}
+\begin{description}
+	\item[Doubling:] 
+	How can we be sure that in a given range there is a point where the derivative is $0$? Rolle's theorem, as shown in \Cref{fig:24ott1}.
+	
+	\addtwopics{0.4}{pics/24ott/1.png}{0.4}{pics/24ott/2.png}{First, we restrict from $\R$ to $[x_{1}, x_{2}]$, then double $\alpha$ until the derivative is greater than $0$}{fig:24ott1}
+	
+	Since the gradient is continuous the directional derivative is continue, so $\varphi$ is continuous (the scalar product is continuous).
+	
+	Actually, we only need to find where the derivative is positive, because the $0$ of the derivative is between the previous value and this point.
+	A formalization of the algorithm can be found in \Cref{alg:24ottELS1}.
+	
+	\algo{alg:24ottELS1}{First algorithm for exact line search}{
+		\State~$\bar{\alpha} \gets x_{1}$; \#or whatever value $>0$
+		\While{($\varphi'(\bar{\alpha}) < 0$)}
+		\State~$\bar{\alpha} \gets 2 \bar{\alpha}$; \#or whatever factor $>1$
+		\EndWhile%
+	}
+	
+	Since we are dealing with machine precision we stop when $\alpha < -{10}^{308}$, which is the smallest value for a double.
+	
+	Works if $\varphi$ \textbf{coercive}:
+	$\lim_{\alpha \to \infty} \varphi( \, \alpha \, ) = \infty$
+	(ex.~$f$ strongly convex)
+	
+	\begin{exe}
+		Build an example where $\bar{\alpha}$ exists but it is not found by this algorithm.
+	\end{exe}
+	\textbf{Solution:} The function changes its derivative in a range between $\alpha$ and $2 \alpha$.
+		
+		
+	\item[Bisection:] we pick the middle point of the interval $[\alpha_-, \alpha_+]$, as shown in \Cref{alg:24ottBS}.
+	
+	\algo{alg:24ottBS}{Bisection algorithm}{
+		\Procedure{LSBM}{($\varphi', \bar{\alpha}, \varepsilon$)}
+		\State~$\alpha_- \gets 0$;
+		\State~$\alpha_{+} \gets \bar{\alpha}$;
+		\State~$\alpha \gets \alpha_+$;
+		\While{($\abs{\varphi'(\alpha)} > \varepsilon$)}
+		\State~$\alpha \gets (\alpha_{+} + \alpha_{-})/2$;
+		\If{($\varphi'(\alpha) < 0$)}
+		\State~$\alpha_- \gets \alpha$;
+		\Else%
+		\State~$\alpha_+ \gets \alpha$;
+		\EndIf%
+		\EndWhile%
+		\EndProcedure%
+	}
+	
+	\item[Quadratic approximation:] we use the first order information to build a quadratic model $m$ that approximates $\varphi$ in a ball centered in $\alpha$.
+	
+	\addpic{0.5}{pics/24ott/3.png}{The information we have about function $\varphi$}{fig:24ott3}
+	
+	We may use the information we have about the function, since we know $\varphi(\alpha^{-})$, $\varphi ' (\alpha^{-})$, $\varphi(\alpha^{+})$ and $\varphi ' (\alpha^{+})$.
+	
+	At this point we can write a model ($m(\alpha) = a {\alpha}^{2} + b \alpha + c$) and specialize it with the information we have, via computing a linear system:
+	\[
+	\begin{cases}
+	a {(\alpha^{-})}^{2} + b (\alpha^{-}) + c = \varphi(\alpha^-)\\
+	a {(\alpha^{+})}^{2} + b (\alpha^{+}) + c = \varphi(\alpha^+)\\
+	2a \alpha^{-} + b = \varphi'(\alpha^{-})\\
+	2a \alpha^{+} + b = \varphi'(\alpha^{+})
+	\end{cases}
+	\]
+	
+	Then we look for the stationary point of this function and that's the ball where I'm likely to find the root of the derivative.
+	
+	\begin{proposition}\label{fact:24ott3}
+		Let $\varphi: \R \to \R$ such that $\varphi \in \C{3}$, then quadratic interpolation has convergence of order $1 < p < 2$ (superlinear).
+	\end{proposition}
+	
+	In \Cref{fig:24ott4} we can observe a situation in which the hypotheses of \Cref{fact:24ott3} are not satisfied.
+	
+	\addpic{0.5}{pics/24ott/4.png}{If the function is not $\C{3}$ and one derivative is very big, then the range does not shrink much.}{fig:24ott4}
+	
+	We would like to modify the formula to have at least linear convergence.
+	
+	We can ensure to move not too close to one of the extremes, for example more than $10\%$.
+	
+\end{description}
 
-Since the gradient is continuous the directional derivative is continue, so $\varphi$ is continuous (the scalar product is continuous).
-
-Actually, we only need to find where the derivative is positive, because the $0$ of the derivative is between the previous value and this point.
-
-The algorithm is the following:
-
-\algo{alg:24ottELS1}{First algorithm for exact line search}{
-  \State~$\bar{\alpha} \gets x_{1}$; \#or whatever value $>0$
-    \While{($\varphi'(\bar{\alpha}) < 0$)}
-      \State~$\bar{\alpha} \gets 2 \bar{\alpha}$; \#or whatever factor $>1$
-    \EndWhile%
-}
-
-We'll stop when $\alpha < -{10}^{308}$, which is the smallest value for a double, since we will get a numerical error and stop.
-
-Works if $\varphi$ \textbf{coercive}:
-       $\lim_{\alpha \to \infty} \varphi( \, \alpha \, ) = \infty$
-       (ex.~$f$ strongly convex)
-
-\begin{exe}
-Build an example where $\bar{\alpha}$ exists but it is not found by this algorithm.
-\end{exe}
-\textbf{Solution:} The function changes its derivative in a range between $\alpha$ and $2 \alpha$.
-
-
-An alternative to the algorithm presented above may be the bisection algorithm, which follows.
-
-\algo{alg:24ottBS}{Bisection algorithm}{
-\Procedure{LSBM}{($\varphi' \bar{\alpha} \varepsilon$)}
-  \State~$\alpha_- \gets 0$;
-  \State~$\alpha \gets \alpha_+$;
-  \State~$\alpha_{+} \gets \bar{\alpha}$;
-  \While{($\abs{\varphi'(\alpha)} > \varepsilon$)}
-    \State~$\alpha \gets (\alpha_{+} + \alpha_{-}) 2$;
-    \If{($\varphi'(\alpha) < 0$)}
-      \State~$\alpha_- \gets \alpha$;
-    \Else%
-      \State~$\alpha_+ \gets \alpha$;
-    \EndIf%
-  \EndWhile%
-\EndProcedure%
-}
-
-
-We would like to improve this algorithm too, finding a better point in the middle than the middle point.
-
-\addpic{0.5}{pics/24ott/3.png}{The information we have about function $\varphi$}{fig:24ott3}
-
-We may use the information we have about the function, since we know $\varphi(\alpha^{-})$, $\varphi ' (\alpha^{-})$, $\varphi(\alpha^{-})$ and $\varphi ' (\alpha^{-})$.
-
-At this point we can write a model ($m(\alpha) = a {\alpha}^{2} + b \alpha + c$) and specialize it with the information we have, via computing a linear system:
-\[
-\begin{cases}
-  a {(\alpha^{-})}^{2} + b (\alpha^{-}) + c = \varphi(\alpha)\\
-  a {(\alpha^{-})}^{2} + b (\alpha^{-}) + c = \varphi(\alpha)\\
-  2a \alpha^{-} + b = \varphi'(\alpha^{-})\\
-  2a \alpha^{+} + b = \varphi'(\alpha^{+})
-\end{cases}
-\]
-
-Then we look for the stationary point of this function and that's the ball where I'm likely to find the root of the derivative.
-
-We can say something more, since the following fact holds:
-
-\begin{proposition}\label{fact:24ott3}
-Let $\varphi \in C^{{3}}$, then quadratic interpolation has convergence of order $1 < p < 2$ (superlinear)
-\end{proposition}
-
-In \Cref{fig:24ott4} we can observe a situation in which the hypothesis of \Cref{fact:24ott3} aren't satisfied.
-
-\addpic{0.5}{pics/24ott/4.png}{If the function isn't $C^3$ and one derivative is very big, then the range doesn't shrink much.}{fig:24ott4}
-
-We would like to modify the formula to have at least linear convergence.
-
-We can ensure to move not to close to one of the extremes, for example more than $10\%$.
-
-Another idea is, since we have four equations, to build a cubic function, although the operation is very long. In this case the convergence get quadratic, which is better than linear.
-
-\end{document}
+\noindent It is possible to build a more complex model, i.e. a cubic function.
+Although this is pretty involved, it allows the convergence to get quadratic, which is better than linear.

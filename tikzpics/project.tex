@@ -1,0 +1,16 @@
+\documentclass[tikz,border=3.14mm]{standalone}
+\usepackage{pgfplots, tikz}
+\usepackage{txfonts} %font
+\pgfplotsset{compat=1.16}
+\begin{document}
+	\begin{tikzpicture}
+	\tikz \draw (4,2) ellipse (2cm and 1cm);
+	\draw[->] (-4.5,-1) -- (2,-1) {};
+	\draw[->] (-4.5 ,-1) -- (-4.5 ,3) {};
+	\draw (-4.5,2.7) node[left] {$y$};
+	\draw (1.7,-1) node[below] {$x$};
+	\draw[dashed] (.03,-1) -- (.03 ,1) {};
+	\draw[dashed] (-4.03,-1) -- (-4.03,1) {};
+	\draw (-4.03, -1) edge [thick, decorate, decoration = {zigzag}] ++(4.05, 0);
+	\end{tikzpicture}
+\end{document}
