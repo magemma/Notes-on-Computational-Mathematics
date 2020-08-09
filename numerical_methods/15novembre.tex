@@ -7,10 +7,10 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{15th of November 2018 --- F. Poloni}
+\chapter{15th of November 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Stability of algorithms}
+\section{Stability of algorithms}
 
 In this lecture we will try to answer the questio: ``Is our algorithm (using floating point) going to compute a good approximation of the answer?''
 
@@ -255,7 +255,7 @@ While
 and this second matrix doesn't have rank $1$.
 \end{example}
 
-\subsection{Backward stability of QR factorization}
+\section{Backward stability of QR factorization}
 
 \recap{A generic step of the computation of the QR factorization of a matrix has the following shape:
 \[
@@ -333,7 +333,7 @@ In the end we may observe that the final computed $R_n$ is the exact result obta
 Orthogonal transformations are the key for stability. 
 \end{myframe}
 
-\subsubsection{Stability of algorithms for least-squares problems}
+\subsection{Stability of algorithms for least-squares problems}
 Let us see how various algorithms to solve LS problems (implemented in Matlab) behave in relation to backward stability.
 
 \textbf{Least squares problem via QR}
@@ -401,7 +401,7 @@ $m \gg n$ & $mn^2$ & $2mn^2$ & $2mn^2$\\
 \end{center}\caption{Brief recap of the complexities of the algorithms we studied for solving the least squares problem. The last row takes into account the stability.}\label{tab:15nov1}
 \end{table}
 
-\subsubsection{A posteriori checks}
+\subsection{A posteriori checks}
 
 Let's assume that Matlab gives us a solution of a problem. We want to be able to check how good this result is.
 
@@ -450,7 +450,7 @@ Where $\stareq$ follows from the definition of $r$ and $\frac{\norm{\widetilde{b
 
 It's important to notice that also computing $A \odot x \ominus b$ is an approximated operation. We choose to simplify things and ignore this error.
 
-\subsection{A posteriori check for Least Squares Problems}
+\section{A posteriori check for Least Squares Problems}
 Can we make an analogous check for the Least Squares Problem?
 
   Take a LSP $\min \norm{Ax-b}$, with $A$ tall thin, with full column rank.

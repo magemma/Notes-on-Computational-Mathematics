@@ -7,10 +7,10 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{26th of October 2018 --- F. Poloni}
+\chapter{26th of October 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{How to construct a QR factorization}
+\section{How to construct a QR factorization}
 
 In the previous lecture we introduced the $QR$ factorization and we defined what an Householder reflector is.
 
@@ -191,7 +191,7 @@ Where, $Q_{4} =
   It's trivial computation, using the definition of matrix product.
 \end{proof}
 
-\subsubsection{Matlab implementation}
+\subsection{Matlab implementation}
 
 \begin{center}
 \begin{minipage}{.9\linewidth}
@@ -327,7 +327,7 @@ $Q \cdot B =
 There are some libraries that store the $v_{i}$ vectors in the lower part of matrix $R$ which is upper triangular and has only zeros below the main diagonal.
 \end{myframe}
 
-\subsection{How to use the thin QR factorization to solve a least squares problem}
+\section{How to use the thin QR factorization to solve a least squares problem}
 
 We would like to solve $\norm{Ax-b}$ $\forall A \in \mathcal{M}(m, n, \R)$ and $\forall B \in \R^n$ where $m > n$ (a.k.a $A$ is a tall, thin matrix),through the $QR$ factorization.
 We would like to solve $\min \norm{Ax-b}$ through the $QR$ factorization.

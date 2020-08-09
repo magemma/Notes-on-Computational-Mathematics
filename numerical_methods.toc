@@ -1,0 +1,60 @@
+\babel@toc {english}{}
+\@ifundefined {tof@begin}{\global \let \tof@begin \relax \global \let \tof@finish \@empty \global \let \tof@starttags \@gobble \global \let \tof@stoptags \@gobble \global \let \tof@tagthis \@gobble \global \let \tof@untagthis \@gobble }{}
+\tof@begin 
+\contentsline {section}{\numberline {0.1}20th of September 2018 --- F. Poloni}{5}{section.0.1}%
+\contentsline {subsection}{\numberline {0.1.1}A warm up}{5}{subsection.0.1.1}%
+\contentsline {subsection}{\numberline {0.1.2}Solving Linear Systems}{8}{subsection.0.1.2}%
+\contentsline {subsection}{\numberline {0.1.3}Orthogonality}{10}{subsection.0.1.3}%
+\contentsline {section}{\numberline {0.2}26th of September 2018 --- F. Poloni}{12}{section.0.2}%
+\contentsline {subsection}{\numberline {0.2.1}Orthogonality (II)}{12}{subsection.0.2.1}%
+\contentsline {subsection}{\numberline {0.2.2}Eigenvalues / Eigenvector}{13}{subsection.0.2.2}%
+\contentsline {subsubsection}{Eigenvector: what could possibly go wrong?}{15}{section*.5}%
+\contentsline {section}{\numberline {0.3}28th of September 2018 --- F. Poloni}{20}{section.0.3}%
+\contentsline {subsection}{\numberline {0.3.1}Singular value decomposition (SVD)}{20}{subsection.0.3.1}%
+\contentsline {subsubsection}{Properties of SVD}{21}{section*.7}%
+\contentsline {section}{\numberline {0.4}4th of October 2018 --- F. Poloni}{25}{section.0.4}%
+\contentsline {section}{\numberline {0.5}10th of October 2018 --- F. Poloni}{27}{section.0.5}%
+\contentsline {section}{\numberline {0.6}18th of October 2018 --- F. Poloni}{29}{section.0.6}%
+\contentsline {subsection}{\numberline {0.6.1}Least squares problem}{29}{subsection.0.6.1}%
+\contentsline {subsubsection}{Method of normal equations}{30}{section*.10}%
+\contentsline {subsection}{\numberline {0.6.2}QR factorization}{30}{subsection.0.6.2}%
+\contentsline {section}{\numberline {0.7}26th of October 2018 --- F. Poloni}{34}{section.0.7}%
+\contentsline {subsection}{\numberline {0.7.1}How to construct a QR factorization}{34}{subsection.0.7.1}%
+\contentsline {subsubsection}{Matlab implementation}{36}{section*.14}%
+\contentsline {subsection}{\numberline {0.7.2}How to use the thin QR factorization to solve a least squares problem}{38}{subsection.0.7.2}%
+\contentsline {section}{\numberline {0.8}7th of November 2018 --- F.Poloni}{40}{section.0.8}%
+\contentsline {subsection}{\numberline {0.8.1}Least squares problem with SVD}{40}{subsection.0.8.1}%
+\contentsline {subsubsection}{Behaviour in case of zeros as singular values}{43}{section*.15}%
+\contentsline {subsection}{\numberline {0.8.2}Truncated SVD}{44}{subsection.0.8.2}%
+\contentsline {subsection}{\numberline {0.8.3}Tikhonov regularization / ridge regression}{44}{subsection.0.8.3}%
+\contentsline {section}{\numberline {0.9}9th of November 2018 --- F. Poloni}{46}{section.0.9}%
+\contentsline {subsection}{\numberline {0.9.1}Conditioning}{46}{subsection.0.9.1}%
+\contentsline {subsubsection}{Conditioning of linear systems}{49}{section*.23}%
+\contentsline {subsection}{\numberline {0.9.2}Condition number, SVD, and distance to singularity}{50}{subsection.0.9.2}%
+\contentsline {subsection}{\numberline {0.9.3}Conditioning of least squares problem}{52}{subsection.0.9.3}%
+\contentsline {section}{\numberline {0.10}15th of November 2018 --- F. Poloni}{54}{section.0.10}%
+\contentsline {subsection}{\numberline {0.10.1}Stability of algorithms}{54}{subsection.0.10.1}%
+\contentsline {subsection}{\numberline {0.10.2}Backward stability of QR factorization}{58}{subsection.0.10.2}%
+\contentsline {subsubsection}{Stability of algorithms for least-squares problems}{59}{section*.28}%
+\contentsline {subsubsection}{A posteriori checks}{60}{section*.32}%
+\contentsline {subsection}{\numberline {0.10.3}A posteriori check for Least Squares Problems}{62}{subsection.0.10.3}%
+\contentsline {section}{\numberline {0.11}21st of November 2018 --- F. Poloni}{64}{section.0.11}%
+\contentsline {subsection}{\numberline {0.11.1}Gaussian elimination and LU factorization}{64}{subsection.0.11.1}%
+\contentsline {subsubsection}{Stability of LU}{68}{section*.38}%
+\contentsline {subsubsection}{Gaussian elimination on sparse matrices}{68}{section*.39}%
+\tof@stoptags {myfile1}
+\contentsline {section}{\numberline {0.12}23rd of November 2018 --- F. Poloni}{71}{section.0.12}%
+\contentsline {subsection}{\numberline {0.12.1}Gaussian elimination on symmetric matrices}{71}{subsection.0.12.1}%
+\contentsline {subsection}{\numberline {0.12.2}Cholesky factorization}{74}{subsection.0.12.2}%
+\contentsline {subsection}{\numberline {0.12.3}Krylov subspace methods}{74}{subsection.0.12.3}%
+\contentsline {section}{\numberline {0.13}29th of November 2018 --- F. Poloni}{76}{section.0.13}%
+\contentsline {subsubsection}{Naive idea}{76}{section*.40}%
+\contentsline {subsubsection}{Improvement}{76}{section*.41}%
+\contentsline {subsection}{\numberline {0.13.1}Arnoldi algorithm}{76}{subsection.0.13.1}%
+\contentsline {section}{\numberline {0.14}5th of December 2018 --- F. Poloni}{82}{section.0.14}%
+\contentsline {subsection}{\numberline {0.14.1}Convergence of Arnoldi}{82}{subsection.0.14.1}%
+\contentsline {subsubsection}{Better explanation}{82}{section*.43}%
+\contentsline {section}{\numberline {0.15}7th of December 2018 --- F. Poloni}{85}{section.0.15}%
+\contentsline {section}{\numberline {0.16}13th of December 2018 --- F. Poloni}{88}{section.0.16}%
+\contentsline {subsection}{\numberline {0.16.1}Lanczos algorithm}{88}{subsection.0.16.1}%
+\tof@finish 

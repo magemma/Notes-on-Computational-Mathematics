@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{      function}[v,s] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{householdervector}\PYG{p}{(}x\PYG{p}{)}
+\PYG{+w}{      }\PYG{n}{s} \PYG{p}{=} \PYG{n}{norm}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+      \PYG{n}{v} \PYG{p}{=} \PYG{n}{x}\PYG{p}{;}
+      \PYG{n}{v}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{=} \PYG{n}{v}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{s}\PYG{p}{;}
+      \PYG{n}{v} \PYG{p}{=} \PYG{n}{v} \PYG{o}{/} \PYG{n}{norm}\PYG{p}{(}\PYG{n}{v}\PYG{p}{);}
+\end{Verbatim}

@@ -10,10 +10,10 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{28th of September 2018 --- F. Poloni}
+\chapter{28th of September 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Singular value decomposition (SVD)}
+\section{Singular value decomposition (SVD)}
 We are left with the task of reaching a (sort of) ``eigenvalue decomposition'' when the target matix is not symmetric.\\
 There are two way to generalize the eigenvalue decomposition to a
 nonsymmetric matrix A (with something that always exists):
@@ -121,7 +121,7 @@ We are not going into details of algorithms for computing SVD, but we would like
     \item \texttt{[U, S, V] = svd(A)} (non-thin) more expensive, because it has to store the ‘large’ $m \times m$ factor. (But there are some tricks to store orthogonal matrices compactly, more about it later).
 \end{itemize}
 
-\subsubsection{Properties of SVD}
+\subsection{Properties of SVD}
 The SVD reveals rank, image, and kernel of a matrix.
 \begin{definition}[Rank]
   Let $A \in M(n, \R)$ we call the \textbf{rank} of $A$ the number of non-zero singular values.

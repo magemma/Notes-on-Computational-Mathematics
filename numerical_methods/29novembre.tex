@@ -8,21 +8,21 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{29th of November 2018 --- F. Poloni}
+\chapter{29th of November 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
 In this lecture we address the problem of designing methods that use Krylov spaces to solve linear systems.
 
 We need alternative methods to Gaussian elimination because matrices are too large.
 
-\subsubsection{Naive idea}
+\subsection{Naive idea}
 Find first a ``good'' search subspace, then look for best approximation of the solution of $Ax=b$ in that space.
 
 Let us assume that our space is the image of a matrix $V$ $Im(V)$. $\forall~x \in Im(V)$ such $x$ may be written as $x=V^1 y_1 + V^2 y_2 + \cdots + V^n y_n$, where $V^i$ are the columns of the matrix $V$.
 
   The idea is too find a vector $y$ that satisfies $\min_{y \in \R} \norm{AVy - b}$, which is a least squares problem.
 
-\subsubsection{Improvement}
+\subsection{Improvement}
 A good search space is $Im(V) = K_n(A, b) = \operatorname{span}(b, Ab, A^2b, \ldots, A^{n-1}b)$, where $K_n(A, b)$ is the Krylov space.
 
   The issue here is that $V=\begin{pmatrix} b & Ab & \cdots & A^{n-1}b\end{pmatrix}$ is a bad basis, because it is ill conditioned.
@@ -33,7 +33,7 @@ We need a better basis for $K_n(A,b)$, in particular an orthogonal basis.
 
 \recap{An orthogonal basis is a basis in which each couple of vectors are orthogonal}
 
-\subsection{Arnoldi algorithm}
+\section{Arnoldi algorithm}
 
 The idea behind this algorithm is to build an orthogonal basis of $K_n(A, b)$ incrementally.
 

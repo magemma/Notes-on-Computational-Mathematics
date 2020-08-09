@@ -4,11 +4,11 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{18th of October 2018 --- F. Poloni}
+\chapter{18th of October 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
 
-\subsection{Least squares problem}
+\section{Least squares problem}
 \begin{proposition}
   Given $A \in \mathcal{M}(m, n, \mathds{R})$ the following conditions are equivalent:
   \begin{itemize}
@@ -68,7 +68,7 @@ Let's compute complexity:
 
 \end{itemize}
 
-\subsubsection{Method of normal equations}
+\subsection{Method of normal equations}
 This method solves least squares problem and takes his name from the fact that ``normal'' means orthogonal.
 
 The key idea is using symmetry to skip half of the entries of ${A}^{T}A$
@@ -95,7 +95,7 @@ In particular, the solution of $\|\min Ax - ({b}_{1} + {b}_{2})\|$ is the sum of
 
 \textbf{Obs:} $A{A}^{\dag} = A {(\tr{A}A)}^{-1} \tr{A} = A \inv{A} \inv{\tr{A}} \tr{A} = I_{n \times m}$, but this doesn't hold for ${A}^{\dag}A = {({A}^{T}A)}^{-1}({A}^{T}A)$, which is not the identity matrix.
 
-\subsection{QR factorization}
+\section{QR factorization}
 
 \begin{theorem}
   $\forall A \in \mathcal{M}(m, m, \mathds{R}),~ \exists  Q \in \mathcal{O}(m, m, \mathds{R})$ (space of orthogonal matrices of size $m\times m$), $\exists R \in \mathcal{M}(m, m, \mathds{R})$ upper triangular such that $A=QR$

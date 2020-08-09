@@ -62,17 +62,19 @@ More formally,
 \end{proof}
 
 \section{Newton's method}
-Newton's method attempts to solve the minimum problem (P) by constructing a sequence $\{\vect{x^i}\}$from an initial guess (starting point) $\vect{x^0} \in \R^n$  that converges towards a minimizer $\vect{x_*}$ of $f$ by using a sequence of second-order Taylor approximations of $f$ around the iterates.
+Newton's method attempts to solve the minimum problem (P) by constructing a sequence $\{\vect{x^i}\}$ from an initial guess (starting point) $\vect{x^0} \in \R^n$  that converges towards a minimizer $\vect{x_*}$ of $f$ by using a sequence of second-order Taylor approximations of $f$ around the iterates.
 
 \subsection{Convex case}
 In the next line we will explore Newton's method in the simplest case, when the function is perfectly convex (i.e. the Hessian is strictly positive definite).
 
-\begin{theorem}
-Let $f$ be a function such that $\nabla^2 f(\vect{x^i}) {\succ} 0$. Then the second order model $Q_{\vect{x^i}}(\vect{y})$ admits a minimum.
+\begin{theorem}\label{theo:newton_min}
+Let $f: \R^n \to \R$ be a function such that $\nabla^2 f(\vect{x^i}) {\succ} 0$.
+Then the second order model in proximity of point $\vect{x}$ ($Q_{\vect{x^i}}(\vect{y})$ for $\vect{y} \in \mathcal{B}(\vect{x}, \delta)$) admits a minimum.
 \end{theorem}
+
 \begin{proof}
 Let us write $\vect{x}$ instead of $\vect{x^i}$ to ease notation.
-The second order Taylor's expansion of $f$ is:
+The second order Taylor's expansion of $f$ around the point $\vect{x}$ (recall \Cref{def:taylor_2nd}) is:
 \[
     \begin{split}
       Q_{\vect{x}}(\vect{y}) &= f(\vect{x}) + <\nabla f(\vect{x}), \vect{y}-\vect{x}> + \frac{1}{2} \tr{(\vect{y}-\vect{x})} \nabla^2 f(\vect{x}) (\vect{y}-\vect{x})\\
@@ -88,13 +90,13 @@ Let us differentiate $Q_{\vect{x}}$:
 
 \[
 	\begin{split}
-		\parder{Q_{\vect{x}}}{\vect{y}} &\stareq \parder{\bigl (<\nabla f(\vect{x}), \vect{y}> + \frac{1}{2} \tr{\vect{y}} \nabla^2 f(\vect{x}) \vect{y} - \tr{\vect{x}} \nabla^2 f(\vect{x}) \vect{y}}{\vect{y}}\\
+		\parder{Q_{\vect{x}}(\vect{y})}{\vect{y}} &\stareq \parder{\bigl (<\nabla f(\vect{x}), \vect{y}> + \frac{1}{2} \tr{\vect{y}} \nabla^2 f(\vect{x}) \vect{y} - \tr{\vect{x}} \nabla^2 f(\vect{x}) \vect{y}}{\vect{y}}\\
 		&= \parder{\bigl (<\nabla f(\vect{x}) + \frac{1}{2} \tr{\vect{y}} \nabla^2 f(\vect{x}) - \tr{\vect{x}} \nabla^2 f(\vect{x}), \vect{y}>}{\vect{y}}\\
 		&= \nabla f(\vect{x}) - \tr{\vect{x}} \nabla^2 f(\vect{x}) + \frac{1}{2}\nabla^2 f(\vect{x}) \vect{y}\\
 	\end{split}
 \]
 where $\stareq$ is given by the fact that $f(\vect{x})$, $- <\nabla f(\vect{x}), \vect{x}>$ and $\frac{1}{2} \tr{\vect{x}} \nabla^2 f(\vect{x}) \vect{x}$ are constant terms with respect to $\vect{y}$.
-$\vect{y}$ is a stationary point iff
+The equality obtained above allows to say that $\vect{y}$ is a stationary point iff
 \[
 	\begin{split}
 		\frac{1}{2} \nabla^2 f(\vect{x}) \vect{y} &= \nabla f^2(\vect{x})\vect{x} - \nabla f(\vect{x})\\
@@ -103,54 +105,51 @@ $\vect{y}$ is a stationary point iff
 \]
 \end{proof}
 
-The moving direction of the gradient descent algorithm using Newton's method is $\vect{d^i} = - \inv{[\nabla^2 f(\vect{x^i})]} \nabla f(\vect{x^i})$.
+The moving direction of the gradient descent algorithm using Newton's method is obtained taking the opposite of the inverse of the Hessian times the gradient of the function.
+Formally, $\vect{d^i} = - \inv{[\nabla^2 f(\vect{x^i})]} \nabla f(\vect{x^i})$.
 
-The direction $\vect{d}$ is obtained taking the opposite of the inverse of the Hessian times the gradient of the function
+An attentive reader may notice that \Cref{theo:newton_min} holds only if the Hessian is invertible.
 
-\begin{obs}
-  We need the Hessian to be invertible, which isn't true in general.
-\end{obs}
-
-We need to solve a non linear equation, namely a system of equations. A way to circumvent this problem is putting the gradient to $0$, so we can write the Taylor form of the gradient and solve a linear equation which is $\nabla f(\vect{x}) ~ \approx \nabla f(\vect{x^i}) + \nabla^2 f(\vect{x^i})(\vect{x} - \vect{x^i})$.
+Moreover, even if the Hessian is invertible, the computation of the descent direction requires to solve a linear system.
+A way to circumvent this problem is putting the gradient to $0$, so we can write the Taylor form of the gradient and solve a linear equation which is $\nabla f(\vect{x}) ~ \approx \nabla f(\vect{x^i}) + \nabla^2 f(\vect{x^i})(\vect{x} - \vect{x^i})$.
 
 \begin{theorem}\label{theo:newton}
-Let $f: \R^n \to \R$ s.t. $f \in \C{3}$ and let $\vect{x_*}$ be a stationary point such that $\nabla f(\vect{\vect{x_*}}) = 0$ and $\nabla^2 f(\vect{x_*}) \succ 0$. Then $\exists \, \mathcal{B}(\vect{x_*},r)$ s.t.~$\vect{x^1} \in \mathcal{B}$, which implies $\{\vect{x^i}\} \to \vect{x_*}$ quadratically.
+Let $f: \R^n \to \R$ s.t. $f \in \C{3}$ and let $\vect{x_*}$ be a stationary point such that $\nabla f(\vect{\vect{x_*}}) = 0$ and $\nabla^2 f(\vect{x_*}) \succ 0$. Then $\exists \, \mathcal{B}(\vect{x_*},r)$ s.t.~$\vect{x^1} \in \mathcal{B}$ and $\{\vect{x^i}\} \to \vect{x_*}$ quadratically.
 \end{theorem}
 
-Notice that \Cref{theo:newton} states that the direction of the Newton method is correct both close and far from the minimum point.
+Notice that \Cref{theo:newton} states that the descent direction computed through Newton's method is correct both close and far from the minimum point.
 
 An attentive reader may notice that the scalar product between the function value at the $i$-th iterate $f(\vect{x^i})$ and the descent direction $\vect{d^i}$ should be negative but also not too close to $0$.
-Such condition is ensured when the function $f$ is such that $u I \preceq \nabla^2 f \preceq L I$, which implies that the function is strongly convex, in other words that the eigenvalues of the Hessian do not get too close to zero (numerically speaking).
-.
-\begin{theorem}
+Such condition is ensured when the function $f$ is such that $u I \preceq \nabla^2 f \preceq L I$, which implies that the function is strongly convex, in other words that the eigenvalues of the Hessian do not get too close to zero (in terms of machine precision).
+
+\begin{theorem}[Global convergence of Newton's method]
 Let $f: \R^n \to \R$ s.t. $f \in \C{3}$ and such that satisfies $u I \preceq \nabla^2 f \preceq L I$ and $\cos \theta^i = \frac{\ps{\nabla f(\vect{x})}{\vect{d^i}}}{\norm{\nabla f(\vect{x^i})} \cdot \norm{\vect{d^i}}}$.
 Then Newton's method converges globally.
 \end{theorem}
 
-\begin{proof}~%
-	\begin{description}
-    \item[{\sc Step 1}]
-		The definition of the descent direction $\vect{d^i}$ in Newton's algorithm is $\vect{d^i} = - \inv{[\nabla^2 f(\vect{x^i})]} \nabla f(\vect{x^i})$ or, equivalently, $\nabla^2 f(\vect{x^i}) \vect{d^i} = - \nabla f(\vect{x^i})$.
-		Thanks to the variational characterization of the eigenvalues we get
+\begin{proof}
+	\todo[inline]{Aggiungere la ref alla variational characterization nella parte di Numerical Methods}
+	The variational characterization of the eigenvalues and the definition of $\vect{d^i}
+$ ($\vect{d^i} := - \inv{[\nabla^2 f(\vect{x^i})]} \nabla f(\vect{x^i}) \iff \nabla^2 f(\vect{x^i}) \vect{d^i} = - \nabla f(\vect{x^i})$) leads to the following upper-bounds:
+	\begin{enumerate}
+		\item
 		\[
-		  \tr{\vect{d^i}} \nabla f(\vect{x^i}) = - \tr{(\vect{d^i})} \nabla^2 f(\vect{x^i}) \vect{d^i} \leq - \lambda_{\text{min}} \sqrnorm{\vect{d^i}}
+			\tr{\vect{d^i}} \nabla f(\vect{x^i}) = - \tr{(\vect{d^i})} \nabla^2 f(\vect{x^i}) \vect{d^i} \leq - \lambda_{\text{min}} \sqrnorm{\vect{d^i}}
 		\]
-
-\todo[inline]{Aggiungere la ref alla variational characterization nella parte di Numerical Methods}
-  \item[{\sc Step 2}]
-    	Since we have that $\cos(\theta^i) = \vect{d^i} \nabla f(\vect{x^i}) \cdot (\norm{\vect{x^i}} \cdot \norm{\nabla f(\vect{x^i})}) \leq \delta < 0$, we want to bound the norm of the gradient:
-  \[
-    \norm{\nabla f(\vect{x^i})} = \norm{\nabla^2 f(\vect{x^i}) \vect{d^i}} \leq \norm{\nabla^2 f(\vect{x^i})} \cdot \norm{\vect{d^i}} = \lambda_{\text{max}} \norm{\vect{d^i}}
-  \]
-      which implies
-  \[
-      \cos(\theta^i) \leq - \lambda_{\text{min}} / \lambda_{\text{max}} \leq - u / L
-  \]
-	\end{description}
+		\item
+		\[
+			\norm{\nabla f(\vect{x^i})} = \norm{\nabla^2 f(\vect{x^i}) \vect{d^i}} \leq \norm{\nabla^2 f(\vect{x^i})} \cdot \norm{\vect{d^i}} = \lambda_{\text{max}} \norm{\vect{d^i}}
+		\]
+	\end{enumerate}
+	
+	From the definition of $\cos \theta^i = \frac{\ps{\nabla f(\vect{x})}{\vect{d^i}}}{\norm{\nabla f(\vect{x^i})} \cdot \norm{\vect{d^i}}}$ we get 
+	\[
+		\cos(\theta^i) \leq - \lambda_{\text{min}} / \lambda_{\text{max}} \leq - u / L
+	\]
 \end{proof}
 
 \begin{theorem}
-  Let $f: \R^n \to \R$ s.t. $f \in \C{3}$ and such that satisfies $u I \preceq \nabla^2 f \preceq L I$ and $\cos(\theta^i) \leq - \lambda_{\text{min}} / \lambda_{\text{max}} \leq - u / L$. Then the method not only converges, but we also have that from some iteration onward, $\alpha^i = 1$ always satisfies Armijo'c condition.
+  Let $f: \R^n \to \R$ s.t. $f \in \C{3}$ and such that satisfies $u I \preceq \nabla^2 f \preceq L I$ and $\cos(\theta^i) \leq - \lambda_{\text{min}} / \lambda_{\text{max}} \leq - u / L$. Then the method not only converges, but we also have that from some iteration onward, $\alpha^i = 1$ always satisfies Armijo's condition.
 \end{theorem}
 
 \begin{proof}
@@ -176,6 +175,7 @@ It can be proved that the convergence is superlinear.
 \noindent This works under the assumption that the eigenvalues are bounded both above and below (deriving from the bounds on the Hessian).
 
 \subsection{Interpretation of Newton's method}
+\todo[inline]{Riscrivere meglio}
 Let us consider Newton's method from a different point of view.
 We can construct a different space where the gradient method coincides with Newton's method.
 Given $R$ which is not singular, we make a variable change ($\vect{y} = R \vect{x}$) --- which is possible given that $R$ is non singular --- and we get $f_{\vect{y}}(\vect{y}) = \frac{1}{2} \tr{\vect{y}} I \vect{y} + q \inv{R} \vect{y}$, which has as an Hessian the identity matrix, which is the optimal matrix for convergence in Newton's method.
@@ -192,16 +192,20 @@ We made a lot of assumptions on the Hessian, without the ones there's no guarant
 \end{myframe}
 
 \subsection{Non convex case}
+Saying that the function $f$ is not convex is equivalent to say that the Hessian in indefinite.
+In such case we propose to compute the descent direction (previously defined as $\vect{d^i} = - \inv{[\nabla^2 f(\vect{x^i})]} \nabla f(\vect{x^i})$) substituting the inverse of the Hessian with a matrix $H'$ which is strictly positive definite ad has more or less the same properties of the Hessian.
 
-If the Hessian isn't positive definite we may take something which is close to the Hessian, which has the bounding property we used before (eigenvalues bounded below and above). In truth, there is no reason to choose exactly the opposite of the inverse of the Hessian times the gradient for the direction, we may use another matrix which is striclty positive definite ad has more or less the same properties of the Hessian.
+For example, we can build $H^i$ summing to the Hessian a multiple of the identity matrix: $H^i = \nabla^2 f(\vect{x^i}) + \varepsilon^i I \succ 0$.
+The sequence $\{ H^i\}$ is supposed to converge to a matrix $H'$ that is strictly positive definite.
 
-In particular, given an Hessian that has some negative eigenvalues we can sum to it a multiple of the identity matrix: $H^i = \nabla^2 f(\vect{x^i}) + \varepsilon^i I \succ 0$. We iterate this procedure until the resulting matrix is strictly positive definite.
+\noindent A proper choice for $\eps$ should ensure that all the eigenvalues are at least $\delta$, for an ``appropriately chosen smallish $\delta$''.
+Formally,
 
-How to compute $\varepsilon$ numerically? How much larger should $\varepsilon$ be? We also want the smallest eigenvalue to be not too close to $0$.
+	\[
+		\varepsilon = \max \{0,~  \delta - \lambda_{\text{min}}\}
+	\]
 
- $\varepsilon = \max \{0,~  \delta - \lambda_{\text{min}}\}$ for ``appropriately chosen smallish $\delta$'', in other words we want all the eigenvalues to be at least $\delta$.
-
- The reasons behind the choice of $\delta$ (not too small) are both numerical (any double $\leq$ {\tt 1e-16} ``is $0$'') and algorithmic (if $\lambda_{\text{min}}(\nabla^2 f(\vect{x^i}) + \varepsilon I)$ ``very small'' then the axes of $S(Q_{\vect{x^i}}, \cdot)$ are ``very elongated'').
+ The real value $\delta$ should not be too small for both numerical (any double $\leq$ {\tt 1e-16} is treated as $0$ by computers) and algorithmic (the smaller $\lambda_{\text{min}}(\nabla^2 f(\vect{x^i}) + \varepsilon I)$ the more elongated the axes of $S(Q_{\vect{x^i}}, \cdot)$) reasons.
 
  It can be proved that the $\varepsilon$ we chose is the solution to an optimization problem: $\min \{\norm{H - \nabla^2 f(\vect{x^i})} ~ H \succeq \delta I\}$. The choice for $\delta$ in the Matlab code is $10^{-6}$.
 
@@ -209,7 +213,7 @@ How to compute $\varepsilon$ numerically? How much larger should $\varepsilon$ b
    Note that these constraints are important and we will get back to them later on in the course.
 \end{obs}
  
-Could we use a different norm instead of the $2$-norm? Yes, for example we can use Frobenius norm, changing a bit the algorithm, but we still get convergence. We would need to solve $\min \{{\norm{H - \nabla^2 f(\vect{x^i})}}_F ~ H \succeq \delta I\}$, which is performed in two steps:
+\noindent Could we use a different norm instead of the $2$-norm? Yes, for example we can use Frobenius's norm, changing a bit the algorithm, but we still get convergence. We would need to solve $\min \{{\norm{H - \nabla^2 f(\vect{x^i})}}_F ~ H \succeq \delta I\}$, which is performed in two steps:
 \begin{enumerate}
   \item compute spectral decomposition $\nabla^2 f(\vect{x^i}) = H \Lambda H^T$
   \item $H^i = H \bar{\Lambda} H^T$ with $\bar{\gamma}^i = \max \{\lambda^i, \delta\}$
@@ -220,4 +224,4 @@ In both cases, $\{\vect{x^i}\} \to \vect{x_*}$ with $\nabla^2 f(\vect{x_*}) \suc
 We still need to compute eigenvalues, which takes $O(n^3)$, which is too much if we are in multidimensional spaces.
 \end{myframe}
 
-As a closing observation we may notice that Newton's method is very fast to go to a local minimum and this may represent a problem, because it misses global minima.
+As a closing observation we want to stress that Newton's method is very fast to converge to a local minimum, but this behaviour may represent a problem, because the algorithm may miss global minima.

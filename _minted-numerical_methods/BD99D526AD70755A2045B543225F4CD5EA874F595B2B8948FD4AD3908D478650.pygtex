@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }[L, D] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{ldl\PYGZus{}factorization}\PYG{p}{(}A\PYG{p}{)}
+\PYG{+w}{  }\PYG{n}{m} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{A}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{);}
+  \PYG{n}{L} \PYG{p}{=} \PYG{n+nb}{eye}\PYG{p}{(}\PYG{n}{m}\PYG{p}{);} \PYG{n}{D} \PYG{p}{=} \PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{m}\PYG{p}{);}
+  \PYG{n}{for} \PYG{l+s}{k} \PYG{l+s}{=} \PYG{l+s}{1:m\PYGZhy{}1}
+    \PYG{n}{D}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,} \PYG{n}{k}\PYG{p}{)} \PYG{p}{=} \PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,} \PYG{n}{k}\PYG{p}{);}
+	  \PYG{n}{L}\PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{k}{end}\PYG{p}{,} \PYG{n}{k}\PYG{p}{)} \PYG{p}{=} \PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{k}{end}\PYG{p}{,} \PYG{n}{k}\PYG{p}{)} \PYG{o}{/} \PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,} \PYG{n}{k}\PYG{p}{);}
+	  \PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{k}{end}\PYG{p}{,} \PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{k}{end}\PYG{p}{)} \PYG{p}{=} \PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{k}{end}\PYG{p}{,} \PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{k}{end}\PYG{p}{)} \PYG{c}{...}
+        \PYG{o}{\PYGZhy{}} \PYG{n}{L}\PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{k}{end}\PYG{p}{,} \PYG{n}{k}\PYG{p}{)} \PYG{o}{*} \PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,} \PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{k}{end}\PYG{p}{);}
+  \PYG{n}{end}
+  \PYG{l+s}{D(m,} \PYG{l+s}{m)} \PYG{l+s}{=} \PYG{l+s}{A(m,} \PYG{l+s}{m)}\PYG{p}{;}
+\end{Verbatim}

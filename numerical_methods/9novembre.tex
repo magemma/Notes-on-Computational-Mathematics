@@ -6,10 +6,10 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{9th of November 2018 --- F. Poloni}
+\chapter{9th of November 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Conditioning}
+\section{Conditioning}
 Two lectures ago we introduced the QR factorization to solve least squares problems and we noticed that it has a computational complexity which is much worse thant the normal equations method.
 
 Why did we introduce the QR factorization to solve the least squares problem, then? Altough it's more complex computationally speaking, it's much better than the normal equation for what concerns accuracy. Let's see why through an example:
@@ -123,7 +123,7 @@ i.e., we replace the absolute error $\norm{\tilde{\x}-\x}$ with the relative err
 \end{definition}
 
 
-\subsubsection{Conditioning of linear systems}
+\subsection{Conditioning of linear systems}
 At this point we would like to compute the condition number of solving a linear system, i.e., the condition number of the function $f(A,b)=A^{-1}b$, perturbing the inputs $A$ and $b$, one at a time.
 
 \begin{description}
@@ -167,7 +167,7 @@ We only proved an inequality, but it turns out that it is tight: for every $A$ a
 
 In the end, in both cases, the error in the output is the error in the input (namely $b$ or $A$) times the condition number.
 
-\subsection{Condition number, SVD, and distance to singularity}
+\section{Condition number, SVD, and distance to singularity}
 
 \begin{proposition}
 $\kappa(A) = \frac{\sigma_1}{\sigma_n}$, i.e., $\kappa(A)$ is the ratio between the smallest and the largest singular value.
@@ -266,7 +266,7 @@ Thus, $\norm{A - \hat{A}} = \sigma_n$. We know already that $\norm{A}=\sigma_1$,
 
 We analyzed the conditioning of linear systems, but the main problem we want to study in this course is least squares problem.
 
-\subsection{Conditioning of least squares problem}
+\section{Conditioning of least squares problem}
 
 We need two quantities to be able to measure the conditioning of least squares problem:
 

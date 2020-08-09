@@ -10,10 +10,10 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{23rd of November 2018 --- F. Poloni}
+\chapter{23rd of November 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Gaussian elimination on symmetric matrices}
+\section{Gaussian elimination on symmetric matrices}
 \recap{
 In Gaussian elimination we had $A$ and we multiplied it by $L_1$ in order to get a big chunk of $0$s in the first column
 \[
@@ -300,7 +300,7 @@ Of course there are some matrices (like the ones with all $0$s on the diagonal) 
 
 We may introduce another kind of factorization.
 
-\subsection{Cholesky factorization}
+\section{Cholesky factorization}
 The key idea is to write the diagonal matrix of the Gaussian elimination $D$ as product of $D^{1/2}$ times itself:
 
 $D = \begin{pmatrix}
@@ -340,7 +340,7 @@ We will not discuss stability further, but Cholesky is always backward stable ev
 In a sparse matrix, we can choose the (symmetric) permutation with the only goal of reducing fill-in. The same considerations about LU factorization hold in this case too.
 \end{obs}
 
-\subsection{Krylov subspace methods}
+\section{Krylov subspace methods}
 
 In this part we will discuss some different techniques to solved linear systems, inspired from optimization algorithms.
 

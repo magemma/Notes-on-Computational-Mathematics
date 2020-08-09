@@ -5,7 +5,7 @@
 
 \begin{document}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{21st of November 2018 --- F. Poloni}
+\chapter{21st of November 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
 In this lecture we address the problem of solving linear systems exactly.
@@ -28,7 +28,7 @@ Let us see some real life examples, where the matrices are large and sparse.
 \end{description}
 
 
-\subsection{Gaussian elimination and LU factorization}
+\section{Gaussian elimination and LU factorization}
 
 Gaussian elimination can be seen as a factorization: $A=LU$. The intuition is to proceed iteratively, multiplying each time for a new matrix, just like QR factorization.
 
@@ -260,7 +260,7 @@ Why isn't there any check on the orthogonality of the matrix? Because in that ca
 }
 \todo{missing}
 
-\subsubsection{Stability of LU}\label{21novstability}
+\subsection{Stability of LU}\label{21novstability}
 A downside of this approach is that it's not numerically stable.
 The intuition is that the condition is bad whenever the matrix $A$ has a very small pivot.
 
@@ -308,7 +308,7 @@ What about the stability of this improvement to LU factorization, called \textbf
 
 It's not stable at all, in the worst case it may happen that $\norm{U} / \norm{A}$ may grow as $\approx 2^m$, although matrices for which this happens are very rare.
 
-\subsubsection{Gaussian elimination on sparse matrices}
+\subsection{Gaussian elimination on sparse matrices}
 
 Given a sparse matrix 
 

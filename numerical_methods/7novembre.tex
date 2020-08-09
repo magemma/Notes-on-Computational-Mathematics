@@ -6,10 +6,10 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{7th of November 2018 --- F.Poloni}
+\chapter{7th of November 2018 --- F.Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\subsection{Least squares problem with SVD}
+\section{Least squares problem with SVD}
 
 \recap{
   \textbf{Tall thin SVD:}
@@ -164,7 +164,7 @@ This lemma also proves that the factorization is also a $QR$ factorization.
 \end{myframe}
  We may observe that the computational complexity is $O(15 \cdot n^3)$ for square matrices, while it's $O(m \cdot n^2)$ in the tall, thin case.
 
- \subsubsection{Behaviour in case of zeros as singular values}
+ \subsection{Behaviour in case of zeros as singular values}
  What happens when there are some zeros as singular values? 
  
  \recap{We may recall that the singular values are ordered on the diagonal in decreasing order (the largerst in top left position). From this assumption, we may say that if there are some $\sigma_{i} = 0$ then they are in the bottom right part of the matrix.
@@ -225,7 +225,7 @@ Note that $\norm{x} = \norm{y}$, because $x = Vy$. It follows from the expressio
   What happens when working with machine precision? Let's make an example where $r = n-1$, so only the last singular value is $0$. If the check of $\sigma_n = 0$ fails, $\frac{1}{\sigma_n}$ becomes very big. A way to circumvent this problem is to find the linear dependencies between the columns, so that the algorithm works correctly.
 
 
-\subsection{Truncated SVD}
+\section{Truncated SVD}
 In many real world setups first singular components correspond to the most prominent features of the dataset, while the smallest ones are fine details and noise. Note, though, that in the sum $\sum\limits_{i=1}^n V^i \frac{\tr{U^i} b}{\sigma_i}$ the small singular values may have a large impact, because $\sigma_i$ is in the denominator.
 
 We can modify the solution to cope with real world data problems:
@@ -236,7 +236,7 @@ for a certain $k$, ignoring small singular values.
 
 Another way to modify the problem is the following.
 
-\subsection{Tikhonov regularization / ridge regression}
+\section{Tikhonov regularization / ridge regression}
 
 The Tikhonov regularization is a smoother version of truncated SVD.%
 

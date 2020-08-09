@@ -75,6 +75,14 @@
 \newcommand\stareq{\stackrel{\mathclap{\normalfont\mbox{*}}}{=}}
 \newcommand\numeq[1]{\stackrel{\mathclap{\normalfont\mbox{\textbf{\tiny #1}}}}{=}}
 \newcommand\numineq[2]{\stackrel{\mathclap{\normalfont\mbox{\textbf{\tiny #1}}}}{#2}}
+\newcommand\finline[3][]{\begin{myfont}[#1]{#2}#3\end{myfont}}%
+\addto\captionsitalian{\renewcommand{\appendixname}{Allegato}}
+\newcommand{\tr}[1]{{#1}^{T}}
+\newcommand{\inv}[1]{{#1}^{-1}}
+\newcommand{\parder}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\sqrnorm}[1]{{\left\lVert#1\right\rVert}^2}
+\newcommand{\Cr}[1]{{\color{red} #1}}
+\newcommand{\Cb}[1]{{\color{blue} #1}}
 
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
    \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
@@ -99,15 +107,7 @@
 }
 %\makeatother
 
-
-\newcommand\finline[3][]{\begin{myfont}[#1]{#2}#3\end{myfont}}%
-\addto\captionsitalian{\renewcommand{\appendixname}{Allegato}}
-\newcommand{\tr}[1]{{#1}^{T}}
-\newcommand{\inv}[1]{{#1}^{-1}}
-\newcommand{\parder}[2]{\frac{\partial#1}{\partial#2}}
-\newcommand{\sqrnorm}[1]{{\left\lVert#1\right\rVert}^2}
-\newcommand{\Cr}[1]{{\color{red} #1}}
-\newcommand{\Cb}[1]{{\color{blue} #1}}
+\newcommand\eqmathbox[1]{\eqmakebox[M]{$\displaystyle #1$}}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 \makeatletter%

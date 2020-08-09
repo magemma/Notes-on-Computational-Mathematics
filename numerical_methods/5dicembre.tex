@@ -9,7 +9,7 @@
 \begin{document}
 
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
-\section{5th of December 2018 --- F. Poloni}
+\chapter{5th of December 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
 \recap{
@@ -24,7 +24,7 @@ Notice that the approximation is not always good, but it is good enough if we ta
 
 We are interested in explaining the convergence of Arnoldi method.
 
-\subsection{Convergence of Arnoldi}
+\section{Convergence of Arnoldi}
 
 The eigenvalues of $H_n$ are eigenvalues of a ``nearby matrix'' obtained by taking $\widetilde{H}_m$ (result of the full process) and replacing $\widetilde{H}_{n+1,n}$ with zero.
 \[
@@ -67,7 +67,7 @@ $
 We expect that this change does not lead to a significative change in the eigenvalues, in other words, the eigenvalues of $\widetilde{H}_m$ differ from the eigenvalues of $H_m$ by $\abs{h_{n+1, n}}$.
 Formally, $\norm{\widetilde{H}_m - H_m} = h_{n+1, n}$.
 
-\subsubsection{Better explanation}
+\subsection{Better explanation}
 The space $K_n(A, b) = \operatorname{span}(b,Ab,\dots,A^{n-1}b)$ contains the right ``features'' to represent the eigenvectors of $A$ with largest eigenvalues: if $A = V \Lambda V^{-1}$ is diagonalizable, then
 \begin{equation}
   \begin{aligned}

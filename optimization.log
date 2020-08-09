@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2020.5.19)  8 AUG 2020 16:44
+This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2020.5.19)  9 AUG 2020 09:40
  system commands enabled.
 **optimization.tex
 (./optimization.tex
@@ -4289,21 +4289,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 47--47
  []
 
 [86] [87]
-Overfull \hbox (1.54463pt too wide) detected at line 168
+Overfull \hbox (1.54463pt too wide) detected at line 167
 [][][][]
  []
 
-
-Underfull \vbox (badness 2689) has occurred while \output is active []
-
- [88]
+[88]
 Overfull \hbox (5.0638pt too wide) in paragraph at lines 183--185
 []\T1/lmr/m/n/10 For-mally, the de-scend-ing di-rec-tion $\OT1/lmr/bx/n/10 d[]$
  \T1/lmr/m/n/10 is com-puted as fol-lows: $\OT1/lmr/bx/n/10 d[] \OT1/lmr/m/n/10
  = \OMS/lmsy/m/n/10 ^^@r\OML/lmm/m/it/10 f[]\OT1/lmr/m/n/10 (\OT1/lmr/bx/n/10 y\OT1/lmr/m/n/10 ) =
  []
 
-[89]) [90] [91] (./optimization/16novembre.tex [92
+[89] [90]) [91] (./optimization/16novembre.tex [92
 
 ]
 Lecture 13.
@@ -4313,7 +4310,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 147--147
  []
 
 [95]
-<pics/16nov/1.png, id=1883, 236.239pt x 162.93867pt>
+<pics/16nov/1.png, id=1888, 236.239pt x 162.93867pt>
 File: pics/16nov/1.png Graphic file (type png)
 <use pics/16nov/1.png>
 Package luatex.def Info: pics/16nov/1.png  used on input line 149.
@@ -4413,12 +4410,12 @@ Lecture 14.
 [99
 
 ]
-<pics/22nov/1.png, id=1915, 236.3229pt x 190.7928pt>
+<pics/22nov/1.png, id=1921, 236.3229pt x 190.7928pt>
 File: pics/22nov/1.png Graphic file (type png)
 <use pics/22nov/1.png>
 Package luatex.def Info: pics/22nov/1.png  used on input line 55.
 (luatex.def)             Requested size: 137.9979pt x 111.4139pt.
-<pics/22nov/2.png, id=1916, 228.6141pt x 187.4202pt>
+<pics/22nov/2.png, id=1922, 228.6141pt x 187.4202pt>
 File: pics/22nov/2.png Graphic file (type png)
 <use pics/22nov/2.png>
 Package luatex.def Info: pics/22nov/2.png  used on input line 55.
@@ -4463,7 +4460,7 @@ warning  (pdf backend): ignoring duplicate destination with the name 'ALG@line.1
 warning  (pdf backend): ignoring duplicate destination with the name 'ALG@line.1
 3'
 [100<./pics/22nov/1.png><./pics/22nov/2.png>]
-<pics/22nov/3.png, id=1925, 323.7696pt x 200.9106pt>
+<pics/22nov/3.png, id=1930, 323.7696pt x 200.9106pt>
 File: pics/22nov/3.png Graphic file (type png)
 <use pics/22nov/3.png>
 Package luatex.def Info: pics/22nov/3.png  used on input line 82.
@@ -4475,12 +4472,12 @@ $[][] \OT1/lmr/m/n/10 = 3\OML/lmm/m/it/10 L[]$\T1/lmr/m/it/10 .
  []
 
 [101<./pics/22nov/3.png>] [102]
-<pics/22nov/lasso.pdf, id=1941, 470.5868pt x 368.89008pt>
+<pics/22nov/lasso.pdf, id=1946, 470.5868pt x 368.89008pt>
 File: pics/22nov/lasso.pdf Graphic file (type pdf)
 <use pics/22nov/lasso.pdf>
 Package luatex.def Info: pics/22nov/lasso.pdf  used on input line 145.
 (luatex.def)             Requested size: 172.5pt x 135.2207pt.
-<pics/22nov/4.png, id=1943, 366.6498pt x 223.0734pt>
+<pics/22nov/4.png, id=1948, 366.6498pt x 223.0734pt>
 File: pics/22nov/4.png Graphic file (type png)
 <use pics/22nov/4.png>
 Package luatex.def Info: pics/22nov/4.png  used on input line 161.
@@ -4552,47 +4549,47 @@ warning  (pdf backend): ignoring duplicate destination with the name 'ALG@line.1
 
 warning  (pdf backend): ignoring duplicate destination with the name 'ALG@line.1
 7'
-<pics/28nov/1.png, id=1990, 336.7782pt x 177.7842pt>
+<pics/28nov/1.png, id=1995, 336.7782pt x 177.7842pt>
 File: pics/28nov/1.png Graphic file (type png)
 <use pics/28nov/1.png>
 Package luatex.def Info: pics/28nov/1.png  used on input line 174.
 (luatex.def)             Requested size: 172.5pt x 91.06479pt.
 [108]
-<pics/28nov/2.png, id=2004, 300.78365pt x 222.66182pt>
+<pics/28nov/2.png, id=2009, 300.78365pt x 222.66182pt>
 File: pics/28nov/2.png Graphic file (type png)
 <use pics/28nov/2.png>
 Package luatex.def Info: pics/28nov/2.png  used on input line 219.
 (luatex.def)             Requested size: 172.5pt x 127.69658pt.
  [109<./pics/28nov/1.png>]
-<pics/28nov/3.png, id=2013, 300.78365pt x 222.66182pt>
+<pics/28nov/3.png, id=2018, 300.78365pt x 222.66182pt>
 File: pics/28nov/3.png Graphic file (type png)
 <use pics/28nov/3.png>
 Package luatex.def Info: pics/28nov/3.png  used on input line 228.
 (luatex.def)             Requested size: 172.5pt x 127.69658pt.
  [110<./pics/28nov/2.png><./pics/28nov/3.png>]
-<pics/28nov/kgh4_1_i.pdf, id=2023, 361.35pt x 161.60374pt>
+<pics/28nov/kgh4_1_i.pdf, id=2028, 361.35pt x 161.60374pt>
 File: pics/28nov/kgh4_1_i.pdf Graphic file (type pdf)
 <use pics/28nov/kgh4_1_i.pdf>
 Package luatex.def Info: pics/28nov/kgh4_1_i.pdf  used on input line 245.
 (luatex.def)             Requested size: 165.59853pt x 74.05997pt.
-<pics/28nov/kgh6_1_i.pdf, id=2024, 361.35pt x 161.60374pt>
+<pics/28nov/kgh6_1_i.pdf, id=2029, 361.35pt x 161.60374pt>
 File: pics/28nov/kgh6_1_i.pdf Graphic file (type pdf)
 <use pics/28nov/kgh6_1_i.pdf>
 Package luatex.def Info: pics/28nov/kgh6_1_i.pdf  used on input line 245.
 (luatex.def)             Requested size: 165.59853pt x 74.05997pt.
-<pics/28nov/4.png, id=2026, 361.35pt x 204.5241pt>
+<pics/28nov/4.png, id=2031, 361.35pt x 204.5241pt>
 File: pics/28nov/4.png Graphic file (type png)
 <use pics/28nov/4.png>
 Package luatex.def Info: pics/28nov/4.png  used on input line 255.
 (luatex.def)             Requested size: 241.49895pt x 136.69025pt.
 
 [111<./pics/28nov/kgh4_1_i.pdf><./pics/28nov/kgh6_1_i.pdf>]
-<pics/28nov/bundle01.pdf, id=2053, 213.79875pt x 137.51375pt>
+<pics/28nov/bundle01.pdf, id=2058, 213.79875pt x 137.51375pt>
 File: pics/28nov/bundle01.pdf Graphic file (type pdf)
 <use pics/28nov/bundle01.pdf>
 Package luatex.def Info: pics/28nov/bundle01.pdf  used on input line 276.
 (luatex.def)             Requested size: 137.9979pt x 88.75967pt.
-<pics/28nov/bundle04.pdf, id=2054, 213.79875pt x 137.51375pt>
+<pics/28nov/bundle04.pdf, id=2059, 213.79875pt x 137.51375pt>
 File: pics/28nov/bundle04.pdf Graphic file (type pdf)
 <use pics/28nov/bundle04.pdf>
 Package luatex.def Info: pics/28nov/bundle04.pdf  used on input line 276.
@@ -4652,38 +4649,38 @@ warning  (pdf backend): ignoring duplicate destination with the name 'ALG@line.1
 
 ]
 Lecture 16.
-<pics/30nov/1.png, id=2096, 257.0526pt x 116.67973pt>
+<pics/30nov/1.png, id=2101, 257.0526pt x 116.67973pt>
 File: pics/30nov/1.png Graphic file (type png)
 <use pics/30nov/1.png>
 Package luatex.def Info: pics/30nov/1.png  used on input line 26.
 (luatex.def)             Requested size: 172.5pt x 78.3014pt.
 [115<./pics/30nov/1.png>]
-<pics/30nov/eqKKT01.pdf, id=2106, 259.96478pt x 250.21875pt>
+<pics/30nov/eqKKT01.pdf, id=2111, 259.96478pt x 250.21875pt>
 File: pics/30nov/eqKKT01.pdf Graphic file (type pdf)
 <use pics/30nov/eqKKT01.pdf>
 Package luatex.def Info: pics/30nov/eqKKT01.pdf  used on input line 40.
 (luatex.def)             Requested size: 103.50105pt x 99.61992pt.
-<pics/30nov/eqKKT02.pdf, id=2107, 259.96478pt x 250.21875pt>
+<pics/30nov/eqKKT02.pdf, id=2112, 259.96478pt x 250.21875pt>
 File: pics/30nov/eqKKT02.pdf Graphic file (type pdf)
 <use pics/30nov/eqKKT02.pdf>
 Package luatex.def Info: pics/30nov/eqKKT02.pdf  used on input line 40.
 (luatex.def)             Requested size: 103.50105pt x 99.61992pt.
-<pics/30nov/eqKKT03.pdf, id=2108, 259.96478pt x 250.21875pt>
+<pics/30nov/eqKKT03.pdf, id=2113, 259.96478pt x 250.21875pt>
 File: pics/30nov/eqKKT03.pdf Graphic file (type pdf)
 <use pics/30nov/eqKKT03.pdf>
 Package luatex.def Info: pics/30nov/eqKKT03.pdf  used on input line 41.
 (luatex.def)             Requested size: 103.50105pt x 99.61992pt.
-<pics/30nov/eqKKT04.pdf, id=2109, 259.96478pt x 250.21875pt>
+<pics/30nov/eqKKT04.pdf, id=2114, 259.96478pt x 250.21875pt>
 File: pics/30nov/eqKKT04.pdf Graphic file (type pdf)
 <use pics/30nov/eqKKT04.pdf>
 Package luatex.def Info: pics/30nov/eqKKT04.pdf  used on input line 41.
 (luatex.def)             Requested size: 103.50105pt x 99.61992pt.
-<pics/30nov/eqKKT05.pdf, id=2110, 259.96478pt x 250.21875pt>
+<pics/30nov/eqKKT05.pdf, id=2115, 259.96478pt x 250.21875pt>
 File: pics/30nov/eqKKT05.pdf Graphic file (type pdf)
 <use pics/30nov/eqKKT05.pdf>
 Package luatex.def Info: pics/30nov/eqKKT05.pdf  used on input line 42.
 (luatex.def)             Requested size: 103.50105pt x 99.61992pt.
-<pics/30nov/eqKKT06.pdf, id=2111, 259.96478pt x 250.21875pt>
+<pics/30nov/eqKKT06.pdf, id=2116, 259.96478pt x 250.21875pt>
 File: pics/30nov/eqKKT06.pdf Graphic file (type pdf)
 <use pics/30nov/eqKKT06.pdf>
 Package luatex.def Info: pics/30nov/eqKKT06.pdf  used on input line 42.
@@ -4691,12 +4688,12 @@ Package luatex.def Info: pics/30nov/eqKKT06.pdf  used on input line 42.
  [116<./pics/30nov/eqKKT01.pdf><./pics/30nov/eqKKT02.pdf><./pics/30nov/eqKKT03.p
 df><./pics/30nov/eqKKT04.pdf>] [117<./pics/30nov/eqKKT05.pdf><./pics/30nov/eqKKT
 06.pdf>]
-<pics/30nov/tangentcone01.pdf, id=2275, 121.77031pt x 92.84648pt>
+<pics/30nov/tangentcone01.pdf, id=2280, 121.77031pt x 92.84648pt>
 File: pics/30nov/tangentcone01.pdf Graphic file (type pdf)
 <use pics/30nov/tangentcone01.pdf>
 Package luatex.def Info: pics/30nov/tangentcone01.pdf  used on input line 102.
 (luatex.def)             Requested size: 103.50105pt x 78.91844pt.
-<pics/30nov/tangentcone08.pdf, id=2276, 121.77031pt x 92.84648pt>
+<pics/30nov/tangentcone08.pdf, id=2281, 121.77031pt x 92.84648pt>
 File: pics/30nov/tangentcone08.pdf Graphic file (type pdf)
 <use pics/30nov/tangentcone08.pdf>
 Package luatex.def Info: pics/30nov/tangentcone08.pdf  used on input line 104.
@@ -4718,12 +4715,12 @@ it/10 < \OMS/lmsy/m/n/10 r\OML/lmm/m/it/10 f\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 x\
  []
 
 [118<./pics/30nov/tangentcone01.pdf><./pics/30nov/tangentcone08.pdf>]
-<pics/30nov/tangentcone10.pdf, id=2305, 121.77031pt x 92.84648pt>
+<pics/30nov/tangentcone10.pdf, id=2310, 121.77031pt x 92.84648pt>
 File: pics/30nov/tangentcone10.pdf Graphic file (type pdf)
 <use pics/30nov/tangentcone10.pdf>
 Package luatex.def Info: pics/30nov/tangentcone10.pdf  used on input line 135.
 (luatex.def)             Requested size: 103.50105pt x 78.91844pt.
-<pics/30nov/tangentcone13.pdf, id=2307, 121.77031pt x 92.84648pt>
+<pics/30nov/tangentcone13.pdf, id=2312, 121.77031pt x 92.84648pt>
 File: pics/30nov/tangentcone13.pdf Graphic file (type pdf)
 <use pics/30nov/tangentcone13.pdf>
 Package luatex.def Info: pics/30nov/tangentcone13.pdf  used on input line 141.
@@ -4747,12 +4744,12 @@ m/n/10 = \OMS/lmsy/m/n/10 f\OML/lmm/m/it/10 d \OMS/lmsy/m/n/10 2 \U/dsrom/m/n/1
  []
 
 [120]
-<pics/30nov/tangentcone18.pdf, id=2356, 121.77031pt x 92.84648pt>
+<pics/30nov/tangentcone18.pdf, id=2361, 121.77031pt x 92.84648pt>
 File: pics/30nov/tangentcone18.pdf Graphic file (type pdf)
 <use pics/30nov/tangentcone18.pdf>
 Package luatex.def Info: pics/30nov/tangentcone18.pdf  used on input line 208.
 (luatex.def)             Requested size: 103.50105pt x 78.91844pt.
-<pics/30nov/tangentcone21.pdf, id=2358, 121.77031pt x 92.84648pt>
+<pics/30nov/tangentcone21.pdf, id=2363, 121.77031pt x 92.84648pt>
 File: pics/30nov/tangentcone21.pdf Graphic file (type pdf)
 <use pics/30nov/tangentcone21.pdf>
 Package luatex.def Info: pics/30nov/tangentcone21.pdf  used on input line 221.
@@ -4782,7 +4779,7 @@ x/n/10 . []\T1/lmr/m/it/10 We term \T1/lmr/bx/it/10 conic pro-gram $[]\OMS/lmsy
 /m/n/10 []  \OML/lmm/m/it/10 b\OMS/lmsy/m/n/10 g$\T1/lmr/m/it/10 ,
  []
 
-<pics/6dic/1.png, id=2437, 310.761pt x 185.9748pt>
+<pics/6dic/1.png, id=2442, 310.761pt x 185.9748pt>
 File: pics/6dic/1.png Graphic file (type png)
 <use pics/6dic/1.png>
 Package luatex.def Info: pics/6dic/1.png  used on input line 248.
@@ -4817,7 +4814,7 @@ Overfull \hbox (0.83226pt too wide) in paragraph at lines 14--14
 [131
 
 ] [132]
-<pics/12dic/1.png, id=2469, 289.8027pt x 183.5658pt>
+<pics/12dic/1.png, id=2474, 289.8027pt x 183.5658pt>
 File: pics/12dic/1.png Graphic file (type png)
 <use pics/12dic/1.png>
 Package luatex.def Info: pics/12dic/1.png  used on input line 125.
@@ -5069,27 +5066,27 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ]
 Lecture 19.
 [141] [142]
-<pics/14dic/1.png, id=2534, 139.9629pt x 126.4725pt>
+<pics/14dic/1.png, id=2539, 139.9629pt x 126.4725pt>
 File: pics/14dic/1.png Graphic file (type png)
 <use pics/14dic/1.png>
 Package luatex.def Info: pics/14dic/1.png  used on input line 100.
 (luatex.def)             Requested size: 68.99895pt x 62.34837pt.
-<pics/14dic/2.png, id=2535, 140.2038pt x 125.7498pt>
+<pics/14dic/2.png, id=2540, 140.2038pt x 125.7498pt>
 File: pics/14dic/2.png Graphic file (type png)
 <use pics/14dic/2.png>
 Package luatex.def Info: pics/14dic/2.png  used on input line 100.
 (luatex.def)             Requested size: 68.99895pt x 61.88464pt.
-<pics/14dic/3.png, id=2536, 139.722pt x 125.268pt>
+<pics/14dic/3.png, id=2541, 139.722pt x 125.268pt>
 File: pics/14dic/3.png Graphic file (type png)
 <use pics/14dic/3.png>
 Package luatex.def Info: pics/14dic/3.png  used on input line 100.
 (luatex.def)             Requested size: 68.99895pt x 61.86162pt.
-<pics/14dic/4.png, id=2537, 140.9265pt x 127.1952pt>
+<pics/14dic/4.png, id=2542, 140.9265pt x 127.1952pt>
 File: pics/14dic/4.png Graphic file (type png)
 <use pics/14dic/4.png>
 Package luatex.def Info: pics/14dic/4.png  used on input line 100.
 (luatex.def)             Requested size: 68.99895pt x 62.27766pt.
-<pics/14dic/5.png, id=2539, 346.896pt x 233.9139pt>
+<pics/14dic/5.png, id=2544, 346.896pt x 233.9139pt>
 File: pics/14dic/5.png Graphic file (type png)
 <use pics/14dic/5.png>
 Package luatex.def Info: pics/14dic/5.png  used on input line 109.
@@ -5130,15 +5127,15 @@ runsystem(rm optimization.pyg)...executed
 )
 
 Here is how much of LuaTeX's memory you used:
- 61707 strings out of 480992
+ 61713 strings out of 480992
  125171,2373549 words of node,token memory allocated
- 2785 words of node memory still in use:
-   22 hlist, 2 vlist, 10 rule, 4 glue, 4 kern, 5 sub_mlist, 1 glyph, 491 attribu
-te, 139 glue_spec, 271 attribute_list, 2 write, 16 pdf_literal, 1 pdf_action, 16
+ 2791 words of node memory still in use:
+   22 hlist, 2 vlist, 10 rule, 4 glue, 4 kern, 5 sub_mlist, 1 glyph, 493 attribu
+te, 139 glue_spec, 272 attribute_list, 2 write, 16 pdf_literal, 1 pdf_action, 16
  pdf_colorstack nodes
    avail lists: 1:3,2:2206,3:323,4:132,5:362,6:78,7:3276,8:90,9:898,10:20,11:191
 
- 75356 multiletter control sequences out of 65536+600000
+ 75360 multiletter control sequences out of 65536+600000
  144 fonts using 11955331 bytes
  98i,26n,146p,874b,1204s stack positions out of 5000i,500n,10000p,200000b,100000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local
@@ -5187,10 +5184,10 @@ r/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><
 /usr/local/texlive/2020/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/loca
 l/texlive/2020/texmf-dist/fonts/type1/public/rsfs/rsfs7.pfb></usr/local/texlive/
 2020/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on optimization.pdf (147 pages, 13453510 bytes).
+Output written on optimization.pdf (147 pages, 13454567 bytes).
 
-PDF statistics: 2779 PDF objects out of 2984 (max. 8388607)
- 2222 compressed objects within 23 object streams
- 694 named destinations out of 1000 (max. 131072)
+PDF statistics: 2784 PDF objects out of 2984 (max. 8388607)
+ 2227 compressed objects within 23 object streams
+ 696 named destinations out of 1000 (max. 131072)
  912 words of extra memory for PDF output out of 10000 (max. 100000000)
 
