@@ -7,8 +7,8 @@ COMPILER_FLAGS := -shell-escape -pdf
 all: computational_mathematics.pdf
 
 computational_mathematics.pdf:
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) computationalMathematics.tex > /dev/null
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) computationalMathematics.tex > /dev/null
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) computationalMathematics.tex
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) computationalMathematics.tex 
 	rm -rf _minted*
 	rm -f *.aux *.log *.out *.toc *.pyg 2> /dev/null
 
@@ -36,8 +36,8 @@ prefixed_pdfopt := $(addprefix optimization/, $(pdfopt))
 optimization_singles: $(prefixed_pdfopt)
 
 optimization/%.pdf: optimization/%.tex
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) $< > /dev/null
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) $< > /dev/null
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) $<
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) $<
 	rm -rf _minted*
 	rm *.aux *.log *.out
 	mkdir -p optimization/pdf
@@ -46,8 +46,8 @@ optimization/%.pdf: optimization/%.tex
 optimization_all: optimization.pdf
 
 optimization.pdf:
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) optimization.tex > /dev/null
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) optimization.tex > /dev/null
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) optimization.tex
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) optimization.tex
 	rm -rf _minted*
 	rm *.aux *.log *.out *.toc
 
@@ -68,8 +68,8 @@ prefixed_pdfnum := $(addprefix numerical_methods/, $(pdfnum))
 numerical_methods_singles: $(prefixed_pdfnum)
 
 numerical_methods/%.pdf: numerical_methods/%.tex
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) $< > /dev/null
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) $< > /dev/null
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) $<
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) $<
 	rm -rf _minted*
 	rm *.aux *.log *.out
 	mkdir -p numerical_methods/pdf
@@ -78,8 +78,8 @@ numerical_methods/%.pdf: numerical_methods/%.tex
 numerical_methods_all: numerical_methods.pdf
 
 numerical_methods.pdf:
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) numerical_methods.tex > /dev/null
-	$(LATEX_COMPILER) $(COMPILER_FLAGS) numerical_methods.tex > /dev/null
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) numerical_methods.tex
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) numerical_methods.tex
 	rm -rf _minted*
 	rm *.aux *.log *.out *.toc
 

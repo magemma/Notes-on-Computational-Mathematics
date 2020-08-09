@@ -13,6 +13,193 @@
 \chapter{20th of September 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
+\par In the following chapters we will going to cover the part of Numerical Analysis of the course of Computational Mathematics for Data Learning and Analytics. This part of the course is held by Professor Federico Poloni. The content of these chapters is based primarily on the material provided by the professor on the e-learning portal. In addition to that material, the content has been written also based on the content of the course Linear Algebra held by Prof. Gilbert Strang from MIT. There is a nice portal called MIT OpenCourseWare where you can find a lot of recorded lectures from MIT. Linear algebra course is just super duper fantastic.
+\par During the course, some Matlab code will be covered. We do not plan to include a deep introduction to the Matlab language chiefly for two reasons:
+\begin{enumerate}
+    \item there is already plenty of stuff online,
+    \item it is too time consuming to create one.
+\end{enumerate}
+
+\section{A brief journey in Linear Algebra}
+\label{section:MAT08/1-introduction}
+\par What is linear algebra? Linear algebra solves systems of linear equations. Period. But there is a whole world there in. So better start right now.
+\par What is a system of equations? Well, simply put, it is a bunch of linear equations, say $m$, each of which is characterized by at most $n$ unknowns, i.e. variables. Since there are two dimensions involved here, that is $m$ and $n$, there are actually two points of view to look at this system. We can look at it from the row perspective and from the column perspective. Let us go through an example to show this.
+\begin{example}
+    Suppose we are given the following system of two linear equations with two unknowns:
+    \[
+        \begin{cases}
+            &-4x + 2y = 2 \\
+            &3x + 5y = -3    
+        \end{cases}
+    \]
+    As we probably know, we can write this system of linear equations in the following matrix form:
+    \[
+        \begin{bmatrix}
+            -4 & 2 \\
+            3 & 5
+        \end{bmatrix}
+        \begin{bmatrix}
+            x \\
+            y
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            2 \\
+            -3
+        \end{bmatrix}
+    \]
+    Usually the coefficient matrix is indicated with $A$, the vector of unknowns is indicated with $x$, and the vector of coefficients on the right hand side is usually indicated with $b$.
+    \par The row perspective is the one that we are mostly used to deal with. Each equation in this example represents a line in the cartesian plane and the problem requires to find the point (if it exists) where the two lines meet (see figure \ref{figure:MAT08/1-introduction/introduction/example_row_perspective}).
+    \par The column perspective is a bit different and maybe completely new to you. Look at this mind blowing thing:
+    \[
+        x \begin{bmatrix} -4 \\ 3 \end{bmatrix} + y \begin{bmatrix} 2 \\ 5 \end{bmatrix} = \begin{bmatrix} 2 \\ -3 \end{bmatrix}
+    \]
+    Why is column perspective interesting? Because now we can look at these columns of $A$ as vectors in a column space. We are eager to find the right amount (unknowns) of each of these column vectors that produce the vector $b$ (see figure \ref{figure:MAT08/1-introduction/introduction/example_column_perspective}).
+    \par Linear combination is the fundamental operation of the whole course. Besides the question of what is the linear combination of the columns of $A$ that produce $b$, we will also ask ourselfs what are all the possible vectors $b$ that we can obtain with some linear combination of the columns of $A$? Or what are all the possible linear combinations of the columns of $A$ that give a certain $b$?
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}
+    \label{figure:MAT08/1-introduction/introduction/example_row_perspective}
+    \begin{axis}[xlabel=$x$, ylabel=$y$, xmin=-10, xmax=10, ymin=-10, ymax=10, axis lines=center, axis equal]
+        \addplot[domain=-10:10, color=blue,]{2*x+1};
+        \addplot[domain=-10:10, color=blue,]{1/5*(-3*x-3)};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+    \label{figure:MAT08/1-introduction/introduction/example_column_perspective}
+    \begin{tikzpicture}[>=stealth, scale=0.5, line cap=round, bullet/.style={circle,inner sep=1.5pt,fill}]
+        \draw[->] (-9,0) -- (9,0) node[right]{$x$};
+        \draw[->] (0,-7) -- (0,7) node[above]{$y$};
+
+        \draw foreach \X in {2,-4,2}
+        {(\X,0.1) -- ++ (0,-0.2) node[below]{$\X$}};
+
+        \draw foreach \Y in {-3,3,5}
+        {(0.1,\Y) -- ++ (-0.2,0) node[left]{$\Y$}};
+
+        \foreach \X [count=\Y] in {(2,-3),(-4,3),(2,5)} 
+        {\path  \X node(n\Y)[bullet,label=right:{$\X$}]{};
+        \draw[thick,->]  (0,0) -- (n\Y);}
+    \end{tikzpicture}
+\end{center}
+    
+\par In the previous example we have encountered a bunch of new terms. Let us now define them rigorously. We saw that the generic system of linear equations can be written as:
+\[
+    A x = b
+\]
+Note that we are actually abusing terminology here. Even though it is not that important, bare in mind that these are actually affine equations. The linear equations are the equations that go through the origin, while affine need not to.
+\par We have seen that there is a row perspective and a column perspective. These perspectives are actually two different Euclidean spaces. The first is called row space and the second one is the column space. Note how these correspond directly to the rows and columns of $A$ respectively. When the matrix is a square matrix the dimension of the two spaces is the same (if certain properties hold). But when we have $m \times n$ matrices, then the two spaces have different dimensions (if the same properties hold). Remember all these spaces, because it is important! Especially the column space.
+\par Clearly, two equations in two unknowns is a very basic case. Let us see another basic case before moving to interesting stuff :).
+\begin{example}
+    Let us now take three equations in three unknowns.  TODO: I need a tikz magician here...
+\end{example}
+\par Now that we have said that the linear system of equations can also be seen as a bunch of vectors in the $n$ dimensional space, we can think of solving a linear system of equations as the problem of finding a linear combination of columns of the matrix $A$ to obtain the vector $b$. Thus, given a vector $b$, how can we obtain it (if it is possible at all) as a linear combination of the columns of $A$? If you think a bit, the vector $b$ is yet another vector in the $n$ dimensional space. Think of the columns of $A$ as directions, i.e. $n$ directions. You are in the origin of the space, and you want to get to the point pointed by $b$. You may move in each of $n$ directions only once and in every direction you can choose how much you want to move. You may move backwards (corresponding to negative coefficient in the linear combination) or forward (corresponding to positive coefficient in the linear combination). A zero coefficient means that you do not move in the corresponding direction. The problem is: given these $n$ direction, can you get from the origin to the point $b$? Note, whatever $b$ you are given. This basically means that these $n$ direction must somehow ``fill'' the whole space, that is for every point $b$ there must be a linear combination of directions that bring you from the origin to $b$. So, is there a way to know whether a given set of columns is ``sufficiently powerful'' to be able to generate all the ``treasury maps''? Here comes the concept of linear independence.
+\par If the columns of $A$ are linearly independent, then every vector $b$ on the right hand side of the equation $A x = b$ can be generated with some combination of columns of $A$. What does it mean to be linearly independent? It means that when you take one of the $n$ columns, you cannot find a linear combination of the remaining $n-1$ columns of $A$ that can generate the one that you have picked. Geometrically speaking, $n-1$ columns in an $n$ dimensional space generate a so called subspace. In an $n$ dimensional space there are $n$ types of subspaces: a zero subspace, the subspaces of 1 dimension, the subspaces of 2 dimensions, ..., the subspaces of $n-1$ dimensions, and finally a subspace of $n$ dimensions. Note singularity and plurality in the previous sentence. There is only one subspace of zero dimension, namely the origin. There is only one subspace of $n$ dimensions in an $n$ dimensional space, the space it self. The remaining subspaces are all of dimensions $1$ to $n-1$. A subspace of dimension $1$ is a line. A subspace of dimension $2$ is a plane. A subspace of dimension $3$ is the three dimensional space. A subspace of dimension $4$... well you picture it, I'm not able. So $n-1$ vectors in the $n$ dimensional space generate a subspace (think of a plane subspace in the three dimensional space). If the vector that we have picked from $A$ is located on the very same plane generated by the $n-1$ vectors, then there is no way that these $n-1$ vectors can generate a vector that is outside of this plane, because there is no direction that points outside of the plane itself. The vector that we have picked and that is on the plane is then linearly dependant from the $n-1$ remaining ones. Clearly, we may have more than one vectors that are linearly dependant from the rest in $A$. The obvious question now is what is the subspace that the columns of $A$ generate? In other words what is the maximum number of linearly independent columns of $A$? In linear algebra this is the so called rank of the matrix. When the rank is $n$ then the matrix is said to be full rank. Given this definition, the rank of the matrix then satisfy the following box constraint:
+\[
+    0 \leq \texttt{rank}(A) \leq n
+\]
+for some $A \in M(n,n,\R)$. Since we have two dimensions, namely rows and columns, each of which generates its own space, namely row space and column space, you may legitimately wonder if these are the same. Well, in case of square matrices $n \times n$ the two are the same. So the rank of row space is the same of the column space. You want a proof? Search rank of a matrix on wikipedia for three different proofs :).
+\par Let us now turn back to the rows. The question for you is: what happens if we do instead:
+\[
+    x^T A = b^T
+\]
+where $x^T$ is the row vector, so we have:
+\[
+    \begin{bmatrix}
+        x_1 & x_2 & \dots & x_n
+    \end{bmatrix}
+    \begin{bmatrix}
+        a_{11} & a_{12} & \dots & a_{1n} \\
+        a_{21} & a_{22} & \dots & a_{2n} \\
+        \vdots & \vdots & \dots & \vdots \\
+        a_{n1} & a_{n2} & \dots & a_{nn} \\
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+        b_1 & b_2 & \dots & b_n
+    \end{bmatrix}
+\]
+The row vector $b$ is the linear combination of the rows of $A$ where the weights are given by the vector $x$. Namely:
+\[
+    x_1
+    \begin{bmatrix}
+        a_{11} & a_{12} & \dots & a_{1n}
+    \end{bmatrix}
+    +
+    \dots
+    +
+    x_n
+    \begin{bmatrix}
+        a_{n1} & a_{n2} & \dots & a_{nn}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        b_1 & b_2 & \dots & b_n
+    \end{bmatrix}
+\]
+Everything we have said about columns, linear independence, rank, etc, holds for rows and row space of the matrix $A$. Basically, when we do operations from the left of the matrix $A$ then we are operating on rows of the matrix, when instead we are operating from the right then we are performing operations over columns of $A$.
+\par Now that we that linearly independent columns of $A$ can generate all the vectors in the corresponding $n$ dimensional column space, the question is how do we generate it? In other words, given a vector $b$ how do we find the coefficients of the linear combination that generate it? Note the linear combination and not a linear combination. There is only one linear combination that generates it. Why? Picture the row space. Each equation in the linear system generates a subspace of dimension $n-1$. So in three dimensional space the equations represent planes. In case of a system of $n$ linear equations in $n$ unknowns, we have $n$ subspaces of dimension $n-1$ in the $n$ dimensional row space. So if these $n$ subspaces are linearly independent, then it must be the case that there is only one point that touches them all when they intersect. If there is more than one point that is in the intersection of all of them, then the matrix $A$ is not full rank. Suppose then that the columns (or rows) are linearly independent, how do we find the coefficients? Note this basic math:
+\[
+    a x = b \iff \frac{1}{a} x = \frac{b}{a} \iff x = a^{-1} b
+\]
+where every term is a simple scalar. So to get $x$ we must multiply $b$ with the inverse of $a$. The same happens with the matrices and vectors. We need something called inverse matrix of $A$, indicated with $A^{-1}$:
+\[
+    x = A^{-1} b
+\]
+The matrix $A$ is invertible only if it is full column rank. This is why the linear independence is so central to the whole linear algebra. Note that only square matrices may have the inverse matrix. Obviously, the inverse matrix is unique. And moreover the inverse of the inverse is the initial matrix, namely:
+\[
+    (A^{-1})^{-1} = A
+\]
+\par Cool man. But how the heck are we going to find the inverse? There are many (not \textit{that} many) algorithms that can be used for matrix inversion. But one of the standard one is the Gauss-Jordan Elimination algorithm. Are we going to cover it here? Why not? It is one of the most used algorithms in linear algebra so let us give it some love. But before doing this algorithm, we still need one ingredient: matrix multiplications.
+
+\subsection{Matrix multiplications: four flavors plus one of looking at it}
+\par Matrix multiplication is another of the most important operations that you can think of when you think of linear algebra. In here, we are going to cover briefly four different ways to look at this important operation.
+\par We start with the basic definition that you have probably seen if you have ever done some linear algebra course. The classical definition is:
+\[
+    \begin{bmatrix}
+        a_{11} & a_{12} & \dots & a_{1n} \\
+        a_{21} & a_{22} & \dots & a_{2n} \\
+        \vdots & \vdots & \dots & \vdots \\
+        a_{n1} & a_{n2} & \dots & a_{nn} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        b_{11} & b_{12} & \dots & b_{1n} \\
+        b_{21} & b_{22} & \dots & b_{2n} \\
+        \vdots & \vdots & \dots & \vdots \\
+        b_{n1} & b_{n2} & \dots & b_{nn} \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        c_{11} & c_{12} & \dots & c_{1n} \\
+        c_{21} & c_{22} & \dots & c_{2n} \\
+        \vdots & \vdots & \dots & \vdots \\
+        c_{n1} & c_{n2} & \dots & c_{nn} \\
+    \end{bmatrix}
+\]
+where:
+\[
+    c_{ij} = \sum_{k=1}^n a_{ik} b_{kj}
+\]
+\par But as we all know, there is more than one of everything. Another way to look at matrix matrix multiplication is the following. We have seen that matrix vector multiplication is basically a linear operation that send a certain vector $x$ into another vector $y$. Thus, $A x = y$ means that $x$ is mapped to $y$ through $A$. When it comes to the matrix matrix multiplication, i.e. $A B = C$, the same story happens. It is the columns of $B$ that are mapped to columns of $C$. Each column $i$ of $B$ is mapped to the corresponding column $i$ of $C$. Similarly, we could think of all of this from the row space perspective. The rows of $A$ are mapped to the corresponding rows of $C$ through $B$. So these are the additional two ways to look at matrix matrix multiplication. What about the forth one?
+\par The forth way to look at matrix matrix multiplication is a bit more mind blowing. In the first way, we have computed the dot products between rows of $A$ and columns of $B$. But nobody prevents us from doing the contrary. What if we used the columns of $A$ and the rows of $B$:
+\[
+  \begin{bmatrix}
+    a_{1i} \\
+    a_{2i} \\
+    \vdots \\
+    a_{ni} \\
+\end{bmatrix}
+\begin{bmatrix}
+    b_{i1} & b_{i2} & \dots & b_{in} \\
+\end{bmatrix}
+\]
+What do we get for each $i=[1 \dots n]$? We get an $n \times n$ matrix. So the resulting matrix $C$ is the summation of $n$ different matrices of size $n \times n$. 
+
+
+
 \section{A warm up}
 Before we start, here is a small recap of the basic linear algebra operations that we will use throughout the whole course:
 \begin{itemize}
@@ -28,7 +215,7 @@ Before we start, here is a small recap of the basic linear algebra operations th
       \]
     
     \item \textbf{Vector-Vector product}:\\
-      Let $x, y \in \R^n$. The product between those two vectors is computed as follows $\tr{x} y = \sum\limits_{i=1}^n x_i y_i$ and $\tr{x}y \in \R$.
+      Let $x, y \in \R^n$, the dot product between these two vectors is defined as $\tr{x} y = \sum\limits_{i=1}^n x_i y_i$. Note in particular that $\tr{x}y \in \R$. In other words, the dot product produces a scalar.
      
      \item \textbf{Scalar-Matrix product}:\\
       Let $A \in M(n, m, R)$ and $\lambda \in \R$ we call the \textbf{scalar-matrix product} the following:
