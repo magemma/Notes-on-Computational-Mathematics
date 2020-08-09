@@ -8,6 +8,7 @@ all: computational_mathematics.pdf
 
 computational_mathematics.pdf:
 	$(LATEX_COMPILER) $(COMPILER_FLAGS) computationalMathematics.tex > /dev/null
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) computationalMathematics.tex > /dev/null
 	rm -rf _minted*
 	rm -f *.aux *.log *.out *.toc *.pyg 2> /dev/null
 
@@ -36,6 +37,7 @@ optimization_singles: $(prefixed_pdfopt)
 
 optimization/%.pdf: optimization/%.tex
 	$(LATEX_COMPILER) $(COMPILER_FLAGS) $< > /dev/null
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) $< > /dev/null
 	rm -rf _minted*
 	rm *.aux *.log *.out
 	mkdir -p optimization/pdf
@@ -44,6 +46,7 @@ optimization/%.pdf: optimization/%.tex
 optimization_all: optimization.pdf
 
 optimization.pdf:
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) optimization.tex > /dev/null
 	$(LATEX_COMPILER) $(COMPILER_FLAGS) optimization.tex > /dev/null
 	rm -rf _minted*
 	rm *.aux *.log *.out *.toc
@@ -60,12 +63,12 @@ optimization.pdf:
 # numerical methods single files
 pdfnum := 20settembre.pdf 26settembre.pdf 28settembre.pdf 4ottobre.pdf 10ottobre.pdf 18ottobre.pdf 26ottobre.pdf 7novembre.pdf 9novembre.pdf 15novembre.pdf 21novembre.pdf 23novembre.pdf 29novembre.pdf 5dicembre.pdf 7dicembre.pdf 13dicembre.pdf
 
-# pdfnum but without .pdf suffix
 prefixed_pdfnum := $(addprefix numerical_methods/, $(pdfnum))
 
 numerical_methods_singles: $(prefixed_pdfnum)
 
 numerical_methods/%.pdf: numerical_methods/%.tex
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) $< > /dev/null
 	$(LATEX_COMPILER) $(COMPILER_FLAGS) $< > /dev/null
 	rm -rf _minted*
 	rm *.aux *.log *.out
@@ -75,6 +78,7 @@ numerical_methods/%.pdf: numerical_methods/%.tex
 numerical_methods_all: numerical_methods.pdf
 
 numerical_methods.pdf:
+	$(LATEX_COMPILER) $(COMPILER_FLAGS) numerical_methods.tex > /dev/null
 	$(LATEX_COMPILER) $(COMPILER_FLAGS) numerical_methods.tex > /dev/null
 	rm -rf _minted*
 	rm *.aux *.log *.out *.toc
