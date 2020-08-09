@@ -1,0 +1,9 @@
+_minted*
+*.toc
+*.aux
+*.out
+*.log
+*.pyg
+*.gz
+.DS_Store
+.vscode
