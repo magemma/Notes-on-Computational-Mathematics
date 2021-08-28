@@ -1,0 +1,43 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.19)  16 DEC 2020 15:52
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**"/Users/gemma/Google Drive/Documenti/Università/Informatica/Magistrale/Computational Mathematics/Notes-on-Computational-Mathematics/numerical_methods/18ottobre.tex"
+(/Users/gemma/Google Drive/Documenti/Università/Informatica/Magistrale/Computational Mathematics/Notes-on-Computational-Mathematics/numerical_methods/18ottobre.tex
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-03-06> (/usr/local/texlive/2020/texmf-dist/tex/latex/subfiles/subfiles.cls
+Document Class: subfiles 2020/02/14 v1.6 Multi-file projects (class)
+Preamble taken from file `computationalMathematics.tex'
+(/usr/local/texlive/2020/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2019/11/10 v1.5r LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks15
+\verbatim@line=\toks16
+\verbatim@in@stream=\read2
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/import/import.sty
+Package: import 2020/01/22  v 6.0
+)
+
+! LaTeX Error: File `computationalMathematics.tex' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: tex)
+
+Enter file name: 
+/usr/local/texlive/2020/texmf-dist/tex/latex/subfiles/subfiles.cls:47: Emergency stop.
+<read *> 
+         
+l.47 \subimport{\filename@area}{\filename@base}
+                                               ^^M
+*** (cannot \read from terminal in nonstop modes)
+
+ 
+Here is how much of TeX's memory you used:
+ 90 strings out of 480608
+ 2433 string characters out of 5903630
+ 239610 words of memory out of 5000000
+ 16068 multiletter control sequences out of 15000+600000
+ 532338 words of font info for 24 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 27i,0n,25p,281b,16s stack positions out of 5000i,500n,10000p,200000b,80000s
+/usr/local/texlive/2020/texmf-dist/tex/latex/subfiles/subfiles.cls:47:  ==> Fatal error occurred, no output PDF file produced!

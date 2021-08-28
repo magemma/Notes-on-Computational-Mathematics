@@ -14,32 +14,34 @@
 This lecture has the goal of introducing the concept of linear combinations.
 
 \begin{definition}[Linear combination]
-  In a very unformal way, we can define the goal of linear combination as the pursuit of obtaining a certain target vector $b \in \R^n$ using $m$ (in principle $m \neq n$) vectors $a_1, a_2, \ldots, a_m$ such that
+  In a very informal way, we can define the goal of \textbf{linear combination} as the pursuit of obtaining a certain target vector $\vect{b} \in \R^n$ using $m$ (in principle $m \neq n$) vectors $\vect{x_1}, \vect{x_2}, \ldots, \vect{x_m} \in \R^n$ such that
   \[
-a_1 x_1 + a_2 x_2 + \cdots + a_m x_m = b
+		a_1 \vect{x_1} + a_2 \vect{x_2} + \cdots + a_m \vect{x_m} = \vect{b}
   \]
-  where $x_i$ are properly chosen.
+  where $a_i \in \R$ are properly chosen.
 \end{definition}
 
-The task of finding such vectors is called \textbf{solving a linear system} and it is formally written as $Ax=b$.
+The task of finding such vectors is called \textbf{solving a linear system} and it is formally written as $A\vect{x}=\vect{b}$.
 
 \begin{theorem}
-  Let $A \in M(n, m)$ and let $b \in \R^n$. It holds that any linear system $Ax=b$ is solvable iff $A$ is invertible.
+  Let $A \in M(n, m)$ and let $\vect{b} \in \R^n$.
+  It holds that any linear system $A\vect{x}=\vect{b}$ is solvable iff $A$ is invertible.
 \end{theorem}
 
-We are interested in finding approximate solutions of such systems, where the proximity to the target is expressed in terms as $\norm{Ax - b}$ that should be close to zero. A geometric inutition is displayed in \Cref{fig:10ott_1}.
+We are interested in finding approximate solutions of such systems, where the proximity to the target is expressed in terms as $\norm{A\vect{x} - \vect{b}}$ that should be close to zero.
+A geometric inutition is displayed in \Cref{fig:10ott_1}.
 
-\addpic{0.5}{pics/10ott/1.png}{In this case the image of the matrix $A$ (in red) does not contain $b$ and the best one can do is to obtain a projection of $b$ in the plane $Im(A)$ (drawn in blue).}{fig:10ott_1}
+\addpic{0.5}{pics/10ott/1.png}{In this case the image of the matrix $A$ (in red) does not contain $\vect{b}$ and the best one can do is to obtain a projection of $\vect{b}$ in the plane $Im(A)$ (drawn in blue).}{fig:10ott_1}
 
 \syntax{Matlab provides syntactic sugar to solve linear systems.
 
 Before introducing such syntax let we just notice the following \texttt{5\textbackslash~2} $(=2/5) \neq$ \texttt{5/2}.
 
-The syntax to solve $Ax=b$ is \texttt{A\textbackslash~b}, where the algorithm used in Matlab is not inverting the matrix $A$ and then performing the multiplication, but it is a more sophisticated and efficient one.
+The syntax to solve $A\vect{x}=\vect{b}$ is \texttt{A\textbackslash~b}, where the algorithm used in Matlab is not inverting the matrix $A$ and then performing the multiplication, but it is a more sophisticated and efficient one.
 }
 
-\begin{definition}[Linearly square problem]
-  Let $A \in M(n, m, \R)$ and let $b \in \R^n$, we term \textbf{linearly square problem} the task of computing $\min\limits_{x \in \R^m} \norm{Ax - b}_2$.
+\begin{definition}[Least square problem]
+  Let $A \in M(n, m, \R)$ and let $\vect{b} \in \R^n$, we term \textbf{linearly square problem} the task of computing $\min\limits_{\vect{x} \in \R^m} \norm{A\vect{x} - \vect{b}}_2$.
 \end{definition}
 
 \syntax{In Matlab the syntax \texttt{.func} means that function func should be performed entry by entry of the non-scalar variable.}
@@ -47,14 +49,14 @@ The syntax to solve $Ax=b$ is \texttt{A\textbackslash~b}, where the algorithm us
 
 An example of a practical least square problem may be predicting the salary of NBA players, assuming that the income is obtained as a linear combination of some features.
 
-\begin{definition}[Full rank matrix]
-  Let $A \in M(n, m, \R)$ we say that $A$ has \textbf{full column rank} if $\ker{A} = \{0\}$.
+\begin{definition}[Full column rank matrix]
+  Let $A \in M(n, m, \R)$ we say that $A$ has \textbf{full column rank} if $\ker{A} = \{\vect{0}\}$.
 
-  Equivalently, $rk(A) = n$ or alternatively $\nexists z \in \R^n \setminus \{0\}$ such that $Az = 0$.
+  Equivalently, $rk(A) = n$ or alternatively $\nexists \vect{z} \in \R^n \setminus \{\vect{0}\}$ such that $A\vect{z} = \vect{0}$.
 \end{definition}
 
 \begin{proposition}
-  Let $A \in M(n, m, \R)$, the least square problem $\norm{Ax - b = 0}$ has a unique solution iff $A$ has full column rank.
+  Let $A \in M(n, m, \R)$, the least square problem $\min\limits_{\vect{x} \in \R^n} \norm{A\vect{x} - \vect{b}}$ has a unique solution iff $A$ has full column rank.
 \end{proposition}
 
 \begin{theorem}
@@ -62,6 +64,6 @@ An example of a practical least square problem may be predicting the salary of N
 \end{theorem}
 
 \begin{proof}
-  $A$ has full column rank $\iff \norm{Az} \neq 0, \forall z \in \R^m \setminus \{0\}\iff \norm{Az}^2 \neq 0, \forall z \in \R^m \setminus \{0\}\iff 0=\tr{(Az)} Az = \tr{z}\tr{A}Az$  
+  $A$ has full column rank $\iff \norm{A\vect{z}} \neq 0, \forall \vect{z} \in \R^m \setminus \{\vect{0}\}\iff \norm{A\vect{z}}^2 \neq 0, \forall \vect{z} \in \R^m \setminus \{\vect{0}\}\iff 0=\tr{(A\vect{z})} A\vect{z} = \tr{\vect{z}}\tr{A}A\vect{z}$  
 \end{proof}
 \end{document}

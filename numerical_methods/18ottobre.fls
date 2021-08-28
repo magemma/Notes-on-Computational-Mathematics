@@ -1,0 +1,12 @@
+PWD /Users/gemma/Google Drive/Documenti/Università/Informatica/Magistrale/Computational Mathematics/Notes-on-Computational-Mathematics/numerical_methods
+INPUT /usr/local/texlive/2020/texmf.cnf
+INPUT /usr/local/texlive/2020/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT /Users/gemma/Google Drive/Documenti/Università/Informatica/Magistrale/Computational Mathematics/Notes-on-Computational-Mathematics/numerical_methods/18ottobre.tex
+OUTPUT /Users/gemma/Google Drive/Documenti/Università/Informatica/Magistrale/Computational Mathematics/Notes-on-Computational-Mathematics/numerical_methods/18ottobre.log
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/subfiles/subfiles.cls
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/subfiles/subfiles.cls
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/tools/verbatim.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/import/import.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/import/import.sty

@@ -13,7 +13,7 @@
 \chapter{20th of September 2018 --- F. Poloni}
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
-\par In the following chapters we will going to cover the part of Numerical Analysis of the course of Computational Mathematics for Data Learning and Analytics. This part of the course is held by Professor Federico Poloni. The content of these chapters is based primarily on the material provided by the professor on the e-learning portal. In addition to that material, the content has been written also based on the content of the course Linear Algebra held by Prof. Gilbert Strang from MIT. There is a nice portal called MIT OpenCourseWare where you can find a lot of recorded lectures from MIT. Linear algebra course is just super duper fantastic.
+\par In the following chapters we will cover the part of Numerical Analysis of the course of Computational Mathematics for Data Learning and Analytics. This part of the course is held by Professor Federico Poloni. The content of these chapters is based primarily on the material provided by the professor on the e-learning portal. In addition to that material, the content has been written also based on the content of the course Linear Algebra held by Prof. Gilbert Strang from MIT. There is a nice portal called MIT OpenCourseWare where you can find a lot of recorded lectures from MIT. Linear algebra course is just super duper fantastic.
 \par During the course, some Matlab code will be covered. We do not plan to include a deep introduction to the Matlab language chiefly for two reasons:
 \begin{enumerate}
     \item there is already plenty of stuff online,
@@ -32,7 +32,7 @@
             &3x + 5y = -3    
         \end{cases}
     \]
-    As we probably know, we can write this system of linear equations in the following matrix form:
+    We can write this system of linear equations in the following matrix form:
     \[
         \begin{bmatrix}
             -4 & 2 \\
@@ -48,65 +48,72 @@
             -3
         \end{bmatrix}
     \]
-    Usually the coefficient matrix is indicated with $A$, the vector of unknowns is indicated with $x$, and the vector of coefficients on the right hand side is usually indicated with $b$.
-    \par The row perspective is the one that we are mostly used to deal with. Each equation in this example represents a line in the cartesian plane and the problem requires to find the point (if it exists) where the two lines meet (see figure \ref{figure:MAT08/1-introduction/introduction/example_row_perspective}).
-    \par The column perspective is a bit different and maybe completely new to you. Look at this mind blowing thing:
+    Usually the coefficient matrix is indicated with $A$, the vector of unknowns is indicated with $\vect{x}$, and the vector of coefficients on the right hand side is usually indicated with $\vect{b}$.
+    \par The row perspective is the one that we are mostly used to deal with. Each equation in this example represents a line in the Cartesian plane and the problem requires to find the point (if it exists) where the two lines meet (see figure \ref{figure:MAT08/1-introduction/introduction/example_row_perspective}).
+    \par The column perspective is a bit different and may be completely new to you. Look at this mind blowing thing:
     \[
         x \begin{bmatrix} -4 \\ 3 \end{bmatrix} + y \begin{bmatrix} 2 \\ 5 \end{bmatrix} = \begin{bmatrix} 2 \\ -3 \end{bmatrix}
     \]
-    Why is column perspective interesting? Because now we can look at these columns of $A$ as vectors in a column space. We are eager to find the right amount (unknowns) of each of these column vectors that produce the vector $b$ (see figure \ref{figure:MAT08/1-introduction/introduction/example_column_perspective}).
-    \par Linear combination is the fundamental operation of the whole course. Besides the question of what is the linear combination of the columns of $A$ that produce $b$, we will also ask ourselfs what are all the possible vectors $b$ that we can obtain with some linear combination of the columns of $A$? Or what are all the possible linear combinations of the columns of $A$ that give a certain $b$?
+    Why is column perspective interesting? Because now we can look at these columns of $A$ as vectors in a column space. We are eager to find the right amount (unknowns) of each of these column vectors that produce the vector $\vect{b}$ (see figure \ref{figure:MAT08/1-introduction/introduction/example_column_perspective}).
+    \par Linear combination is the fundamental operation of the whole course. Besides the question of what is the linear combination of the columns of $A$ that produce $\vect{b}$, we will also ask ourselves what are all the possible vectors $\vect{b}$ that we can obtain with some linear combination of the columns of $A$? Or what are all the possible linear combinations of the columns of $A$ that give a certain $\vect{b}$?
 \end{example}
 
-\begin{center}
-\begin{tikzpicture}
-    \label{figure:MAT08/1-introduction/introduction/example_row_perspective}
-    \begin{axis}[xlabel=$x$, ylabel=$y$, xmin=-10, xmax=10, ymin=-10, ymax=10, axis lines=center, axis equal]
-        \addplot[domain=-10:10, color=blue,]{2*x+1};
-        \addplot[domain=-10:10, color=blue,]{1/5*(-3*x-3)};
-    \end{axis}
-\end{tikzpicture}
-\end{center}
+\begin{figure}
+	\begin{center}
+		\begin{tikzpicture}
+		    \begin{axis}[xlabel=$x$, ylabel=$y$, xmin=-10, xmax=10, ymin=-10, ymax=10, axis lines=center, axis equal]
+		        \addplot[domain=-10:10, color=blue,]{2*x+1};
+		        \addplot[domain=-10:10, color=blue,]{1/5*(-3*x-3)};
+		    \end{axis}
+		\end{tikzpicture}
+	\end{center}
+\caption{Linear system}\label{figure:MAT08/1-introduction/introduction/example_row_perspective}
+\end{figure}
 
-\begin{center}
-    \label{figure:MAT08/1-introduction/introduction/example_column_perspective}
-    \begin{tikzpicture}[>=stealth, scale=0.5, line cap=round, bullet/.style={circle,inner sep=1.5pt,fill}]
-        \draw[->] (-9,0) -- (9,0) node[right]{$x$};
-        \draw[->] (0,-7) -- (0,7) node[above]{$y$};
-
-        \draw foreach \X in {2,-4,2}
-        {(\X,0.1) -- ++ (0,-0.2) node[below]{$\X$}};
-
-        \draw foreach \Y in {-3,3,5}
-        {(0.1,\Y) -- ++ (-0.2,0) node[left]{$\Y$}};
-
-        \foreach \X [count=\Y] in {(2,-3),(-4,3),(2,5)} 
-        {\path  \X node(n\Y)[bullet,label=right:{$\X$}]{};
-        \draw[thick,->]  (0,0) -- (n\Y);}
-    \end{tikzpicture}
-\end{center}
+\begin{figure}
+	\begin{center}
+	    \begin{tikzpicture}[>=stealth, scale=0.5, line cap=round, bullet/.style={circle,inner sep=1.5pt,fill}]
+	        \draw[->] (-9,0) -- (9,0) node[right]{$x$};
+	        \draw[->] (0,-7) -- (0,7) node[above]{$y$};
+	
+	        \draw foreach \X in {2,-4,2}
+	        {(\X,0.1) -- ++ (0,-0.2) node[below]{$\X$}};
+	
+	        \draw foreach \Y in {-3,3,5}
+	        {(0.1,\Y) -- ++ (-0.2,0) node[left]{$\Y$}};
+	
+	        \foreach \X [count=\Y] in {(2,-3),(-4,3),(2,5)} 
+	        {\path  \X node(n\Y)[bullet,label=right:{$\X$}]{};
+	        \draw[thick,->]  (0,0) -- (n\Y);}
+	    \end{tikzpicture}
+	\end{center}
+\caption{Linear system 2}\label{figure:MAT08/1-introduction/introduction/example_column_perspective}
+\end{figure}
     
 \par In the previous example we have encountered a bunch of new terms. Let us now define them rigorously. We saw that the generic system of linear equations can be written as:
 \[
-    A x = b
+    A \vect{x} = \vect{b}
 \]
-Note that we are actually abusing terminology here. Even though it is not that important, bare in mind that these are actually affine equations. The linear equations are the equations that go through the origin, while affine need not to.
-\par We have seen that there is a row perspective and a column perspective. These perspectives are actually two different Euclidean spaces. The first is called row space and the second one is the column space. Note how these correspond directly to the rows and columns of $A$ respectively. When the matrix is a square matrix the dimension of the two spaces is the same (if certain properties hold). But when we have $m \times n$ matrices, then the two spaces have different dimensions (if the same properties hold). Remember all these spaces, because it is important! Especially the column space.
-\par Clearly, two equations in two unknowns is a very basic case. Let us see another basic case before moving to interesting stuff :).
+Note that we are actually abusing terminology here. Even though it is not that important, bare in mind that these are actually \textbf{affine equations}. The linear equations are the equations that go through the origin, while affine need not to.
+\par We have seen that there is a row perspective and a column perspective. These perspectives are actually two different Euclidean spaces. The first is called \emph{row space} and the second one is the \emph{column space}. Note how these correspond directly to the rows and columns of $A$ respectively. When the matrix is a square matrix the dimension of the two spaces is the same (if certain properties hold). But when we have $m \times n$ matrices, then the two spaces have different dimensions (if the same properties hold). Remember all these spaces, because it is important! Especially the column space.
+\par Clearly, two equations in two unknowns is a very basic case. Let us see another basic case before moving to definitions.
+
 \begin{example}
-    Let us now take three equations in three unknowns.  TODO: I need a tikz magician here...
+    Let us now take three equations in three unknowns.
+    \todo[inline]{TODO: I need a tikz magician here...}
 \end{example}
-\par Now that we have said that the linear system of equations can also be seen as a bunch of vectors in the $n$ dimensional space, we can think of solving a linear system of equations as the problem of finding a linear combination of columns of the matrix $A$ to obtain the vector $b$. Thus, given a vector $b$, how can we obtain it (if it is possible at all) as a linear combination of the columns of $A$? If you think a bit, the vector $b$ is yet another vector in the $n$ dimensional space. Think of the columns of $A$ as directions, i.e. $n$ directions. You are in the origin of the space, and you want to get to the point pointed by $b$. You may move in each of $n$ directions only once and in every direction you can choose how much you want to move. You may move backwards (corresponding to negative coefficient in the linear combination) or forward (corresponding to positive coefficient in the linear combination). A zero coefficient means that you do not move in the corresponding direction. The problem is: given these $n$ direction, can you get from the origin to the point $b$? Note, whatever $b$ you are given. This basically means that these $n$ direction must somehow ``fill'' the whole space, that is for every point $b$ there must be a linear combination of directions that bring you from the origin to $b$. So, is there a way to know whether a given set of columns is ``sufficiently powerful'' to be able to generate all the ``treasury maps''? Here comes the concept of linear independence.
-\par If the columns of $A$ are linearly independent, then every vector $b$ on the right hand side of the equation $A x = b$ can be generated with some combination of columns of $A$. What does it mean to be linearly independent? It means that when you take one of the $n$ columns, you cannot find a linear combination of the remaining $n-1$ columns of $A$ that can generate the one that you have picked. Geometrically speaking, $n-1$ columns in an $n$ dimensional space generate a so called subspace. In an $n$ dimensional space there are $n$ types of subspaces: a zero subspace, the subspaces of 1 dimension, the subspaces of 2 dimensions, ..., the subspaces of $n-1$ dimensions, and finally a subspace of $n$ dimensions. Note singularity and plurality in the previous sentence. There is only one subspace of zero dimension, namely the origin. There is only one subspace of $n$ dimensions in an $n$ dimensional space, the space it self. The remaining subspaces are all of dimensions $1$ to $n-1$. A subspace of dimension $1$ is a line. A subspace of dimension $2$ is a plane. A subspace of dimension $3$ is the three dimensional space. A subspace of dimension $4$... well you picture it, I'm not able. So $n-1$ vectors in the $n$ dimensional space generate a subspace (think of a plane subspace in the three dimensional space). If the vector that we have picked from $A$ is located on the very same plane generated by the $n-1$ vectors, then there is no way that these $n-1$ vectors can generate a vector that is outside of this plane, because there is no direction that points outside of the plane itself. The vector that we have picked and that is on the plane is then linearly dependant from the $n-1$ remaining ones. Clearly, we may have more than one vectors that are linearly dependant from the rest in $A$. The obvious question now is what is the subspace that the columns of $A$ generate? In other words what is the maximum number of linearly independent columns of $A$? In linear algebra this is the so called rank of the matrix. When the rank is $n$ then the matrix is said to be full rank. Given this definition, the rank of the matrix then satisfy the following box constraint:
+
+\par Now that we have said that the linear system of equations can also be seen as a bunch of vectors in the $n$ dimensional space, we can think of solving a linear system of equations as the problem of finding a linear combination of columns of the matrix $A$ to obtain the vector $\vect{b}$. Thus, given a vector $\vect{b}$, how can we obtain it (if it is possible at all) as a linear combination of the columns of $A$? If you think a bit, the vector $\vect{b}$ is yet another vector in the $n$ dimensional space. Think of the columns of $A$ as directions, i.e. $n$ directions. You are in the origin of the space, and you want to get to the point pointed by $\vect{b}$. You may move in each of $n$ directions only once and in every direction you can choose how much you want to move. You may move backwards (corresponding to negative coefficient in the linear combination) or forward (corresponding to positive coefficient in the linear combination). A zero coefficient means that you do not move in the corresponding direction. The problem is: given these $n$ direction, can you get from the origin to the point $\vect{b}$ whatever $\vect{b}$ you are given? This basically means that these $n$ direction must somehow ``fill'' the whole space, that is for every point $b$ there must be a linear combination of directions that bring you from the origin to $\vect{b}$. So, is there a way to know whether a given set of columns is ``sufficiently powerful'' to be able to generate all the ``treasury maps''? Here comes the concept of linear independence.
+\par If the columns of $A$ are \textbf{linearly independent}, then every vector $\vect{b}$ on the right hand side of the equation $A \vect{x} = \vect{b}$ can be generated with some combination of columns of $A$. What does it mean to be linearly independent? It means that when you take one of the $n$ columns, you cannot find a linear combination of the remaining $n-1$ columns of $A$ that can generate the one that you have picked. Geometrically speaking, $n-1$ columns in an $n$ dimensional space generate a so called subspace. In an $n$ dimensional space there are $n$ types of subspaces: a zero subspace, the subspaces of 1 dimension, the subspaces of 2 dimensions, ..., the subspaces of $n-1$ dimensions, and finally a subspace of $n$ dimensions. Note singularity and plurality in the previous sentence. There is only one subspace of zero dimension, namely the origin. There is only one subspace of $n$ dimensions in an $n$ dimensional space, the space it self. The remaining subspaces are all of dimensions $1$ to $n-1$. A subspace of dimension $1$ is a line. A subspace of dimension $2$ is a plane. A subspace of dimension $3$ is the three dimensional space. A subspace of dimension $4$... well you picture it, I'm not able. So $n-1$ vectors in the $n$ dimensional space generate a subspace (think of a plane subspace in the three dimensional space). If the vector that we have picked from $A$ is located on the very same plane generated by the $n-1$ vectors, then there is no way that these $n-1$ vectors can generate a vector that is outside of this plane, because there is no direction that points outside of the plane itself. The vector that we have picked and that is on the plane is then linearly dependent from the $n-1$ remaining ones. Clearly, we may have more than one vectors that are linearly dependent from the rest in $A$. The obvious question now is what is the subspace that the columns of $A$ generate? In other words what is the maximum number of linearly independent columns of $A$? In linear algebra this is the so called rank of the matrix. When the rank is $n$ then the matrix is said to be full rank. Given this definition, the rank of the matrix then satisfy the following box constraint:
 \[
     0 \leq \texttt{rank}(A) \leq n
 \]
-for some $A \in M(n,n,\R)$. Since we have two dimensions, namely rows and columns, each of which generates its own space, namely row space and column space, you may legitimately wonder if these are the same. Well, in case of square matrices $n \times n$ the two are the same. So the rank of row space is the same of the column space. You want a proof? Search rank of a matrix on wikipedia for three different proofs :).
+for some $A \in M(n,\R)$. Since we have two dimensions, namely rows and columns, each of which generates its own space, namely row space and column space, you may legitimately wonder if these are the same. Well, in case of square matrices $n \times n$ the two are the same. So the rank of row space is the same of the column space. You want a proof? Search rank of a matrix on Wikipedia for three different proofs.
 \par Let us now turn back to the rows. The question for you is: what happens if we do instead:
 \[
-    x^T A = b^T
+    \tr{\vect{x}} A = \tr{\vect{b}}
 \]
-where $x^T$ is the row vector, so we have:
+where $\tr{\vect{x}}$ is a row vector, so we have:
 \[
     \begin{bmatrix}
         x_1 & x_2 & \dots & x_n
@@ -140,35 +147,35 @@ The row vector $b$ is the linear combination of the rows of $A$ where the weight
         b_1 & b_2 & \dots & b_n
     \end{bmatrix}
 \]
-Everything we have said about columns, linear independence, rank, etc, holds for rows and row space of the matrix $A$. Basically, when we do operations from the left of the matrix $A$ then we are operating on rows of the matrix, when instead we are operating from the right then we are performing operations over columns of $A$.
-\par Now that we that linearly independent columns of $A$ can generate all the vectors in the corresponding $n$ dimensional column space, the question is how do we generate it? In other words, given a vector $b$ how do we find the coefficients of the linear combination that generate it? Note the linear combination and not a linear combination. There is only one linear combination that generates it. Why? Picture the row space. Each equation in the linear system generates a subspace of dimension $n-1$. So in three dimensional space the equations represent planes. In case of a system of $n$ linear equations in $n$ unknowns, we have $n$ subspaces of dimension $n-1$ in the $n$ dimensional row space. So if these $n$ subspaces are linearly independent, then it must be the case that there is only one point that touches them all when they intersect. If there is more than one point that is in the intersection of all of them, then the matrix $A$ is not full rank. Suppose then that the columns (or rows) are linearly independent, how do we find the coefficients? Note this basic math:
+Everything we said about columns, linear independence, rank, etc, holds for rows and row space of the matrix $A$. Basically, when we do operations from the left of the matrix $A$ then we are operating on rows of the matrix, when instead we are operating from the right then we are performing operations over columns of $A$.
+\par Now that we know hat linearly independent columns of $A$ can generate all the vectors in the corresponding $n$ dimensional column space, the question is how do we generate it? In other words, given a vector $\vect{b}$ how do we find the coefficients of the linear combination that generate it? Note the linear combination and not a linear combination. There is only one linear combination that generates it. Why? Picture the row space. Each equation in the linear system generates a subspace of dimension $n-1$. So in three dimensional space the equations represent planes. In case of a system of $n$ linear equations in $n$ unknowns, we have $n$ subspaces of dimension $n-1$ in the $n$ dimensional row space. So if these $n$ subspaces are linearly independent, then it must be the case that there is only one point that touches them all when they intersect. If there is more than one point that is in the intersection of all of them, then the matrix $A$ is not full rank. Suppose then that the columns (or rows) are linearly independent, how do we find the coefficients? Note this basic math:
 \[
     a x = b \iff \frac{1}{a} x = \frac{b}{a} \iff x = a^{-1} b
 \]
-where every term is a simple scalar. So to get $x$ we must multiply $b$ with the inverse of $a$. The same happens with the matrices and vectors. We need something called inverse matrix of $A$, indicated with $A^{-1}$:
+where every term is a simple scalar. So to get $x$ we must multiply $b$ with the inverse of $a$. The same happens with the matrices and vectors. We need something called \textbf{inverse matrix} of $A$, indicated with $A^{-1}$:
 \[
-    x = A^{-1} b
+    \vect{x} = A^{-1} \vect{b}
 \]
-The matrix $A$ is invertible only if it is full column rank. This is why the linear independence is so central to the whole linear algebra. Note that only square matrices may have the inverse matrix. Obviously, the inverse matrix is unique. And moreover the inverse of the inverse is the initial matrix, namely:
+The matrix $A$ is invertible only if it has full column rank. This is why the linear independence is so central to the whole linear algebra. Note that only square matrices may have the inverse matrix. Obviously, the inverse matrix is unique. And moreover the inverse of the inverse is the initial matrix, namely:
 \[
     (A^{-1})^{-1} = A
 \]
 \par Cool man. But how the heck are we going to find the inverse? There are many (not \textit{that} many) algorithms that can be used for matrix inversion. But one of the standard one is the Gauss-Jordan Elimination algorithm. Are we going to cover it here? Why not? It is one of the most used algorithms in linear algebra so let us give it some love. But before doing this algorithm, we still need one ingredient: matrix multiplications.
 
 \subsection{Matrix multiplications: four flavors plus one of looking at it}
-\par Matrix multiplication is another of the most important operations that you can think of when you think of linear algebra. In here, we are going to cover briefly four different ways to look at this important operation.
-\par We start with the basic definition that you have probably seen if you have ever done some linear algebra course. The classical definition is:
+\par Matrix multiplication is another of the most important operations that you can think of when you think of linear algebra. In here, we are going to cover briefly four different ways of looking at this important operation.
+\par We start with the basic definition that you probably have seen if you have ever done some linear algebra course. The classical definition is:
 \[
     \begin{bmatrix}
         a_{11} & a_{12} & \dots & a_{1n} \\
         a_{21} & a_{22} & \dots & a_{2n} \\
-        \vdots & \vdots & \dots & \vdots \\
+        \vdots & \vdots & \ddots & \vdots \\
         a_{n1} & a_{n2} & \dots & a_{nn} \\
     \end{bmatrix}
     \begin{bmatrix}
         b_{11} & b_{12} & \dots & b_{1n} \\
         b_{21} & b_{22} & \dots & b_{2n} \\
-        \vdots & \vdots & \dots & \vdots \\
+        \vdots & \vdots & \ddots & \vdots \\
         b_{n1} & b_{n2} & \dots & b_{nn} \\
     \end{bmatrix}
     =
@@ -183,8 +190,8 @@ where:
 \[
     c_{ij} = \sum_{k=1}^n a_{ik} b_{kj}
 \]
-\par But as we all know, there is more than one of everything. Another way to look at matrix matrix multiplication is the following. We have seen that matrix vector multiplication is basically a linear operation that send a certain vector $x$ into another vector $y$. Thus, $A x = y$ means that $x$ is mapped to $y$ through $A$. When it comes to the matrix matrix multiplication, i.e. $A B = C$, the same story happens. It is the columns of $B$ that are mapped to columns of $C$. Each column $i$ of $B$ is mapped to the corresponding column $i$ of $C$. Similarly, we could think of all of this from the row space perspective. The rows of $A$ are mapped to the corresponding rows of $C$ through $B$. So these are the additional two ways to look at matrix matrix multiplication. What about the forth one?
-\par The forth way to look at matrix matrix multiplication is a bit more mind blowing. In the first way, we have computed the dot products between rows of $A$ and columns of $B$. But nobody prevents us from doing the contrary. What if we used the columns of $A$ and the rows of $B$:
+\par But as we all know, there is more than one of everything. Another way to look at matrix-matrix multiplication is the following. We have seen that matrix vector multiplication is basically a linear operation that send a certain vector $\vect{x}$ into another vector $\vect{y}$. Thus, $A \vect{x} = \vect{y}$ means that $\vect{x}$ is mapped to $\vect{y}$ through $A$. When it comes to the matrix matrix multiplication, i.e. $A B = C$, the same story happens. It is the columns of $B$ that are mapped to columns of $C$. Each column $i$ of $B$ (denoted as $B^i$) is mapped to the corresponding column $i$ of $C$. Similarly, we could think of all of this from the row space perspective. The rows of $A$ are mapped to the corresponding rows of $C$ through $B$. So these are the additional two ways to look at matrix matrix multiplication. What about the fourth one?
+\par The fourth way to look at matrix-matrix multiplication is a bit more mind blowing. In the first way, we have computed the dot products between rows of $A$ and columns of $B$. But nobody prevents us from doing the contrary. What if we used the columns of $A$ and the rows of $B$:
 \[
   \begin{bmatrix}
     a_{1i} \\
@@ -196,17 +203,15 @@ where:
     b_{i1} & b_{i2} & \dots & b_{in} \\
 \end{bmatrix}
 \]
-What do we get for each $i=[1 \dots n]$? We get an $n \times n$ matrix. So the resulting matrix $C$ is the summation of $n$ different matrices of size $n \times n$. 
+What do we get for each $i=1, \ldots, n$? We get an $n \times n$ matrix. So the resulting matrix $C$ is the summation of $n$ different matrices of size $n \times n$. 
 
-
-
-\section{A warm up}
-Before we start, here is a small recap of the basic linear algebra operations that we will use throughout the whole course:
+\section{Formal definitions}
+At this point, we are ready to introduce the formality of linear algebra, that we will use throughout the whole course:
 \begin{itemize}
     \item \textbf{Vector-Scalar product}:\\
-      Let $x \in \R^n$ and $\lambda \in \R$ we call \textbf{multiple} of vector $x$ the following vector:
+      Let $\vect{x} \in \R^n$ and $\lambda \in \R$ we call \textbf{multiple} of vector $\vect{x}$ the following vector:
       \[
-        \lambda x = x \lambda =
+        \lambda \vect{x} = \vect{x} \lambda =
         \begin{pmatrix}
         \lambda x_1\\
         \vdots\\
@@ -215,7 +220,7 @@ Before we start, here is a small recap of the basic linear algebra operations th
       \]
     
     \item \textbf{Vector-Vector product}:\\
-      Let $x, y \in \R^n$, the dot product between these two vectors is defined as $\tr{x} y = \sum\limits_{i=1}^n x_i y_i$. Note in particular that $\tr{x}y \in \R$. In other words, the dot product produces a scalar.
+      Let $\vect{x}, \vect{y} \in \R^n$, the dot product between these two vectors is defined as $\tr{\vect{x}} \vect{y} = \sum\limits_{i=1}^n x_i y_i$. Note in particular that $\tr{\vect{x}}\vect{y} \in \R$. In other words, the dot product produces a scalar.
      
      \item \textbf{Scalar-Matrix product}:\\
       Let $A \in M(n, m, R)$ and $\lambda \in \R$ we call the \textbf{scalar-matrix product} the following:
@@ -224,19 +229,19 @@ Before we start, here is a small recap of the basic linear algebra operations th
         \begin{pmatrix}
         \lambda A_{11} & \lambda A_{12} & \cdots & \lambda A_{1m}\\
         \lambda A_{21} & \lambda A_{22} & \cdots & \lambda A_{2m}\\
-        \vdots  &\vdots & \ddots\\
+        \vdots  & \vdots & \ddots & \vdots\\
         \lambda A_{n1} & \lambda A_{n2} & \cdots & \lambda A_{nm}
         \end{pmatrix}
       \]
      
      \item \textbf{Matrix-Vector product}:\\
-        Given a matrix $A \in M(n, m, \R)$ and a vector $v \in \R^m$ the \textbf{matrix-vector product} $A v = w \in \R^n$ is computed as follows:
+        Given a matrix $A \in M(n, m, \R)$ and a vector $\vect{v} \in \R^m$ the \textbf{matrix-vector product} $A \vect{v} = \vect{w} \in \R^n$ is computed as follows:
         \[
-          w = Av = \begin{pmatrix}
-          A_1 v\\
-          A_2 v\\
+          \vect{w} = A\vect{v} = \begin{pmatrix}
+          A_1 \vect{v}\\
+          A_2 \vect{v}\\
           \vdots\\
-          A_m v\\
+          A_m \vect{v}\\
           \end{pmatrix}, \, 
           w_i = \sum\limits_{j=1}^m A_{ij} v_j
         \]
@@ -289,31 +294,36 @@ Before we start, here is a small recap of the basic linear algebra operations th
       \]
   \item \textbf{Matrix-Matrix Product}:\\
         Given two matrices $A \in M(n, m, R)$ and $B \in M(m, k, R)$ we call \textbf{matrix-matrix product} the following:
-        $C=AB$ such that $C_{ij} = A_i B^j$, where $\tr{A_i} \in \R^m$ is the $i$-th row of $A$, $B^i$ is the $i$-th column of $B$ ($B^i \in \R^m$) and $C \in M(n, k, \R)$. Notice that this product is \textbf{not commutative}: $AB \neq BA$ might not even make sense dimension-wise.
-        
-As long as the complexity is concerned, multiplying two matrices $m \times n$ and $n \times k$ requires $O(m n k)$ floating point operations (flops). Forget about fancier algorithms (e.g. Strassen)
-        
-\begin{myframe}{\bf Order of operations}
-  Usual algebra properties hold, e.g.: $A(B + C) = AB + AC, A(BC) = (AB)C, \ldots$.
-  
-  Parenthesization matters a lot: if $A, B \in M(n, \R), \, v \in \R^n$, then $(AB)v$ costs $O(n^3)$, but $A(Bv)$ costs $O(n^2)$.
-  Programming languages usually do not rearrange parentheses to help.
-\end{myframe}
+        $C=AB$ such that $C_{ij} = A_i B^j$, where $\tr{A_i} \in \R^m$ is the $i$-th row of $A$, $B^i$ is the $i$-th column of $B$ ($B^i \in \R^m$) and $C \in M(n, k, \R)$.
+        Notice that this product is \textbf{not commutative}: $AB \neq BA$ might not even make sense dimension-wise.
+        \term{
+        	In this notes we refer to the columns to a generic matrix $A$ as $A^1$ for the first column, $A^2$ for the second column and so on and so forth.
+        	
+        	Conversely, we represent the rows of a matrix $A$ as $A_i$.
+        }
+		As long as the complexity is concerned, multiplying two matrices $m \times n$ and $n \times k$ requires $O(m n k)$ floating point operations (flops). Forget about fancier algorithms (e.g. Strassen)
+		        
+		\begin{myframe}{\bf Order of operations}
+		  Usual algebra properties hold, e.g.: $A(B + C) = AB + AC, A(BC) = (AB)C, \ldots$.
+		  
+		  Parenthesization matters a lot: if $A, B \in M(n, \R), \, \vect{v} \in \R^n$, then $(AB)\vect{v}$ costs $O(n^3)$, but $A(B\vect{v})$ costs $O(n^2)$.
+		  Programming languages usually do not rearrange parentheses to help.
+		\end{myframe}
 
      \item \textbf{Image} of a matrix $A$ ($\text{Im}(A)$):  the set of vectors that can    be obtained multiplying $A$ by any vector in the domain of $A$.
 
-     \item \textbf{Kernel} of a matrix $A$ ($\ker(A)$):  the set of vectors $w$ in its domain such that $Aw=0$.
+     \item \textbf{Kernel} of a matrix $A$ ($\ker(A)$):  the set of vectors $\vect{w}$ in its domain such that $A\vect{w}=\vect{0}$.
 
      \item Given a matrix $A \in M(n, \R)$ we call \textbf{inverse} of $A$ the matrix $\inv{A}$ such that:
        \[  
        \inv{A} A = A \inv{A} = I_{n} =
-         \begin{pmatrix}
+         \underbrace{\begin{pmatrix}
                 1\\
                 & 1\\
                 & & 1\\
                 & & & \ddots\\
                 & & & & 1
-         \end{pmatrix}
+         \end{pmatrix}}_{n}
          \]
          The \textbf{inverse of a product} (shoe-sock identity) is $\inv{(A B)} = \inv{B} \inv{A}$. Notice that this identity holds only for square matrices.
 
@@ -335,24 +345,24 @@ As long as the complexity is concerned, multiplying two matrices $m \times n$ an
 \noindent
 In general, $AB = AC$ does not imply $B = C$; it holds only when $A$ is invertible.
 
-\begin{myframe}{\bf Row and column vectors notation}
+\term{
   \[
-    v = \begin{pmatrix}
+    \vect{v} = \begin{pmatrix}
         4\\
         5\\
         6
     \end{pmatrix}, \vspace{0.5cm}
-    \tr{v} = \begin{pmatrix}
+    \tr{\vect{v}} = \begin{pmatrix}
         4 & 5 & 6
     \end{pmatrix}
   \]
-          $v$ is a column vector in $\R^3$ (or a matrix in $M(3, 1, \R)$) and $v^T$ is a row vector (or a matrix in $M(1, 3, \R)$).
-\end{myframe}
+          $\vect{v}$ is a column vector in $\R^3$ (or a matrix in $M(3, 1, \R)$) and $\tr{\vect{v}}$ is a row vector (or a matrix in $M(1, 3, \R)$).
+}
 
 \begin{definition}[Basis]
-  We call \textbf{basis} a set $B$ of elements (vectors) in a vector space $V$ if every element of $V$ may be written in a unique way as a (finite) linear combination of elements of $B$.
-  The coefficients of this linear combination are referred to as components or coordinates on $B$ of the vector.
-  The elements of a basis are called basis vectors.
+  We call \textbf{basis} a set $\mathcal{B}$ of elements (vectors) in a vector space $V$ if every element of $V$ may be written in a unique way as a (finite) linear combination of elements of $\mathcal{B}$.
+  The coefficients of this linear combination are referred to as components or coordinates on $\mathcal{B}$ of the vector.
+  The elements of a basis are called \textbf{basis vectors}.
 \end{definition}
 
 \begin{definition}[Canonical basis]
@@ -360,22 +370,37 @@ In general, $AB = AC$ does not imply $B = C$; it holds only when $A$ is invertib
 \end{definition}
 
 \begin{example}
-  In $\R^4$ the \textbf{canonical basis} is $ \mathcal{B} = \{ e_1, e_2, e_3, e_4\}$ such that
+  In $\R^4$ the \textbf{canonical basis} is $ \mathcal{B} = \{ \vect{e_1}, \vect{e_2}, \vect{e_3}, \vect{e_4}\}$ such that
   \[
-  e_1 = \begin{pmatrix} 1\\ 0\\ 0\\ 0 \end{pmatrix},~
-  e_2 = \begin{pmatrix} 0\\ 1\\ 0\\ 0 \end{pmatrix},~
-  e_3 = \begin{pmatrix} 0\\ 0\\ 1\\ 0 \end{pmatrix},~
-  e_4 = \begin{pmatrix} 0\\ 0\\ 0\\ 1 \end{pmatrix}
+  \vect{e_1} = \begin{pmatrix} 1\\ 0\\ 0\\ 0 \end{pmatrix},~
+  \vect{e_2} = \begin{pmatrix} 0\\ 1\\ 0\\ 0 \end{pmatrix},~
+  \vect{e_3} = \begin{pmatrix} 0\\ 0\\ 1\\ 0 \end{pmatrix},~
+  \vect{e_4} = \begin{pmatrix} 0\\ 0\\ 0\\ 1 \end{pmatrix}
 \]
-  and each vector $w \in R^4$ can be written as $w = w_1e_1 + w_2e_2 + w_3e_3 + w_4e_4$.
+  and each vector $\vect{w} \in R^4$ can be written as $\vect{w} = w_1\vect{e_1} + w_2\vect{e_2} + w_3\vect{e_3} + w_4\vect{e_4}$.
 \end{example}
+
+\mantra{
 The powerful idea behind linear algebra: many relations are true
-regardless of the basis we use. E.g. $w$, $v$ and $w + v$ in two different bases.
+regardless of the basis we use. E.g. $\vect{w}$, $\vect{v}$ and $\vect{w} + \vect{v}$ in two different bases.}
+
+\begin{example}
+	Let us take two vectors $\vect{v}, \vect{w}$ and let us write those with respect to two different bases $\mathcal{B}_1$ and $\mathcal{B}_2$:
+	\[
+		\vect{w}_{\mathcal{B}_1} = \begin{pmatrix} 2\\ 4 \end{pmatrix}
+		\vect{v}_{\mathcal{B}_1} = \begin{pmatrix} 2\\ 1 \end{pmatrix}
+	\]
+	and 
+	\[
+	\vect{w}_{\mathcal{B}_2} = \begin{pmatrix} -1\\ 3 \end{pmatrix}
+	\vect{v}_{\mathcal{B}_2} = \begin{pmatrix} 0.5\\ 1.5 \end{pmatrix}
+	\]
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.45]{pics/20sett/3.png}
     \caption{How a change of basis reflects on the space.}\label{fig:20sett1}
 \end{figure}
+\end{example}
 
 \begin{definition}[Triangular matrix]
   Let $A \in M(n, \R)$. We term $A$ \textbf{upper triangular} if ${(A)}_{ij} =0$ for each $i<j$.
@@ -390,28 +415,31 @@ regardless of the basis we use. E.g. $w$, $v$ and $w + v$ in two different bases
 
 \begin{definition}[Symmetric matrix]
   Let $A \in M(n, \R)$. We term $A$ \textbf{symmetric} if ${(A)}_{ij} = {(A)}_{ji}$ for each $i,j = 1, \ldots, n$.
-  The set of all diagonal $n \times n$ real matrices is a group and it is denoted as $D(n, \R)$.
-
+  The set of all symmetric $n \times n$ real matrices is a group and it is denoted as $S(n, \R)$.
 \end{definition}
+
+\begin{proposition}
+	$A \in S(n, \R) \iff \tr{D} = D$
+\end{proposition}
 
 \section{Solving Linear Systems}
 The objective of this course, for the part concerning numerical methods, is solving linear systems efficiently.
 
 \begin{definition}[Linear system]
-  Let $A \in M(n, m, \R)$, $b \in \R^n$ and $x \in \R^m$. We term \textbf{linear system} the following:
+  Let $A \in M(n, m, \R)$, $\vect{b} \in \R^n$ and $\vect{x} \in \R^m$. We term \textbf{linear system} the following:
 
   \[
-Ax = b
+A\vect{x} = \vect{b}
   \]
 \end{definition}
 
-\noindent Our goal is to \emph{approximate} such vector $x$, hence resulting in solving a minimum problem:
+\noindent Our goal is to \emph{approximate} such vector $\vect{x}$, hence resulting in solving a minimum problem:
 
 \[
-  \min\limits \norm{Ax - b}
+  \min\limits \norm{A\vect{x} - \vect{b}}
 \]
 
-If we have a square and invertible mtrix $A \in GL(n, \R)$ solving a linear system means: find those coordinates $x_1, \dots , x_n$ needed to write $b$ as a linear combination of the columns of (square) $A$ and in this case, the solution is given by: $x = A^{-1}b$. \\
+If we have a square and invertible matrix $A \in GL(n, \R)$ solving a linear system means: find those coordinates $x_1, \dots , x_n$ needed to write $\vect{b}$ as a linear combination of the columns of (square) $A$ and in this case, the solution is given by: $\vect{x} = \inv{A}\vect{b}$. \\
 \textbf{Warning}: this is not the best way to solve a linear system on a computer!\\
 
 \syntax{Notice that the machine precision is $10^{-16}$, so we should pay attention when making computations, since we may incur in some error (proportional to the size of the operands).
@@ -546,7 +574,7 @@ than hand-coded loops (Blas/Lapack).
     \]
     \begin{enumerate}
       \item A block triangular matrix is invertible iff all diagonal blocks $A_{ii}$ are invertible;
-      \item The eigenvalues of a block triangular matrix are the union of the eigenvalues of each $A_{ii}$ block;
+      \item The eigenvalues\footnote{The concept of eigenvalue is exposed in \Cref{def:eigenvalues}.} of a block triangular matrix are the union of the eigenvalues of each $A_{ii}$ block;
       \item Let $M \in GL(n, \R)$ such that $M= 
         \begin{pmatrix}
           A & B\\
@@ -556,7 +584,7 @@ than hand-coded loops (Blas/Lapack).
         
         $\inv{M} = 
         \begin{pmatrix}
-          \inv{A} & -\inv{A}B\inv{D}\\
+          \inv{A} & -\inv{A}B\inv{C}\\
           0 & \inv{C}
         \end{pmatrix}$.
       \item The product of two block (upper/lower) triangular matrices
@@ -571,7 +599,9 @@ Why are we interested in block triangular matrices? They depict a situation as s
     \caption{The adjacency matrix of a biparted graph has $0$s in its bottom left part (Matlab syntax \texttt{A[p+1:n; 1:p]=0}), which means that the edges from a connected component and the other are in one direction only.}\label{fig:20sett3}
 \end{figure}
 
-\textbf{General principle}: matrix structures matter. Block triangular linear system has a cheaper system solution than a general system as shown in \Cref{exp1:20sett}.
+\mantra{
+Matrix structures matter.
+Block triangular linear systems have a cheaper solution than general systems as shown in \Cref{exp1:20sett}.}
 
 \begin{example}\label{exp1:20sett}
 Let us take a $2\times2$ block triangular linear system\\
@@ -582,25 +612,25 @@ Let us take a $2\times2$ block triangular linear system\\
 \end{pmatrix}
 \cdot
 \begin{pmatrix}
-    x \\
-    y 
+    \vect{x} \\
+    \vect{y} 
 \end{pmatrix} = 
 \begin{pmatrix}
-    e \\
-    f 
+    \vect{e} \\
+    \vect{f} 
 \end{pmatrix}
 \]
 (Again, diagonal blocks are square and all dimensions are
 compatible.)
   \[
 \begin{pmatrix}
-    Ax + By\\
-    Cy
+    A\vect{x} + B\vect{y}\\
+    C\vect{y}
 \end{pmatrix} = 
 \begin{pmatrix}
-    e \\
-    f 
-\end{pmatrix}\implies y = \inv{C}f, x = \inv{A}(e - B\inv{C}f)
+    \vect{e} \\
+    \vect{f} 
+\end{pmatrix}\implies \vect{y} = \inv{C}\vect{f}, \vect{x} = \inv{A}(\vect{e} - B\inv{C}\vect{f})
 \]
   \[
 \begin{pmatrix}
@@ -618,44 +648,56 @@ Informal idea: we can start solving from the variables multiplied by C.
 \section{Orthogonality}
 
 \begin{definition}[Norms]\label{def:20sett_norm}
-  Let $x \in \R^n$.
+  Let $\vect{x} \in \R^n$.
   We ``measure'' its magnitude using so-called ``norms''.
   \begin{description}
-    \item[{\sc Euclidean:}] $\norm{x}_2 = \tr{x} x = \sqrt{\sum\limits_{i=1}^n {x_i}^2}$;
-    \item[{\sc Norm 1:}] $\norm{x}_1= \sum\limits_{i=1}^n \abs{x_i}$;
-    \item[{\sc $p$-Norm:}] $\abs{x}_p = {\bigg(\sum\limits_{i=1}^n \abs{x_i}^p\bigg)}^{1/p}$;
-    \item[{\sc $0$-Norm:}] $\norm{x}_0 = \abs{\{i~:~\abs{x_i} > 0\}}$, which accounts for $1- \#$of $0$ entries;
-    \item[{\sc $\infty$-Norm:}]$\norm{x}_\infty = \max\limits_{i=1, \ldots, n} \abs{x_i}$.
+    \item[{\sc Euclidean:}] $\norm{\vect{x}}_2 = \tr{\vect{x}} \vect{x} = \sqrt{\sum\limits_{i=1}^n {x_i}^2}$;
+    \item[{\sc Norm 1:}] $\norm{\vect{x}}_1= \sum\limits_{i=1}^n \abs{x_i}$;
+    \item[{\sc $p$-Norm:}] $\abs{\vect{x}}_p = {\bigg(\sum\limits_{i=1}^n \abs{x_i}^p\bigg)}^{1/p}$;
+    \item[{\sc $0$-Norm:}] $\norm{\vect{x}}_0 = \abs{\{i~:~\abs{x_i} > 0\}}$, which accounts for $1- \#$of $0$ entries;
+    \item[{\sc $\infty$-Norm:}]$\norm{\vect{x}}_\infty = \max\limits_{i=1, \ldots, n} \abs{x_i}$.
   \end{description}
 \end{definition}
 
 From now on in this part of the course, if not explicitly specified, we will refer to norm-2 only.
 
 \begin{definition}[Scalar product]
-  Let $v, w \in \R^n$ we term \textbf{standard scalar product} between $v$ and $w$ the real number $\tr{v} w = \sum\limits_{i=1}^n v_i w_i$.
+  Let $\vect{v}, \vect{w} \in \R^n$ we term \textbf{standard scalar product} between $\vect{v}$ and $\vect{w}$ the real number $\tr{\vect{v}} \vect{w} = \sum\limits_{i=1}^n v_i w_i$.
 \end{definition}
 
 \begin{definition}[Orthogonal vectors]
-  Let $v, w \in \R^n$. We say that $v$ is \textbf{orthogonal} to $w$ (in symbols $x \bot y$) if their scalar product is zero.
+  Let $\vect{v}, \vect{w} \in \R^n$.
+  We say that $\vect{v}$ is \textbf{orthogonal} to $\vect{w}$ (in symbols $\vect{v} \bot \vect{w}$) if their scalar product is zero.
   
-  Formally, $\tr{x} v = 0$.
+  Formally, $\tr{\vect{v}} \vect{w} = 0$.
 \end{definition}
 
 \begin{definition}[Orthogonal matrix]
   Let $A \in M(n, \R)$ a square matrix.
-  We term $A$ \textbf{orthogonal} if $\tr{A} A = A \tr{A} = I_{n}$ where $I_n$ is the identity matrix of size $n$ ($1$ on the diagonal, $0$ elsewhere) or equivalenlty if $\inv{A} = \tr{U}$.
+  We term $A$ \textbf{orthogonal} if $\tr{A} A = A \tr{A} = I_{n}$ where $I_n$ is the identity matrix of size $n$ ($1$ on the diagonal, $0$ elsewhere) or equivalently if $\inv{A} = \tr{A}$.
 
   The set of all orthogonal matrices in $M(n, \R)$ is a group and it called orthogonal group and denotes as $O(n, \R)$.
 \end{definition}
 
 \begin{proposition}\label{fact:20sett}
-  Let $A \in O(n, \R)$, $\forall x \in \R^n$ we have that $\norm{Ax} = \norm{x}$. 
+  Let $A \in O(n, \R)$, $\forall \vect{x} \in \R^n$ we have that $\norm{A\vect{x}} = \norm{\vect{x}}$. 
 \end{proposition}
 
 \begin{proof}
-  \[
-    \norm{Ax} = \sqrt{\tr{(Ax)} Ax} = \sqrt{\tr{x}\tr{A} A x} = \sqrt{\tr{x} I_n x} = \sqrt{\tr{x} x} = \norm{x}
-  \]
+	\begin{enumerate}
+		\item 
+		\[
+			\norm{A\vect{x}} = \sqrt{\tr{(A\vect{x})} A\vect{}} = \sqrt{\tr{\vect{x}}\tr{A} A \vect{x}} = \sqrt{\tr{\vect{x}} I_n \vect{x}} = \sqrt{\tr{\vect{x}} \vect{x}} = \norm{\vect{x}}
+		\]
+		\item  Instead of proving that $\norm{U\vect{x}} = \norm{\vect{x}}$ we will prove $\sqrnorm{U\vect{x}} = \sqrnorm{\vect{x}}$:
+		
+		\[
+		\sqrnorm{U\vect{x}} = \tr{(U\vect{x})} \cdot (U\vect{x}) \numeq{(1)} \tr{\vect{x}} \tr{U} U \vect{x} = \tr{\vect{x}} I_n x = \tr{\vect{x}} \vect{x} = \norm{\vect{x}}
+		\]
+		
+		where $\numeq{(1)}$ follows from the definition of transpose of a product.
+	\end{enumerate}
+  
 \end{proof}
 \end{document}
 

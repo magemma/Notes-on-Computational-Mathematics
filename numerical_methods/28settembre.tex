@@ -14,17 +14,15 @@
 %%%%%%%%%%%%%%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%%%%%%%%%%%%%%%
 
 \section{Singular value decomposition (SVD)}
-We are left with the task of reaching a (sort of) ``eigenvalue decomposition'' when the target matix is not symmetric.\\
-There are two way to generalize the eigenvalue decomposition to a
-nonsymmetric matrix A (with something that always exists):
+We are left with the task of reaching a (sort of) ``eigenvalue decomposition'' when the target matrix is not symmetric.\\
+There are two ways to generalize the eigenvalue decomposition to a
+non-symmetric matrix A (with something that always exists):
 
 \begin{definition}[Schur decomposition]
-  Let $A \in M(n, \R)$, $\exists~U \in M(n, \R)$ orthogonal matrix and $T \in M(n, \R)$ triangular matrix such that $A = UT\tr{U}$ and this is called \textbf{Schur decomposition}.
+  Let $A \in M(n, \R)$, $\exists~U \in O(n, \R)$ orthogonal matrix and $T \in T(n, \R)$ triangular matrix such that $A = UT\tr{U}$ and this is called \textbf{Schur decomposition}.
 \end{definition}
 
-What is really important for us is the \textbf{Singular value decomposition}, every square matrix $A$ can be written with \textbf{SVD} form.\\
-
-\noindent Every square matrix $A$ can be written as SVD.
+\noindent We can say more:
 
 \begin{definition}[Singular value decomposition]
   Let $A \in M(n, \R)$, $\exists~U, V \in M(n, \R)$ orthogonal matrices ($V$ not necessary equal to $U$) and $\Sigma \in \text{Diag}(n, \R)$ such that $A = U\Sigma\tr{V}$ and this is called \textbf{Singular Value Decomposition}.
@@ -32,7 +30,7 @@ What is really important for us is the \textbf{Singular value decomposition}, ev
 \[
   A = 
   \begin{pmatrix}
-    u_1 & u_2 & \cdots & u_n\\
+    U^1 & U^2 & \cdots & U^n\\
   \end{pmatrix}
   \cdot
   \begin{pmatrix}
@@ -43,16 +41,12 @@ What is really important for us is the \textbf{Singular value decomposition}, ev
   \end{pmatrix}
   \cdot
   \begin{pmatrix}
-    \tr{v_1}\\
-    \tr{v_2}\\
+    V_1\\
+    V_2\\
   \vdots\\
-    \tr{v_n}
+    V_n
   \end{pmatrix}
-  = \sum\limits_{i=1}^{n} u_i \sigma_i \tr{v_i} =
-\]
-
-  \[
-    = u_1 \sigma_1 \tr{v_1} + u_2 \sigma_2 \tr{v_2} + \cdots + u_n \sigma_n \tr{v_n}
+  = \sum\limits_{i=1}^{n} u_{ii} \sigma_i v_{ii} =
 \]
 
   Where $\sigma_i$ are called \textbf{singular values} and they are sorted such that:
@@ -66,14 +60,15 @@ What is really important for us is the \textbf{Singular value decomposition}, ev
         \[
            \sigma_1 \geq \abs{\lambda_1} \;\; \text{and} \;\; \abs{\lambda_m} \geq \sigma_m
          \]
-      $\lambda_i$ is larger than the largest eigenvalue of a matrix $A$ and $\lambda_m$ is smaller than the smallest eigenvalue of a matrix $A$.
+      $\sigma_i$ is larger than the largest eigenvalue of a matrix $A$ and $\sigma_m$ is smaller than the smallest eigenvalue of a matrix $A$.
   \end{itemize}
 \end{definition}
 
 \noindent The SVD can be defined also for a rectangular matrix A:
 
 \begin{definition}[Rectangular matrices and SVD]
-  Let $A \in M(m, n, \R)$, there exist $U \in M(m, \R)$ orthogonal, $V \in M(n, \R)$ orthogonal and $\Sigma(m, n, \R)$ diagonal in the sense that $\sum_{ij} = 0$ with $i \neq j$ (padded with zeros). Matrix $A$  has a \textbf{SVD factorization}, where $\Sigma$ has the following shape:
+  Let $A \in M(m, n, \R)$, there exist $U \in O(m, \R)$ orthogonal, $V \in O(n, \R)$ orthogonal and $\Sigma \in D(m, n, \R)$ diagonal in the sense that $\sum_{ij} = 0$ with $i \neq j$ (padded with zeros). 
+  Matrix $A$  has a \textbf{SVD factorization} ($A = U \Sigma \tr{V}$), where $\Sigma$ has the following shape:
   \begin{itemize}
       \item case m < n  (e.g $m=3, n=5$)
         \[
@@ -102,7 +97,8 @@ What is really important for us is the \textbf{Singular value decomposition}, ev
   Let $A \in M(m, n, \R)$,   has a \textbf{thin} \textbf{SVD factorization}:  we may restrict to compute only the first min(m, n)
 vectors that appear in this sum: thin SVD.
   \[
-    A = \sum\limits_{i=1}^{\min(m, n)} u_i \sigma_i \tr{v_i} = u_1 \sigma_1 v_1^T + u_2 \sigma_2 v_2^T + \cdots + u_{\min(m,n)} \sigma_{\min(m,n)} \tr{v_{\min(m,n)}}
+    A = \sum\limits_{i=1}^{\min(m, n)} u_{ii} \sigma_i v_{ii} 
+    = u_{11} \sigma_1 v_{11} + u_{22} \sigma_2 v_{22} + \cdots + u_{\tilde{n}, \tilde{n}} \sigma_{\tilde{n}} v_{\tilde{n}, \tilde{n}}
   \]
 \end{definition}
 
@@ -111,14 +107,14 @@ vectors that appear in this sum: thin SVD.
 As an example, \texttt{[U, S, V] = svd(A)}.
 Notice that, if \texttt{svd(A)} is assigned to one variable, then such variable is an array of singular values.
 
-The thin SVD can be compute with:\texttt{[U, S, V] = svd(A, 0)}
+The thin SVD can be computed as:\texttt{[U, S, V] = svd(A, 0)}
 } 
 
 \noindent \textbf{Computational costs}\\
 We are not going into details of algorithms for computing SVD, but we would like to add a consideration about the computational complexity of such an algorithm.
 \begin{itemize}
-    \item \texttt{[U, S, V] = svd(A, 0)} (thin) costs $O(mn^2)$ ops for $A \in \mathbb{R}^{m \times n}$ or $A \in \mathbb{R}^{n \times m}$ with $m \geq n$
-    \item \texttt{[U, S, V] = svd(A)} (non-thin) more expensive, because it has to store the ‘large’ $m \times m$ factor. (But there are some tricks to store orthogonal matrices compactly, more about it later).
+    \item \texttt{[U, S, V] = svd(A, 0)} (thin) costs $O(mn^2)$ ops for $A \in M(m, n, \R)$ or $A \in M(n, m, \R)$ with $m \geq n$
+    \item \texttt{[U, S, V] = svd(A)} (non-thin) is more expensive, because it has to store the ‘large’ $m \times m$ factor. (But there are some tricks to store orthogonal matrices compactly, more about it later).
 \end{itemize}
 
 \subsection{Properties of SVD}
@@ -159,42 +155,59 @@ A pictorial representation of the shape of $\Sigma$ can be found below.
   \draw[thick] (i.east) -- (first.south east);
 }
 
-This factorization represents $A$ as $\sum\limits_{i=1}^r U_i \sigma_i V_i$. 
+This factorization represents $A$ as $\sum\limits_{i=1}^r u_{ii} \sigma_i v_{ii}$. 
 
-An attentive reader may notice that $Ax = \sum\limits_{i=1}^r U_i \sigma_i V_i x$, where the last three terms are dimensionally a scalar.
-It goes without saying that the image of $A$ is the span of $U_1, U_2, \ldots U_r$, hence $rk(A) = r$.
+\begin{proposition}
+	Let $A \in M(n, \R)$ such that has the following SVD-factorization $A = U \Sigma \tr{V}$ with $U \in O(n, \R)$ orthogonal, $V \in O(n, \R)$ orthogonal and $\Sigma \in D(n, \R)$ is a diagonal matrix.
+	The image of $A$ is the span of $U_1, U_2, \ldots U_r$, hence $rk(A) = r$.
+	Moreover, $\ker(A)=span(V_{r+1}, V_{r+2}, \ldots V_{n})$, since $V$ is orthogonal.
+\end{proposition}
 
-Moreover, $\ker(A)=span(V_{r+1}, V_{r+2}, \ldots V_{n})$, since $V$ is orthgonal (proof: plugging in $x=V_j$, where $j>r$). 
+\begin{proof}
+	\todo[inline]{TODO: plugging in $x=V_j$, where $j>r$}
+\end{proof}
 
 \begin{definition}[Matrix norm]
   Let $A \in M(m, n, \R)$. We define the \textbf{matrix norm} of $A$ as
   \[
-    \norm{A} := \max\limits_{x \neq 0} \frac{\norm{Ax}}{\norm{x}} = \max\limits_{z=1}\norm{Az}
+    \norm{A} := \max\limits_{\vect{x} \neq \vect{0}} \frac{\norm{A\vect{x}}}{\norm{\vect{x}}} = \max\limits_{\vect{z} ~ s.t. \norm{\vect{z}}=1}\norm{A\vect{z}}
   \]
-  Where the norm may be any of the ones defined in \Cref{def:20sett_norm} second equality is introduced in order to work in a compact set, the one of normalized vectors $z$.
+  Where the norm may be any of the ones defined in \Cref{def:20sett_norm} second equality is introduced in order to work in a compact set, the one of normalized vectors $\vect{z}$.
 \end{definition}
 
-Notice that $\norm{Ax} \le \norm{A} \cdot \norm{x}$.
-
 \begin{property}\label{prop:28sett_norms}
-  Let $A$ and $B \in M(n, m, \R)$ and let $x \in \R^n$, the following holds, for any norm defined in \Cref{def:20sett_norm}:
+  Let $A$ and $B \in M(n, m, \R)$ and let $\vect{x} \in \R^n$, the following holds, for any norm defined in \Cref{def:20sett_norm}:
   \begin{itemize}
     \item $\norm{A} \ge 0$ (and the equality holds iff $A=0$);
     \item $\norm{\alpha A} = |\alpha| \norm{A}, \forall \alpha \in \R$;
     \item $\norm{A+B} \le \norm{A} + \norm{B}$;
     \item $\norm{AB} \le \norm{A} \norm{B}$;
-    \item $\norm{Ax} \le \norm{A} \norm{x}$.
+    \item $\norm{A\vect{x}} \le \norm{A} \norm{\vect{x}}$, $\forall \vect{x} \in \R^n$.
   \end{itemize}
 \end{property}
 
 \begin{proposition}\label{fact:28sett_orthogonorm}
-  Let $A \in (n, m, \R)$ and let $U \in M(m, n, \R)$ orthogonal, in the case of $2$-norm $\norm{A}_2 = \norm{AU}_2 = \norm{UA}_2$.
+  Let $A \in (n, \R)$ and let $U \in O(m, n, \R)$ orthogonal, in the case of $2$-norm $\norm{A}_2 \numeq{(1)} \norm{AU}_2 \numeq{(2)} \norm{UA}_2$.
 \end{proposition}
 
-\begin{proof}
-  $\norm{UA}_2 = \max\limits_{x \in R^n,~x \ne 0} \frac{\norm{UAx}_2}{\norm{x}_2} \numeq{(1)} \max\limits_{x \in R^n,~x \ne 0} \frac{\norm{Ax}_2}{\norm{x}_2} = \norm{A}_2$, where $\numeq{(1)}$ follows from a property of vector norms.
-
- $\norm{AU}_2 = \max\limits_{x \in R^n,~x \ne 0} \frac{\norm{AUx}_2}{\norm{x}_2} \numeq{(2)} \max\limits_{y \in R^n,~y \ne 0} \frac{\norm{Ay}_2}{\norm{y}_2} = \norm{A}_2$, where $\numeq{(2)}$ follows from the substitution $y=Ux$.
+\begin{proof}~\\
+	\hangindent=0.7cm$\numeq{(1)}$
+	\[
+		\begin{split}
+			\norm{UA}_2 &= \max\limits_{\vect{x} \in R^n,~\vect{x} \ne \vect{0}} \frac{\norm{UA\vect{x}}_2}{\norm{\vect{x}}_2}\\
+			&= \max\limits_{\vect{x} \in R^n,~\vect{x} \ne \vect{0}} \frac{\sqrt{(\tr{UA\vect{x})}(U A \vect{x})}}{\norm{\vect{x}}_2}\\
+			&= \max\limits_{\vect{x} \in R^n,~\vect{x} \ne \vect{0}} \frac{\sqrt{\tr{\vect{x}} \tr{A} \cancel{\tr{U}} \cancel{U} A \vect{x}}}{\norm{\vect{x}}_2}\\
+			&= \max\limits_{\vect{x} \in R^n,~\vect{x} \ne \vect{0}} \frac{\norm{A\vect{x}}_2}{\norm{\vect{x}}_2} = \norm{A}_2
+		\end{split}
+	\]
+	\hangindent=0.7cm$\numeq{(2)}$
+	\[
+	\begin{split}
+		norm{AU}_2 &= \max\limits_{\vect{x} \in R^n,~\vect{x} \ne \vect{0}} \frac{\norm{AU\vect{x}}_2}{\norm{\vect{x}}_2}\\
+		&\numeq{(2)} \max\limits_{\vect{y} \in R^n,~\vect{y} \ne \vect{0}} \frac{\norm{A\vect{y}}_2}{\norm{\vect{y}}_2} = \norm{A}_2
+	\end{split}
+	\]
+	where $\numeq{(2)}$ follows from the substitution $\vect{y}=U\vect{x}$.
 \end{proof}
 
 \begin{definition}[Frobenius norm]
@@ -205,10 +218,10 @@ Notice that all the properties enumerated in \Cref{prop:28sett_norms} hold for t
 
 \begin{proposition}
   Let $A \in M(n, m, \R)$ and let $A = U \Sigma \tr{V}$ be its singular value decomposition.
-  The following hold:
+  The following holds:
   \begin{enumerate}
     \item $\norm{A}_2 = \norm{\Sigma}_2 = \sigma_1$
-    \item $\norm{A}_F = \norm{Sigma}_F = \sum\limits_{i=1}^{\min{n, m}} {\sigma_i}^2$
+    \item $\norm{A}_F = \norm{\Sigma}_F = \sum\limits_{i=1}^{\tilde{n}} {\sigma_i}^2$, where $\tilde{n} = \min{n, m}$
   \end{enumerate}
 \end{proposition}
 
@@ -218,28 +231,28 @@ Notice that all the properties enumerated in \Cref{prop:28sett_norms} hold for t
   \begin{equation}
     \begin{split}
       \norm{\Sigma}_2 &=
-    \max\limits_{x \in \R^n,~x \neq 0}\frac{\norm{\Sigma x}_2}{\norm{x}_2} =
-    \max\limits_{x \in \R^n,~x \neq 0}\frac{\norm{\begin{pmatrix}
-    \sigma_1\\
-    & \sigma_2\\
-    && \ddots\\
-    &&&& \sigma_n\\
-      &&\text{\Large 0}&&\\
-    \end{pmatrix}
-    \cdot 
-    \begin{pmatrix}
-      x_1\\
-      x_2\\
-      \vdots\\
-      x_n\\
-    \end{pmatrix}}_2}
-      {\norm{\begin{pmatrix}
-      x_1\\
-      x_2\\
-      \vdots\\
-      x_n\\
-    \end{pmatrix}}_2}
-    =
+	    \max\limits_{\vect{x} \in \R^n,~\vect{x} \neq \vect{0}}\frac{\norm{\Sigma \vect{x}}_2}{\norm{\vect{x}}_2} =
+	    \max\limits_{\vect{x} \in \R^n,~\vect{x} \neq \vect{0}}\frac{\norm{\begin{pmatrix}
+	    \sigma_1\\
+	    & \sigma_2\\
+	    && \ddots\\
+	    &&&& \sigma_n\\
+	      &&\text{\Large 0}&&\\
+	    \end{pmatrix}
+	    \cdot 
+	    \begin{pmatrix}
+	      x_1\\
+	      x_2\\
+	      \vdots\\
+	      x_n\\
+	    \end{pmatrix}}_2}
+	      {\norm{\begin{pmatrix}
+	      x_1\\
+	      x_2\\
+	      \vdots\\
+	      x_n\\
+	    \end{pmatrix}}_2}\\
+    &=
       \max\limits_{x \in \R^n,~x \neq 0}\frac{\norm{\begin{pmatrix}
       \sigma_1 x_1\\
       \sigma_2 x_2\\
@@ -254,18 +267,18 @@ Notice that all the properties enumerated in \Cref{prop:28sett_norms} hold for t
       x_2\\
       \vdots\\
       x_n\\
-      \end{pmatrix}}_2}\\
-      &=
-    \frac{\sqrt{{(\sigma_1 x_1)}^2 + {(\sigma_2 x_2)}^2 + \cdots +{(\sigma_n x_n)}^2}}{\sqrt{{x_1}^2 + {x_2}^2 + \cdots +{x_n}^2}}
-      \le 
-      \frac{\sqrt{{(\sigma_1 x_1)}^2 + {(\sigma_1 x_2)}^2 + \cdots +{(\sigma_1 x_n)}^2}}{\sqrt{{x_1}^2 + {x_2}^2 + \cdots +{x_n}^2}}\\
-      &=
-    \sqrt{\sigma_1}^2 \cdot \frac{\sqrt{{x_1}^2 + {x_2}^2 + \cdots +{x_n}^2}}{\sqrt{{x_1}^2 + {x_2}^2 + \cdots +{x_n}^2}}
+      \end{pmatrix}}_2}
+    =
+    	\frac{\sqrt{{(\sigma_1 x_1)}^2 + {(\sigma_2 x_2)}^2 + \cdots +{(\sigma_n x_n)}^2}}{\sqrt{{x_1}^2 + {x_2}^2 + \cdots +{x_n}^2}}\\
+    &\le 
+		\frac{\sqrt{{(\sigma_1 x_1)}^2 + {(\sigma_1 x_2)}^2 + \cdots +{(\sigma_1 x_n)}^2}}{\sqrt{{x_1}^2 + {x_2}^2 + \cdots +{x_n}^2}}
+	=
+    \sqrt{\sigma_1}^2 \cdot \frac{\cancel{\sqrt{{x_1}^2 + {x_2}^2 + \cdots +{x_n}^2}}}{\cancel{\sqrt{{x_1}^2 + {x_2}^2 + \cdots +{x_n}^2}}}
       = \sigma_1
   \end{split}
   \end{equation}
 
-  The equality is achieved if we pick $x = e_1 = \begin{pmatrix}
+  The equality is achieved if we pick $\vect{x} = \vect{e_1} = \begin{pmatrix}
     1\\
     0\\
     \vdots\\
@@ -275,10 +288,10 @@ Notice that all the properties enumerated in \Cref{prop:28sett_norms} hold for t
     \end{enumerate}
 \end{proof}
 
-\begin{theorem}[Eckart-Younger]
+\begin{theorem}[Eckart-Young]
   Let $A \in M(n, m, \R)$ and let $A = U \Sigma \tr{V}$ be its singular value decomposition.
 
-  The solution of $\min\limits_{rk(X) \le k} \norm{A}-X$ is given by the \emph{truncated SVD}:
+  The solution of $\min\limits_{rk(X) \le k} \norm{A-X}_F$ is given by the \emph{truncated SVD}:
   \[
     X = \begin{pmatrix}
       U^1 & U^2 & \cdots & U^k

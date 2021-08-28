@@ -14,180 +14,221 @@
   \begin{itemize}
     \item ${A}^{T}A$ is positive definite;
     \item $A$ has full column rank;
-    \item the columns of $A$ are linear indipendent;
+    \item the columns of $A$ are linearly independent;
     \item $Ker(A) = \{0\}$.
   \end{itemize}
 \end{proposition}
 
 \begin{proposition}
-  Given $A \in \mathcal{M}(m, n, \mathds{R})$, if $\tr{A} A$ is \textbf{positive semidefinite} $f(x) = \tr{x}Qx -\tr{q}x +\tr{b}b$ is \textbf{strongly} (or \textbf{strictly}) \textbf{convex}. In other words, $f(x)$ has a \textbf{unique} minimum.
+  Let $A \in \mathcal{M}(m, n, \mathds{R})$, s.t. $Q = \tr{A} A \in M(n, \R)$ is \textbf{positive semidefinite}.
+  The quadratic function $f(\vect{x}) = \tr{\vect{x}}Q\vect{x} -\tr{\vect{q}}\vect{x} +\tr{\vect{b}}\vect{b}$ is \textbf{strongly} (or \textbf{strictly}) \textbf{convex}.
+  In other words, $f(\vect{x})$ has a \textbf{unique} minimum.
 \end{proposition}
 
-We find the minimum by solving $\nabla f(x) = 0$, 
+\begin{proposition}
+	Let $A \in \mathcal{M}(m, n, \mathds{R})$, s.t. $Q = \tr{A} A \in M(n, \R)$ is \textbf{positive semidefinite}.
+	The quadratic function $f(\vect{x}) = \tr{\vect{x}}Q\vect{x} -\tr{\vect{q}}\vect{x} +\tr{\vect{b}}\vect{b}$ has gradient
+	\[
+		\nabla  f(\vect{x}) = 2 \tr{A}A\vect{x} - 2\tr{A}\vect{b}
+	\]
+\end{proposition}
 
-where $f(x) = {x}^{T}{A}^{T}Ax - 2{b}^{T}Ax + {b}^{T}b$
+\begin{proof}
+	We know that $f(\vect{x} + \vect{h}) = f(\vect{x}) + \tr{(\nabla f(\vect{x}))} \cdot \vect{h} + o(\norm{\vect{h}})$
+	
+	\begin{equation}
+		\begin{split}
+			f(\vect{x}+\vect{h}) & = \tr{(\vect{x}+\vect{h})} \tr{A}A(\vect{x}+\vect{h}) - 2\tr{\vect{b}}A(\vect{x}+\vect{h}) + \tr{\vect{b}}\vect{b}\\
+			& = {\color{blue} \tr{\vect{x}} \tr{A}A\vect{x}} + {\color{green} \tr{\vect{x}}\tr{A}A\vect{h}} + {\color{green} \tr{\vect{h}} \tr{A} A \vect{x}} + {\color{red} \tr{\vect{h}} \tr{A} A \vect{h}} {\bf \color{blue}- 2 \tr{\vect{b}} A \vect{x}} - 2 \tr{\vect{b}} A \vect{h} + {\bf \color{blue} \tr{\vect{b}} \vect{b}}\\
+			& = {\color{blue}f(\vect{x})} +({\color{green} 2 \tr{x} \tr{A} A \vect{h}}- 2 \tr{\vect{b}} A \vect{h}) + {\color{red} o(\norm{\vect{h}})}\\
+			& = f(\vect{x}) + { \color{magenta} \tr{(2 \tr{A} A \vect{x} - 2 \tr{A} \vect{b})}\vect{h}} + o(\norm{\vect{h}}) 
+		\end{split}
+	\end{equation}
+	
+	So, ${\color{magenta} \nabla  f(\vect{x}) = 2 \tr{A} A \vect{x} - 2\tr{A} \vect{b}}$	
+\end{proof}
 
-$\nabla  f(x) = 2 {A}^{T}Ax - 2{A}^{T}b$
-How should we compute this gradient? 
+\noindent We would like to know when the gradient is $\vect{0}$.
 
-We know that $f(x+h) = f(x) + {(\nabla f(x))}^{T} \dot h  + o(\|h\|)$
+\begin{proposition}
+	Let $A \in \mathcal{M}(m, n, \mathds{R})$, s.t. $Q = \tr{A} A \in M(n, \R)$ is \textbf{positive semidefinite}.
+	The quadratic function $f(\vect{x}) = \tr{\vect{x}}Q\vect{x} -\tr{\vect{q}}\vect{x} +\tr{\vect{b}}\vect{b}$ has a unique minimum in
+	\[
+		\vect{x} = \inv{(\tr{A} A)} (\tr{A}\vect{b})
+	\]
+\end{proposition}
 
-\begin{equation}
-  \begin{split}
-    f(x+h) & = {(x+h)}^{T} {A}^{T}A(x+h) - 2{b}^{T}A(x+h) +{b}^{T}b\\
-    & = {\bf \color{blue} {x}^{T}{A}^{T}Ax} + {\bf \color{green} {x}^{T}{A}^{T}Ah} + {\bf \color{green} {h}^{T}{A}^{T}Ax} + {\bf \color{red} {h}^{T}{A}^{T}Ah} {\bf \color{blue}- 2{b}^{T}Ax} - 2{b}^{T}Ah + {\bf \color{blue} {b}^{T}b}\\
-    & = {\bf \color{blue}f(x)} +({\bf \color{green} 2 {x}^{T}{A}^{T}Ah}-2{b}^{T}Ah) + {\bf \color{red} o(\|h\|)}\\
-    & = f(x) + {\bf \color{magenta} \tr{(\tr{A}Ax-2\tr{A}b)}h} + o(\|h\|) 
-  \end{split}
-\end{equation}
+\begin{proof}
+	$\nabla  f(\vect{x}) \questeq 0 \iff \tr{A} A \vect{x} = \tr{A} \vect{b}$
+	Since $\tr{A} A$ is a {\bf square} matrix and also {\bf non singular} (which means invertible) we may find $\vect{x}$ by solving a linear system $\inv{x} = \inv{(\tr{A} A)}(\tr{A} \vect{b})$.
+\end{proof}
 
-So, ${\bf \color{magenta} \nabla  f(x) = {A}^{T}Ax - 2{A}^{T}b}$
-
-We would like to know when the gradient is $0$.
-
-$\nabla  f(x) \questeq 0 \Leftrightarrow {A}^{T}Ax = {A}^{T}b$
-
-Since ${A}^{T}A$ is a {\bf square} matrix and also {\bf non singular} (which means invertible) we may find $x$ by solving a linear system $x={({A}^{T}A)}^{-1}({A}^{T}b)$ via:
-
+\noindent In this course we provide the following four ways of solving a linear system:
 \begin{itemize}
   \item Gaussian elimination;
   \item LU factorization;
   \item QR factorization;
-  \item Cholesky factorization (specialyzed method for positive definite matrices)
+  \item Cholesky factorization (specialized method for positive definite matrices)
     Idea: ${A}^{T}A$ can be written as ${A}^{T}A={R}^{T}R$, where $R$ is a square, upper triangular matrix.
 \end{itemize}
 
-Why do we need factorization method?
+\noindent Why do we need factorization method?
 Let's compute complexity:
 \begin{itemize}
-  \item ${A}^{T}A ~ \rightarrow ~ 2m{n}^{2}$, where $m>n$;
-  \item ${A}^{T}b ~ \rightarrow ~ 2mn$;
-  \item Solving ${A}^{T}Ax={A}^{T}b$ with gaussian elimination has a computational complexity of $\frac{2}{3}{n}^{3}$;
-  \item Cholesky factorization ${A}^{T}A={R}^{T}R$ which has a cost of $\frac{1}{3}{n}^{3}$
-
-
+  \item $\tr{A} A ~ \rightarrow ~ 2m{n}^{2}$, where $m>n$;
+  \item $\tr{A} \vect{b} ~ \rightarrow ~ 2mn$;
+  \item Solving $\tr{A} A \vect{x} = \tr{A} \vect{b}$ with Gaussian elimination has a computational complexity of $\frac{2}{3}{n}^{3}$;
+  \item Cholesky factorization $\tr{A} A = \tr{R} R$ which has a cost of $\frac{1}{3}{n}^{3}$
 \end{itemize}
 
 \subsection{Method of normal equations}
 This method solves least squares problem and takes his name from the fact that ``normal'' means orthogonal.
+The key idea is using symmetry to skip half of the entries of $\tr{A}A$
 
-The key idea is using symmetry to skip half of the entries of ${A}^{T}A$
+If $A\vect{x}=\vect{b}$ cannot be solved, since $A$ is tall and thin, we can multiply on both sides by $\tr{A}$ and try again, since the matrix is square now.
 
-If $Ax=b$ can't be solved, since $A$ is tall and thin, we can multiply on both sides by ${A}^{T}$ and try again, since the matrix is square now.
+\begin{myframe}{\bf LSP: closed formula}
+	A solution to the least squares problem
+	\[
+		\min\limits_{\vect{x} \in \R^n} \norm{A \vect{x} - \vect{b}}
+	\]
+	is given by 
+	\[
+		\vect{x} = \inv{(\tr{A}A)} \tr{A} \vect{b}
+	\]
+\end{myframe}
 
-The residual $Ax-b$ is orthogonal to any vector $v \in span(A): {(Av)}^{T} (Ax-b)=0$
+\begin{proposition}
+	Let $A \in M(n,m, \R), \vect{b} \in \R^n$ and let the lest squares problem be
+	\[
+	\min\limits_{\vect{x} \in \R^n} \norm{A \vect{x} - \vect{b}}
+	\]
+	The residual $A\vect{x} - \vect{b}$ is orthogonal to any vector $\vect{v} \in span(A)$.
+	Formally,
+	\[
+		 \tr{(A\vect{v})} (A\vect{x} - \vect{b}) = \vect{0}
+	\]
+\end{proposition}
 
-Why?
-
-$v^T({A}^{T}Ax - {A}^{T}b) = 0$, see \Cref{fig:18ott1}.
-
-\addpic{0.9}{pics/18ott/1.png}{Geometric idea.}{fig:18ott1}
-
-It's possible to find a close formula for solving this problem: $\min\|Ax-b\|$ is given by $x={({A}^{T}A)}^{-1}{A}^{T}b$.
+\begin{proof}
+	$\tr{\vect{v}} (\tr{A} A \vect{x} - \tr{A} \vect{b}) = 0$, see \Cref{fig:18ott1}.
+\end{proof}
 
 \begin{definition}[Moore-Penrose pseudoinverse]
-  Let $A$ be a matrix in $\mathcal{M}(n, m, \mathds{R})$, the \textbf{Moore-Penrose pseudoinverse} of $A$ with full column rank is ${\bf {A}^{\dag}} := {({A}^{T}A)}^{-1}{A}^{T}$
+  Let $A$ be a matrix in $\mathcal{M}(n, m, \mathds{R})$.
+  \begin{itemize}
+  	\item if $A$ has \emph{full column rank}, the \textbf{Moore-Penrose pseudoinverse} of $A$ is ${\bf {A}^{\dag}} := \inv{(\tr{A}A)} \tr{A}$
+  	\item if $A$ has \emph{full row rank}, the \textbf{Moore-Penrose pseudoinverse} of $A$ is ${\bf {A}^{\dag}} := \tr{A} \inv{(A\tr{A})}$
+  \end{itemize}
 \end{definition}
 
-So we can write $x={A}^{\dag}b$ for the solution of a LS problem.
+Thanks to this definition, we can rewrite the solution of a LS problem as $\vect{x}={A}^{\dag} \vect{b}$.
 
-In particular, the solution of $\|\min Ax - ({b}_{1} + {b}_{2})\|$ is the sum of two solutions of $\min \| A{x}_{1} -b_{1} \|$ and  $\min \| A{x}_{2} -b_{2} \|$.
+Notice that the solution of $\min \norm{A \vect{x} - ({\vect{b}}_{1} + {\vect{b}}_{2})}$ can be written as the sum of two solutions of $\min \norm{A \vect{{x}_{1}} - \vect{b_{1}}}$ and  $\min \norm{A \vect{x_{2}} - \vect{b_{2}}}$.
 
-\textbf{Obs:} $A{A}^{\dag} = A {(\tr{A}A)}^{-1} \tr{A} = A \inv{A} \inv{\tr{A}} \tr{A} = I_{n \times m}$, but this doesn't hold for ${A}^{\dag}A = {({A}^{T}A)}^{-1}({A}^{T}A)$, which is not the identity matrix.
+\begin{proposition}
+	Let $A$ be a matrix in $\mathcal{M}(n, m, \mathds{R})$.
+	\begin{itemize}
+		\item if $A$ has \emph{full column rank}, the Moore-Penrose pseudoinverse is a \emph{left-inverse} of $A$: ${A}^{\dag} A = I$
+		\item if $A$ has \emph{full row rank}, the Moore-Penrose pseudoinverse is a \emph{right-inverse} of $A$: $A {A}^{\dag} = I$
+	\end{itemize}
+\end{proposition}
+
+Let us study a different kind of methods for solving the least squares problem, namely \emph{factorization} methods, that reveal properties of matrices and can be used as intermediate steps in algorithms.
 
 \section{QR factorization}
 
-\begin{theorem}
-  $\forall A \in \mathcal{M}(m, m, \mathds{R}),~ \exists  Q \in \mathcal{O}(m, m, \mathds{R})$ (space of orthogonal matrices of size $m\times m$), $\exists R \in \mathcal{M}(m, m, \mathds{R})$ upper triangular such that $A=QR$
+\begin{theorem}[QR factorization]
+  $\forall A \in \mathcal{M}(m, \mathds{R}),~ \exists  Q \in \mathcal{O}(m, \mathds{R})$, $\exists R \in \mathcal{T}(m, \mathds{R})$ upper triangular such that $A=QR$
 \end{theorem}
 
-QR factorization isn't as powerful as SVD factorization.
-
-Why are we interested in studying factorizations?
-
-\begin{itemize}
-  \item They reveal properties: singularity, rank, \dots;
-  \item They may be an intermediate step in algorithms.
-\end{itemize}
-
-\begin{example}
-  We would like to solve $Ax=b$, with $A \in \mathcal{M}(m, m, \mathds{R})$ we may:
-
-\begin{enumerate}
-  \item first compute the QR factorization ($A=QR$) and then obtain 
-$x={A}^{-1}b={R}^{-1}{Q}^{-1}b$
-  \item compute then $c= \tr{Q}b$
-  \item and then $x={R}^{-1}c$
-\end{enumerate}
-\end{example}
-
-
-What's the computational cost?
-\begin{enumerate}
-  \item $QR ~ \rightarrow ~ O({m}^{3})$
-  \item compute c $\rightarrow ~ O({m}^{2})$
-  \item compute x $ \rightarrow ~ O({m}^{2})$
-\end{enumerate}
-
-Let's analyze the case in which $A$ is a vector. Given $x \in \mathds{R}^m$, we want to find an orthogonal matrix $Q$ such that $Qx$ has the form $\begin{pmatrix}s\\0\\ \cdot\\ \cdot\\ \cdot\\ 0\end{pmatrix} = se_{1}$, where $s= \pm \|x\|$.
-  
-  We denote $e_{i}$ the i-th column of the identity matrix.
+\begin{proposition}
+	Let $A \in M(n,m, \R), \vect{b} \in \R^n$. A solution to the least squares problem
+	\[
+	 	(P) ~ ~ ~ ~ \min\limits_{\vect{x} \in \R^n} \norm{A \vect{x} - \vect{b}}
+	\]
+	can be computed as follows:
+	\begin{enumerate}
+		\item first compute the QR factorization ($A=QR$) and then obtain 
+		$\vect{x} = \inv{A} \vect{b} = \inv{R} \inv{Q} \vect{b}$
+		\item compute then $\vect{y} = \tr{Q} \vect{b}$
+		\item and then $\vect{x} = \inv{R} \vect{c}$
+	\end{enumerate}
+	And the computational cost is expressed as"
+	\begin{enumerate}
+		\item $QR ~ \rightarrow ~ O({m}^{3})$
+		\item compute  $\vect{y} ~ \rightarrow ~ O({m}^{2})$
+		\item compute $ \vect{x} ~ \rightarrow ~ O({m}^{2})$
+	\end{enumerate}
+\end{proposition}
 
 \begin{definition}[Housholder reflector]
-  Let $U$ be a vector in $\mathds{R}^m$. An \textbf{Householder reflector} is a matrix $H$ such that $H = I - \frac{2}{\tr{U}U} \cdot U \tr{U}$.
-  
-  We can observe that $\tr{U}U$ is a scalar.
+  Let $\vect{v} \in \R^m$.
+  An \textbf{Householder reflector} is a matrix $H \in M(m, \R)$ such that
+  \[
+  	H = I - \frac{2}{\tr{\vect{v}}\vect{v}} \cdot \vect{v} \tr{\vect{v}}
+  \]
+  Equivalently, since $\tr{\vect{v}}\vect{v} = \sqrnorm{\vect{v}} \in \R$
+  \[
+  	H = I - \frac{2}{\sqrnorm{\vect{v}}} \vect{v} \tr{\vect{v}} = I - 2\vect{v}_u \tr{\vect{v}_u} 
+  \]
+  where $vect{v}_u = \frac{1}{\norm{\vect{v}}}\vect{v}$.
+\end{definition}
 
-    Since $\tr{U}U = \|U\|^2$, another way of seeing $H$ may be $H = I - \frac{2}{{\|U\|}^{2}} U \tr{U} = I - 2v \tr{v}$, where $v = \frac{1}{\|U\|}U$
-
-  
-  \end{definition}
 \begin{lemma}
-  Matrices of this form are orthogonal.
+  Householder reflectors are orthogonal.
 \end{lemma}
 
 \begin{proof}
   \begin{equation}
     \begin{split}
-      H\tr{H} & = (I-\frac{2}{{\|U\|}^{2}} \cdot U \tr{U}) \cdot (I-\frac{2}{{\|U\|}^{2}} \cdot U \tr{U})\\
-      & = I\cdot I - \frac{2}{\sqrnorm{U}} \cdot U \tr{U} I-I \cdot \frac{2}{\sqrnorm{U}} \cdot U \tr{U} + \frac{2}{\sqrnorm{U}} \cdot U \tr{U} \cdot \frac{2}{\sqrnorm{U}} \cdot U \tr{U}\\
-      & = I - \frac{2}{\sqrnorm{U}} \cdot U \tr{U} - \frac{2}{\sqrnorm{U}} \cdot U \tr{U} + \frac{4}{{\|U\|}^{4}} \cdot U\tr{U} U \tr{U}\\
-      & = I - \frac{4}{\sqrnorm{U}} U \tr{U} + \frac{4}{{\|U\|}^{4}} U {\|U\|}^{2} \tr{U}\\
+      H\tr{H} & = (I-\frac{2}{{\|\vect{v}\|}^{2}} \cdot \vect{v} \tr{\vect{v}}) \cdot (I-\frac{2}{{\|\vect{v}\|}^{2}} \cdot \vect{v} \tr{\vect{v}})\\
+      & = I\cdot I - \frac{2}{\sqrnorm{\vect{v}}} \cdot \vect{v} \tr{\vect{v}} I-I \cdot \frac{2}{\sqrnorm{\vect{v}}} \cdot \vect{v} \tr{\vect{v}} + \frac{2}{\sqrnorm{\vect{v}}} \cdot \vect{v} \tr{\vect{v}} \cdot \frac{2}{\sqrnorm{\vect{v}}} \cdot \vect{v} \tr{\vect{v}}\\
+      & = I - \frac{2}{\sqrnorm{\vect{v}}} \cdot \vect{v} \tr{\vect{v}} - \frac{2}{\sqrnorm{\vect{v}}} \cdot \vect{v} \tr{\vect{v}} + \frac{4}{{\|\vect{v}\|}^{4}} \cdot \vect{v}\tr{\vect{v}} \vect{v} \tr{\vect{v}}\\
+      & = I - \frac{4}{\sqrnorm{\vect{v}}} \vect{v} \tr{\vect{v}} + \frac{4}{{\|\vect{v}\|}^{4}} \vect{v} {\|\vect{v}\|}^{2} \tr{\vect{v}}\\
       & = I
     \end{split}
   \end{equation}
 \end{proof}
 
+\begin{corollary}
+	The Householder reflector is Hermitian (symmetric, in the real case), unitary and involutory.
+	Formally,
+	\[
+		H = \inv{H} = \tr{H}
+	\]
+\end{corollary}
+
+Notice that geometrically, an Householder reflector identifies an hyperplane and reflects any vector with respect to such hyperplane. See \Cref{fig:18ott_householder}
+
+
+\addpic{0.5}{pics/18ott/householder.JPG}{Reflection with respect to the hyperplane.}{fig:18_householder}
+
 \begin{example}
-$Hx = (I - \frac{2}{{\|U\|}^{2}} U \tr{U})x = x - \frac{2}{{\|U\|}^{2}} U (\tr{U} U)$
-
-$y = compute\_product(U,x)$
-
-$a = U' * x$
-
-$b=U' * U$
-
-$y = x \frac{2*a}{b} \cdot U$
+	Let us be given the problem of computing the product $H \vect{x}$ for $H \in M(m, \R)$ and $\vect{x} \in \R^m$.
+	\[
+		H\vect{x} = (I - \frac{2}{{\|\vect{v}\|}^{2}} \vect{v} \tr{\vect{v}})\vect{x} = \vect{x} - \frac{2}{{\|\vect{v}\|}^{2}} \vect{v} (\tr{\vect{v}} \vect{x})
+	\]
+Let us first compute $a = \tr{\vect{v}} \cdot \vect{x}$, then $b= \tr{\vect{v}} \cdot \vect{v}$.
+We are now ready to compute the result $\vect{y} = \vect{x} \frac{2*a}{b} \cdot \vect{v}$
 
 All these operations are linear operations, so the complexity is $O(m)$, cheaper than generic matrix-vector product ($O(m^2)$).
 \end{example}
 
-Can we find a matrix $H$ in this family that maps $x$ to $y$ (equivalently $Hx = y$)? The answer is given by the following lemma
+At this point, we are interested in finding an Householder reflector $H$ that maps $\vect{x}$ to $\vect{y}$, formally $H\vect{x} = \vect{y}$ (\Cref{fig:18ott_H_x_y}).
 
 \begin{lemma}
- $\forall x, y ~ s.t ~ \|x\| = \|y\| \exists H ~ s.t. ~ Hx = y$, choosing $u = x - y$.
+ $\forall \vect{x}, \vect{y} ~ s.t ~ \|\vect{x}\| = \|\vect{y}\| \exists H ~ s.t. ~ H\vect{x} = \vect{y}$, choosing $\vect{v} = \vect{x} - \vect{y}$.
 \end{lemma}
 
-A geometric idea is given by the following
-
-\addtwopics{0.5}{pics/18ott/2.png}{0.46}{pics/18ott/3.png}{On the left in $\mathds{R}^{2}$, on the right in $\mathds{R}^{3}$.}{fig:18ott2}
+\addpic{0.5}{pics/18ott/H_x_y.png}{$H$ is the hyperplane that ``bisects'' the angle between $\vect{x}$ and $\vect{y}$.}{fig:18ott_H_x_y}
 
 What happens if $y = \begin{pmatrix} \|x\|\\ 0\\ \cdot\\ \cdot\\ \cdot\\ 0\end{pmatrix}$?
   
   $y = \tr{H}x$, actually $\tr{H} = \inv{H} = H$
   Let's map $x$ to $y$: 
   \[
-    U = x - y =
+    \vect{v} = x - y =
   \begin{pmatrix} {}x_{1}\\ {x}_{2}\\ \cdot\\ \cdot\\ \cdot\\{x}_{n}\end{pmatrix} - \begin{pmatrix} s\\ 0\\ \cdot\\ \cdot\\ \cdot\\ 0 \end{pmatrix} = 
     \begin{pmatrix} {x}_{1}-s\\ {x}_{2}\\ \cdot\\ \cdot\\ \cdot\\ {x}_{n} \end{pmatrix}
   \]
